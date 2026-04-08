@@ -12,6 +12,7 @@
 This document outlines the complete product backlog and execution plan for the KRAAK Consulting MVP website. The project is organized into **8 major epics**, broken down into **30 actionable tasks**, with clear milestones, priorities, and status tracking.
 
 ### Success Criteria
+
 - ✅ Site deployed and accessible publicly
 - ✅ Mobile-responsive design implemented
 - ✅ Clear service presentation
@@ -23,14 +24,14 @@ This document outlines the complete product backlog and execution plan for the K
 
 ## 🎯 Milestones & Timeline
 
-| Milestone | Description | Expected Phase |
-|-----------|-------------|-----------------|
-| **Scope locked** | MVP scope and requirements finalized | Week 1-2 |
-| **Design approved** | Design system and visual designs finalized | Week 3-4 |
-| **Content ready** | All content finalized and approved | Week 3-4 |
-| **Development complete** | All development tasks completed | Week 5-8 |
-| **QA complete** | Testing and QA completed | Week 8-9 |
-| **Launch** | Site deployed to production | Week 9-10 |
+| Milestone                | Description                                | Expected Phase |
+| ------------------------ | ------------------------------------------ | -------------- |
+| **Scope locked**         | MVP scope and requirements finalized       | Week 1-2       |
+| **Design approved**      | Design system and visual designs finalized | Week 3-4       |
+| **Content ready**        | All content finalized and approved         | Week 3-4       |
+| **Development complete** | All development tasks completed            | Week 5-8       |
+| **QA complete**          | Testing and QA completed                   | Week 8-9       |
+| **Launch**               | Site deployed to production                | Week 9-10      |
 
 ---
 
@@ -43,11 +44,13 @@ This document outlines the complete product backlog and execution plan for the K
 **Objective**: Develop all content for MVP pages including copywriting, messaging, and brand voice alignment.
 
 **Related Tasks**:
+
 - [Issue #9] Finalize home page messaging
-- [Issue #10] Develop services descriptions  
+- [Issue #10] Develop services descriptions
 - [Issue #11] Create About page content
 
 **Acceptance Criteria**:
+
 - All page content approved by stakeholders
 - Content aligned with KRAAK brand voice
 - French language quality check completed
@@ -64,11 +67,13 @@ This document outlines the complete product backlog and execution plan for the K
 **Objective**: Create comprehensive design system, UI components, and visual designs for all MVP pages.
 
 **Related Tasks**:
+
 - [Issue #12] Create design system documentation
 - [Issue #13] Wireframe all MVP pages
 - [Issue #14] Create high-fidelity mockups
 
 **Deliverables**:
+
 - Design system documentation (colors, typography, spacing)
 - Figma design files with all pages
 - Wireframes and high-fidelity mockups
@@ -87,6 +92,7 @@ This document outlines the complete product backlog and execution plan for the K
 **Objective**: Initialize Angular monorepo with all build tools, dependencies, and CI/CD infrastructure.
 
 **Related Tasks**:
+
 - [Issue #15] Initialize pnpm monorepo
 - [Issue #16] Configure Angular 21 with prerendering
 - [Issue #17] Setup Tailwind CSS and PrimeNG
@@ -94,6 +100,7 @@ This document outlines the complete product backlog and execution plan for the K
 - [Issue #19] Setup Playwright E2E testing
 
 **Tech Stack**:
+
 - Angular 21.2.x with prerendering
 - Tailwind CSS 4.1.13
 - PrimeNG 21.1.3
@@ -113,6 +120,7 @@ This document outlines the complete product backlog and execution plan for the K
 **Objective**: Build and implement all 5 core MVP pages with responsive design and functionality.
 
 **Pages to Build**:
+
 - [Issue #20] Home page
 - [Issue #21] About page
 - [Issue #22] Services page
@@ -120,6 +128,7 @@ This document outlines the complete product backlog and execution plan for the K
 - [Issue #24] Contact page
 
 **Requirements**:
+
 - Full responsive design (mobile-first)
 - Performance optimization (Lighthouse > 90)
 - Accessibility (WCAG AA standard)
@@ -139,11 +148,13 @@ This document outlines the complete product backlog and execution plan for the K
 **Objective**: Develop and integrate contact forms, lead capture, and email notification system.
 
 **Related Tasks**:
+
 - [Issue #25] Build contact form component
 - [Issue #26] Setup NestJS form API endpoint
 - [Issue #27] Integrate Resend email service
 
 **Components**:
+
 - Contact form (name, email, message, subject)
 - Consultation request form
 - Program interest form
@@ -152,6 +163,7 @@ This document outlines the complete product backlog and execution plan for the K
 - Success/confirmation messages
 
 **Backend Integration**:
+
 - NestJS API endpoints
 - Supabase storage for form data
 - Resend email integration
@@ -169,12 +181,14 @@ This document outlines the complete product backlog and execution plan for the K
 **Objective**: Implement technical SEO, performance optimization, and analytics integration.
 
 **Related Tasks**:
+
 - [Issue #28] Configure meta tags and Open Graph
 - [Issue #29] Setup Google Analytics 4
 - [Issue #30] Generate XML sitemap
 - [Issue #31] Optimize performance and accessibility
 
 **SEO Implementation**:
+
 - Meta tags and Open Graph configuration
 - Dynamic meta tags for each page
 - XML sitemap generation and submission
@@ -185,6 +199,7 @@ This document outlines the complete product backlog and execution plan for the K
 - Google Analytics 4 integration
 
 **Performance**:
+
 - Image optimization
 - Code splitting
 - Bundle size optimization
@@ -203,11 +218,13 @@ This document outlines the complete product backlog and execution plan for the K
 **Objective**: Comprehensive testing and QA covering all functionality, performance, and user experience.
 
 **Related Tasks**:
+
 - [Issue #32] Write E2E tests for critical user flows
 - [Issue #33] Test mobile responsiveness
 - [Issue #34] Cross-browser testing
 
 **Testing Scope**:
+
 - Unit tests (Angular components)
 - Integration tests
 - E2E tests (Playwright)
@@ -219,6 +236,7 @@ This document outlines the complete product backlog and execution plan for the K
 - Email delivery testing
 
 **Quality Gates**:
+
 - Test coverage > 80%
 - Lighthouse scores > 90
 - No critical bugs
@@ -238,12 +256,14 @@ This document outlines the complete product backlog and execution plan for the K
 **Objective**: Prepare production environment, configure hosting, and execute launch.
 
 **Related Tasks**:
+
 - [Issue #35] Setup Vercel deployment
 - [Issue #36] Setup Render backend deployment
 - [Issue #37] Pre-launch security audit
 - [Issue #38] Create deployment runbook
 
 **Deployment Strategy**:
+
 - Vercel for frontend (prerendered static site)
 - Render for NestJS backend
 - Custom domain and SSL configuration
@@ -254,6 +274,7 @@ This document outlines the complete product backlog and execution plan for the K
 - CDN/caching configuration
 
 **Pre-Launch Checklist**:
+
 - Security audit completed
 - All systems monitored
 - Performance verified
@@ -261,6 +282,7 @@ This document outlines the complete product backlog and execution plan for the K
 - Team trained on operations
 
 **Documentation**:
+
 - Deployment runbook
 - Incident response procedures
 - Admin documentation
@@ -274,29 +296,32 @@ This document outlines the complete product backlog and execution plan for the K
 ## 📌 Status & Priority Reference
 
 ### Status Labels
-| Label | Color | Meaning |
-|-------|-------|---------|
-| `status: backlog` | Purple | Not yet started |
-| `status: ready` | Yellow | Ready to work on |
-| `status: in-progress` | Blue | Currently being worked on |
-| `status: review` | Purple | In review/QA |
-| `status: done` | Green | Completed |
+
+| Label                 | Color  | Meaning                   |
+| --------------------- | ------ | ------------------------- |
+| `status: backlog`     | Purple | Not yet started           |
+| `status: ready`       | Yellow | Ready to work on          |
+| `status: in-progress` | Blue   | Currently being worked on |
+| `status: review`      | Purple | In review/QA              |
+| `status: done`        | Green  | Completed                 |
 
 ### Priority Labels
-| Label | Color | Severity |
-|-------|-------|----------|
-| `priority: critical` | Red | Must complete for MVP launch |
-| `priority: high` | Orange | Should complete for quality |
-| `priority: medium` | Yellow | Nice to have |
-| `priority: low` | Green | Can defer to V1.1+ |
+
+| Label                | Color  | Severity                     |
+| -------------------- | ------ | ---------------------------- |
+| `priority: critical` | Red    | Must complete for MVP launch |
+| `priority: high`     | Orange | Should complete for quality  |
+| `priority: medium`   | Yellow | Nice to have                 |
+| `priority: low`      | Green  | Can defer to V1.1+           |
 
 ### Type Labels
-| Label | Meaning |
-|-------|---------|
-| `type: epic` | High-level initiative (8 per MVP) |
-| `type: feature` | Feature task |
-| `type: bug` | Bug fix |
-| `type: chore` | Maintenance/documentation |
+
+| Label           | Meaning                           |
+| --------------- | --------------------------------- |
+| `type: epic`    | High-level initiative (8 per MVP) |
+| `type: feature` | Feature task                      |
+| `type: bug`     | Bug fix                           |
+| `type: chore`   | Maintenance/documentation         |
 
 ---
 
@@ -335,6 +360,7 @@ Done (status: done) - Merged and verified
 - **Medium Priority**: 4 tasks
 
 ### By Phase
+
 - **Scope Locked Phase**: 6 tasks (Frontend setup + content)
 - **Design Phase**: 3 tasks
 - **Development Phase**: 15 tasks
@@ -346,6 +372,7 @@ Done (status: done) - Merged and verified
 ## 🚀 Execution Recommendations
 
 ### Phase 1: Foundation (Weeks 1-2)
+
 **Focus**: Setup, design, and content
 
 1. ✅ Initialize pnpm monorepo (Issue #15)
@@ -355,6 +382,7 @@ Done (status: done) - Merged and verified
 5. ✅ Setup CI/CD (Issue #18)
 
 ### Phase 2: Design & Delivery (Weeks 3-4)
+
 **Focus**: Design finalization and frontend setup
 
 1. ✅ Wireframe all pages (Issue #13)
@@ -363,6 +391,7 @@ Done (status: done) - Merged and verified
 4. ✅ Design system ready for dev handoff
 
 ### Phase 3: Development (Weeks 5-8)
+
 **Focus**: Build all pages and features
 
 1. ✅ Implement all 5 pages (Issues #20-24)
@@ -371,6 +400,7 @@ Done (status: done) - Merged and verified
 4. ✅ E2E test development (Issue #32)
 
 ### Phase 4: QA & Optimization (Weeks 8-9)
+
 **Focus**: Testing and refinement
 
 1. ✅ Mobile & cross-browser testing (Issues #33-34)
@@ -379,6 +409,7 @@ Done (status: done) - Merged and verified
 4. ✅ Bug fixes and refinements
 
 ### Phase 5: Launch (Week 9-10)
+
 **Focus**: Deployment and go-live
 
 1. ✅ Vercel frontend deployment (Issue #35)
