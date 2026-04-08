@@ -9,11 +9,13 @@
 ## ✅ Quick Setup Checklist
 
 ### Labels Configured ✓
+
 - **Status Labels** (5): backlog, ready, in-progress, review, done
 - **Priority Labels** (4): critical, high, medium, low
 - **Type Labels** (4): epic, feature, bug, chore
 
 ### Milestones Created ✓
+
 1. Scope locked (#1)
 2. Design approved (#2)
 3. Content ready (#3)
@@ -22,6 +24,7 @@
 6. Launch (#6)
 
 ### Issues Created ✓
+
 - **8 Epics** (GitHub Issues #1-8)
 - **30 Tasks** (GitHub Issues #9-38)
 - **Total**: 38 issues properly labeled and organized
@@ -56,11 +59,13 @@ gh project item-add 6 --owner Ange230700 --id <node_id>
 ### Updating Issue Status
 
 **Option 1: Using labels** (via GitHub CLI)
+
 ```bash
 gh issue edit 42 --add-label "status: in-progress" --remove-label "status: backlog"
 ```
 
 **Option 2: Using GitHub Web UI**
+
 - Click issue → Add label or change label
 
 ### Workflow States
@@ -92,16 +97,16 @@ gh issue edit 42 --add-label "status: in-progress" --remove-label "status: backl
 
 ## 📋 Epic Reference Card
 
-| Epic | Issues | Priority | Milestone | Owner |
-|------|--------|----------|-----------|-------|
-| Content | #9-11 | Critical | Content ready | Content Lead |
-| Design | #12-14 | Critical | Design approved | Design Lead |
-| Frontend Setup | #15-19 | Critical | Dev complete | Frontend Lead |
-| Pages | #20-24 | Critical | Dev complete | Frontend Team |
-| Forms | #25-27 | Critical | Dev complete | Backend + Frontend |
-| SEO | #28-31 | High | Dev complete | Frontend + DevOps |
-| QA | #32-34 | High | QA complete | QA Team |
-| Deployment | #35-38 | High | Launch | DevOps |
+| Epic           | Issues | Priority | Milestone       | Owner              |
+| -------------- | ------ | -------- | --------------- | ------------------ |
+| Content        | #9-11  | Critical | Content ready   | Content Lead       |
+| Design         | #12-14 | Critical | Design approved | Design Lead        |
+| Frontend Setup | #15-19 | Critical | Dev complete    | Frontend Lead      |
+| Pages          | #20-24 | Critical | Dev complete    | Frontend Team      |
+| Forms          | #25-27 | Critical | Dev complete    | Backend + Frontend |
+| SEO            | #28-31 | High     | Dev complete    | Frontend + DevOps  |
+| QA             | #32-34 | High     | QA complete     | QA Team            |
+| Deployment     | #35-38 | High     | Launch          | DevOps             |
 
 ---
 
@@ -128,6 +133,7 @@ The GitHub Project should have these columns (can be customized):
 ## 🔧 Common Commands
 
 ### View Project Issues
+
 ```bash
 # List all open issues
 gh issue list --state open
@@ -140,6 +146,7 @@ gh issue list --label "type: epic,status: backlog"
 ```
 
 ### Update Issues in Bulk
+
 ```bash
 # Close all done issues (if needed)
 gh issue close 9 10 11 # Issue numbers
@@ -149,6 +156,7 @@ for i in {20..24}; do gh issue edit $i --milestone "Development complete"; done
 ```
 
 ### View Project Details
+
 ```bash
 # Get project info
 gh api users/Ange230700/projects/6
@@ -164,21 +172,26 @@ gh api users/Ange230700/projects/6
 ## Week X Progress
 
 ### Completed (Status: Done)
+
 - [ ] Issue #X - Description
 - [ ] Issue #Y - Description
 
 ### In Progress (Status: In Progress)
+
 - [ ] Issue #A - Description: 50% complete
 - [ ] Issue #B - Description: blocked by #X
 
 ### Blocked/Issues
+
 - [ ] Issue #Z - Blocked because...
 
 ### Next Week Focus
+
 - [ ] Issue #N - High priority
 - [ ] Issue #M - High priority
 
 ### Metrics
+
 - Issues completed: X
 - Critical blockers: Y
 - On track: Yes/No
@@ -189,6 +202,7 @@ gh api users/Ange230700/projects/6
 ## 🚨 Monitoring & Alerts
 
 ### Track Critical Path
+
 Focus on these epic chains:
 
 1. **Content Ready → Design Approved**
@@ -203,6 +217,7 @@ Focus on these epic chains:
    - #25-27 + #20-24 → #28-31 → #32-34 → #35-38
 
 ### Health Check Questions
+
 - [ ] Are all Critical priority items on track?
 - [ ] Are there any blockers older than 1 day?
 - [ ] Is the critical path (setup → design → pages) progressing?
@@ -213,6 +228,7 @@ Focus on these epic chains:
 ## 🎓 Team Guidelines
 
 ### When Creating Issues
+
 1. ✅ Use clear, actionable titles: `[Epic] Specific action`
 2. ✅ Include acceptance criteria in body
 3. ✅ Assign correct labels (type, priority, status)
@@ -220,6 +236,7 @@ Focus on these epic chains:
 5. ✅ Link to related issues if dependent
 
 ### When Working on Issues
+
 1. ✅ Move to "In Progress" when starting work
 2. ✅ Create feature branch from issue
 3. ✅ Update status in comments or labels
@@ -227,6 +244,7 @@ Focus on these epic chains:
 5. ✅ Move to "Review" when PR created
 
 ### When Closing Issues
+
 1. ✅ Verify all AC met
 2. ✅ PR merged to main
 3. ✅ Change status to "Done"
@@ -238,6 +256,7 @@ Focus on these epic chains:
 ## 📱 Mobile/Responsive Project View
 
 ### GitHub Project Views
+
 - **List view**: Better for bulk operations
 - **Table view**: Better for filtering and sorting
 - **Board view**: Better for visual kanban workflow
@@ -254,6 +273,7 @@ Recommend using **Board view** for daily standup and status checks.
 **Visibility**: Private (update if needed)
 
 ### Invite Team Members
+
 ```bash
 # Add collaborator to repo
 gh repo add-collaborator Ange230700/kraak-group <username> --permission triage
@@ -283,6 +303,7 @@ A: Yes, if PR says "fixes #42", issue auto-closes when PR merges.
 ## 📞 Support
 
 Need help? Check:
+
 - [GitHub Project Docs](https://docs.github.com/en/issues/planning-and-tracking-with-projects)
 - [GitHub Issues Docs](https://docs.github.com/en/issues)
 - [GitHub CLI Reference](https://cli.github.com/manual/)
