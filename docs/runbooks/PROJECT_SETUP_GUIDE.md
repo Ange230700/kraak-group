@@ -1,311 +1,201 @@
-# GitHub Project Setup & Management Guide
+# Guide De Mise En Place Et De Pilotage Du GitHub Project
 
-## 📊 GitHub Project #6: KRAAK MVP - Product Backlog
+## GitHub Project #6 : KRAAK MVP - Product Backlog
 
-**URL**: https://github.com/users/Ange230700/projects/6
-
----
-
-## ✅ Quick Setup Checklist
-
-### Labels Configured ✓
-
-- **Status Labels** (5): backlog, ready, in-progress, review, done
-- **Priority Labels** (4): critical, high, medium, low
-- **Type Labels** (4): epic, feature, bug, chore
-
-### Milestones Created ✓
-
-1. Scope locked (#1)
-2. Design approved (#2)
-3. Content ready (#3)
-4. Development complete (#4)
-5. QA complete (#5)
-6. Launch (#6)
-
-### Issues Created ✓
-
-- **8 Epics** (GitHub Issues #1-8)
-- **30 Tasks** (GitHub Issues #9-38)
-- **Total**: 38 issues properly labeled and organized
+- URL : https://github.com/users/Ange230700/projects/6
+- Dépôt : Ange230700/kraak-group
+- Portée : backlog MVP KRAAK (épopées + tâches)
 
 ---
 
-## 🎯 How to Use the Project Board
+## Configuration Rapide
 
-### Creating New Issues
+### Labels cibles
+
+- Statut : `status: backlog`, `status: ready`, `status: in-progress`, `status: review`, `status: done`
+- Priorite : `priority: critical`, `priority: high`, `priority: medium`, `priority: low`
+- Type : `type: epic`, `type: feature`, `type: bug`, `type: chore`
+
+### Jalons cibles
+
+1. Scope locked
+2. Design approved
+3. Content ready
+4. Development complete
+5. QA complete
+6. Launch
+
+### Structure backlog
+
+- 8 épopées
+- 30 tâches
+- 38 issues au total
+
+---
+
+## Utilisation Quotidienne Du Board
+
+### Création d'une issue
 
 ```bash
-# Create a new feature issue
 gh issue create \
-  --title "[Epic Name] Feature description" \
-  --body "Feature details and acceptance criteria" \
+  --title "[Nom epopee] Action specifique" \
+  --body "Contexte, criteres d'acceptation, definition de fini" \
   --label "type: feature,priority: high,status: backlog" \
   --milestone "Development complete"
 ```
 
-### Adding Issues to Project
-
-Issues are automatically added when created. To manually add existing issues:
+### Ajout manuel au projet (si nécessaire)
 
 ```bash
-# Get issue node_id
+# Recuperer le node_id de l'issue
 gh api repos/Ange230700/kraak-group/issues/42 --jq .node_id -q
 
-# Add to project
+# Ajouter l'issue au projet
 gh project item-add 6 --owner Ange230700 --id <node_id>
 ```
 
-### Updating Issue Status
-
-**Option 1: Using labels** (via GitHub CLI)
+### Mise à jour du statut
 
 ```bash
 gh issue edit 42 --add-label "status: in-progress" --remove-label "status: backlog"
 ```
 
-**Option 2: Using GitHub Web UI**
+---
 
-- Click issue → Add label or change label
+## Cycle de statut recommandé
 
-### Workflow States
+1. `Backlog` : travail non démarré
+2. `Ready` : prerequis leves, pret a etre lance
+3. `In Progress` : implementation en cours
+4. `Review` : en revue fonctionnelle/technique
+5. `Done` : fusionne, verifie, clos
 
-```
-│
-├─ Backlog (new work, not started)
-│  └─ When: Issue created or task not ready
-│  └─ Action: Label with "status: backlog"
-│
-├─ Ready (dependencies met, assigned)
-│  └─ When: All blockers cleared, designer assigned
-│  └─ Action: Move to "status: ready"
-│
-├─ In Progress (actively being worked)
-│  └─ When: Work started, branch created
-│  └─ Action: Move to "status: in-progress"
-│
-├─ Review (awaiting approval)
-│  └─ When: PR created or review needed
-│  └─ Action: Move to "status: review"
-│
-└─ Done (merged and verified)
-   └─ When: PR merged, verified, tested
-   └─ Action: Move to "status: done" & close issue
-```
+Règle pratique : chaque passage de colonne doit aussi etre reflechi dans les labels et le commentaire d'avancement.
 
 ---
 
-## 📋 Epic Reference Card
+## Carte De Reference Des Epopees
 
-| Epic           | Issues | Priority | Milestone       | Owner              |
-| -------------- | ------ | -------- | --------------- | ------------------ |
-| Content        | #9-11  | Critical | Content ready   | Content Lead       |
-| Design         | #12-14 | Critical | Design approved | Design Lead        |
-| Frontend Setup | #15-19 | Critical | Dev complete    | Frontend Lead      |
-| Pages          | #20-24 | Critical | Dev complete    | Frontend Team      |
-| Forms          | #25-27 | Critical | Dev complete    | Backend + Frontend |
-| SEO            | #28-31 | High     | Dev complete    | Frontend + DevOps  |
-| QA             | #32-34 | High     | QA complete     | QA Team            |
-| Deployment     | #35-38 | High     | Launch          | DevOps             |
-
----
-
-## 📊 Kanban Board Organization
-
-### Columns Setup
-
-The GitHub Project should have these columns (can be customized):
-
-1. **Backlog** - Not started, blocked, or waiting
-2. **Ready** - Dependencies cleared, ready to start
-3. **In Progress** - Actively being worked on
-4. **Review** - Awaiting approval, testing, or merge
-5. **Done** - Completed and shipped
-
-### Card Automation
-
-- Cards automatically created from issues
-- Move cards between columns to update status
-- Use labels to track phase where card sits
+| Epopee | Issues | Priorite | Jalon | Responsable |
+| --- | --- | --- | --- | --- |
+| Contenu | #9-11 | Critique | Content ready | Content Lead |
+| Design | #12-14 | Critique | Design approved | Design Lead |
+| Setup frontend | #15-19 | Critique | Development complete | Frontend Lead |
+| Pages | #20-24 | Critique | Development complete | Frontend Team |
+| Formulaires | #25-27 | Critique | Development complete | Backend + Frontend |
+| SEO | #28-31 | Haute | Development complete | Frontend + DevOps |
+| QA | #32-34 | Haute | QA complete | QA Team |
+| Deploiement | #35-38 | Haute | Launch | DevOps |
 
 ---
 
-## 🔧 Common Commands
+## Organisation Kanban
 
-### View Project Issues
+Colonnes recommandees :
+
+1. Backlog
+2. Ready
+3. In Progress
+4. Review
+5. Done
+
+Bonnes pratiques :
+
+- Déplacer les cartes au fil de l'execution, pas en fin de semaine.
+- Conserver une seule source de vérité : issue + labels + board alignes.
+- Ajouter le lien de PR dans l'issue des l'ouverture.
+
+---
+
+## Commandes Utiles
+
+### Lister les issues ouvertes
 
 ```bash
-# List all open issues
 gh issue list --state open
+```
 
-# List by milestone
+### Filtrer par milestone
+
+```bash
 gh issue list --milestone "Development complete"
+```
 
-# List by label
+### Filtrer par labels
+
+```bash
 gh issue list --label "type: epic,status: backlog"
 ```
 
-### Update Issues in Bulk
+### Verifier le projet
 
 ```bash
-# Close all done issues (if needed)
-gh issue close 9 10 11 # Issue numbers
-
-# Add milestone to multiple issues
-for i in {20..24}; do gh issue edit $i --milestone "Development complete"; done
-```
-
-### View Project Details
-
-```bash
-# Get project info
-gh api users/Ange230700/projects/6
+gh project view 6 --owner Ange230700
 ```
 
 ---
 
-## 📈 Tracking Progress
-
-### Weekly Review Template
+## Revue Hebdomadaire (Template)
 
 ```markdown
-## Week X Progress
+## Semaine X
 
-### Completed (Status: Done)
+### Termine (Done)
+- [ ] Issue #X - Intitule
 
-- [ ] Issue #X - Description
-- [ ] Issue #Y - Description
+### En cours (In Progress)
+- [ ] Issue #Y - avancement + blocages
 
-### In Progress (Status: In Progress)
+### Bloque
+- [ ] Issue #Z - raison + aide requise
 
-- [ ] Issue #A - Description: 50% complete
-- [ ] Issue #B - Description: blocked by #X
+### Focus semaine suivante
+- [ ] Issue #A
+- [ ] Issue #B
 
-### Blocked/Issues
-
-- [ ] Issue #Z - Blocked because...
-
-### Next Week Focus
-
-- [ ] Issue #N - High priority
-- [ ] Issue #M - High priority
-
-### Metrics
-
-- Issues completed: X
-- Critical blockers: Y
-- On track: Yes/No
+### Indicateurs
+- Issues terminees : X
+- Bloquants critiques : Y
+- Trajectoire MVP : Oui/Non
 ```
 
 ---
 
-## 🚨 Monitoring & Alerts
+## Chemin Critique A Surveiller
 
-### Track Critical Path
+1. Contenu pret -> design valide
+2. Setup frontend -> implementation des pages
+3. Pages + formulaires -> SEO -> QA -> deploiement
 
-Focus on these epic chains:
+Questions de controle :
 
-1. **Content Ready → Design Approved**
-   - #9, #10, #11 → #12, #13, #14
-   - If blocker: delay all downstream work
-
-2. **Frontend Setup → Page Implementation**
-   - #15-19 → #20-24
-   - If blocker: no frontend work can proceed
-
-3. **Forms + Pages → SEO → QA → Deploy**
-   - #25-27 + #20-24 → #28-31 → #32-34 → #35-38
-
-### Health Check Questions
-
-- [ ] Are all Critical priority items on track?
-- [ ] Are there any blockers older than 1 day?
-- [ ] Is the critical path (setup → design → pages) progressing?
-- [ ] Do we need to escalate any issues?
+- Les sujets critiques avancent-ils cette semaine ?
+- Un blocage depasse-t-il 24h sans plan de sortie ?
+- Le board reflete-t-il l'etat reel ?
 
 ---
 
-## 🎓 Team Guidelines
+## FAQ
 
-### When Creating Issues
-
-1. ✅ Use clear, actionable titles: `[Epic] Specific action`
-2. ✅ Include acceptance criteria in body
-3. ✅ Assign correct labels (type, priority, status)
-4. ✅ Assign to milestone (which phase)
-5. ✅ Link to related issues if dependent
-
-### When Working on Issues
-
-1. ✅ Move to "In Progress" when starting work
-2. ✅ Create feature branch from issue
-3. ✅ Update status in comments or labels
-4. ✅ Link PR to issue (fixes #X)
-5. ✅ Move to "Review" when PR created
-
-### When Closing Issues
-
-1. ✅ Verify all AC met
-2. ✅ PR merged to main
-3. ✅ Change status to "Done"
-4. ✅ Close issue (auto-closes via PR)
-5. ✅ Card moves to Done column
-
----
-
-## 📱 Mobile/Responsive Project View
-
-### GitHub Project Views
-
-- **List view**: Better for bulk operations
-- **Table view**: Better for filtering and sorting
-- **Board view**: Better for visual kanban workflow
-
-Recommend using **Board view** for daily standup and status checks.
-
----
-
-## 🔐 Project Access
-
-**Repository Owner**: Ange230700  
-**Repository**: kraak-group  
-**Project**: #6 (KRAAK MVP - Product Backlog)  
-**Visibility**: Private (update if needed)
-
-### Invite Team Members
+### Comment changer le milestone d'une issue ?
 
 ```bash
-# Add collaborator to repo
-gh repo add-collaborator Ange230700/kraak-group <username> --permission triage
+gh issue edit <numero> --milestone "<nouveau milestone>"
 ```
 
----
+### Peut-on faire des sous-tâches natives ?
+GitHub ne gere pas les sous-tâches natives comme Jira. Utiliser des issues liees avec references explicites (`depends on #X`, `blocks #Y`).
 
-## ❓ FAQ
-
-**Q: How do I move an issue between milestones?**  
-A: `gh issue edit <number> --milestone "<new milestone>"`
-
-**Q: Can I create sub-tasks?**  
-A: GitHub doesn't support sub-tasks natively. Create related issues and link them with references (#X depends on #Y).
-
-**Q: How do I see issue dependencies?**  
-A: In issue body, use "Depends on #X" or "Blocks #Y" to create references.
-
-**Q: When should I close an issue?**  
-A: Close when PR is merged, all AC verified, and code is in main branch.
-
-**Q: Can I use the project to auto-close issues?**  
-A: Yes, if PR says "fixes #42", issue auto-closes when PR merges.
+### Quand fermer une issue ?
+Quand la PR est fusionnee, les criteres d'acceptation verifies et la fonctionnalite disponible sur `main`.
 
 ---
 
-## 📞 Support
+## Support
 
-Need help? Check:
+- Docs GitHub Projects : https://docs.github.com/en/issues/planning-and-tracking-with-projects
+- Docs GitHub Issues : https://docs.github.com/en/issues
+- Reference GitHub CLI : https://cli.github.com/manual/
 
-- [GitHub Project Docs](https://docs.github.com/en/issues/planning-and-tracking-with-projects)
-- [GitHub Issues Docs](https://docs.github.com/en/issues)
-- [GitHub CLI Reference](https://cli.github.com/manual/)
-
-**Last Updated**: April 8, 2026
+Derniere mise a jour : 9 avril 2026

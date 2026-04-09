@@ -1,12 +1,12 @@
 ---
-name: "Design task"
+name: "Tache design"
 about: Creer ou ajuster une decision de design
-labels: ["design", "enhancement", "ready"]
+labels: ["design", "type: chore", "status: ready"]
 ---
 
 ## Objectif design
 
-## Ecrans/Composants concernes
+## Ecrans/composants concernes
 
 ## Contraintes
 - [ ] Mobile-first

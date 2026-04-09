@@ -1,7 +1,7 @@
 ---
-name: "Content task"
+name: "Tache contenu"
 about: Ajouter ou ajuster du contenu produit
-labels: ["content", "ready"]
+labels: ["content", "type: chore", "status: ready"]
 ---
 
 ## Objectif

@@ -4,10 +4,10 @@
 
 ## Type de changement
 - [ ] bug
-- [ ] enhancement
-- [ ] content
+- [ ] amelioration
+- [ ] contenu
 - [ ] design
-- [ ] chore
+- [ ] maintenance
 
 ## Checklist
 - [ ] Tache liee a une issue
@@ -23,4 +23,4 @@
 - [ ] Tests E2E/smoke
 - [ ] Verification manuelle
 
-## Screenshots / preuves
+## Captures / preuves
