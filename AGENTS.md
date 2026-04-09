@@ -175,7 +175,7 @@ Comportement obligatoire pour les assistants :
   non suivis se trouvent sur `main` sans pouvoir y être commités directement
   (protection de branche ou politique de PR), ne jamais forcer ni contourner les
   contrôles. Appliquer systématiquement la séquence suivante :
-  1. `git stash` pour mettre les changements de côté.
+  1. `git stash -u` pour mettre les changements de côté, y compris les fichiers non suivis.
   2. Créer une branche courte appropriée (`git checkout -b <type>/<sujet>`).
   3. `git stash pop` pour restaurer les changements sur cette branche.
   4. Suivre le protocole normal : commit, push, PR, merge, nettoyage de branche.
