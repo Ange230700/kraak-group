@@ -160,20 +160,20 @@ Ces elements sont utiles mais volontairement reportes apres le pilote MVP.
 
 ## 8. Matrice de correspondance (fonctionnalite -> criteres de succes phase 1)
 
-| Decoupage fonctionnalites                  | Auth ok | Contenu pertinent uniquement | Android first | Annonces disponibles | Stabilite pilote |
-| ------------------------------------------ | ------- | ---------------------------- | ------------- | -------------------- | ---------------- |
-| Indispensable - Authentification/session   | Oui     | Indirect                     | Oui           | Non                  | Oui              |
-| Indispensable - Accueil perimetre participant  | Non     | Oui                          | Oui           | Non                  | Oui              |
-| Indispensable - Planning/sessions          | Non     | Oui                          | Oui           | Non                  | Oui              |
-| Indispensable - Ressources                 | Non     | Oui                          | Oui           | Non                  | Oui              |
-| Indispensable - Fil d'annonces             | Non     | Oui                          | Oui           | Oui                  | Oui              |
-| Indispensable - Contact/support            | Non     | Indirect                     | Oui           | Non                  | Oui              |
-| Indispensable - Preparation pilote Android | Non     | Non                          | Oui           | Non                  | Oui              |
-| Souhaite - Notifications push              | Non     | Indirect                     | Oui           | Oui                  | Indirect         |
-| Souhaite - Profil participant              | Non     | Oui                          | Oui           | Non                  | Indirect         |
-| Souhaite - Marqueurs de progression        | Non     | Oui                          | Oui           | Non                  | Indirect         |
-| Souhaite - Rappels de session              | Non     | Non                          | Oui           | Indirect             | Indirect         |
-| Souhaite - Feedback in-app                 | Non     | Indirect                     | Oui           | Non                  | Indirect         |
+| Decoupage fonctionnalites                     | Auth ok | Contenu pertinent uniquement | Android first | Annonces disponibles | Stabilite pilote |
+| --------------------------------------------- | ------- | ---------------------------- | ------------- | -------------------- | ---------------- |
+| Indispensable - Authentification/session      | Oui     | Indirect                     | Oui           | Non                  | Oui              |
+| Indispensable - Accueil perimetre participant | Non     | Oui                          | Oui           | Non                  | Oui              |
+| Indispensable - Planning/sessions             | Non     | Oui                          | Oui           | Non                  | Oui              |
+| Indispensable - Ressources                    | Non     | Oui                          | Oui           | Non                  | Oui              |
+| Indispensable - Fil d'annonces                | Non     | Oui                          | Oui           | Oui                  | Oui              |
+| Indispensable - Contact/support               | Non     | Indirect                     | Oui           | Non                  | Oui              |
+| Indispensable - Preparation pilote Android    | Non     | Non                          | Oui           | Non                  | Oui              |
+| Souhaite - Notifications push                 | Non     | Indirect                     | Oui           | Oui                  | Indirect         |
+| Souhaite - Profil participant                 | Non     | Oui                          | Oui           | Non                  | Indirect         |
+| Souhaite - Marqueurs de progression           | Non     | Oui                          | Oui           | Non                  | Indirect         |
+| Souhaite - Rappels de session                 | Non     | Non                          | Oui           | Indirect             | Indirect         |
+| Souhaite - Feedback in-app                    | Non     | Indirect                     | Oui           | Non                  | Indirect         |
 
 ## 9. Recommandation de delivery (2 sprints)
 
@@ -252,7 +252,7 @@ Enveloppe MVP (globale) :
 | ------------------------------------------ | -------------- |
 | Authentification participant               | Indispensable  |
 | Onboarding / welcome de base               | Indispensable  |
-| Accueil perimetre participant                  | Indispensable  |
+| Accueil perimetre participant              | Indispensable  |
 | Profil participant                         | Souhaite       |
 | Liste des programmes/cours                 | Indispensable  |
 | Calendrier ou planning de session          | Indispensable  |

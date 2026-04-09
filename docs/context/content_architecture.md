@@ -1,6 +1,7 @@
 # Point 4 — Architecture du contenu (KRAAK Consulting)
 
 ## 1. Ton éditorial 🎙️
+
 - Professionnel, clair, structuré
 - Crédible et orienté résultats
 - Favorisant l’épanouissement des jeunes
@@ -9,7 +10,9 @@
 ---
 
 ## 2. Hiérarchie de contenu standard 🧱
+
 Pour chaque page / section :
+
 1. **Titre (H1/H2)**
 2. **Texte d’accompagnement (value proposition)**
 3. **CTA principal**
@@ -19,6 +22,7 @@ Pour chaque page / section :
 ---
 
 ## 3. Éléments de confiance 🔐
+
 - Mission
 - Vision
 - Valeurs
@@ -29,6 +33,7 @@ Pour chaque page / section :
 ---
 
 ## 4. Plan du site 🌐
+
 - Accueil
 - À propos
 - Services
@@ -40,9 +45,11 @@ Pour chaque page / section :
 ## 5. Carte des sections par page 📄
 
 ## 5.1 Accueil
+
 **Objectif :** comprendre rapidement KRAAK + orienter vers l’action
 
 Sections :
+
 1. Hero
    - Titre fort
    - Sous-texte
@@ -59,9 +66,11 @@ Sections :
 ---
 
 ## 5.2 À propos
+
 **Objectif :** crédibilité + identité
 
 Sections :
+
 1. Histoire
 2. Mission
 3. Vision
@@ -73,9 +82,11 @@ Sections :
 ---
 
 ## 5.3 Services
+
 **Objectif :** expliquer clairement l’offre
 
 Sections :
+
 1. Introduction services
 2. Formation
 3. Gestion de projet
@@ -88,9 +99,11 @@ Sections :
 ---
 
 ## 5.4 Programmes / Formations
+
 **Objectif :** détailler les offres concrètes
 
 Sections :
+
 1. Introduction
 2. Liste des programmes
    - description
@@ -105,9 +118,11 @@ Sections :
 ---
 
 ## 5.5 Contact
+
 **Objectif :** conversion directe
 
 Sections :
+
 1. Formulaire
 2. Coordonnées
    - email
@@ -120,6 +135,7 @@ Sections :
 ---
 
 ## 6. Résumé structurel 🧩
+
 Le site suit une logique simple :
 
 - Comprendre → (Accueil)
@@ -130,4 +146,5 @@ Le site suit une logique simple :
 ---
 
 ## 7. Résultat attendu
+
 Une architecture claire, cohérente et orientée conversion, prête à être transformée en wireframes puis en UI.

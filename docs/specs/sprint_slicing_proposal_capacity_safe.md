@@ -1,18 +1,22 @@
 # Sprint Slicing Proposal - Capacity-Safe Variant
 
 ## Goal
+
 Keep every sprint at or below 35 SP while preserving total scope, including the requested extra P1 move from Sprint-07 to Sprint-08.
 
 ## Requested Change Applied
+
 - Additional P1 moved from Sprint-07 to Sprint-08: ANN-04 (2 SP)
 
 ## Additional Rebalancing Applied
+
 - Sprint-02 -> Sprint-03: SET-03 (3 SP)
 - Sprint-07 -> Sprint-08: PRG-05 (3 SP), QAT-06 (3 SP)
 - Sprint-06 -> Sprint-09: ANN-02 (3 SP)
 - Sprint-08 -> Sprint-09 buffer: DEP-05 (3 SP), SUP-04 (2 SP), WEB-04 (2 SP)
 
 ## Sprint Totals (Tasks Only)
+
 - Sprint-01: 18 SP
 - Sprint-02: 35 SP
 - Sprint-03: 27 SP
@@ -28,6 +32,7 @@ Capacity check: max sprint load = 35 SP (target <= 35 SP).
 ## Detailed Plan
 
 ### Sprint-01 (18 SP)
+
 - ARC-01 (5 SP, P0) [ARC] [TASK][ARC-01] Valider architecture cible web/mobile/api avec scope MVP | milestone: M1 - Architecture locked
 - ARC-02 (3 SP, P0) [ARC] [TASK][ARC-02] Definir conventions repo (naming, structure, quality gates) | milestone: M1 - Architecture locked
 - ARC-03 (3 SP, P0) [ARC] [TASK][ARC-03] Definir strategie de rendu web (SEO/prerender) | milestone: M1 - Architecture locked
@@ -35,6 +40,7 @@ Capacity check: max sprint load = 35 SP (target <= 35 SP).
 - ARC-05 (2 SP, P1) [ARC] [TASK][ARC-05] Documenter ADRs et criteres anti-scope-creep | milestone: M1 - Architecture locked
 
 ### Sprint-02 (35 SP)
+
 - LIB-01 (5 SP, P0) [LIB] [TASK][LIB-01] Creer packages/contracts (DTO, schema validation, versioning) | milestone: M2 - Workspace bootstrapped
 - LIB-02 (5 SP, P0) [LIB] [TASK][LIB-02] Creer packages/domain (regles metier pures MVP) | milestone: M2 - Workspace bootstrapped
 - SET-01 (5 SP, P0) [SET] [TASK][SET-01] Initialiser workspace Angular monorepo (apps/web, apps/mobile) | milestone: M2 - Workspace bootstrapped
@@ -45,6 +51,7 @@ Capacity check: max sprint load = 35 SP (target <= 35 SP).
 - SET-07 (2 SP, P1) [SET] [TASK][SET-07] Mettre en place variables d'environnement et runbook local dev | milestone: M2 - Workspace bootstrapped
 
 ### Sprint-03 (27 SP)
+
 - LIB-03 (3 SP, P1) [LIB] [TASK][LIB-03] Creer packages/api-client (typed client web/mobile vers API) | milestone: M2 - Workspace bootstrapped
 - LIB-04 (2 SP, P1) [LIB] [TASK][LIB-04] Ajouter tests unitaires libs + guideline de publication interne | milestone: M2 - Workspace bootstrapped
 - MOB-01 (3 SP, P0) [MOB] [TASK][MOB-01] Initialiser app Ionic Angular dans apps/mobile | milestone: M3 - Mobile shell ready
@@ -55,6 +62,7 @@ Capacity check: max sprint load = 35 SP (target <= 35 SP).
 - SET-03 (3 SP, P0) [SET] [TASK][SET-03] Configurer quality gates (lint, format, typecheck) | milestone: M2 - Workspace bootstrapped
 
 ### Sprint-04 (19 SP)
+
 - AUT-01 (3 SP, P0) [AUT] [TASK][AUT-01] Configurer Supabase Auth (providers, policies de base) | milestone: M4 - Auth ready
 - AUT-02 (5 SP, P0) [AUT] [TASK][AUT-02] Implementer endpoints API auth/session (NestJS) | milestone: M4 - Auth ready
 - AUT-03 (5 SP, P0) [AUT] [TASK][AUT-03] Implementer ecrans login/signup/reset mobile | milestone: M4 - Auth ready
@@ -62,6 +70,7 @@ Capacity check: max sprint load = 35 SP (target <= 35 SP).
 - AUT-05 (3 SP, P1) [AUT] [TASK][AUT-05] Ajouter gestion role participant/admin minimal | milestone: M4 - Auth ready
 
 ### Sprint-05 (31 SP)
+
 - ANN-01 (2 SP, P0) [ANN] [TASK][ANN-01] Definir format annonce et regles de publication MVP | milestone: M5 - Core participant flows ready
 - DSH-01 (2 SP, P0) [DSH] [TASK][DSH-01] Definir contenu dashboard MVP (cartes, rappels, dernieres actus) | milestone: M5 - Core participant flows ready
 - PRG-01 (3 SP, P0) [PRG] [TASK][PRG-01] Definir modele programme/cohorte/statut progression MVP | milestone: M5 - Core participant flows ready
@@ -73,6 +82,7 @@ Capacity check: max sprint load = 35 SP (target <= 35 SP).
 - WEB-03 (3 SP, P0) [WEB] [TASK][WEB-03] Ajouter SEO technique (meta, sitemap, robots, Open Graph) | milestone: M5 - Core participant flows ready
 
 ### Sprint-06 (34 SP)
+
 - ANN-03 (3 SP, P0) [ANN] [TASK][ANN-03] Implementer flux annonces dans mobile dashboard/feed | milestone: M5 - Core participant flows ready
 - DSH-02 (3 SP, P0) [DSH] [TASK][DSH-02] Exposer endpoint dashboard aggregate cote API | milestone: M5 - Core participant flows ready
 - DSH-03 (5 SP, P0) [DSH] [TASK][DSH-03] Implementer vue dashboard mobile | milestone: M5 - Core participant flows ready
@@ -83,6 +93,7 @@ Capacity check: max sprint load = 35 SP (target <= 35 SP).
 - SUP-02 (3 SP, P0) [SUP] [TASK][SUP-02] Integrer formulaire support dans mobile | milestone: M5 - Core participant flows ready
 
 ### Sprint-07 (34 SP)
+
 - DSH-04 (3 SP, P1) [DSH] [TASK][DSH-04] Implementer vue dashboard web participant (si activee MVP) | milestone: M5 - Core participant flows ready
 - PRG-04 (3 SP, P1) [PRG] [TASK][PRG-04] Implementer marquage de progression minimale | milestone: M5 - Core participant flows ready
 - QAT-01 (3 SP, P0) [QAT] [TASK][QAT-01] Definir matrice de couverture (page, composant, comportement) | milestone: M6 - QA ready
@@ -94,6 +105,7 @@ Capacity check: max sprint load = 35 SP (target <= 35 SP).
 - SUP-05 (3 SP, P1) [SUP] [TASK][SUP-05] Ajouter suivi et statut basique des demandes support | milestone: M5 - Core participant flows ready
 
 ### Sprint-08 (35 SP)
+
 - ANN-04 (2 SP, P1) [ANN] [TASK][ANN-04] Ajouter notification push pour annonce prioritaire | milestone: M5 - Core participant flows ready
 - DEP-01 (3 SP, P0) [DEP] [TASK][DEP-01] Configurer environnements (dev/staging/pilot) | milestone: M7 - Pilot release ready
 - DEP-02 (5 SP, P0) [DEP] [TASK][DEP-02] Mettre en place pipeline deploiement web | milestone: M7 - Pilot release ready
@@ -106,12 +118,14 @@ Capacity check: max sprint load = 35 SP (target <= 35 SP).
 - WEB-05 (3 SP, P1) [WEB] [TASK][WEB-05] Optimiser accessibilite/performance (objectif Lighthouse > 90) | milestone: M5 - Core participant flows ready
 
 ### Sprint-09 (10 SP)
+
 - ANN-02 (3 SP, P0) [ANN] [TASK][ANN-02] Implementer endpoints annonces (feed + detail) | milestone: M5 - Core participant flows ready
 - DEP-05 (3 SP, P1) [DEP] [TASK][DEP-05] Finaliser observabilite et alerting minimum | milestone: M7 - Pilot release ready
 - SUP-04 (2 SP, P1) [SUP] [TASK][SUP-04] Configurer envoi email transactionnel (Resend ou equivalent) | milestone: M5 - Core participant flows ready
 - WEB-04 (2 SP, P1) [WEB] [TASK][WEB-04] Ajouter analytics web (PostHog/GA) | milestone: M5 - Core participant flows ready
 
 ## Notes
+
 - Scope is unchanged; only sprint placement changes.
 - Sprint-09 acts as controlled stabilization/ops buffer.
 - If you must keep exactly 8 sprints, capacity uplift or de-scoping is required.
