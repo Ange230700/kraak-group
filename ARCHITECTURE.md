@@ -1,0 +1,245 @@
+# ARCHITECTURE.md
+
+## Objectif
+
+Ce document fixe la décision d'architecture active pour KRAAK après gel du
+périmètre, avant setup du dépôt applicatif et avant travail UI.
+
+Il sert de référence technique prioritaire quand un choix concret entre en
+conflit avec la pile par défaut mentionnée dans `AGENTS.md`.
+
+---
+
+## Statut De La Décision
+
+- Statut : validé
+- Moment de déclaration : juste après gel du scope, avant setup repo et avant
+  travail UI
+- Portée : site web MVP, application mobile MVP, API/backend, données,
+  notifications, analytics, déploiement
+
+---
+
+## Décision Globale
+
+La pile retenue pour KRAAK n'est **pas** la pile par défaut `Next.js` indiquée
+comme base générique dans `AGENTS.md`.
+
+La décision validée pour ce projet est :
+
+- fondation frontend unique : **Angular workspace**
+- couche UI web marketing : **PrimeNG**
+- couche UI mobile : **Ionic Angular**
+- runtime mobile : **Capacitor**
+- backend / API : **NestJS**
+- données / auth / stockage : **Supabase**
+- notifications mobile : **Firebase Cloud Messaging** via Capacitor ou solution
+  équivalente compatible
+- analytics web : **PostHog** et/ou **Google Analytics** selon besoin réel
+- analytics mobile : outil dédié uniquement si le besoin de pilotage mobile le
+  justifie
+- déploiement web : **Vercel** ou équivalent
+- distribution mobile : **APK**, **TestFlight** et/ou canaux de test interne
+- stratégie de contenu : contenu web statique ou géré simplement ; contenu
+  mobile servi par l'API/backend
+
+---
+
+## Principes Structurants
+
+### 1. Frontend Workspace Unique
+
+Le frontend doit partir d'un **workspace Angular unique** comme fondation
+technique commune.
+
+Objectifs :
+
+- mutualiser l'outillage front
+- garder une convention commune pour le code client
+- réutiliser plus facilement types, services, contrats et composants si utile
+- éviter l'introduction d'une seconde pile frontend non nécessaire au MVP
+
+Cette décision autorise plusieurs applications dans le même socle, en priorité :
+
+- `apps/web` pour le site marketing
+- `apps/mobile` pour l'application mobile Ionic Angular si cette partie est
+  effectivement lancée
+
+### 2. Web Et Mobile Séparés Dans Leur UI, Unifiés Dans Le Socle
+
+Le site web et le mobile n'ont pas la même couche UI, mais partagent la même
+base Angular de travail.
+
+- web : UI orientée marketing, conversion, crédibilité
+- mobile : UI orientée usage récurrent, navigation d'app, sessions utilisateur,
+  notifications, consultation de contenu
+
+### 3. Backend Unique Et Explicite
+
+Le backend applicatif retenu est **NestJS**.
+
+Le projet ne doit pas s'appuyer sur des route handlers web comme couche backend
+principale. Toute logique métier non triviale, toute orchestration, toute API
+mobile, tout flux de notification ou de données doit être pensé côté NestJS.
+
+### 4. BaaS Ciblé, Pas D'ORM Par Défaut
+
+Le socle data/auth/storage retenu est **Supabase**.
+
+Cela couvre prioritairement :
+
+- base de données PostgreSQL
+- authentification
+- stockage de fichiers
+- services backend utiles au MVP
+
+Un ORM n'est pas introduit par défaut à ce stade. Si ce besoin apparaît plus
+tard, il devra être justifié dans une décision complémentaire.
+
+---
+
+## Stack Confirmée
+
+### Frontend Workspace
+
+- **Angular workspace** comme fondation frontend unique
+
+### Site Web
+
+- framework : **Angular**
+- couche UI : **PrimeNG**
+- usage : site vitrine/marketing KRAAK
+- priorité : SEO, clarté éditoriale, conversion, accessibilité de base,
+  performance de base
+
+### Mobile
+
+- framework : **Ionic Angular**
+- runtime : **Capacitor**
+- usage : expérience mobile applicative, comptes participants, consultation de
+  contenu, notifications, interactions récurrentes
+
+### Backend / API
+
+- framework : **NestJS**
+- rôle : API métier, orchestration, intégration Supabase, exposition des données
+  consommées par le mobile et les formulaires/processus utiles au web
+
+### Données / Auth / Stockage
+
+- **Supabase**
+- database : PostgreSQL managé
+- auth : Supabase Auth
+- storage : Supabase Storage
+
+### Notifications
+
+- **Firebase Cloud Messaging** via **Capacitor**
+- alternative admise : solution équivalente si elle reste compatible avec la
+  pile mobile retenue et garde une complexité MVP raisonnable
+
+### Analytics
+
+- web : **PostHog** et/ou **Google Analytics**
+- mobile : outil dédié seulement si les besoins produit le demandent vraiment
+
+### Déploiement
+
+- website : **Vercel** ou équivalent compatible front Angular
+- mobile : distribution via **APK**, **TestFlight**, canaux de test interne, ou
+  processus équivalent selon la phase
+
+### Stratégie De Contenu
+
+- website : contenu statique ou géré simplement
+- mobile : contenu récupéré depuis l'API/backend
+
+---
+
+## Conséquences D'Architecture
+
+### Organisation Cible Du Dépôt
+
+Structure cible recommandée :
+
+```txt
+/
+├─ apps/
+│  ├─ web/          # site Angular + PrimeNG
+│  ├─ mobile/       # Ionic Angular + Capacitor
+│  └─ api/          # NestJS
+├─ packages/
+│  ├─ contracts/
+│  ├─ api-client/
+│  └─ domain/
+├─ supabase/
+│  ├─ migrations/
+│  └─ functions/    # uniquement si besoin validé
+└─ docs/
+```
+
+### Contrats Et Flux De Données
+
+- le web peut rester majoritairement statique au MVP
+- le mobile dépend d'une API/backend explicite
+- les contenus et états utilisateurs mobiles ne doivent pas être embarqués en
+  dur comme stratégie par défaut
+- les contrats consommés par le mobile doivent être stables, typés et versionnables
+
+### SEO Et Web Marketing
+
+Le site web doit être configuré pour servir correctement :
+
+- metadata
+- Open Graph
+- sitemap
+- robots
+- instrumentation analytics
+
+Le choix Angular pour le site implique de traiter explicitement la stratégie de
+rendu et de pré-rendu au moment du setup applicatif.
+
+### Mobile Et Notifications
+
+Le mobile n'est pas traité comme simple duplication responsive du site.
+
+L'application mobile doit être pensée pour :
+
+- authentification utilisateur
+- contenu contextualisé
+- sessions / programmes / ressources
+- notifications push
+- distribution hors navigateur
+
+---
+
+## Décisions De Mise En Oeuvre À Respecter
+
+- Ne pas introduire `Next.js` comme fondation du projet.
+- Ne pas construire la couche mobile sur PrimeNG seul ; utiliser **Ionic Angular**.
+- Ne pas remplacer **NestJS** par une logique backend dispersée dans le frontend.
+- Ne pas faire du contenu mobile une simple copie statique du site si une API est
+  requise.
+- Ne pas ajouter un ORM sans décision technique explicite complémentaire.
+- Ne pas alourdir l'analytics mobile sans besoin produit concret.
+
+---
+
+## Prochaines Étapes Techniques
+
+1. Créer le workspace Angular comme fondation frontend commune.
+2. Initialiser `apps/web` avec Angular + PrimeNG.
+3. Initialiser `apps/mobile` avec Ionic Angular + Capacitor.
+4. Initialiser `apps/api` avec NestJS.
+5. Définir les premiers contrats backend/mobile/web.
+6. Préparer l'intégration Supabase.
+7. Définir la stratégie de rendu du site web pour le SEO.
+8. Préparer la stratégie de notifications mobile.
+
+---
+
+## Règle De Priorité
+
+En cas de contradiction entre un document de contexte, une hypothèse ancienne,
+ou la pile générique d'un autre document, **ce fichier fait foi pour la décision
+d'architecture active** jusqu'à nouvelle mise à jour explicite.
