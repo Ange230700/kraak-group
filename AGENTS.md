@@ -165,6 +165,9 @@ Comportement obligatoire pour les assistants :
 
 - Appliquer ce workflow Git pour chaque tâche d’implémentation sans attendre un
   rappel de l’utilisateur.
+- Après finalisation du travail sur une branche courte (merge/push effectués),
+  supprimer systématiquement la branche distante et la branche locale dans la
+  foulée, sans attendre une demande explicite de l’utilisateur ou d’un tiers.
 - Traiter les mises à jour GitHub Project et GitHub issue comme des étapes
   obligatoires du même workflow, et non comme une administration facultative à
   faire plus tard.
