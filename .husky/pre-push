@@ -1,1 +1,3 @@
-npx --no -- validate-branch-name
+pnpm exec validate-branch-name
+pnpm test:api
+pnpm --filter @kraak/client exec ng test --watch=false
