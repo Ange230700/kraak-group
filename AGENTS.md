@@ -171,6 +171,9 @@ Comportement obligatoire pour les assistants :
 - Ne pas sauter les étapes de branchement, de mise à jour Project / issue, de
   validation, de fusion, de push, ou de nettoyage de branche, sauf si
   l’utilisateur remplace explicitement ce workflow.
+- Règle PR explicite : dès qu’une PR est intégrée (squash, rebase ou merge),
+  fermer l’issue liée, puis supprimer la branche courte en local et en distant
+  dans le même passage.
 
 ### Jalons Git / GitHub À Respecter
 
