@@ -170,7 +170,8 @@ Comportement obligatoire pour les assistants :
   faire plus tard.
 - Ne pas sauter les étapes de branchement, de mise à jour Project / issue, de
   validation, de fusion, de push, ou de nettoyage de branche, sauf si
-  l’utilisateur remplace explicitement ce workflow.- Règle de récupération des changements en suspens : si des fichiers modifiés ou
+  l’utilisateur remplace explicitement ce workflow.
+- Règle de récupération des changements en suspens : si des fichiers modifiés ou
   non suivis se trouvent sur `main` sans pouvoir y être commités directement
   (protection de branche ou politique de PR), ne jamais forcer ni contourner les
   contrôles. Appliquer systématiquement la séquence suivante :
