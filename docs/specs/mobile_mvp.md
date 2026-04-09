@@ -220,6 +220,7 @@ This section freezes the first release scope and defines what is prioritized now
 - Resource progress markers
 - Session reminders
 - Basic in-app feedback
+- Basic push notification readiness
 
 ### 10.3 Later (Out of MVP)
 
@@ -231,6 +232,8 @@ This section freezes the first release scope and defines what is prioritized now
 - In-app messaging/chat with trainer
 - Offline sync at scale
 - Community/forum
+- Offline sync at scale
+- Community/forum/chat
 - Assignments grading engine
 - Deep analytics dashboards for users
 - Advanced certificates engine
