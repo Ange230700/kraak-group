@@ -1,5 +1,5 @@
 ---
-name: "Content task"
+name: "Tache contenu"
 about: Ajouter ou ajuster du contenu produit
 labels: ["content", "ready"]
 ---

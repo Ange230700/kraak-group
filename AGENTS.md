@@ -304,14 +304,26 @@ Règle de langue de collaboration / travail :
 - Par défaut, dans le contexte KRAAK, le français est la langue privilégiée pour
   le cadrage, le contenu, les retours, les revues, et les mises à jour.
 
-Pour **tout travail sous `apps/web` et `apps/api`**, les assistants doivent
-appliquer :
+Règle de langue du dépôt (obligatoire, tout le repo) :
 
-- le français pour les textes UI, contenus éditoriaux, exemples de valeurs,
-  messages visibles, labels de formulaires, messages de réponse API visibles, et
-  commentaires de code quand ils servent le produit
-- l’anglais pour la structure du code : identifiants, noms de fonctions, noms de
-  types, noms de fichiers, termes d’architecture, et APIs techniques
+- Règle synthétique à appliquer partout : **anglais pour les éléments de code**
+  (noms de variables, fonctions, types, classes, fichiers, identifiants,
+  schémas techniques) et **français pour le reste** (documentation, specs,
+  runbooks, contenus UI, commentaires de code, messages visibles, corps de
+  réponses API destinés à l’utilisateur).
+- Le **français** est la langue par défaut pour la documentation, les specs, les
+  runbooks, les contenus éditoriaux, les textes UI, les labels de formulaires,
+  les messages visibles, les commentaires de code, et les corps de réponses API
+  destinés à l’utilisateur.
+- L’**anglais** est réservé aux éléments techniques de code : noms de variables,
+  noms de fonctions, noms de types, noms de classes, noms de fichiers,
+  identifiants, clés techniques, schémas techniques, et termes d’architecture.
+- Les noms propres techniques (frameworks, bibliothèques, commandes, standards)
+  restent dans leur forme officielle.
+
+Pour **tout travail sous `apps/web` et `apps/api`**, les assistants doivent
+appliquer cette politique strictement, y compris dans les réponses API et les
+commentaires.
 
 Cette règle est obligatoire pour l’assistant IA dans ce dépôt.
 
@@ -346,8 +358,8 @@ Cette règle est obligatoire pour l’assistant IA dans ce dépôt.
   avec des E2E Playwright.
 - S’assurer que chaque tâche web critique comprend une couverture page,
   composant, et comportement.
-- Respecter la politique de langue contenu français / code anglais dans
-  `apps/web` et `apps/api`.
+- Respecter la politique de langue contenu français / code anglais dans tout le
+  dépôt.
 - Faire en sorte que les composants UI implémentés ou adaptés restent cohérents
   avec l’identité visuelle de KRAAK, sa lisibilité, sa crédibilité et son ton.
 - Lorsqu’une route API est ajoutée ou mise à jour, mettre à jour la documentation

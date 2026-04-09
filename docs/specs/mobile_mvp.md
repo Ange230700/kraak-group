@@ -1,290 +1,286 @@
-# Mobile MVP
+# MVP Mobile
 
-## 1. Main Business Goal
+## 1. Objectif metier principal
 
-The mobile MVP exists to keep KRAAK participants connected to their learning journey in a simple and reliable way.
+Le MVP mobile sert a maintenir les participants KRAAK connectes a leur parcours d'apprentissage, de facon simple et fiable.
 
-Primary business goal:
+Objectifs metiers prioritaires :
 
-- allow participants to authenticate securely
-- give them direct access to their own training information
-- deliver updates and resources in one place
-- maintain an active link between participants and KRAAK
+- permettre une authentification securisee
+- donner un acces direct a leurs informations de formation
+- centraliser les mises a jour et ressources
+- garder un lien actif entre les participants et KRAAK
 
-## 2. Primary Mobile Audience
+## 2. Audience mobile principale
 
-MVP target users (priority order):
+Utilisateurs cibles du MVP (ordre de priorite) :
 
-1. Enrolled participants
-2. Prospective participants already engaged in a KRAAK process
-3. Internal staff/admins only for strictly necessary MVP operations
+1. Participants inscrits
+2. Prospects deja engages dans un parcours KRAAK
+3. Equipe interne/admins uniquement pour les operations strictement necessaires au MVP
 
-Out of scope for MVP:
+Hors perimetre MVP :
 
-- broad public browsing app
-- advanced admin back-office in mobile
-- complex role matrix unless required for pilot
+- application mobile de navigation grand public
+- back-office admin avance sur mobile
+- matrice de roles complexe sauf besoin impose par le pilote
 
-## 3. Top User Actions (Core Flows)
+## 3. Actions utilisateurs prioritaires (flux coeur)
 
-Participants must be able to:
+Les participants doivent pouvoir :
 
-1. Sign in
-2. See their enrolled program(s)
-3. View schedule and session information
-4. Access training resources
-5. Receive announcements/updates
-6. Contact support, trainer, or KRAAK
+1. Se connecter
+2. Voir leurs programmes suivis
+3. Consulter le planning et les informations de session
+4. Acceder aux ressources de formation
+5. Recevoir des annonces/mises a jour
+6. Contacter le support, le formateur ou KRAAK
 
-## 4. Success Criteria (Pilot Readiness)
+## 4. Criteres de succes (preparation pilote)
 
-The mobile MVP is successful when:
+Le MVP mobile est reussi lorsque :
 
-- participant authentication works end-to-end
-- each participant sees only relevant content (role/context scoped)
-- app runs on Android first (iOS optional for same phase)
-- basic announcements/notifications are available
-- stability is sufficient for real pilot usage
+- l'authentification participant fonctionne de bout en bout
+- chaque participant voit uniquement le contenu pertinent (scope role/contexte)
+- l'application fonctionne d'abord sur Android (iOS optionnel sur la meme phase)
+- les annonces/notifications de base sont disponibles
+- la stabilite est suffisante pour un usage pilote reel
 
-## 5. MVP Scope Boundaries
+## 5. Limites de perimetre MVP
 
-In scope:
+Dans le perimetre :
 
-- participant account access
-- read-first learning information and communication
-- basic support/contact path
+- acces au compte participant
+- information de formation en lecture prioritaire et communication
+- parcours de contact/support basique
 
-Not in scope for Phase 1:
+Hors perimetre Phase 1 :
 
-- advanced payments/subscriptions
-- full LMS progression engine
-- heavy offline-first sync logic
-- deep analytics dashboards in app
+- paiements/abonnements avances
+- moteur LMS complet de progression
+- logique lourde de synchronisation offline-first
+- tableaux de bord analytiques avances dans l'application
 
-## 6. Product Decision Gate (End of Phase 1)
+## 6. Porte de decision produit (fin de phase 1)
 
-Move to next phase only if all are true:
+Passer a la phase suivante uniquement si toutes ces conditions sont vraies :
 
-- goal and audience are approved by stakeholders
-- success criteria are measurable and accepted
-- core user actions are frozen for implementation planning
-- Android-first pilot path is confirmed
+- objectif et audience valides par les parties prenantes
+- criteres de succes mesurables et acceptes
+- flux utilisateurs coeur figes pour la planification implementation
+- trajectoire pilote Android-first confirmee
 
-## 7. Phase 2 - Prioritized Feature Slice (Must/Should/Could)
+## 7. Phase 2 - Decoupage priorise des fonctionnalites (Indispensable/Souhaite/Plus tard)
 
-This slice translates the Phase 1 outcome into an implementation-ready MVP scope.
+Ce decoupage traduit le resultat de la phase 1 en perimetre MVP pret pour l'implementation.
 
-### 7.1 MUST (Pilot-critical)
+### 7.1 Indispensable (critique pilote)
 
-These features are required to start a real Android pilot.
+Ces fonctionnalites sont requises pour lancer un pilote Android reel.
 
-1. Authentication and session
+1. Authentification et session
 
-- Email/password sign in
-- Secure session persistence
-- Sign out
-- Password reset (basic flow)
-- Outcome mapping: participant can authenticate
+- Connexion email/mot de passe
+- Persistance de session securisee
+- Deconnexion
+- Reinitialisation de mot de passe (flux basique)
+- Mapping de resultat : le participant peut s'authentifier
 
-2. Participant-scoped home
+2. Accueil scope participant
 
-- Show only participant-relevant content after sign in
-- Program card(s): enrolled program title, status, next key step
-- Basic onboarding/welcome screen after first sign in
-- Outcome mapping: participant sees only relevant content
+- Afficher uniquement le contenu pertinent apres connexion
+- Carte(s) programme : titre du programme suivi, statut, prochaine etape cle
+- Ecran de bienvenue/onboarding de base apres premiere connexion
+- Mapping de resultat : le participant voit uniquement le contenu pertinent
 
-3. Schedule and sessions
+3. Planning et sessions
 
-- Upcoming sessions list (date/time, title, location/link)
-- Session detail page (description + trainer + join info)
-- Outcome mapping: view schedule/sessions
+- Liste des sessions a venir (date/heure, titre, lieu/lien)
+- Page detail session (description + formateur + infos de participation)
+- Mapping de resultat : consulter le planning/sessions
 
-4. Training resources (read/download)
+4. Ressources de formation (lecture/telechargement)
 
-- Resource list by program/module
-- Open resource detail and access link/file
-- Outcome mapping: access training resources
+- Liste des ressources par programme/module
+- Ouvrir le detail d'une ressource et acceder au lien/fichier
+- Mapping de resultat : acceder aux ressources de formation
 
-5. Announcements (basic)
+5. Annonces (base)
 
-- In-app announcements feed
-- Unread/read marker (simple)
-- Outcome mapping: basic notifications/announcements exist
+- Fil d'annonces in-app
+- Marqueur non lu/lu (simple)
+- Mapping de resultat : notifications/annonces de base disponibles
 
-6. Contact and support
+6. Contact et support
 
-- Contact action from app (email/WhatsApp/form deeplink)
-- Support/trainer contact info visible
-- Outcome mapping: stay connected to KRAAK
+- Action de contact depuis l'application (email/WhatsApp/formulaire deeplink)
+- Informations de contact support/formateur visibles
+- Mapping de resultat : rester connecte a KRAAK
 
-7. Android pilot readiness
+7. Preparation pilote Android
 
-- Android build signed and installable
-- Crash-free baseline and basic performance checks
-- Outcome mapping: app stable enough for real pilot use
+- Build Android signe et installable
+- Baseline crash-free et controles de performance de base
+- Mapping de resultat : application assez stable pour un pilote reel
 
-### 7.2 SHOULD (High value, not launch-blocking)
+### 7.2 Souhaite (forte valeur, non bloquant lancement)
 
-These features improve pilot quality but are not mandatory for day-1 rollout.
+Ces fonctionnalites ameliorent la qualite du pilote mais ne bloquent pas le deploiement jour 1.
 
-1. Push notifications (announcements only)
+1. Notifications push (annonces uniquement)
 
-- Receive push when new announcement is published
-- Open app to relevant announcement item
+- Recevoir une notification push lorsqu'une nouvelle annonce est publiee
+- Ouvrir l'application directement sur l'annonce concernee
 
-2. Lightweight participant profile
+2. Profil participant leger
 
-- View/edit basic profile fields (name, phone, preferred contact)
+- Voir/modifier les champs de profil de base (nom, telephone, contact prefere)
 
-3. Resource progress markers
+3. Marqueurs de progression des ressources
 
-- Mark resource as viewed/downloaded
+- Marquer une ressource comme vue/telechargee
 
-4. Session reminders
+4. Rappels de session
 
-- Local reminder 24h/1h before upcoming session
+- Rappel local 24 h/1 h avant une session a venir
 
-5. Basic in-app feedback
+5. Feedback in-app basique
 
-- Quick "Need help" or "Report issue" form
+- Formulaire rapide "Besoin d'aide" ou "Signaler un probleme"
 
-### 7.3 COULD (Post-pilot candidates)
+### 7.3 Plus tard (candidats post-pilote)
 
-These are valuable but intentionally deferred beyond MVP pilot.
+Ces elements sont utiles mais volontairement reportes apres le pilote MVP.
 
-1. iOS packaging and TestFlight distribution
-2. Offline caching for selected resources
-3. In-app messaging/chat with trainer
-4. Advanced role-specific dashboards
-5. Rich analytics views for participants
+1. Packaging iOS et distribution TestFlight
+2. Cache offline pour certaines ressources
+3. Messagerie/chat in-app avec le formateur
+4. Tableaux de bord avances par role
+5. Vues analytiques riches pour les participants
 
-## 8. Mapping Matrix (Feature -> Phase 1 Success Criteria)
+## 8. Matrice de correspondance (fonctionnalite -> criteres de succes phase 1)
 
-| Feature slice                        | Auth works | Relevant content only | Android first | Announcements exist | Pilot stability |
-| ------------------------------------ | ---------- | --------------------- | ------------- | ------------------- | --------------- |
-| MUST - Authentication/session        | Yes        | Indirect              | Yes           | No                  | Yes             |
-| MUST - Participant-scoped home       | No         | Yes                   | Yes           | No                  | Yes             |
-| MUST - Schedule/sessions             | No         | Yes                   | Yes           | No                  | Yes             |
-| MUST - Resources                     | No         | Yes                   | Yes           | No                  | Yes             |
-| MUST - Announcements feed            | No         | Yes                   | Yes           | Yes                 | Yes             |
-| MUST - Contact/support               | No         | Indirect              | Yes           | No                  | Yes             |
-| MUST - Android pilot readiness       | No         | No                    | Yes           | No                  | Yes             |
-| SHOULD - Push announcements          | No         | Indirect              | Yes           | Yes                 | Indirect        |
-| SHOULD - Profile                     | No         | Yes                   | Yes           | No                  | Indirect        |
-| SHOULD - Resource progress markers   | No         | Yes                   | Yes           | No                  | Indirect        |
-| SHOULD - Session reminders           | No         | No                    | Yes           | Indirect            | Indirect        |
-| SHOULD - Basic in-app feedback       | No         | Indirect              | Yes           | No                  | Indirect        |
+| Decoupage fonctionnalites                  | Auth ok | Contenu pertinent uniquement | Android first | Annonces disponibles | Stabilite pilote |
+| ------------------------------------------ | ------- | ---------------------------- | ------------- | -------------------- | ---------------- |
+| Indispensable - Authentification/session   | Oui     | Indirect                     | Oui           | Non                  | Oui              |
+| Indispensable - Accueil scope participant  | Non     | Oui                          | Oui           | Non                  | Oui              |
+| Indispensable - Planning/sessions          | Non     | Oui                          | Oui           | Non                  | Oui              |
+| Indispensable - Ressources                 | Non     | Oui                          | Oui           | Non                  | Oui              |
+| Indispensable - Fil d'annonces             | Non     | Oui                          | Oui           | Oui                  | Oui              |
+| Indispensable - Contact/support            | Non     | Indirect                     | Oui           | Non                  | Oui              |
+| Indispensable - Preparation pilote Android | Non     | Non                          | Oui           | Non                  | Oui              |
+| Souhaite - Notifications push              | Non     | Indirect                     | Oui           | Oui                  | Indirect         |
+| Souhaite - Profil participant              | Non     | Oui                          | Oui           | Non                  | Indirect         |
+| Souhaite - Marqueurs de progression        | Non     | Oui                          | Oui           | Non                  | Indirect         |
+| Souhaite - Rappels de session              | Non     | Non                          | Oui           | Indirect             | Indirect         |
+| Souhaite - Feedback in-app                 | Non     | Indirect                     | Oui           | Non                  | Indirect         |
 
-## 9. Delivery Recommendation (2 Sprints)
+## 9. Recommandation de delivery (2 sprints)
 
-Sprint 1 (MUST foundation):
+Sprint 1 (fondations indispensables) :
 
-- Authentication/session
-- Basic onboarding/welcome
-- Participant-scoped home
-- Schedule/sessions
+- Authentification/session
+- Onboarding/welcome de base
+- Accueil scope participant
+- Planning/sessions
 - Contact/support
 
-Sprint 2 (MUST completion + selective SHOULD):
+Sprint 2 (finalisation indispensable + souhaites selectifs) :
 
-- Resources
-- Announcements feed
-- Android pilot hardening
-- Optional: push announcements if stable
+- Ressources
+- Fil d'annonces
+- Stabilisation pilote Android
+- Optionnel : notifications push si la stabilite est confirmee
 
-Go/No-Go to pilot:
+Go/No-Go vers pilote :
 
-- All MUST stories accepted
-- No P1 blocker open
-- End-to-end participant flow validated on Android
+- Toutes les user stories indispensables sont acceptees
+- Aucun blocker P1 ouvert
+- Flux participant de bout en bout valide sur Android
 
-## 10. MVP Scope Freeze (Before Design/Coding)
+## 10. Gel du perimetre MVP (avant design/codage)
 
-This section freezes the first release scope and defines what is prioritized now versus later.
+Cette section gele le perimetre de la premiere release et precise ce qui est priorise maintenant versus plus tard.
 
-### 10.1 Must-have (Release 1 locked)
+### 10.1 Indispensable (release 1 verrouillee)
 
-- Participant authentication
-- Basic onboarding / welcome
-- Program/course list
-- Session calendar or schedule
-- Resource library
-- Announcements / notices
+- Authentification participant
+- Onboarding / welcome de base
+- Liste des programmes/cours
+- Calendrier ou planning de session
+- Bibliotheque de ressources
+- Annonces / notifications
 - Contact/support
-- Logout / session handling
+- Deconnexion / gestion de session
 
-### 10.2 Should-have (Not blocking Release 1)
+### 10.2 Souhaite (non bloquant release 1)
 
-- Participant profile
-- Push notification readiness (announcements only)
-- Resource progress markers
-- Session reminders
-- Basic in-app feedback
-- Basic push notification readiness
+- Profil participant
+- Preparation de base des notifications push
+- Marqueurs de progression des ressources
+- Rappels de session
+- Feedback in-app basique
 
-### 10.3 Later (Out of MVP)
+### 10.3 Plus tard (hors MVP)
 
-- Full LMS
-- Live video classes inside app
-- In-app payments
-- iOS packaging and TestFlight distribution
-- Offline caching for selected resources
-- In-app messaging/chat with trainer
-- Offline sync at scale
-- Community/forum
-- Offline sync at scale
-- Community/forum/chat
-- Assignments grading engine
-- Deep analytics dashboards for users
-- Advanced certificates engine
-- Multi-role admin panel inside mobile app
-- Complex gamification
+- LMS complet
+- Classes video en direct dans l'application
+- Paiements in-app
+- Packaging iOS et distribution TestFlight
+- Cache offline pour certaines ressources
+- Messagerie/chat in-app avec le formateur
+- Synchronisation offline a grande echelle
+- Communaute/forum/chat
+- Moteur de notation des devoirs
+- Tableaux de bord analytiques approfondis pour les utilisateurs
+- Moteur avance de certificats
+- Panneau admin multi-role dans l'application mobile
+- Gamification complexe
 
-### 10.4 First Release Scope - Frozen
+### 10.4 Perimetre de la premiere release - gele
 
-**Release 1 scope** is frozen to **Must-have** only.
+La release 1 est gelee sur les fonctionnalites **Indispensable** uniquement.
 
-**MVP envelope** (broader planning scope):
-- **In MVP envelope** = Must-have + Should-have
-- **Out of MVP** = Later
+Envelope MVP (global) :
 
-This means **Should-have** items are considered part of the broader MVP backlog, but they are **not committed to Release 1** unless explicitly pulled in under the execution rules below.
+- **Dans MVP** = Indispensable + Souhaite
+- **Hors MVP** = Plus tard
 
-### 10.5 Full Classification Matrix (All Requested Features)
+### 10.5 Matrice de classification complete (toutes les fonctionnalites demandees)
 
-| Feature | Classification |
-| --- | --- |
-| Participant authentication | Must-have |
-| Basic onboarding / welcome | Must-have |
-| Participant-scoped home | Must-have |
-| Program/course list | Must-have |
-| Session calendar or schedule | Must-have |
-| Resource library | Must-have |
-| Announcements / notices | Must-have |
-| Contact/support | Must-have |
-| Logout / session handling | Must-have |
-| Android pilot readiness | Must-have |
-| Participant profile | Should-have |
-| Push notification readiness (announcements only) | Should-have |
-| Resource progress markers | Should-have |
-| Session reminders | Should-have |
-| Basic in-app feedback | Should-have |
-| Full LMS | Later |
-| Live video classes inside app | Later |
-| In-app payments | Later |
-| iOS packaging and TestFlight distribution | Later |
-| Offline caching for selected resources | Later |
-| In-app messaging/chat with trainer | Later |
-| Offline sync at scale | Later |
-| Community/forum | Later |
-| Assignments grading engine | Later |
-| Deep analytics dashboards for users | Later |
-| Advanced certificates engine | Later |
-| Multi-role admin panel inside mobile app | Later |
-| Complex gamification | Later |
+| Fonctionnalite                             | Classification |
+| ------------------------------------------ | -------------- |
+| Authentification participant               | Indispensable  |
+| Onboarding / welcome de base               | Indispensable  |
+| Accueil scope participant                  | Indispensable  |
+| Profil participant                         | Souhaite       |
+| Liste des programmes/cours                 | Indispensable  |
+| Calendrier ou planning de session          | Indispensable  |
+| Bibliotheque de ressources                 | Indispensable  |
+| Annonces / notifications                   | Indispensable  |
+| Contact/support                            | Indispensable  |
+| Preparation pilote Android                 | Indispensable  |
+| Preparation de base des notifications push | Souhaite       |
+| Marqueurs de progression des ressources    | Souhaite       |
+| Rappels de session                         | Souhaite       |
+| Feedback in-app basique                    | Souhaite       |
+| Deconnexion / gestion de session           | Indispensable  |
+| LMS complet                                | Plus tard      |
+| Classes video en direct dans l'application | Plus tard      |
+| Paiements in-app                           | Plus tard      |
+| Packaging iOS et distribution TestFlight   | Plus tard      |
+| Cache offline pour certaines ressources    | Plus tard      |
+| Messagerie/chat in-app avec le formateur   | Plus tard      |
+| Synchronisation offline a grande echelle   | Plus tard      |
+| Communaute/forum/chat                      | Plus tard      |
+| Moteur de notation des devoirs             | Plus tard      |
+| Tableaux de bord analytiques utilisateurs  | Plus tard      |
+| Moteur avance de certificats               | Plus tard      |
+| Panneau admin multi-role dans le mobile    | Plus tard      |
+| Gamification complexe                      | Plus tard      |
 
-Execution rules:
+Regles d'execution :
 
-- Design and engineering start from Must-have features only.
-- Should-have items can be pulled only if Must-have is complete and pilot stability is not at risk.
-- Later items remain out of scope until a post-pilot decision.
+- Le design et l'engineering demarrent depuis les fonctionnalites Indispensable uniquement.
+- Les elements Souhaite ne peuvent etre pris que si l'Indispensable est termine et que la stabilite pilote n'est pas a risque.
+- Les elements Plus tard restent hors perimetre jusqu'a decision post-pilote.

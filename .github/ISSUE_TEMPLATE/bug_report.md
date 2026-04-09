@@ -1,5 +1,5 @@
 ---
-name: "Bug report"
+name: "Signalement de bug"
 about: Signaler un probleme qui impacte le MVP
 labels: ["bug", "ready"]
 ---
