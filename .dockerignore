@@ -1,0 +1,33 @@
+# Dépendances et caches
+node_modules
+.pnpm-store
+
+# Builds et artefacts
+apps/client/dist
+apps/client/.angular
+apps/api/dist
+apps/api/coverage
+
+# Environnement
+.env
+.env.*
+!.env.example
+
+# Git et CI
+.git
+.github
+.husky
+
+# Tests et rapports
+test-results
+playwright-report
+coverage
+
+# Docs
+docs
+*.md
+!README.md
+
+# IDE
+.vscode
+.idea
