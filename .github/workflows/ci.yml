@@ -1,0 +1,123 @@
+# Pipeline CI — kraak-group monorepo
+# Déclenché sur push vers main et sur les pull requests ciblant main.
+# Couvre : format, lint, build, tests unitaires, tests E2E.
+
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  # ──────────────────────────────────────────────
+  # Vérifications rapides : format + lint
+  # ──────────────────────────────────────────────
+  lint:
+    name: Format & Lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: package.json
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+
+      - name: Vérifier le formatage (Prettier)
+        run: pnpm format:check
+
+      - name: Lint (ESLint)
+        run: pnpm lint
+
+  # ──────────────────────────────────────────────
+  # Build de production (web + mobile)
+  # ──────────────────────────────────────────────
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    needs: lint
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: package.json
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+
+      - name: Build web (production SSR)
+        run: pnpm build:web
+
+      - name: Build mobile (production)
+        run: pnpm build:mobile
+
+  # ──────────────────────────────────────────────
+  # Tests unitaires (Vitest via Angular builder)
+  # ──────────────────────────────────────────────
+  unit:
+    name: Tests unitaires
+    runs-on: ubuntu-latest
+    needs: lint
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: package.json
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+
+      - name: Exécuter les tests unitaires
+        run: pnpm test:unit
+
+  # ──────────────────────────────────────────────
+  # Tests E2E (Playwright — Chromium)
+  # ──────────────────────────────────────────────
+  e2e:
+    name: Tests E2E
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: package.json
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+
+      - name: Installer les navigateurs Playwright
+        run: pnpm --filter @kraak/client exec playwright install --with-deps chromium
+
+      - name: Exécuter les tests E2E
+        run: pnpm test:e2e
+
+      - name: Sauvegarder les rapports Playwright
+        if: ${{ !cancelled() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: apps/client/playwright-report/
+          retention-days: 14
