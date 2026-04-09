@@ -171,6 +171,10 @@ Comportement obligatoire pour les assistants :
 - Ne pas sauter les étapes de branchement, de mise à jour Project / issue, de
   validation, de fusion, de push, ou de nettoyage de branche, sauf si
   l’utilisateur remplace explicitement ce workflow.
+- Règle explicite de nettoyage : quand une tâche est terminée (merge/push
+  réussis), supprimer systématiquement la branche courte en local **et** en
+  distant. Ne garder la branche distante que tant que la PR est ouverte ou que
+  le travail n’est pas terminé.
 
 ### Jalons Git / GitHub À Respecter
 
