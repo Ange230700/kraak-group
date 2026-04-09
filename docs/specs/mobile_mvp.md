@@ -160,16 +160,20 @@ These are valuable but intentionally deferred beyond MVP pilot.
 
 ## 8. Mapping Matrix (Feature -> Phase 1 Success Criteria)
 
-| Feature slice                  | Auth works | Relevant content only | Android first | Announcements exist | Pilot stability |
-| ------------------------------ | ---------- | --------------------- | ------------- | ------------------- | --------------- |
-| MUST - Authentication/session  | Yes        | Indirect              | Yes           | No                  | Yes             |
-| MUST - Participant-scoped home | No         | Yes                   | Yes           | No                  | Yes             |
-| MUST - Schedule/sessions       | No         | Yes                   | Yes           | No                  | Yes             |
-| MUST - Resources               | No         | Yes                   | Yes           | No                  | Yes             |
-| MUST - Announcements feed      | No         | Yes                   | Yes           | Yes                 | Yes             |
-| MUST - Contact/support         | No         | Indirect              | Yes           | No                  | Yes             |
-| SHOULD - Push announcements    | No         | Indirect              | Yes           | Yes                 | Indirect        |
-| SHOULD - Session reminders     | No         | No                    | Yes           | Indirect            | Indirect        |
+| Feature slice                        | Auth works | Relevant content only | Android first | Announcements exist | Pilot stability |
+| ------------------------------------ | ---------- | --------------------- | ------------- | ------------------- | --------------- |
+| MUST - Authentication/session        | Yes        | Indirect              | Yes           | No                  | Yes             |
+| MUST - Participant-scoped home       | No         | Yes                   | Yes           | No                  | Yes             |
+| MUST - Schedule/sessions             | No         | Yes                   | Yes           | No                  | Yes             |
+| MUST - Resources                     | No         | Yes                   | Yes           | No                  | Yes             |
+| MUST - Announcements feed            | No         | Yes                   | Yes           | Yes                 | Yes             |
+| MUST - Contact/support               | No         | Indirect              | Yes           | No                  | Yes             |
+| MUST - Android pilot readiness       | No         | No                    | Yes           | No                  | Yes             |
+| SHOULD - Push announcements          | No         | Indirect              | Yes           | Yes                 | Indirect        |
+| SHOULD - Profile                     | No         | Yes                   | Yes           | No                  | Indirect        |
+| SHOULD - Resource progress markers   | No         | Yes                   | Yes           | No                  | Indirect        |
+| SHOULD - Session reminders           | No         | No                    | Yes           | Indirect            | Indirect        |
+| SHOULD - Basic in-app feedback       | No         | Indirect              | Yes           | No                  | Indirect        |
 
 ## 9. Delivery Recommendation (2 Sprints)
 
@@ -212,15 +216,21 @@ This section freezes the first release scope and defines what is prioritized now
 ### 10.2 Should-have (Not blocking Release 1)
 
 - Participant profile
-- Basic push notification readiness
+- Push notification readiness (announcements only)
+- Resource progress markers
+- Session reminders
+- Basic in-app feedback
 
 ### 10.3 Later (Out of MVP)
 
 - Full LMS
 - Live video classes inside app
 - In-app payments
+- iOS packaging and TestFlight distribution
+- Offline caching for selected resources
+- In-app messaging/chat with trainer
 - Offline sync at scale
-- Community/forum/chat
+- Community/forum
 - Assignments grading engine
 - Deep analytics dashboards for users
 - Advanced certificates engine
@@ -229,11 +239,13 @@ This section freezes the first release scope and defines what is prioritized now
 
 ### 10.4 First Release Scope - Frozen
 
-Release 1 is frozen to **Must-have** only.
+**Release 1 scope** is frozen to **Must-have** only.
 
-MVP envelope (global):
-- **In MVP** = Must-have + Should-have
+**MVP envelope** (broader planning scope):
+- **In MVP envelope** = Must-have + Should-have
 - **Out of MVP** = Later
+
+This means **Should-have** items are considered part of the broader MVP backlog, but they are **not committed to Release 1** unless explicitly pulled in under the execution rules below.
 
 ### 10.5 Full Classification Matrix (All Requested Features)
 
@@ -241,19 +253,27 @@ MVP envelope (global):
 | --- | --- |
 | Participant authentication | Must-have |
 | Basic onboarding / welcome | Must-have |
-| Participant profile | Should-have |
+| Participant-scoped home | Must-have |
 | Program/course list | Must-have |
 | Session calendar or schedule | Must-have |
 | Resource library | Must-have |
 | Announcements / notices | Must-have |
 | Contact/support | Must-have |
-| Basic push notification readiness | Should-have |
 | Logout / session handling | Must-have |
+| Android pilot readiness | Must-have |
+| Participant profile | Should-have |
+| Push notification readiness (announcements only) | Should-have |
+| Resource progress markers | Should-have |
+| Session reminders | Should-have |
+| Basic in-app feedback | Should-have |
 | Full LMS | Later |
 | Live video classes inside app | Later |
 | In-app payments | Later |
+| iOS packaging and TestFlight distribution | Later |
+| Offline caching for selected resources | Later |
+| In-app messaging/chat with trainer | Later |
 | Offline sync at scale | Later |
-| Community/forum/chat | Later |
+| Community/forum | Later |
 | Assignments grading engine | Later |
 | Deep analytics dashboards for users | Later |
 | Advanced certificates engine | Later |
