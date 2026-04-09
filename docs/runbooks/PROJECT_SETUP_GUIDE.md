@@ -3,8 +3,8 @@
 ## GitHub Project #6 : KRAAK MVP - Product Backlog
 
 - URL : https://github.com/users/Ange230700/projects/6
-- Depot : Ange230700/kraak-group
-- Portee : backlog MVP KRAAK (epopees + taches)
+- Dépôt : Ange230700/kraak-group
+- Portée : backlog MVP KRAAK (épopées + tâches)
 
 ---
 
@@ -27,15 +27,15 @@
 
 ### Structure backlog
 
-- 8 epopees
-- 30 taches
+- 8 épopées
+- 30 tâches
 - 38 issues au total
 
 ---
 
 ## Utilisation Quotidienne Du Board
 
-### Creation d'une issue
+### Création d'une issue
 
 ```bash
 gh issue create \
@@ -45,7 +45,7 @@ gh issue create \
   --milestone "Development complete"
 ```
 
-### Ajout manuel au projet (si necessaire)
+### Ajout manuel au projet (si nécessaire)
 
 ```bash
 # Recuperer le node_id de l'issue
@@ -55,7 +55,7 @@ gh api repos/Ange230700/kraak-group/issues/42 --jq .node_id -q
 gh project item-add 6 --owner Ange230700 --id <node_id>
 ```
 
-### Mise a jour du statut
+### Mise à jour du statut
 
 ```bash
 gh issue edit 42 --add-label "status: in-progress" --remove-label "status: backlog"
@@ -63,15 +63,15 @@ gh issue edit 42 --add-label "status: in-progress" --remove-label "status: backl
 
 ---
 
-## Cycle De Statut Recommande
+## Cycle de statut recommandé
 
-1. `Backlog` : travail non demarre
+1. `Backlog` : travail non démarré
 2. `Ready` : prerequis leves, pret a etre lance
 3. `In Progress` : implementation en cours
 4. `Review` : en revue fonctionnelle/technique
 5. `Done` : fusionne, verifie, clos
 
-Regle pratique : chaque passage de colonne doit aussi etre reflechi dans les labels et le commentaire d'avancement.
+Règle pratique : chaque passage de colonne doit aussi etre reflechi dans les labels et le commentaire d'avancement.
 
 ---
 
@@ -102,8 +102,8 @@ Colonnes recommandees :
 
 Bonnes pratiques :
 
-- Deplacer les cartes au fil de l'execution, pas en fin de semaine.
-- Conserver une seule source de verite : issue + labels + board alignes.
+- Déplacer les cartes au fil de l'execution, pas en fin de semaine.
+- Conserver une seule source de vérité : issue + labels + board alignes.
 - Ajouter le lien de PR dans l'issue des l'ouverture.
 
 ---
@@ -184,8 +184,8 @@ Questions de controle :
 gh issue edit <numero> --milestone "<nouveau milestone>"
 ```
 
-### Peut-on faire des sous-taches natives ?
-GitHub ne gere pas les sous-taches natives comme Jira. Utiliser des issues liees avec references explicites (`depends on #X`, `blocks #Y`).
+### Peut-on faire des sous-tâches natives ?
+GitHub ne gere pas les sous-tâches natives comme Jira. Utiliser des issues liees avec references explicites (`depends on #X`, `blocks #Y`).
 
 ### Quand fermer une issue ?
 Quand la PR est fusionnee, les criteres d'acceptation verifies et la fonctionnalite disponible sur `main`.

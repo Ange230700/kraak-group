@@ -1,7 +1,7 @@
 ---
 name: "Signalement de bug"
 about: Signaler un probleme qui impacte le MVP
-labels: ["bug", "ready"]
+labels: ["type: bug", "status: ready"]
 ---
 
 ## Contexte

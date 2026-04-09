@@ -1,22 +1,22 @@
-# Backlog Produit MVP KRAAK - Plan D'Execution
+# Backlog Produit MVP KRAAK - Plan D'exécution
 
 - Projet : site web MVP KRAAK Consulting
-- Depot : https://github.com/Ange230700/kraak-group
+- Dépôt : https://github.com/Ange230700/kraak-group
 - Project board : https://github.com/users/Ange230700/projects/6
-- Mise a jour : 9 avril 2026
+- Mise à jour : 9 avril 2026
 
 ---
 
-## Vue D'Ensemble
+## Vue d'ensemble
 
-Ce backlog structure l'execution MVP autour de 8 epopees et 30 taches.
-Objectif : livrer un site credible, rapide, orienté conversion, avec une base
+Ce backlog structure l'exécution MVP autour de 8 épopées et 30 tâches.
+Objectif : livrer un site crédible, rapide, orienté conversion, avec une base
 technique propre et des parcours de contact fonctionnels.
 
-Criteres de succes MVP :
+Critères de succès MVP :
 
-- site public deploye et stable
-- experience mobile de base validee
+- site public déployé et stable
+- experience mobile de base validée
 - message clair sur les services KRAAK
 - formulaires de contact fonctionnels
 - fondations SEO/analytics en place
@@ -252,12 +252,12 @@ Checklist pre-lancement :
 
 ## Statistiques Backlog
 
-- 8 epopees
-- 30 taches
+- 8 épopées
+- 30 tâches
 - 38 issues au total
-- 16 taches critiques
-- 10 taches priorite haute
-- 4 taches priorite moyenne
+- 16 tâches critiques
+- 10 tâches priorite haute
+- 4 tâches priorite moyenne
 
 ---
 

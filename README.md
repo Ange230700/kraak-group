@@ -10,7 +10,7 @@ Strategie MVP simple :
 
 ## Checklist de tache
 A utiliser pour chaque tache :
-- [ ] Issue creee et scope clair
+- [ ] Issue creee et perimetre clair
 - [ ] Branche courte creee depuis `main`
 - [ ] Implementation minimale viable
 - [ ] Tests executes (RED -> GREEN -> REFACTOR si code)

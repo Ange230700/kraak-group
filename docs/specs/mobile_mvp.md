@@ -1,14 +1,14 @@
 # MVP Mobile
 
-## 1. Objectif metier principal
+## 1. Objectif métier principal
 
-Le MVP mobile sert a maintenir les participants KRAAK connectes a leur parcours d'apprentissage, de facon simple et fiable.
+Le MVP mobile sert à maintenir les participants KRAAK connectés à leur parcours d'apprentissage, de façon simple et fiable.
 
-Objectifs metiers prioritaires :
+Objectifs métiers prioritaires :
 
-- permettre une authentification securisee
-- donner un acces direct a leurs informations de formation
-- centraliser les mises a jour et ressources
+- permettre une authentification sécurisée
+- donner un accès direct à leurs informations de formation
+- centraliser les mises à jour et ressources
 - garder un lien actif entre les participants et KRAAK
 
 ## 2. Audience mobile principale
@@ -16,14 +16,14 @@ Objectifs metiers prioritaires :
 Utilisateurs cibles du MVP (ordre de priorite) :
 
 1. Participants inscrits
-2. Prospects deja engages dans un parcours KRAAK
-3. Equipe interne/admins uniquement pour les operations strictement necessaires au MVP
+2. Prospects déjà engagés dans un parcours KRAAK
+3. Équipe interne/admins uniquement pour les opérations strictement nécessaires au MVP
 
-Hors perimetre MVP :
+Hors périmètre MVP :
 
 - application mobile de navigation grand public
-- back-office admin avance sur mobile
-- matrice de roles complexe sauf besoin impose par le pilote
+- back-office admin avancé sur mobile
+- matrice de rôles complexe sauf besoin imposé par le pilote
 
 ## 3. Actions utilisateurs prioritaires (flux coeur)
 
@@ -36,43 +36,43 @@ Les participants doivent pouvoir :
 5. Recevoir des annonces/mises a jour
 6. Contacter le support, le formateur ou KRAAK
 
-## 4. Criteres de succes (preparation pilote)
+## 4. Critères de succès (préparation pilote)
 
-Le MVP mobile est reussi lorsque :
+Le MVP mobile est réussi lorsque :
 
 - l'authentification participant fonctionne de bout en bout
-- chaque participant voit uniquement le contenu pertinent (scope role/contexte)
+- chaque participant voit uniquement le contenu pertinent (périmètre rôle/contexte)
 - l'application fonctionne d'abord sur Android (iOS optionnel sur la meme phase)
 - les annonces/notifications de base sont disponibles
-- la stabilite est suffisante pour un usage pilote reel
+- la stabilité est suffisante pour un usage pilote réel
 
-## 5. Limites de perimetre MVP
+## 5. Limites de périmètre MVP
 
-Dans le perimetre :
+Dans le périmètre :
 
-- acces au compte participant
+- accès au compte participant
 - information de formation en lecture prioritaire et communication
 - parcours de contact/support basique
 
-Hors perimetre Phase 1 :
+Hors périmètre Phase 1 :
 
-- paiements/abonnements avances
+- paiements/abonnements avancés
 - moteur LMS complet de progression
 - logique lourde de synchronisation offline-first
 - tableaux de bord analytiques avances dans l'application
 
-## 6. Porte de decision produit (fin de phase 1)
+## 6. Porte de décision produit (fin de phase 1)
 
-Passer a la phase suivante uniquement si toutes ces conditions sont vraies :
+Passer à la phase suivante uniquement si toutes ces conditions sont vraies :
 
 - objectif et audience valides par les parties prenantes
-- criteres de succes mesurables et acceptes
-- flux utilisateurs coeur figes pour la planification implementation
-- trajectoire pilote Android-first confirmee
+- critères de succès mesurables et acceptés
+- flux utilisateurs coeur figés pour la planification implementation
+- trajectoire pilote Android-first confirmée
 
 ## 7. Phase 2 - Decoupage priorise des fonctionnalites (Indispensable/Souhaite/Plus tard)
 
-Ce decoupage traduit le resultat de la phase 1 en perimetre MVP pret pour l'implementation.
+Ce découpage traduit le résultat de la phase 1 en périmètre MVP prêt pour l'implementation.
 
 ### 7.1 Indispensable (critique pilote)
 
@@ -86,11 +86,11 @@ Ces fonctionnalites sont requises pour lancer un pilote Android reel.
 - Reinitialisation de mot de passe (flux basique)
 - Mapping de resultat : le participant peut s'authentifier
 
-2. Accueil scope participant
+2. Accueil périmètre participant
 
-- Afficher uniquement le contenu pertinent apres connexion
-- Carte(s) programme : titre du programme suivi, statut, prochaine etape cle
-- Ecran de bienvenue/onboarding de base apres premiere connexion
+- Afficher uniquement le contenu pertinent après connexion
+- Carte(s) programme : titre du programme suivi, statut, prochaine étape clé
+- Écran de bienvenue/onboarding de base après première connexion
 - Mapping de resultat : le participant voit uniquement le contenu pertinent
 
 3. Planning et sessions
@@ -163,7 +163,7 @@ Ces elements sont utiles mais volontairement reportes apres le pilote MVP.
 | Decoupage fonctionnalites                  | Auth ok | Contenu pertinent uniquement | Android first | Annonces disponibles | Stabilite pilote |
 | ------------------------------------------ | ------- | ---------------------------- | ------------- | -------------------- | ---------------- |
 | Indispensable - Authentification/session   | Oui     | Indirect                     | Oui           | Non                  | Oui              |
-| Indispensable - Accueil scope participant  | Non     | Oui                          | Oui           | Non                  | Oui              |
+| Indispensable - Accueil perimetre participant  | Non     | Oui                          | Oui           | Non                  | Oui              |
 | Indispensable - Planning/sessions          | Non     | Oui                          | Oui           | Non                  | Oui              |
 | Indispensable - Ressources                 | Non     | Oui                          | Oui           | Non                  | Oui              |
 | Indispensable - Fil d'annonces             | Non     | Oui                          | Oui           | Oui                  | Oui              |
@@ -181,7 +181,7 @@ Sprint 1 (fondations indispensables) :
 
 - Authentification/session
 - Onboarding/welcome de base
-- Accueil scope participant
+- Accueil perimetre participant
 - Planning/sessions
 - Contact/support
 
@@ -198,9 +198,9 @@ Go/No-Go vers pilote :
 - Aucun blocker P1 ouvert
 - Flux participant de bout en bout valide sur Android
 
-## 10. Gel du perimetre MVP (avant design/codage)
+## 10. Gel du périmètre MVP (avant design/codage)
 
-Cette section gele le perimetre de la premiere release et precise ce qui est priorise maintenant versus plus tard.
+Cette section gèle le périmètre de la première release et précise ce qui est priorisé maintenant versus plus tard.
 
 ### 10.1 Indispensable (release 1 verrouillee)
 
@@ -237,11 +237,11 @@ Cette section gele le perimetre de la premiere release et precise ce qui est pri
 - Panneau admin multi-role dans l'application mobile
 - Gamification complexe
 
-### 10.4 Perimetre de la premiere release - gele
+### 10.4 Périmètre de la première release - gelé
 
-La release 1 est gelee sur les fonctionnalites **Indispensable** uniquement.
+La release 1 est gelée sur les fonctionnalités **Indispensable** uniquement.
 
-Envelope MVP (global) :
+Enveloppe MVP (globale) :
 
 - **Dans MVP** = Indispensable + Souhaite
 - **Hors MVP** = Plus tard
@@ -252,7 +252,7 @@ Envelope MVP (global) :
 | ------------------------------------------ | -------------- |
 | Authentification participant               | Indispensable  |
 | Onboarding / welcome de base               | Indispensable  |
-| Accueil scope participant                  | Indispensable  |
+| Accueil perimetre participant                  | Indispensable  |
 | Profil participant                         | Souhaite       |
 | Liste des programmes/cours                 | Indispensable  |
 | Calendrier ou planning de session          | Indispensable  |
