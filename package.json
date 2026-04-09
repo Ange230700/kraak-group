@@ -1,0 +1,32 @@
+{
+  "name": "kraak-group",
+  "version": "0.0.0",
+  "private": true,
+  "description": "KRAAK — Monorepo for the web platform, API, and shared packages",
+  "engines": {
+    "node": ">=24.14.0",
+    "pnpm": ">=10.0.0"
+  },
+  "packageManager": "pnpm@10.23.0",
+  "scripts": {
+    "dev:web": "pnpm --filter @kraak/client dev",
+    "build:web": "pnpm --filter @kraak/client build",
+    "dev:mobile": "pnpm --filter @kraak/client dev:mobile",
+    "build:mobile": "pnpm --filter @kraak/client build:mobile",
+    "lint": "pnpm -r lint",
+    "format": "prettier --write \"**/*.{ts,html,scss,css,json,md}\"",
+    "format:check": "prettier --check \"**/*.{ts,html,scss,css,json,md}\"",
+    "prepare": "husky"
+  },
+  "validate-branch-name": {
+    "pattern": "^(main|feat|fix|chore|docs|test|refactor|ci|style|perf|revert|build)/.+$",
+    "errorMsg": "Le nom de branche doit suivre le format <type>/<sujet> (ex: feat/login-page, fix/header-layout)"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^20.5.0",
+    "@commitlint/config-conventional": "^20.5.0",
+    "husky": "^9.1.7",
+    "prettier": "^3.8.1",
+    "validate-branch-name": "^1.3.2"
+  }
+}

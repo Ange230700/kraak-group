@@ -1,0 +1,45 @@
+# Dépendances
+node_modules/
+
+# Sorties de build
+dist/
+.angular/
+.next/
+out/
+
+# Environnement
+.env
+.env.local
+.env.*.local
+
+# IDE / Éditeurs
+.idea/
+.vscode/*
+!.vscode/settings.json
+!.vscode/extensions.json
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Tests / Couverture
+coverage/
+.nyc_output/
+
+# Déploiement
+.vercel/
+.netlify/
+
+# Logs
+*.log
+npm-debug.log*
+pnpm-debug.log*
+
+# Divers
+*.tgz
+.cache/
+tmp/
