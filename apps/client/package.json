@@ -15,6 +15,7 @@
     "serve:ssr:web": "node dist/web/server/server.mjs"
   },
   "dependencies": {
+    "@angular/animations": "^21.2.8",
     "@angular/common": "^21.2.0",
     "@angular/compiler": "^21.2.0",
     "@angular/core": "^21.2.0",
@@ -26,8 +27,10 @@
     "@capacitor/android": "^7.3.0",
     "@capacitor/core": "^7.3.0",
     "@ionic/angular": "^8.6.0",
+    "@primeuix/themes": "^2.0.3",
     "express": "^5.1.0",
     "ionicons": "^7.4.0",
+    "primeng": "^21.1.5",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0"
   },
