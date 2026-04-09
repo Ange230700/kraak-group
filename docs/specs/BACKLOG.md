@@ -1,302 +1,287 @@
-# Backlog Produit MVP KRAAK - Plan D'exécution
+# Backlog Produit MVP KRAAK - Epics, Issues Et Milestones
 
-- Projet : site web MVP KRAAK Consulting
-- Dépôt : https://github.com/Ange230700/kraak-group
-- Project board : https://github.com/users/Ange230700/projects/6
-- Mise à jour : 9 avril 2026
-
----
-
-## Vue d'ensemble
-
-Ce backlog structure l'exécution MVP autour de 8 épopées et 30 tâches.
-Objectif : livrer un site crédible, rapide, orienté conversion, avec une base
-technique propre et des parcours de contact fonctionnels.
-
-Critères de succès MVP :
-
-- site public déployé et stable
-- experience mobile de base validée
-- message clair sur les services KRAAK
-- formulaires de contact fonctionnels
-- fondations SEO/analytics en place
+- Projet : KRAAK (MVP web + base mobile)
+- Depot : https://github.com/Ange230700/kraak-group
+- Project board : https://github.com/users/Ange230700/projects/4
+- Mise a jour : 9 avril 2026
 
 ---
 
-## Jalons Et Cadence
+## Cadre Du Backlog
 
-| Jalon | Description | Fenetre cible |
-| --- | --- | --- |
-| Scope locked | Perimetre MVP fige | S1-S2 |
-| Design approved | Design system et maquettes valides | S3-S4 |
-| Content ready | Contenus rediges et approuves | S3-S4 |
-| Development complete | Pages et integrations finalisees | S5-S8 |
-| QA complete | Verification fonctionnelle terminee | S8-S9 |
-| Launch | Mise en production | S9-S10 |
+Ce backlog couvre le MVP avec 13 epics, des issues detaillees, des priorites et
+des dependances explicites.
 
----
+Echelle de priorite appliquee a toutes les issues :
 
-## Epopee 1 - Strategie De Contenu Et Production
+- `P0` : blocant MVP / pilot release
+- `P1` : essentiel mais non blocant immediate
+- `P2` : utile, post-pilot possible si necessaire
 
-- Statut : `status: backlog`
-- Priorite : `priority: critical`
-- Objectif : produire et valider les contenus des pages MVP.
+Regle de dependances :
 
-Taches liees :
-
-- Issue #9 : finaliser les messages de la page d'accueil
-- Issue #10 : developper les descriptions des services
-- Issue #11 : creer le contenu de la page A propos
-
-Definition de fini :
-
-- contenus valides par les parties prenantes
-- tonalite KRAAK respectee
-- relecture linguistique FR complete
+- `none` : aucune dependance
+- liste d'IDs : issue(s) a terminer avant demarrage
 
 ---
 
-## Epopee 2 - Systeme De Design Et Design Visuel
+## Milestones
 
-- Statut : `status: backlog`
-- Priorite : `priority: critical`
-- Objectif : etablir le design system et les maquettes de reference.
-
-Taches liees :
-
-- Issue #12 : documentation design system
-- Issue #13 : wireframes de toutes les pages MVP
-- Issue #14 : maquettes haute fidelite
-
-Livrables :
-
-- tokens visuels (couleurs, typo, espacements)
-- composants d'interface principaux
-- ecrans desktop/mobile coherents
+| Milestone                           | Intent                                            | Exit criteria                                                           |
+| ----------------------------------- | ------------------------------------------------- | ----------------------------------------------------------------------- |
+| `M1 - Architecture locked`          | architecture validee et tracee                    | toutes les issues `ARC-*` en `done`                                     |
+| `M2 - Workspace bootstrapped`       | socle de dev operationnel                         | toutes les issues `SET-*` + `LIB-01` + `LIB-02` en `done`               |
+| `M3 - Mobile shell ready`           | shell mobile navigable et installable             | toutes les issues `MOB-*` en `done`                                     |
+| `M4 - Auth ready`                   | authentification stable web/mobile/api            | toutes les issues `AUT-*` en `done`                                     |
+| `M5 - Core participant flows ready` | parcours coeur participant utilisables            | toutes les issues `DSH-*`, `PRG-*`, `RES-*`, `ANN-*`, `SUP-*` en `done` |
+| `M6 - QA ready`                     | couverture de test et stabilisation pre-lancement | toutes les issues `QAT-*` en `done`                                     |
+| `M7 - Pilot release ready`          | deploiement pilote et runbooks operationnels      | toutes les issues `DEP-*` en `done`                                     |
 
 ---
 
-## Epopee 3 - Setup Frontend Et Infrastructure
+## Epic 1 - Architecture (`ARC`)
 
-- Statut : `status: backlog`
-- Priorite : `priority: critical`
-- Objectif : initialiser le monorepo et les fondations CI/CD.
+Objectif : figer les choix techniques et les contrats de base.
+Milestone cible : `M1 - Architecture locked`
 
-Taches liees :
-
-- Issue #15 : initialiser le monorepo pnpm
-- Issue #16 : configurer Angular 21 avec prerendu
-- Issue #17 : configurer Tailwind CSS et PrimeNG
-- Issue #18 : configurer GitHub Actions CI/CD
-- Issue #19 : configurer les tests E2E Playwright
-
-Stack retenue (version cible) :
-
-- Angular 21.2.x
-- Tailwind CSS 4.1.x
-- PrimeNG 21.x
-- TypeScript 5.9.x
+| Issue ID | Tache                                                                                       | Priorite | Dependances        |
+| -------- | ------------------------------------------------------------------------------------------- | -------- | ------------------ |
+| `ARC-01` | Valider architecture cible web/mobile/api avec scope MVP                                    | `P0`     | `none`             |
+| `ARC-02` | Definir conventions repo (naming, structure, quality gates)                                 | `P0`     | `ARC-01`           |
+| `ARC-03` | Definir strategie de rendu web (SEO/prerender)                                              | `P0`     | `ARC-01`           |
+| `ARC-04` | Definir modeles de donnees MVP (participant, programme, ressource, annonce, ticket support) | `P0`     | `ARC-01`           |
+| `ARC-05` | Documenter ADRs et criteres anti-scope-creep                                                | `P1`     | `ARC-02`, `ARC-04` |
 
 ---
 
-## Epopee 4 - Implementation Des Pages
+## Epic 2 - Workspace Setup (`SET`)
 
-- Statut : `status: backlog`
-- Priorite : `priority: critical`
-- Objectif : implementer les 5 pages coeur du MVP.
+Objectif : rendre le workspace buildable, testable et automatisable.
+Milestone cible : `M2 - Workspace bootstrapped`
 
-Pages :
-
-- Issue #20 : Accueil
-- Issue #21 : A propos
-- Issue #22 : Services
-- Issue #23 : Programmes
-- Issue #24 : Contact
-
-Exigences transverses :
-
-- responsive mobile-first
-- accessibilite de base (WCAG AA)
-- marquage SEO propre
-- performances ciblees (Lighthouse > 90)
+| Issue ID | Tache                                                              | Priorite | Dependances                  |
+| -------- | ------------------------------------------------------------------ | -------- | ---------------------------- |
+| `SET-01` | Initialiser workspace Angular monorepo (`apps/web`, `apps/mobile`) | `P0`     | `ARC-02`                     |
+| `SET-02` | Initialiser `apps/api` NestJS et wiring de base                    | `P0`     | `ARC-02`                     |
+| `SET-03` | Configurer quality gates (lint, format, typecheck)                 | `P0`     | `SET-01`, `SET-02`           |
+| `SET-04` | Configurer test runners unitaires + integration                    | `P0`     | `SET-01`, `SET-02`           |
+| `SET-05` | Configurer Playwright E2E et smoke pipeline                        | `P0`     | `SET-01`, `SET-04`           |
+| `SET-06` | Configurer CI GitHub Actions multi-apps                            | `P0`     | `SET-03`, `SET-04`, `SET-05` |
+| `SET-07` | Mettre en place variables d'environnement et runbook local dev     | `P1`     | `SET-02`                     |
 
 ---
 
-## Epopee 5 - Contact Et Integration Des Formulaires
+## Epic 3 - Shared Libraries (`LIB`)
 
-- Statut : `status: backlog`
-- Priorite : `priority: critical`
-- Objectif : capter les leads et assurer l'envoi des demandes.
+Objectif : factoriser les contrats et la logique transverse sans sur-ingenierie.
+Milestone cible : `M2 - Workspace bootstrapped`
 
-Taches liees :
-
-- Issue #25 : composant formulaire de contact
-- Issue #26 : endpoint API NestJS pour formulaires
-- Issue #27 : integration email via Resend
-
-Points de controle :
-
-- validation des champs et messages d'erreur
-- envoi email confirme
-- stockage des demandes trace
+| Issue ID | Tache                                                           | Priorite | Dependances        |
+| -------- | --------------------------------------------------------------- | -------- | ------------------ |
+| `LIB-01` | Creer `packages/contracts` (DTO, schema validation, versioning) | `P0`     | `ARC-04`, `SET-02` |
+| `LIB-02` | Creer `packages/domain` (regles metier pures MVP)               | `P0`     | `ARC-04`, `LIB-01` |
+| `LIB-03` | Creer `packages/api-client` (typed client web/mobile vers API)  | `P1`     | `LIB-01`, `SET-02` |
+| `LIB-04` | Ajouter tests unitaires libs + guideline de publication interne | `P1`     | `LIB-02`, `LIB-03` |
 
 ---
 
-## Epopee 6 - SEO Et Optimisation Technique
+## Epic 4 - Website (`WEB`)
 
-- Statut : `status: backlog`
-- Priorite : `priority: high`
-- Objectif : consolider la visibilite organique et la qualite technique.
+Objectif : livrer le site vitrine MVP oriente conversion.
+Milestone cible : `M5 - Core participant flows ready`
 
-Taches liees :
-
-- Issue #28 : balises meta et Open Graph
-- Issue #29 : configuration Google Analytics 4
-- Issue #30 : generation sitemap XML
-- Issue #31 : optimisation performances/accessibilite
-
-Livrables attendus :
-
-- metadata par page
-- robots.txt et sitemap
-- instrumentation analytics
-- plan d'amelioration perf continu
+| Issue ID | Tache                                                                     | Priorite | Dependances        |
+| -------- | ------------------------------------------------------------------------- | -------- | ------------------ |
+| `WEB-01` | Implementer pages core (Accueil, A propos, Services, Programmes, Contact) | `P0`     | `SET-01`, `ARC-03` |
+| `WEB-02` | Integrer formulaires de contact et CTA conversion                         | `P0`     | `WEB-01`, `SUP-01` |
+| `WEB-03` | Ajouter SEO technique (meta, sitemap, robots, Open Graph)                 | `P0`     | `WEB-01`           |
+| `WEB-04` | Ajouter analytics web (PostHog/GA)                                        | `P1`     | `WEB-01`           |
+| `WEB-05` | Optimiser accessibilite/performance (objectif Lighthouse > 90)            | `P1`     | `WEB-01`, `WEB-03` |
 
 ---
 
-## Epopee 7 - Assurance Qualite Et Tests
+## Epic 5 - Mobile Shell (`MOB`)
 
-- Statut : `status: backlog`
-- Priorite : `priority: high`
-- Objectif : verifier les parcours critiques et la robustesse du MVP.
+Objectif : fournir l'ossature mobile Ionic/Capacitor prete pour les modules.
+Milestone cible : `M3 - Mobile shell ready`
 
-Taches liees :
-
-- Issue #32 : tests E2E des parcours critiques
-- Issue #33 : tests de compatibilite mobile
-- Issue #34 : tests multi-navigateurs
-
-Couverture minimale :
-
-- tests unitaires composants
-- tests integration
-- tests E2E Playwright (Given/When/Then)
-- verification accessibilite et performance
+| Issue ID | Tache                                                           | Priorite | Dependances        |
+| -------- | --------------------------------------------------------------- | -------- | ------------------ |
+| `MOB-01` | Initialiser app Ionic Angular dans `apps/mobile`                | `P0`     | `SET-01`           |
+| `MOB-02` | Mettre en place navigation shell (tabs/stack) et layout de base | `P0`     | `MOB-01`           |
+| `MOB-03` | Integrer theming, design tokens et composants UI de base        | `P1`     | `MOB-01`, `LIB-01` |
+| `MOB-04` | Configurer Capacitor (Android/iOS) et builds debug              | `P0`     | `MOB-01`           |
+| `MOB-05` | Ajouter service notifications push stub (FCM wiring initial)    | `P1`     | `MOB-04`, `SET-02` |
 
 ---
 
-## Epopee 8 - Deploiement Et Lancement
+## Epic 6 - Auth (`AUT`)
 
-- Statut : `status: backlog`
-- Priorite : `priority: high`
-- Objectif : preparer l'exploitation et lancer en production.
+Objectif : offrir une authentification securisee et consistente web/mobile.
+Milestone cible : `M4 - Auth ready`
 
-Taches liees :
-
-- Issue #35 : deploiement frontend Vercel
-- Issue #36 : deploiement backend Render
-- Issue #37 : audit securite pre-lancement
-- Issue #38 : runbook de deploiement
-
-Checklist pre-lancement :
-
-- variables d'environnement validees
-- supervision de base activee
-- tests smoke passes sur prod
-- procedure d'incident documentee
+| Issue ID | Tache                                                  | Priorite | Dependances        |
+| -------- | ------------------------------------------------------ | -------- | ------------------ |
+| `AUT-01` | Configurer Supabase Auth (providers, policies de base) | `P0`     | `ARC-04`, `SET-02` |
+| `AUT-02` | Implementer endpoints API auth/session (NestJS)        | `P0`     | `AUT-01`, `LIB-01` |
+| `AUT-03` | Implementer ecrans login/signup/reset mobile           | `P0`     | `MOB-02`, `AUT-02` |
+| `AUT-04` | Implementer garde routes protegees web/mobile          | `P0`     | `AUT-02`, `LIB-03` |
+| `AUT-05` | Ajouter gestion role participant/admin minimal         | `P1`     | `AUT-02`, `ARC-04` |
 
 ---
 
-## Reference Statut / Priorite / Type
+## Epic 7 - Dashboard (`DSH`)
 
-### Statuts
+Objectif : page d'accueil participant avec synthese des elements utiles.
+Milestone cible : `M5 - Core participant flows ready`
 
-| Label | Signification |
-| --- | --- |
-| `status: backlog` | non demarre |
-| `status: ready` | pret a lancer |
-| `status: in-progress` | en cours |
-| `status: review` | en verification |
-| `status: done` | termine |
-
-### Priorites
-
-| Label | Signification |
-| --- | --- |
-| `priority: critical` | indispensable au MVP |
-| `priority: high` | important pour la qualite/lancement |
-| `priority: medium` | utile mais non bloquant |
-| `priority: low` | deferable |
-
-### Types
-
-| Label | Signification |
-| --- | --- |
-| `type: epic` | initiative structurante |
-| `type: feature` | fonctionnalite |
-| `type: bug` | correction |
-| `type: chore` | maintenance/documentation |
+| Issue ID | Tache                                                            | Priorite | Dependances                  |
+| -------- | ---------------------------------------------------------------- | -------- | ---------------------------- |
+| `DSH-01` | Definir contenu dashboard MVP (cartes, rappels, dernieres actus) | `P0`     | `ARC-04`                     |
+| `DSH-02` | Exposer endpoint dashboard aggregate cote API                    | `P0`     | `SET-02`, `LIB-01`, `AUT-02` |
+| `DSH-03` | Implementer vue dashboard mobile                                 | `P0`     | `MOB-02`, `AUT-04`, `DSH-02` |
+| `DSH-04` | Implementer vue dashboard web participant (si activee MVP)       | `P1`     | `WEB-01`, `AUT-04`, `DSH-02` |
 
 ---
 
-## Workflow D'Execution
+## Epic 8 - Programs (`PRG`)
 
-1. Creer/mettre a jour l'issue avec AC clairs.
-2. Passer la carte en `In Progress` au demarrage.
-3. Travailler en branche courte.
-4. Appliquer TDD : RED -> GREEN -> REFACTOR.
-5. Ouvrir PR avec preuves de validation.
-6. Passer en `Review` puis `Done` apres fusion.
+Objectif : permettre consultation et suivi simple des programmes.
+Milestone cible : `M5 - Core participant flows ready`
 
----
-
-## Statistiques Backlog
-
-- 8 épopées
-- 30 tâches
-- 38 issues au total
-- 16 tâches critiques
-- 10 tâches priorite haute
-- 4 tâches priorite moyenne
+| Issue ID | Tache                                                   | Priorite | Dependances                            |
+| -------- | ------------------------------------------------------- | -------- | -------------------------------------- |
+| `PRG-01` | Definir modele programme/cohorte/statut progression MVP | `P0`     | `ARC-04`                               |
+| `PRG-02` | Implementer endpoints liste/detail programmes           | `P0`     | `SET-02`, `LIB-01`, `AUT-02`, `PRG-01` |
+| `PRG-03` | Implementer ecran mobile liste + detail programme       | `P0`     | `MOB-02`, `PRG-02`                     |
+| `PRG-04` | Implementer marquage de progression minimale            | `P1`     | `PRG-02`, `LIB-02`                     |
+| `PRG-05` | Ajouter scenarii de test Given/When/Then programmes     | `P1`     | `PRG-03`, `PRG-04`, `QAT-01`           |
 
 ---
 
-## Recommandation De Sequencement
+## Epic 9 - Resources (`RES`)
 
-### Phase 1 (S1-S2) - Fondations
+Objectif : offrir un acces simple a des ressources utiles aux participants.
+Milestone cible : `M5 - Core participant flows ready`
 
-- setup monorepo/frontend
-- premiers contenus
-- cadrage design system
-
-### Phase 2 (S3-S4) - Design Et Preparation
-
-- wireframes + maquettes
-- finalisation contenus
-- outillage test/CI complet
-
-### Phase 3 (S5-S8) - Implementation
-
-- pages MVP
-- formulaires + API
-- couche SEO/analytics
-
-### Phase 4 (S8-S9) - QA
-
-- E2E + mobile + navigateurs
-- correction des ecarts critiques
-
-### Phase 5 (S9-S10) - Lancement
-
-- deploiement Vercel/Render
-- audit securite
-- runbook et supervision
+| Issue ID | Tache                                                    | Priorite | Dependances                            |
+| -------- | -------------------------------------------------------- | -------- | -------------------------------------- |
+| `RES-01` | Definir taxonomie ressources (type, theme, audience)     | `P0`     | `ARC-04`                               |
+| `RES-02` | Implementer endpoints ressources (liste, filtre, detail) | `P0`     | `SET-02`, `LIB-01`, `AUT-02`, `RES-01` |
+| `RES-03` | Implementer ecran mobile ressources (recherche/filtre)   | `P0`     | `MOB-02`, `RES-02`                     |
+| `RES-04` | Implementer tracking consultation ressources             | `P1`     | `RES-02`, `WEB-04`                     |
 
 ---
 
-## Notes D'Application
+## Epic 10 - Announcements (`ANN`)
 
-- Pas d'extension du perimetre V1.1 dans le MVP sans accord explicite.
-- Politique de langue : francais pour docs/commentaires/messages utilisateurs,
-  anglais pour identifiants et elements techniques de code.
-- Toute decision d'architecture doit etre tracee dans `docs/decisions/`.
+Objectif : diffuser annonces et mises a jour importantes.
+Milestone cible : `M5 - Core participant flows ready`
+
+| Issue ID | Tache                                                | Priorite | Dependances                            |
+| -------- | ---------------------------------------------------- | -------- | -------------------------------------- |
+| `ANN-01` | Definir format annonce et regles de publication MVP  | `P0`     | `ARC-04`                               |
+| `ANN-02` | Implementer endpoints annonces (feed + detail)       | `P0`     | `SET-02`, `LIB-01`, `AUT-02`, `ANN-01` |
+| `ANN-03` | Implementer flux annonces dans mobile dashboard/feed | `P0`     | `MOB-02`, `DSH-02`, `ANN-02`           |
+| `ANN-04` | Ajouter notification push pour annonce prioritaire   | `P1`     | `MOB-05`, `ANN-02`                     |
+
+---
+
+## Epic 11 - Support (`SUP`)
+
+Objectif : mettre en place un canal de support simple et fiable.
+Milestone cible : `M5 - Core participant flows ready`
+
+| Issue ID | Tache                                                        | Priorite | Dependances                  |
+| -------- | ------------------------------------------------------------ | -------- | ---------------------------- |
+| `SUP-01` | Implementer endpoint contact/support (API + validation)      | `P0`     | `SET-02`, `LIB-01`           |
+| `SUP-02` | Integrer formulaire support dans mobile                      | `P0`     | `MOB-02`, `SUP-01`, `AUT-04` |
+| `SUP-03` | Integrer formulaire contact site web                         | `P0`     | `WEB-01`, `SUP-01`           |
+| `SUP-04` | Configurer envoi email transactionnel (Resend ou equivalent) | `P1`     | `SUP-01`                     |
+| `SUP-05` | Ajouter suivi et statut basique des demandes support         | `P1`     | `SUP-01`, `AUT-05`           |
+
+---
+
+## Epic 12 - QA (`QAT`)
+
+Objectif : verifier la conformite fonctionnelle, qualite et robustesse du MVP.
+Milestone cible : `M6 - QA ready`
+
+| Issue ID | Tache                                                         | Priorite | Dependances                                                |
+| -------- | ------------------------------------------------------------- | -------- | ---------------------------------------------------------- |
+| `QAT-01` | Definir matrice de couverture (page, composant, comportement) | `P0`     | `SET-04`, `SET-05`                                         |
+| `QAT-02` | Ecrire tests unitaires composants critiques web/mobile        | `P0`     | `QAT-01`, `WEB-01`, `MOB-02`                               |
+| `QAT-03` | Ecrire tests integration API modules critiques                | `P0`     | `QAT-01`, `AUT-02`, `PRG-02`, `RES-02`, `ANN-02`, `SUP-01` |
+| `QAT-04` | Ecrire E2E Given/When/Then pour parcours coeur participant    | `P0`     | `QAT-01`, `AUT-03`, `DSH-03`, `PRG-03`, `RES-03`, `SUP-02` |
+| `QAT-05` | Realiser campagne regression et corriger blockers             | `P0`     | `QAT-02`, `QAT-03`, `QAT-04`                               |
+| `QAT-06` | Realiser checks accessibilite/performance pre-pilot           | `P1`     | `QAT-05`, `WEB-05`                                         |
+
+---
+
+## Epic 13 - Deployment (`DEP`)
+
+Objectif : preparer et executer un lancement pilote maitrise.
+Milestone cible : `M7 - Pilot release ready`
+
+| Issue ID | Tache                                                      | Priorite | Dependances                            |
+| -------- | ---------------------------------------------------------- | -------- | -------------------------------------- |
+| `DEP-01` | Configurer environnements (dev/staging/pilot)              | `P0`     | `SET-07`                               |
+| `DEP-02` | Mettre en place pipeline deploiement web                   | `P0`     | `SET-06`, `WEB-05`                     |
+| `DEP-03` | Mettre en place pipeline deploiement API                   | `P0`     | `SET-06`, `QAT-03`                     |
+| `DEP-04` | Preparer distribution mobile test (APK/TestFlight interne) | `P0`     | `MOB-04`, `QAT-04`                     |
+| `DEP-05` | Finaliser observabilite et alerting minimum                | `P1`     | `DEP-02`, `DEP-03`                     |
+| `DEP-06` | Rediger runbook incident + rollback + pilot checklist      | `P0`     | `DEP-01`, `DEP-05`, `QAT-06`           |
+| `DEP-07` | Executer go/no-go pilote et publier release pilote         | `P0`     | `DEP-02`, `DEP-03`, `DEP-04`, `DEP-06` |
+
+---
+
+## Vue Dependances Entre Epics
+
+| Epic  | Dependances amont                               |
+| ----- | ----------------------------------------------- |
+| `ARC` | none                                            |
+| `SET` | `ARC`                                           |
+| `LIB` | `ARC`, `SET`                                    |
+| `MOB` | `SET`, `LIB`                                    |
+| `AUT` | `SET`, `LIB`, `MOB`                             |
+| `WEB` | `SET`, `SUP` (pour formulaires relies API)      |
+| `DSH` | `AUT`, `MOB`, `LIB`                             |
+| `PRG` | `AUT`, `MOB`, `LIB`                             |
+| `RES` | `AUT`, `MOB`, `LIB`                             |
+| `ANN` | `AUT`, `MOB`, `DSH`                             |
+| `SUP` | `SET`, `LIB`, `AUT`                             |
+| `QAT` | `WEB`, `AUT`, `DSH`, `PRG`, `RES`, `ANN`, `SUP` |
+| `DEP` | `QAT`, `WEB`, `MOB`, `SET`                      |
+
+---
+
+## Definition Of Done Par Milestone
+
+- `M1 - Architecture locked` : documents d'architecture valides, conventions fixees, modeles MVP traces.
+- `M2 - Workspace bootstrapped` : monorepo fonctionnel, quality gates actifs, CI verte.
+- `M3 - Mobile shell ready` : app mobile lanceable, navigation de base, build debug valide.
+- `M4 - Auth ready` : login/session/protection routes operationnels et testes.
+- `M5 - Core participant flows ready` : dashboard, programmes, ressources, annonces, support utilisables sur shell mobile (+ web selon scope).
+- `M6 - QA ready` : couverture minimales unitaires/integration/E2E atteinte, blockers corriges.
+- `M7 - Pilot release ready` : runbooks, pipelines, observabilite et release pilote valides.
+
+---
+
+## Sequence Recommandee
+
+1. `M1` : clore `ARC-*`.
+2. `M2` : clore `SET-*` et socle `LIB-*`.
+3. `M3` : clore `MOB-*`.
+4. `M4` : clore `AUT-*`.
+5. `M5` : clore modules coeur participant (`DSH-*`, `PRG-*`, `RES-*`, `ANN-*`, `SUP-*`) + pages web MVP.
+6. `M6` : clore `QAT-*`.
+7. `M7` : clore `DEP-*` et lancer pilote.
+
+---
+
+## Notes D'Execution
+
+- Respect strict du scope MVP (pas de glissement V1.1 sans validation explicite).
+- TDD obligatoire : `RED -> GREEN -> REFACTOR` sur chaque feature/bug.
+- E2E obligatoires sur parcours critiques avec formulation Given/When/Then.
+- Politique de langue du depot : code en anglais, documentation/messages en francais.
