@@ -265,6 +265,71 @@ Recommend using **Board view** for daily standup and status checks.
 
 ---
 
+## ⚡ Default Board-View Recipe (2 Minutes)
+
+Apply these 3 saved views in GitHub Project UI for a fast, disciplined workflow.
+
+### View 1: Status Kanban (daily execution)
+
+1. Open Project #6 → **+ New view** → **Board**.
+2. Name: `Status Kanban`.
+3. Group by: `Status`.
+4. Columns order: `Todo`, `In Progress`, `Done`.
+5. Show fields on cards: `Priority`, `Milestone`, `Area`, `Launch blocker`.
+6. Filter: `is:open`.
+7. Save view.
+
+Use for standups and immediate work tracking.
+
+### View 2: Milestone Table (planning and sequencing)
+
+1. **+ New view** → **Table**.
+2. Name: `Milestone Table`.
+3. Group by: `Milestone`.
+4. Visible columns:
+   - `Title`
+   - `Status`
+   - `Priority`
+   - `Effort`
+   - `Area`
+   - `Launch blocker`
+   - `Assignees`
+5. Sort by:
+   - `Priority` (critical → low)
+   - then `Effort` (high → low)
+6. Filter: `is:open`.
+7. Save view.
+
+Use for sprint planning and milestone readiness reviews.
+
+### View 3: Launch Blockers (risk radar)
+
+1. **+ New view** → **Table** (or Board if preferred).
+2. Name: `Launch Blockers`.
+3. Filter:
+   - `is:open`
+   - `Launch blocker` = `Yes`
+4. Group by: `Milestone` (recommended) or `Status`.
+5. Sort by:
+   - `Priority` (critical first)
+   - then `Status`.
+6. Save view.
+
+Use for go/no-go decisions before launch.
+
+### Optional Light Automation (recommended)
+
+- Keep issue labels and project `Status` aligned:
+  - `status: backlog` -> `Todo`
+  - `status: ready` -> `Todo`
+  - `status: in-progress` -> `In Progress`
+  - `status: review` -> `In Progress`
+  - `status: done` -> `Done`
+- Keep `Priority` field synced from labels (`priority: critical|high|medium|low`).
+- Mark `Launch blocker = Yes` for `priority: critical` items tied to `Launch` milestone.
+
+---
+
 ## 🔐 Project Access
 
 **Repository Owner**: Ange230700  
