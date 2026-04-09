@@ -3,6 +3,7 @@
 ## Pourquoi
 
 ## Type de changement
+
 - [ ] bug
 - [ ] amelioration
 - [ ] contenu
@@ -10,6 +11,7 @@
 - [ ] maintenance
 
 ## Checklist
+
 - [ ] Tache liee a une issue
 - [ ] Portee MVP respectee
 - [ ] Tests RED -> GREEN -> REFACTOR appliques (si code)
@@ -18,6 +20,7 @@
 - [ ] Aucun secret/variable sensible commit
 
 ## Validation
+
 - [ ] Tests unitaires
 - [ ] Tests integration
 - [ ] Tests E2E/smoke

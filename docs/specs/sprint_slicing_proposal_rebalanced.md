@@ -1,13 +1,16 @@
 # Sprint Slicing Proposal - Rebalanced Variant
 
 ## Objective
+
 Rebalance Sprint-06 by redistributing only P1 items while keeping the same total scope for the release.
 
 ## Changes Vs Baseline
+
 - Moved from Sprint-06 to Sprint-07: DSH-04 (3 SP), PRG-04 (3 SP), SUP-05 (3 SP)
 - Moved from Sprint-06 to Sprint-08: WEB-04 (2 SP), WEB-05 (3 SP), SUP-04 (2 SP)
 
 ## Sprint Totals (Tasks Only)
+
 - Sprint-01: 18 SP
 - Sprint-02: 38 SP
 - Sprint-03: 24 SP
@@ -20,6 +23,7 @@ Rebalance Sprint-06 by redistributing only P1 items while keeping the same total
 ## Detailed Plan
 
 ### Sprint-01 (18 SP)
+
 - ARC-01 (5 SP, P0) [ARC] [TASK][ARC-01] Valider architecture cible web/mobile/api avec scope MVP | milestone: M1 - Architecture locked
 - ARC-02 (3 SP, P0) [ARC] [TASK][ARC-02] Definir conventions repo (naming, structure, quality gates) | milestone: M1 - Architecture locked
 - ARC-03 (3 SP, P0) [ARC] [TASK][ARC-03] Definir strategie de rendu web (SEO/prerender) | milestone: M1 - Architecture locked
@@ -27,6 +31,7 @@ Rebalance Sprint-06 by redistributing only P1 items while keeping the same total
 - ARC-05 (2 SP, P1) [ARC] [TASK][ARC-05] Documenter ADRs et criteres anti-scope-creep | milestone: M1 - Architecture locked
 
 ### Sprint-02 (38 SP)
+
 - LIB-01 (5 SP, P0) [LIB] [TASK][LIB-01] Creer packages/contracts (DTO, schema validation, versioning) | milestone: M2 - Workspace bootstrapped
 - LIB-02 (5 SP, P0) [LIB] [TASK][LIB-02] Creer packages/domain (regles metier pures MVP) | milestone: M2 - Workspace bootstrapped
 - SET-01 (5 SP, P0) [SET] [TASK][SET-01] Initialiser workspace Angular monorepo (apps/web, apps/mobile) | milestone: M2 - Workspace bootstrapped
@@ -38,6 +43,7 @@ Rebalance Sprint-06 by redistributing only P1 items while keeping the same total
 - SET-07 (2 SP, P1) [SET] [TASK][SET-07] Mettre en place variables d'environnement et runbook local dev | milestone: M2 - Workspace bootstrapped
 
 ### Sprint-03 (24 SP)
+
 - LIB-03 (3 SP, P1) [LIB] [TASK][LIB-03] Creer packages/api-client (typed client web/mobile vers API) | milestone: M2 - Workspace bootstrapped
 - LIB-04 (2 SP, P1) [LIB] [TASK][LIB-04] Ajouter tests unitaires libs + guideline de publication interne | milestone: M2 - Workspace bootstrapped
 - MOB-01 (3 SP, P0) [MOB] [TASK][MOB-01] Initialiser app Ionic Angular dans apps/mobile | milestone: M3 - Mobile shell ready
@@ -47,6 +53,7 @@ Rebalance Sprint-06 by redistributing only P1 items while keeping the same total
 - MOB-05 (3 SP, P1) [MOB] [TASK][MOB-05] Ajouter service notifications push stub (FCM wiring initial) | milestone: M3 - Mobile shell ready
 
 ### Sprint-04 (19 SP)
+
 - AUT-01 (3 SP, P0) [AUT] [TASK][AUT-01] Configurer Supabase Auth (providers, policies de base) | milestone: M4 - Auth ready
 - AUT-02 (5 SP, P0) [AUT] [TASK][AUT-02] Implementer endpoints API auth/session (NestJS) | milestone: M4 - Auth ready
 - AUT-03 (5 SP, P0) [AUT] [TASK][AUT-03] Implementer ecrans login/signup/reset mobile | milestone: M4 - Auth ready
@@ -54,6 +61,7 @@ Rebalance Sprint-06 by redistributing only P1 items while keeping the same total
 - AUT-05 (3 SP, P1) [AUT] [TASK][AUT-05] Ajouter gestion role participant/admin minimal | milestone: M4 - Auth ready
 
 ### Sprint-05 (31 SP)
+
 - ANN-01 (2 SP, P0) [ANN] [TASK][ANN-01] Definir format annonce et regles de publication MVP | milestone: M5 - Core participant flows ready
 - DSH-01 (2 SP, P0) [DSH] [TASK][DSH-01] Definir contenu dashboard MVP (cartes, rappels, dernieres actus) | milestone: M5 - Core participant flows ready
 - PRG-01 (3 SP, P0) [PRG] [TASK][PRG-01] Definir modele programme/cohorte/statut progression MVP | milestone: M5 - Core participant flows ready
@@ -65,6 +73,7 @@ Rebalance Sprint-06 by redistributing only P1 items while keeping the same total
 - WEB-03 (3 SP, P0) [WEB] [TASK][WEB-03] Ajouter SEO technique (meta, sitemap, robots, Open Graph) | milestone: M5 - Core participant flows ready
 
 ### Sprint-06 (37 SP)
+
 - ANN-02 (3 SP, P0) [ANN] [TASK][ANN-02] Implementer endpoints annonces (feed + detail) | milestone: M5 - Core participant flows ready
 - ANN-03 (3 SP, P0) [ANN] [TASK][ANN-03] Implementer flux annonces dans mobile dashboard/feed | milestone: M5 - Core participant flows ready
 - DSH-02 (3 SP, P0) [DSH] [TASK][DSH-02] Exposer endpoint dashboard aggregate cote API | milestone: M5 - Core participant flows ready
@@ -76,6 +85,7 @@ Rebalance Sprint-06 by redistributing only P1 items while keeping the same total
 - SUP-02 (3 SP, P0) [SUP] [TASK][SUP-02] Integrer formulaire support dans mobile | milestone: M5 - Core participant flows ready
 
 ### Sprint-07 (42 SP)
+
 - ANN-04 (2 SP, P1) [ANN] [TASK][ANN-04] Ajouter notification push pour annonce prioritaire | milestone: M5 - Core participant flows ready
 - DSH-04 (3 SP, P1) [DSH] [TASK][DSH-04] Implementer vue dashboard web participant (si activee MVP) | milestone: M5 - Core participant flows ready
 - PRG-04 (3 SP, P1) [PRG] [TASK][PRG-04] Implementer marquage de progression minimale | milestone: M5 - Core participant flows ready
@@ -90,6 +100,7 @@ Rebalance Sprint-06 by redistributing only P1 items while keeping the same total
 - SUP-05 (3 SP, P1) [SUP] [TASK][SUP-05] Ajouter suivi et statut basique des demandes support | milestone: M5 - Core participant flows ready
 
 ### Sprint-08 (34 SP)
+
 - DEP-01 (3 SP, P0) [DEP] [TASK][DEP-01] Configurer environnements (dev/staging/pilot) | milestone: M7 - Pilot release ready
 - DEP-02 (5 SP, P0) [DEP] [TASK][DEP-02] Mettre en place pipeline deploiement web | milestone: M7 - Pilot release ready
 - DEP-03 (5 SP, P0) [DEP] [TASK][DEP-03] Mettre en place pipeline deploiement API | milestone: M7 - Pilot release ready
@@ -102,6 +113,7 @@ Rebalance Sprint-06 by redistributing only P1 items while keeping the same total
 - WEB-05 (3 SP, P1) [WEB] [TASK][WEB-05] Optimiser accessibilite/performance (objectif Lighthouse > 90) | milestone: M5 - Core participant flows ready
 
 ## Impact Assessment
+
 - Sprint-06 decreases from 53 SP to 37 SP.
 - Scope is unchanged; all moved items remain in Sprint-07/08.
 - Tradeoff: Sprint-07 increases to 42 SP, Sprint-08 to 34 SP; consider parallel lane staffing or moving one additional P1 from Sprint-07 to Sprint-08 if needed.
