@@ -1,0 +1,176 @@
+# Guide du mode développement
+
+Ce guide explique comment lancer et utiliser chaque application du monorepo en développement.
+
+---
+
+## Prérequis
+
+Avant de lancer quoi que ce soit :
+
+1. **Node.js 24+** installé (`node -v` pour vérifier)
+2. **pnpm 10+** activé (`pnpm -v` pour vérifier)
+3. Dépendances installées : `pnpm install` à la racine
+4. Fichiers `.env` configurés (voir ci-dessous)
+
+### Configurer les variables d'environnement
+
+```bash
+# À la racine du projet
+cp .env.example .env
+
+# Pour l'API
+cp apps/api/.env.example apps/api/.env
+```
+
+Remplir les valeurs — voir [`ENVIRONMENT_VARIABLES.md`](ENVIRONMENT_VARIABLES.md) pour la référence complète.
+
+**Variables minimales pour développer en local :**
+
+| Variable                    | Fichier         | Exemple                        |
+| --------------------------- | --------------- | ------------------------------ |
+| `SUPABASE_URL`              | `apps/api/.env` | `http://127.0.0.1:54321`       |
+| `SUPABASE_SERVICE_ROLE_KEY` | `apps/api/.env` | clé fournie par Supabase local |
+| `PUBLIC_API_BASE_URL`       | `.env`          | `http://localhost:3000`        |
+
+---
+
+## Lancer le site web (Angular SSR)
+
+```bash
+pnpm dev:web
+```
+
+- URL : **http://localhost:4200**
+- Hot-reload : oui (les modifications dans `apps/client/projects/web/` se reflètent automatiquement)
+- Commande sous-jacente : `ng serve web`
+
+### Structure du code web
+
+```
+apps/client/projects/web/src/
+├── app/           # Composants, routes, logique applicative
+├── environments/  # Fichiers d'environnement Angular
+├── index.html     # Point d'entrée HTML
+├── main.ts        # Bootstrap client
+├── main.server.ts # Bootstrap SSR (server-side rendering)
+├── server.ts      # Serveur Express pour le SSR
+├── styles.scss    # Styles globaux
+└── tailwind.css   # Import Tailwind
+```
+
+---
+
+## Lancer l'API (NestJS)
+
+```bash
+pnpm dev:api
+```
+
+- URL : **http://localhost:3000**
+- Hot-reload : oui (`nest start --watch`)
+- Tester que ça tourne : `curl http://localhost:3000` (devrait retourner une réponse)
+
+### Structure du code API
+
+```
+apps/api/src/
+├── main.ts              # Point d'entrée, bootstrap NestJS
+├── app.module.ts        # Module racine
+├── app.controller.ts    # Contrôleur principal
+├── app.service.ts       # Service principal
+├── app.controller.spec.ts  # Test du contrôleur
+├── app.service.spec.ts     # Test du service
+└── supabase/
+    ├── supabase.module.ts   # Module Supabase
+    └── supabase.service.ts  # Service d'accès à Supabase
+```
+
+---
+
+## Lancer l'app mobile (Ionic + Capacitor)
+
+```bash
+pnpm dev:mobile
+```
+
+- URL : **http://localhost:4200** (ne pas lancer en même temps que `dev:web`)
+- Hot-reload : oui
+- Commande sous-jacente : `ng serve mobile`
+
+> **Note :** Pour tester sur un appareil physique ou un émulateur, il faut configurer Capacitor séparément. Ce mode lance uniquement l'aperçu web.
+
+---
+
+## Lancer plusieurs apps en même temps
+
+Le site web et l'API peuvent tourner en parallèle (ports différents). Ouvrir deux terminaux :
+
+```bash
+# Terminal 1
+pnpm dev:api
+
+# Terminal 2
+pnpm dev:web
+```
+
+> ⚠ `dev:web` et `dev:mobile` utilisent le même port (4200). Ne pas les lancer en même temps.
+
+---
+
+## Commandes de test
+
+```bash
+# Tests unitaires API (Jest)
+pnpm test:api
+
+# Tests unitaires client (Karma/Jasmine via Angular)
+pnpm test:unit
+
+# Tests E2E (Playwright)
+pnpm test:e2e
+```
+
+---
+
+## Commandes de qualité
+
+```bash
+# Vérifier le formatage
+pnpm format:check
+
+# Formater automatiquement
+pnpm format
+
+# Lancer le linter
+pnpm lint
+
+# Linter uniquement l'API
+pnpm lint:api
+```
+
+---
+
+## Dépannage courant
+
+### `pnpm install` échoue
+
+- Vérifier la version de Node : `node -v` (doit être ≥ 24.14)
+- Vérifier la version de pnpm : `pnpm -v` (doit être ≥ 10)
+- Supprimer le cache et réessayer : `rm -rf node_modules && pnpm install`
+
+### Le port 4200 ou 3000 est déjà utilisé
+
+- Fermer l'autre processus qui utilise le port
+- Ou changer le port : `ng serve web --port 4201`
+
+### Les hooks Git bloquent mon commit
+
+- Formatage : `pnpm format` puis réessayer
+- Lint : corriger les erreurs ESLint
+- Voir [`CONTRIBUTING.md`](../../CONTRIBUTING.md) pour les détails
+
+### Les variables d'environnement ne sont pas reconnues
+
+- Vérifier que les fichiers `.env` existent (`ls -la .env apps/api/.env`)
+- Redémarrer le serveur de développement après avoir modifié un `.env`

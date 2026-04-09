@@ -77,16 +77,16 @@ Règle pratique : chaque passage de colonne doit aussi etre reflechi dans les la
 
 ## Carte De Reference Des Epopees
 
-| Epopee | Issues | Priorite | Jalon | Responsable |
-| --- | --- | --- | --- | --- |
-| Contenu | #9-11 | Critique | Content ready | Content Lead |
-| Design | #12-14 | Critique | Design approved | Design Lead |
-| Setup frontend | #15-19 | Critique | Development complete | Frontend Lead |
-| Pages | #20-24 | Critique | Development complete | Frontend Team |
-| Formulaires | #25-27 | Critique | Development complete | Backend + Frontend |
-| SEO | #28-31 | Haute | Development complete | Frontend + DevOps |
-| QA | #32-34 | Haute | QA complete | QA Team |
-| Deploiement | #35-38 | Haute | Launch | DevOps |
+| Epopee         | Issues | Priorite | Jalon                | Responsable        |
+| -------------- | ------ | -------- | -------------------- | ------------------ |
+| Contenu        | #9-11  | Critique | Content ready        | Content Lead       |
+| Design         | #12-14 | Critique | Design approved      | Design Lead        |
+| Setup frontend | #15-19 | Critique | Development complete | Frontend Lead      |
+| Pages          | #20-24 | Critique | Development complete | Frontend Team      |
+| Formulaires    | #25-27 | Critique | Development complete | Backend + Frontend |
+| SEO            | #28-31 | Haute    | Development complete | Frontend + DevOps  |
+| QA             | #32-34 | Haute    | QA complete          | QA Team            |
+| Deploiement    | #35-38 | Haute    | Launch               | DevOps             |
 
 ---
 
@@ -142,19 +142,24 @@ gh project view 6 --owner Ange230700
 ## Semaine X
 
 ### Termine (Done)
+
 - [ ] Issue #X - Intitule
 
 ### En cours (In Progress)
+
 - [ ] Issue #Y - avancement + blocages
 
 ### Bloque
+
 - [ ] Issue #Z - raison + aide requise
 
 ### Focus semaine suivante
+
 - [ ] Issue #A
 - [ ] Issue #B
 
 ### Indicateurs
+
 - Issues terminees : X
 - Bloquants critiques : Y
 - Trajectoire MVP : Oui/Non
@@ -185,9 +190,11 @@ gh issue edit <numero> --milestone "<nouveau milestone>"
 ```
 
 ### Peut-on faire des sous-tâches natives ?
+
 GitHub ne gere pas les sous-tâches natives comme Jira. Utiliser des issues liees avec references explicites (`depends on #X`, `blocks #Y`).
 
 ### Quand fermer une issue ?
+
 Quand la PR est fusionnee, les criteres d'acceptation verifies et la fonctionnalite disponible sur `main`.
 
 ---
