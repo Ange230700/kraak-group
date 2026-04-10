@@ -51,11 +51,11 @@ Regles a appliquer dans le GitHub Project :
 
 Lanes recommandees :
 
-| Lane | Portee principale | Type de travail |
-| ---- | ----------------- | --------------- |
-| `Lane A - Web public` | site vitrine, conversion, SEO, contact web | plutot independant |
+| Lane                              | Portee principale                                 | Type de travail                  |
+| --------------------------------- | ------------------------------------------------- | -------------------------------- |
+| `Lane A - Web public`             | site vitrine, conversion, SEO, contact web        | plutot independant               |
 | `Lane B - Platform & participant` | packages, API, mobile, auth, parcours participant | plutot sequentiel mais concentre |
-| `Shared handoff` | contrats, conventions, quality gates, release | court, explicite, limite |
+| `Shared handoff`                  | contrats, conventions, quality gates, release     | court, explicite, limite         |
 
 Issues a re-decouper au niveau board si elles redeviennent bloquantes :
 
