@@ -1,10 +1,13 @@
 # Guide De Mise En Place Et De Pilotage Du GitHub Project
 
-## GitHub Project #6 : KRAAK MVP - Product Backlog
+## GitHub Project principal : KRAAK MVP - Product Backlog
 
-- URL : https://github.com/users/Ange230700/projects/6
+- URL : verifier le board actif avant automatisation
 - Dépôt : Ange230700/kraak-group
 - Portée : backlog MVP KRAAK (épopées + tâches)
+
+> Règle pratique : ne pas figer un numéro de Project dans les scripts ou docs
+> opérationnelles sans le revalider, car le board peut évoluer.
 
 ---
 
@@ -52,7 +55,7 @@ gh issue create \
 gh api repos/Ange230700/kraak-group/issues/42 --jq .node_id -q
 
 # Ajouter l'issue au projet
-gh project item-add 6 --owner Ange230700 --id <node_id>
+gh project item-add <project-number> --owner Ange230700 --id <node_id>
 ```
 
 ### Mise à jour du statut
@@ -131,7 +134,7 @@ gh issue list --label "type: epic,status: backlog"
 ### Verifier le projet
 
 ```bash
-gh project view 6 --owner Ange230700
+gh project view <project-number> --owner Ange230700
 ```
 
 ---

@@ -1,4 +1,4 @@
-# Point 6 — Guide de style UI allégé (KRAAK Consulting)
+# Point 6 — Guide de style UI allégé (KRAAK)
 
 ## 1. Objectif du guide 🎨
 

@@ -29,6 +29,7 @@
     "@capacitor/android": "^7.3.0",
     "@capacitor/core": "^7.3.0",
     "@ionic/angular": "^8.6.0",
+    "@kraak/tokens": "workspace:*",
     "@primeuix/themes": "^2.0.3",
     "express": "^5.1.0",
     "ionicons": "^7.4.0",

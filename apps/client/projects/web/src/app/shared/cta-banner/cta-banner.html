@@ -1,0 +1,14 @@
+<aside class="section cta-banner">
+  <div class="container-page cta-banner__inner">
+    <h2 class="cta-banner__heading text-balance">{{ heading }}</h2>
+    @if (body) {
+      <p class="cta-banner__body text-balance">{{ body }}</p>
+    }
+    <ng-content />
+    @if (ctaLabel && ctaLink) {
+      <a [routerLink]="ctaLink" class="btn btn-primary cta-banner__btn">
+        {{ ctaLabel }}
+      </a>
+    }
+  </div>
+</aside>

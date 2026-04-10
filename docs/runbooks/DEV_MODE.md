@@ -18,20 +18,17 @@ Avant de lancer quoi que ce soit :
 ```bash
 # À la racine du projet
 cp .env.example .env
-
-# Pour l'API
-cp apps/api/.env.example apps/api/.env
 ```
 
 Remplir les valeurs — voir [`ENVIRONMENT_VARIABLES.md`](ENVIRONMENT_VARIABLES.md) pour la référence complète.
 
 **Variables minimales pour développer en local :**
 
-| Variable                    | Fichier         | Exemple                        |
-| --------------------------- | --------------- | ------------------------------ |
-| `SUPABASE_URL`              | `apps/api/.env` | `http://127.0.0.1:54321`       |
-| `SUPABASE_SERVICE_ROLE_KEY` | `apps/api/.env` | clé fournie par Supabase local |
-| `PUBLIC_API_BASE_URL`       | `.env`          | `http://localhost:3000`        |
+| Variable                    | Fichier | Exemple                        |
+| --------------------------- | ------- | ------------------------------ |
+| `SUPABASE_URL`              | `.env`  | `http://127.0.0.1:54321`       |
+| `SUPABASE_SERVICE_ROLE_KEY` | `.env`  | clé fournie par Supabase local |
+| `PUBLIC_API_BASE_URL`       | `.env`  | `http://localhost:3000`        |
 
 ---
 
@@ -75,16 +72,20 @@ pnpm dev:api
 
 ```
 apps/api/src/
-├── main.ts              # Point d'entrée, bootstrap NestJS
-├── app.module.ts        # Module racine
-├── app.controller.ts    # Contrôleur principal
-├── app.service.ts       # Service principal
-├── app.controller.spec.ts  # Test du contrôleur
-├── app.service.spec.ts     # Test du service
-└── supabase/
-    ├── supabase.module.ts   # Module Supabase
-    └── supabase.service.ts  # Service d'accès à Supabase
+├── main.ts                 # Point d'entrée, bootstrap NestJS
+├── app.module.ts           # Module racine actuel
+├── app.controller.ts       # Route health (`GET /health`)
+├── app.service.ts          # Service principal
+├── announcements/          # Répertoire métier scaffoldé
+├── auth/                   # Répertoire métier scaffoldé
+├── dashboard/              # Répertoire métier scaffoldé
+├── programs/               # Répertoire métier scaffoldé
+├── resources/              # Répertoire métier scaffoldé
+└── support/                # Répertoire métier scaffoldé
 ```
+
+> À ce stade, `AppModule` reste minimal et les répertoires métier servent encore
+> surtout de structure cible.
 
 ---
 
@@ -124,10 +125,10 @@ pnpm dev:web
 # Tests unitaires API (Jest)
 pnpm test:api
 
-# Tests unitaires client (Karma/Jasmine via Angular)
+# Tests unitaires client (via `ng test`)
 pnpm test:unit
 
-# Tests E2E (Playwright)
+# Tests E2E web (Playwright dans apps/client/tests/e2e)
 pnpm test:e2e
 ```
 
@@ -168,9 +169,10 @@ pnpm lint:api
 
 - Formatage : `pnpm format` puis réessayer
 - Lint : corriger les erreurs ESLint
+- Message de commit : relancer `pnpm commit`
 - Voir [`CONTRIBUTING.md`](../../CONTRIBUTING.md) pour les détails
 
 ### Les variables d'environnement ne sont pas reconnues
 
-- Vérifier que les fichiers `.env` existent (`ls -la .env apps/api/.env`)
+- Vérifier que le fichier `.env` existe à la racine
 - Redémarrer le serveur de développement après avoir modifié un `.env`

@@ -1,3 +1,4 @@
 pnpm exec validate-branch-name
+pnpm typecheck
 pnpm test:api
 pnpm --filter @kraak/client exec ng test --watch=false

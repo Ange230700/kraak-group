@@ -215,7 +215,7 @@ Documenter les decisions d'architecture et regles de protection MVP.
 ### SET-01
 
 ```md
-Title: [TASK][SET-01] Initialiser workspace Angular monorepo (apps/web, apps/mobile)
+Title: [TASK][SET-01] Initialiser workspace Angular monorepo (apps/client/projects/web, apps/client/projects/mobile)
 
 Labels:
 
@@ -245,8 +245,8 @@ Initialiser le monorepo Angular avec web et mobile.
 
 ## Criteres d'acceptation
 
-- [ ] apps/web cree
-- [ ] apps/mobile cree
+- [ ] apps/client/projects/web cree
+- [ ] apps/client/projects/mobile cree
 - [ ] build local passe
 ```
 
@@ -847,7 +847,7 @@ Ameliorer accessibilite et performance des pages MVP.
 ### MOB-01
 
 ```md
-Title: [TASK][MOB-01] Initialiser app Ionic Angular dans apps/mobile
+Title: [TASK][MOB-01] Initialiser app Ionic Angular dans apps/client/projects/mobile
 
 Labels:
 

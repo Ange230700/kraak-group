@@ -29,9 +29,6 @@ pnpm install
 ```bash
 # Copier l'exemple à la racine
 cp .env.example .env
-
-# Copier l'exemple pour l'API
-cp apps/api/.env.example apps/api/.env
 ```
 
 Remplir les valeurs manquantes — voir [`docs/runbooks/ENVIRONMENT_VARIABLES.md`](docs/runbooks/ENVIRONMENT_VARIABLES.md).
@@ -92,20 +89,22 @@ Pour les détails, voir [`ARCHITECTURE.md`](ARCHITECTURE.md).
 
 ## Scripts disponibles
 
-| Commande            | Description                           |
-| ------------------- | ------------------------------------- |
-| `pnpm dev:web`      | Lancer le site web en dev (port 4200) |
-| `pnpm dev:api`      | Lancer l'API en dev (port 3000)       |
-| `pnpm dev:mobile`   | Lancer l'app mobile en dev            |
-| `pnpm build:web`    | Builder le site web                   |
-| `pnpm build:api`    | Builder l'API                         |
-| `pnpm build:mobile` | Builder l'app mobile                  |
-| `pnpm test:api`     | Tests unitaires API                   |
-| `pnpm test:unit`    | Tests unitaires client                |
-| `pnpm test:e2e`     | Tests E2E (Playwright)                |
-| `pnpm lint`         | Linter tous les projets               |
-| `pnpm format`       | Formater le code (Prettier)           |
-| `pnpm format:check` | Vérifier le formatage                 |
+| Commande            | Description                            |
+| ------------------- | -------------------------------------- |
+| `pnpm dev:web`      | Lancer le site web en dev (port 4200)  |
+| `pnpm dev:api`      | Lancer l'API en dev (port 3000)        |
+| `pnpm dev:mobile`   | Lancer l'app mobile en dev             |
+| `pnpm build:web`    | Builder le site web                    |
+| `pnpm build:api`    | Builder l'API                          |
+| `pnpm build:mobile` | Builder l'app mobile                   |
+| `pnpm test:api`     | Tests unitaires API                    |
+| `pnpm typecheck`    | Vérifier le typage web, mobile et API  |
+| `pnpm test:unit`    | Tests unitaires client                 |
+| `pnpm test:e2e`     | Tests E2E (Playwright)                 |
+| `pnpm lint`         | Linter tous les projets                |
+| `pnpm format`       | Formater le code (Prettier)            |
+| `pnpm format:check` | Vérifier le formatage                  |
+| `pnpm commit`       | Ouvrir le prompt interactif Commitizen |
 
 ---
 
@@ -117,8 +116,12 @@ Voir [`CONTRIBUTING.md`](CONTRIBUTING.md) pour le workflow complet (branches, co
 
 1. Créer une branche depuis `main` : `git checkout -b feat/ma-feature`
 2. Implémenter + tester
-3. Commiter avec un message [Conventional Commits](https://www.conventionalcommits.org/) : `feat: ajouter le formulaire de contact`
+3. Commiter avec un message [Conventional Commits](https://www.conventionalcommits.org/) via `pnpm commit` ou en respectant le format `feat(web): ajouter le formulaire de contact`
 4. Pousser et ouvrir une PR
+
+Règle documentaire : toute évolution du codebase qui rend la documentation
+inexacte doit inclure la mise à jour des fichiers `.md` concernés dans le même
+changement.
 
 ---
 

@@ -90,7 +90,7 @@ Clore toutes les issues SET-\* pour atteindre le milestone M2.
 
 ## Sous-taches (issues enfants)
 
-- [ ] SET-01 - Initialiser workspace Angular monorepo (apps/web, apps/mobile) (P0) - deps: ARC-02
+- [ ] SET-01 - Initialiser workspace Angular monorepo (apps/client/projects/web, apps/client/projects/mobile) (P0) - deps: ARC-02
 - [ ] SET-02 - Initialiser apps/api NestJS et wiring de base (P0) - deps: ARC-02
 - [ ] SET-03 - Configurer quality gates (lint, format, typecheck) (P0) - deps: SET-01, SET-02
 - [ ] SET-04 - Configurer test runners unitaires + integration (P0) - deps: SET-01, SET-02
@@ -246,7 +246,7 @@ Clore toutes les issues MOB-\* pour atteindre M3.
 
 ## Sous-taches (issues enfants)
 
-- [ ] MOB-01 - Initialiser app Ionic Angular dans apps/mobile (P0) - deps: SET-01
+- [ ] MOB-01 - Initialiser app Ionic Angular dans apps/client/projects/mobile (P0) - deps: SET-01
 - [ ] MOB-02 - Mettre en place navigation shell (tabs/stack) et layout de base (P0) - deps: MOB-01
 - [ ] MOB-03 - Integrer theming, design tokens et composants UI de base (P1) - deps: MOB-01, LIB-01
 - [ ] MOB-04 - Configurer Capacitor (Android/iOS) et builds debug (P0) - deps: MOB-01

@@ -43,7 +43,7 @@ Capacity check: max sprint load = 35 SP (target <= 35 SP).
 
 - LIB-01 (5 SP, P0) [LIB] [TASK][LIB-01] Creer packages/contracts (DTO, schema validation, versioning) | milestone: M2 - Workspace bootstrapped
 - LIB-02 (5 SP, P0) [LIB] [TASK][LIB-02] Creer packages/domain (regles metier pures MVP) | milestone: M2 - Workspace bootstrapped
-- SET-01 (5 SP, P0) [SET] [TASK][SET-01] Initialiser workspace Angular monorepo (apps/web, apps/mobile) | milestone: M2 - Workspace bootstrapped
+- SET-01 (5 SP, P0) [SET] [TASK][SET-01] Initialiser workspace Angular monorepo (apps/client/projects/web, apps/client/projects/mobile) | milestone: M2 - Workspace bootstrapped
 - SET-02 (5 SP, P0) [SET] [TASK][SET-02] Initialiser apps/api NestJS et wiring de base | milestone: M2 - Workspace bootstrapped
 - SET-04 (3 SP, P0) [SET] [TASK][SET-04] Configurer test runners unitaires + integration | milestone: M2 - Workspace bootstrapped
 - SET-05 (5 SP, P0) [SET] [TASK][SET-05] Configurer Playwright E2E et smoke pipeline | milestone: M2 - Workspace bootstrapped
@@ -54,7 +54,7 @@ Capacity check: max sprint load = 35 SP (target <= 35 SP).
 
 - LIB-03 (3 SP, P1) [LIB] [TASK][LIB-03] Creer packages/api-client (typed client web/mobile vers API) | milestone: M2 - Workspace bootstrapped
 - LIB-04 (2 SP, P1) [LIB] [TASK][LIB-04] Ajouter tests unitaires libs + guideline de publication interne | milestone: M2 - Workspace bootstrapped
-- MOB-01 (3 SP, P0) [MOB] [TASK][MOB-01] Initialiser app Ionic Angular dans apps/mobile | milestone: M3 - Mobile shell ready
+- MOB-01 (3 SP, P0) [MOB] [TASK][MOB-01] Initialiser app Ionic Angular dans apps/client/projects/mobile | milestone: M3 - Mobile shell ready
 - MOB-02 (5 SP, P0) [MOB] [TASK][MOB-02] Mettre en place navigation shell (tabs/stack) et layout de base | milestone: M3 - Mobile shell ready
 - MOB-03 (3 SP, P1) [MOB] [TASK][MOB-03] Integrer theming, design tokens et composants UI de base | milestone: M3 - Mobile shell ready
 - MOB-04 (5 SP, P0) [MOB] [TASK][MOB-04] Configurer Capacitor (Android/iOS) et builds debug | milestone: M3 - Mobile shell ready

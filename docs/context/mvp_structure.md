@@ -1,8 +1,9 @@
-# Point 2 — Structure du MVP du site web KRAAK Consulting
+# Point 2 — Structure du MVP du site web KRAAK
 
 ## 1. Objectif de la structure 🧭
 
-La structure du MVP doit permettre aux visiteurs de **comprendre rapidement qui est KRAAK Consulting, ce que l’organisation propose et comment passer à l’action**.
+La structure du MVP doit permettre aux visiteurs de **comprendre rapidement qui
+est KRAAK, ce que l’organisation propose et comment passer à l’action**.
 
 L’architecture du site doit être :
 
@@ -30,7 +31,7 @@ Cette structure est suffisante pour lancer une première version professionnelle
 Page d’entrée principale du site.  
 Elle doit :
 
-- présenter KRAAK Consulting en quelques phrases claires ;
+- présenter KRAAK en quelques phrases claires ;
 - mettre en avant la mission, la proposition de valeur et les domaines d’intervention ;
 - orienter rapidement vers les services, les programmes ou la prise de contact ;
 - inclure des appels à l’action visibles.
@@ -104,4 +105,6 @@ Les principales actions à encourager sont :
 
 ## 6. Résultat attendu
 
-Une structure web simple, crédible et efficace, qui permet de lancer rapidement la présence en ligne de KRAAK Consulting, tout en préparant l’ajout futur de nouvelles pages, fonctionnalités ou programmes.
+Une structure web simple, crédible et efficace, qui permet de lancer rapidement
+la présence en ligne de KRAAK, tout en préparant l’ajout futur de nouvelles
+pages, fonctionnalités ou programmes.

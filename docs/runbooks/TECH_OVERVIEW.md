@@ -47,6 +47,7 @@ Le site web et l'app mobile communiquent avec l'API backend (NestJS), qui elle-m
 - `apps/client/projects/web/src/app/` — Code source du site web
 - `apps/client/projects/mobile/src/app/` — Code source de l'app mobile
 - `apps/client/angular.json` — Configuration des projets Angular
+- `packages/tokens/` — Tokens de design partagés déjà actifs dans le repo
 
 ### PrimeNG (v21)
 
@@ -118,7 +119,9 @@ Le site web et l'app mobile communiquent avec l'API backend (NestJS), qui elle-m
 | **Auth**     | Inscription, connexion, gestion des sessions |
 | **Storage**  | Stockage de fichiers (images, documents)     |
 
-**Accès depuis le code :** Le service `apps/api/src/supabase/supabase.service.ts` encapsule la connexion à Supabase.
+**Accès depuis le code :** L'intégration Supabase reste une cible d'architecture.
+À ce stade, le repo contient surtout la structure NestJS et les répertoires
+fonctionnels, sans service Supabase branché dans `apps/api/src/`.
 
 ---
 
@@ -154,8 +157,16 @@ pnpm run <script>     # Exécuter un script du package.json
 
 | Application | Plateforme | Comment                                             |
 | ----------- | ---------- | --------------------------------------------------- |
-| Site web    | **Vercel** | Déploiement automatique à chaque push sur `main`    |
+| Site web    | **Vercel** | Plateforme cible configurée via `vercel.json`       |
 | API         | **Render** | Déploiement via Docker (voir `apps/api/Dockerfile`) |
+
+---
+
+## Règle documentaire
+
+Quand un changement de code modifie la structure du repo, les commandes, les
+intégrations ou les chemins listés ici, ce document doit être mis à jour dans
+le même changement.
 
 ---
 

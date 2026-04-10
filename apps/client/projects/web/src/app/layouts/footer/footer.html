@@ -1,0 +1,31 @@
+<footer class="footer">
+  <div class="container-page footer__inner">
+    <div class="footer__brand">
+      <span class="footer__logo-text">KRAAK</span>
+      <p class="footer__tagline">
+        Accompagner l'ambition. Former le leadership. Ouvrir les chemins.
+      </p>
+    </div>
+    <div class="footer__groups">
+      @for (group of linkGroups; track group.title) {
+        <div class="footer__group">
+          <h3 class="footer__group-title">{{ group.title }}</h3>
+          <ul class="footer__group-links">
+            @for (link of group.links; track link.path + link.label) {
+              <li>
+                <a [routerLink]="link.path" class="footer__link">
+                  {{ link.label }}
+                </a>
+              </li>
+            }
+          </ul>
+        </div>
+      }
+    </div>
+  </div>
+  <div class="footer__legal">
+    <div class="container-page footer__legal-inner">
+      <p>&copy; {{ currentYear }} KRAAK. Tous droits réservés.</p>
+    </div>
+  </div>
+</footer>

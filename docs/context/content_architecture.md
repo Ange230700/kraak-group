@@ -1,4 +1,4 @@
-# Point 4 — Architecture du contenu (KRAAK Consulting)
+# Point 4 — Architecture du contenu (KRAAK)
 
 ## 1. Ton éditorial 🎙️
 

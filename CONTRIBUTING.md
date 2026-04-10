@@ -55,8 +55,8 @@ Chaque message de commit suit le format [Conventional Commits](https://www.conve
 ```
 feat(web): ajouter la page d'accueil
 fix(api): corriger le CORS pour /contact
-docs: mettre à jour le README
-chore: mettre à jour les dépendances pnpm
+docs(docs): mettre à jour le README
+chore(repo): mettre à jour les dépendances pnpm
 test(api): ajouter un test pour le service contact
 ```
 
@@ -66,9 +66,39 @@ test(api): ajouter un test pour le service contact
 
 Ce sont les mêmes que les préfixes de branche : `feat`, `fix`, `docs`, `chore`, `test`, `refactor`, `style`, `perf`, `ci`, `build`, `revert`.
 
-### Scope (optionnel)
+### Scope (obligatoire)
 
-Indique la partie du projet concernée : `web`, `api`, `mobile`, `docs`, etc.
+Indique la partie du projet concernée. Scopes autorisés :
+`root`, `repo`, `workspace`, `config`, `docs`, `scripts`, `web`, `mobile`,
+`api`, `client`, `contracts`, `domain`, `api-client`, `tokens`, `infra`, `ci`.
+
+### Prompt interactif avec Commitizen
+
+Pour créer un commit avec un assistant interactif, utiliser :
+
+```bash
+pnpm commit
+```
+
+Le prompt propose les types et scopes autorisés, puis génère un message compatible
+avec `commitlint`.
+
+---
+
+## Règle Documentation
+
+Toute modification du codebase qui rend un document inexact, incomplet ou
+ambigu impose une mise à jour de la documentation dans le même changement.
+
+Cela couvre notamment :
+
+- les chemins et la structure du dépôt
+- les scripts et commandes de travail
+- les variables d'environnement
+- les comportements visibles et contrats techniques
+- les conventions Git, de test ou de déploiement
+
+Ne pas remettre une mise à jour documentaire nécessaire à plus tard.
 
 ---
 
@@ -79,7 +109,7 @@ Indique la partie du projet concernée : `web`, `api`, `mobile`, `docs`, etc.
 2. git checkout -b feat/ma-feature
 3. # implémenter + tester
 4. git add .
-5. git commit -m "feat(web): description courte"
+5. pnpm commit
 6. git push -u origin feat/ma-feature
 7. # ouvrir une Pull Request sur GitHub
 8. # review + merge dans main
@@ -92,17 +122,19 @@ Indique la partie du projet concernée : `web`, `api`, `mobile`, `docs`, etc.
 
 Des vérifications automatiques s'exécutent à chaque étape :
 
-| Moment       | Vérification                                           | Effet si échec |
-| ------------ | ------------------------------------------------------ | -------------- |
-| `commit-msg` | Format Conventional Commits (commitlint)               | Commit rejeté  |
-| `pre-commit` | `pnpm format:check` + `pnpm lint`                      | Commit rejeté  |
-| `pre-push`   | Nom de branche valide + `pnpm test:api` + tests client | Push rejeté    |
+| Moment       | Vérification                                                              | Effet si échec |
+| ------------ | ------------------------------------------------------------------------- | -------------- |
+| `commit-msg` | Format Conventional Commits (commitlint)                                  | Commit rejeté  |
+| `pre-commit` | `pnpm format:check` + `pnpm lint`                                         | Commit rejeté  |
+| `pre-push`   | Nom de branche valide + `pnpm typecheck` + `pnpm test:api` + tests client | Push rejeté    |
 
 ### Si un hook échoue
 
 - **Formatage** : exécuter `pnpm format` puis réessayer
 - **Lint** : corriger les erreurs signalées par ESLint
+- **Typecheck** : corriger les erreurs TypeScript signalées par `pnpm typecheck`
 - **Nom de branche** : renommer avec `git branch -m <nouveau-nom>`
+- **Message de commit** : relancer `pnpm commit` et choisir un scope autorisé
 - **Tests** : corriger les tests cassés avant de pousser
 
 ---
