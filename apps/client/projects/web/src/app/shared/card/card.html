@@ -1,0 +1,21 @@
+<article class="card">
+  @if (icon) {
+    <div class="card__icon">
+      <i [class]="icon"></i>
+    </div>
+  }
+  <ng-content select="[cardHeader]" />
+  @if (title) {
+    <h3 class="card__title">{{ title }}</h3>
+  }
+  @if (description) {
+    <p class="card__description">{{ description }}</p>
+  }
+  <ng-content />
+  @if (link && linkLabel) {
+    <a [routerLink]="link" class="card__link">
+      {{ linkLabel }}
+      <span aria-hidden="true">&rarr;</span>
+    </a>
+  }
+</article>

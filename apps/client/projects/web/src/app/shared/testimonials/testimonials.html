@@ -1,0 +1,24 @@
+<div class="testimonials">
+  @if (items.length > 0) {
+    <div class="testimonials__grid">
+      @for (item of items; track item.author) {
+        <blockquote class="testimonials__card card">
+          <p class="testimonials__quote">&laquo; {{ item.quote }} &raquo;</p>
+          <footer class="testimonials__author">
+            <strong>{{ item.author }}</strong>
+            @if (item.role) {
+              <span class="testimonials__role">{{ item.role }}</span>
+            }
+          </footer>
+        </blockquote>
+      }
+    </div>
+  } @else if (placeholder) {
+    <div class="testimonials__placeholder">
+      <p class="testimonials__placeholder-text">
+        Témoignages à venir — nos participants partagent bientôt leurs
+        expériences.
+      </p>
+    </div>
+  }
+</div>

@@ -3,7 +3,7 @@
 Ce document decrit les variables d'environnement du MVP.
 Ne jamais commiter de secrets dans le depot.
 
-## Frontend (apps/web)
+## Frontend (apps/client)
 
 - `PUBLIC_SITE_URL`: URL publique du site (ex: https://kraak.example)
 - `PUBLIC_GA4_ID`: identifiant Google Analytics 4
@@ -19,6 +19,13 @@ Ne jamais commiter de secrets dans le depot.
 - `CONTACT_TO_EMAIL`: email destinataire des formulaires
 - `CORS_ALLOWED_ORIGINS`: origines autorisees separees par virgule
 
+## Staging / variantes documentees
+
+- `.env.staging.example` utilise actuellement `SUPABASE_PUBLISHABLE_KEY` et
+  `SUPABASE_SECRET_KEY` pour les environnements de preproduction/staging.
+- Garder les noms de variables alignes entre les fichiers d'exemple, Render,
+  Vercel et le code avant tout changement d'environnement.
+
 ## CI/CD
 
 - `VERCEL_TOKEN`
@@ -29,5 +36,6 @@ Ne jamais commiter de secrets dans le depot.
 ## Convention de gestion
 
 - Utiliser `.env.example` sans valeurs sensibles.
+- Mettre a jour ce document a chaque ajout, suppression ou renommage de variable.
 - Injecter les secrets via GitHub Secrets/variables d'environnement hebergeur.
 - Rotation immediate en cas de fuite.

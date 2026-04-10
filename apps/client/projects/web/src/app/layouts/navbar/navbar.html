@@ -1,0 +1,71 @@
+<header class="navbar">
+  <nav class="container-page navbar__inner">
+    <!-- Logo / Marque -->
+    <a routerLink="/" class="navbar__brand" (click)="closeMobileMenu()">
+      <span class="navbar__logo-text">KRAAK</span>
+    </a>
+
+    <!-- Liens de navigation (desktop) -->
+    <ul class="navbar__links">
+      @for (link of links; track link.path) {
+        <li>
+          <a
+            [routerLink]="link.path"
+            routerLinkActive="navbar__link--active"
+            [routerLinkActiveOptions]="{ exact: link.path === '/' }"
+            class="navbar__link"
+          >
+            {{ link.label }}
+          </a>
+        </li>
+      }
+    </ul>
+
+    <!-- CTA desktop -->
+    <div class="navbar__actions">
+      <a routerLink="/contact" class="btn btn-primary btn--sm">
+        Nous contacter
+      </a>
+    </div>
+
+    <!-- Bouton menu mobile -->
+    <button
+      class="navbar__toggle"
+      (click)="toggleMobileMenu()"
+      [attr.aria-expanded]="mobileMenuOpen()"
+      aria-label="Menu de navigation"
+    >
+      <span class="navbar__toggle-bar"></span>
+      <span class="navbar__toggle-bar"></span>
+      <span class="navbar__toggle-bar"></span>
+    </button>
+  </nav>
+
+  <!-- Menu mobile -->
+  @if (mobileMenuOpen()) {
+    <div class="navbar__mobile-menu">
+      <ul class="navbar__mobile-links">
+        @for (link of links; track link.path) {
+          <li>
+            <a
+              [routerLink]="link.path"
+              routerLinkActive="navbar__link--active"
+              [routerLinkActiveOptions]="{ exact: link.path === '/' }"
+              class="navbar__mobile-link"
+              (click)="closeMobileMenu()"
+            >
+              {{ link.label }}
+            </a>
+          </li>
+        }
+      </ul>
+      <a
+        routerLink="/contact"
+        class="btn btn-primary"
+        (click)="closeMobileMenu()"
+      >
+        Nous contacter
+      </a>
+    </div>
+  }
+</header>

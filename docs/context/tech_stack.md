@@ -1,8 +1,10 @@
-# Point 3 — Définir la stack technologique du MVP KRAAK Consulting
+# Stack Technologique Du MVP KRAAK
 
 ## 1. Décision globale
 
-Pour KRAAK Consulting, le meilleur compromis entre **rapidité de livraison**, **crédibilité technique**, **SEO**, **évolutivité** et **cohérence long terme** est :
+Pour KRAAK, le meilleur compromis entre **rapidité de livraison**,
+**crédibilité technique**, **SEO**, **évolutivité** et **cohérence long terme**
+est :
 
 - **Type de site :** site web marketing personnalisé, avec fondations applicatives pour les futures fonctionnalités
 - **Architecture :** monorepo `pnpm`
@@ -40,8 +42,8 @@ Pour KRAAK Consulting, le meilleur compromis entre **rapidité de livraison**, *
 
 ### Runtime / outillage
 
-- **Node.js : 24.14.1 LTS**
-- **pnpm : 10.33.0**
+- **Node.js : 24.14+**
+- **pnpm : 10.23.0+**
 - **TypeScript : 5.9.3**
 - **Git : dernière version stable**
 - **GitHub : dépôt principal**
@@ -52,10 +54,10 @@ Pour KRAAK Consulting, le meilleur compromis entre **rapidité de livraison**, *
 - **Angular : 21.2.x**
   > Tous les packages `@angular/*` doivent être alignés sur **la même version exacte**
 - **Angular SSR / prerender : 21.x**
-- **RxJS : 7.8.2**
-- **Tailwind CSS : 4.1.13**
-- **PrimeNG : 21.1.3**
-- **@primeuix/themes : 1.x compatible PrimeNG 21**
+- **RxJS : 7.8.x**
+- **Tailwind CSS : 4.2.x**
+- **PrimeNG : 21.1.x**
+- **@primeuix/themes : 2.x compatible PrimeNG 21**
 - **Gestion d’état : Angular Signals + services + RxJS**
   > Pas de NgRx pour le MVP
 
@@ -183,16 +185,33 @@ C’est cohérent avec ton choix initial.
 
 ## 6. Processus de déploiement recommandé
 
+### État actuel du repo
+
+- le workspace Angular vit dans `apps/client`
+- le site web est dans `apps/client/projects/web`
+- l'application mobile est dans `apps/client/projects/mobile`
+- `packages/tokens` est actif ; `packages/contracts`, `packages/domain` et
+  `packages/api-client` sont déjà scaffoldés mais encore vides
+- l'API expose aujourd'hui un bootstrap minimal avec une route health et des
+  répertoires métier déjà préparés
+
 ## Structure du dépôt
 
 ```txt
 /
 ├─ apps/
-│  ├─ web/           # Angular frontend
-│  └─ api/           # NestJS backend
+│  ├─ api/                 # NestJS backend
+│  └─ client/
+│     ├─ angular.json      # workspace Angular
+│     ├─ projects/
+│     │  ├─ web/           # Angular frontend web
+│     │  └─ mobile/        # Ionic Angular mobile
+│     └─ tests/e2e/        # Playwright web
 ├─ packages/
-│  ├─ shared-types/  # types partagés
-│  └─ shared-config/ # config partagée si besoin
+│  ├─ tokens/              # design tokens actifs
+│  ├─ contracts/           # contrats partagés (scaffold)
+│  ├─ domain/              # logique métier (scaffold)
+│  └─ api-client/          # client API typé (scaffold)
 ├─ pnpm-workspace.yaml
 ├─ package.json
 ├─ pnpm-lock.yaml
@@ -213,7 +232,7 @@ C’est cohérent avec ton choix initial.
 
 ### À chaque push sur la branche de préproduction
 
-- **Vercel** déploie `apps/web`
+- **Vercel** build le workspace client et publie `apps/client/dist/web/browser`
 - **Render** déploie `apps/api` à partir du `render.yaml`
 
 ### Docker
@@ -239,6 +258,7 @@ C’est cohérent avec ton choix initial.
 
 - `package.json`
 - `pnpm-workspace.yaml`
+- `tsconfig.base.json`
 - `.npmrc`
 - `.node-version` ou `.nvmrc`
 - `pnpm-lock.yaml`
@@ -246,48 +266,44 @@ C’est cohérent avec ton choix initial.
 ### Front
 
 - `vercel.json`
-- `apps/web/angular.json`
-- `apps/web/tailwind.config.*` si nécessaire selon setup
-- `apps/web/src/app/app.routes.server.ts` si rendu hybride/prerender avancé
+- `apps/client/angular.json`
+- `apps/client/projects/web/src/tailwind.css`
+- `apps/client/projects/web/src/app/app.routes.server.ts` si rendu hybride/prerender avancé
 
 ### Back
 
 - `apps/api/Dockerfile`
-- `apps/api/.dockerignore`
 - `render.yaml`
 
 ### CI/CD
 
 - `.github/workflows/ci.yml`
-- `.github/workflows/deploy-preview.yml` (optionnel)
-- `.github/workflows/deploy-staging.yml` (optionnel selon flux Git)
+- d'autres workflows de déploiement seulement si le besoin réel apparaît
 
 ---
 
 ## 8. Variables d’environnement recommandées
 
-### Variables front-end (`apps/web`)
+### Variables front-end (`.env` racine / apps client)
 
-- `NG_APP_ENV`
-- `NG_APP_SITE_URL`
-- `NG_APP_API_URL`
-- `NG_APP_SUPABASE_URL`
-- `NG_APP_SUPABASE_ANON_KEY`
-- `NG_APP_GA_MEASUREMENT_ID`
-- `NG_APP_GSC_VERIFICATION_TOKEN`
+- `PUBLIC_SITE_URL`
+- `PUBLIC_API_BASE_URL`
+- `PUBLIC_GA4_ID`
 
 ### Variables back-end (`apps/api`)
 
 - `NODE_ENV`
 - `PORT`
-- `APP_BASE_URL`
-- `CORS_ORIGIN`
+- `CORS_ALLOWED_ORIGINS`
 - `SUPABASE_URL`
-- `SUPABASE_ANON_KEY`
 - `SUPABASE_SERVICE_ROLE_KEY`
 - `RESEND_API_KEY`
-- `RESEND_FROM_EMAIL`
-- `RESEND_REPLY_TO`
+- `CONTACT_TO_EMAIL`
+
+Variables de staging déjà documentées dans `.env.staging.example` :
+
+- `SUPABASE_PUBLISHABLE_KEY`
+- `SUPABASE_SECRET_KEY`
 
 ### Variables optionnelles mais utiles
 
@@ -303,9 +319,9 @@ La stack MVP recommandée pour KRAAK est donc :
 
 - **Monorepo : pnpm workspaces**
 - **Langage : TypeScript 5.9.3**
-- **Runtime : Node.js 24.14.1 LTS**
+- **Runtime : Node.js 24.14+**
 - **Front-end : Angular 21.2.x + prerender**
-- **UI : PrimeNG 21.1.3 + Tailwind CSS 4.1.13**
+- **UI : PrimeNG 21.1.x + Tailwind CSS 4.2.x**
 - **État : Signals + services + RxJS**
 - **API : NestJS 11.1.18**
 - **Base / Auth / Storage : Supabase**

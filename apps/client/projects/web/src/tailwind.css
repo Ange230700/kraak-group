@@ -1,38 +1,40 @@
 @import 'tailwindcss';
+@import '@kraak/tokens/tokens.css';
 
 /* ──────────────────────────────────────────────────────────
    THEME — Design tokens (colors, fonts, spacing, radii)
    Tailwind v4 CSS-first configuration: every --* variable
    defined here becomes a utility automatically.
+   Les valeurs brutes proviennent de @kraak/tokens/tokens.css.
    ────────────────────────────────────────────────────────── */
 
 @theme {
   /* ── Fonts ── */
-  --font-sans: 'Poppins', 'Avenir Next', 'Segoe UI', sans-serif;
-  --font-mono: 'IBM Plex Mono', monospace;
+  --font-sans: var(--kr-font-sans);
+  --font-mono: var(--kr-font-mono);
 
   /* ── Brand colors ── */
-  --color-brand-navy: #122b4a;
-  --color-brand-navy-soft: #1c4e86;
-  --color-brand-blue: #1673ae;
-  --color-brand-cyan: #4cc3d9;
-  --color-brand-gold: #f0c433;
-  --color-brand-gray: #8b8d92;
-  --color-brand-white: #ffffff;
-  --color-brand-page: #f3f3f3;
+  --color-brand-navy: var(--kr-brand-navy);
+  --color-brand-navy-soft: var(--kr-brand-navy-soft);
+  --color-brand-blue: var(--kr-brand-blue);
+  --color-brand-cyan: var(--kr-brand-cyan);
+  --color-brand-gold: var(--kr-brand-gold);
+  --color-brand-gray: var(--kr-brand-gray);
+  --color-brand-white: var(--kr-brand-white);
+  --color-brand-page: var(--kr-brand-page);
 
   /* ── Neutral scale ── */
-  --color-neutral-0: #ffffff;
-  --color-neutral-50: #f8f8f8;
-  --color-neutral-100: #f3f3f3;
-  --color-neutral-200: #e5e7eb;
-  --color-neutral-300: #d1d5db;
-  --color-neutral-400: #9ca3af;
-  --color-neutral-500: #6b7280;
-  --color-neutral-600: #4b5563;
-  --color-neutral-700: #374151;
-  --color-neutral-800: #1f2937;
-  --color-neutral-900: #111827;
+  --color-neutral-0: var(--kr-neutral-0);
+  --color-neutral-50: var(--kr-neutral-50);
+  --color-neutral-100: var(--kr-neutral-100);
+  --color-neutral-200: var(--kr-neutral-200);
+  --color-neutral-300: var(--kr-neutral-300);
+  --color-neutral-400: var(--kr-neutral-400);
+  --color-neutral-500: var(--kr-neutral-500);
+  --color-neutral-600: var(--kr-neutral-600);
+  --color-neutral-700: var(--kr-neutral-700);
+  --color-neutral-800: var(--kr-neutral-800);
+  --color-neutral-900: var(--kr-neutral-900);
 
   /* ── Semantic roles ── */
   --color-primary: var(--color-brand-navy);
@@ -46,11 +48,11 @@
   --color-text-muted: var(--color-brand-gray);
 
   /* ── Border radius ── */
-  --radius-btn: 0.75rem;
-  --radius-card: 1.25rem;
+  --radius-btn: var(--kr-radius-btn);
+  --radius-card: var(--kr-radius-card);
 
   /* ── Shadows ── */
-  --shadow-card: 0 1px 3px oklch(0 0 0 / 0.08), 0 1px 2px oklch(0 0 0 / 0.06);
+  --shadow-card: var(--kr-shadow-card);
 }
 
 /* ──────────────────────────────────────────────────────────

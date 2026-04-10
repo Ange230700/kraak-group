@@ -1,21 +1,18 @@
 {
+  "extends": "../../tsconfig.base.json",
   "compileOnSave": false,
   "compilerOptions": {
-    "strict": true,
     "noImplicitOverride": true,
     "noPropertyAccessFromIndexSignature": true,
     "noImplicitReturns": true,
-    "noFallthroughCasesInSwitch": true,
-    "skipLibCheck": true,
     "isolatedModules": true,
-    "experimentalDecorators": true,
     "importHelpers": true,
-    "target": "ES2022",
     "module": "preserve",
-    "baseUrl": ".",
+    "rootDir": "../..",
     "paths": {
-      "@kraak/web/*": ["projects/web/src/*"],
-      "@kraak/mobile/*": ["projects/mobile/src/*"]
+      "@kraak/web/*": ["./projects/web/src/*"],
+      "@kraak/mobile/*": ["./projects/mobile/src/*"],
+      "@kraak/tokens": ["../../packages/tokens/src/index.ts"]
     }
   },
   "angularCompilerOptions": {

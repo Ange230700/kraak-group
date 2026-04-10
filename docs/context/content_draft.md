@@ -1,4 +1,4 @@
-# Point 5 — Ébauche de contenu prêt à intégrer (KRAAK Consulting)
+# Point 5 — Ébauche de contenu prêt à intégrer (KRAAK)
 
 ## 1. Pages — Contenu brut ✍️
 
@@ -8,7 +8,7 @@
 Développez votre potentiel. Construisez votre impact.
 
 **Sous-titre :**
-KRAAK Consulting accompagne les jeunes professionnels et les organisations vers des opportunités concrètes, locales et internationales.
+KRAAK accompagne les jeunes professionnels et les organisations vers des opportunités concrètes, locales et internationales.
 
 **CTA principal :**
 Demander une consultation
@@ -86,12 +86,12 @@ Contactez-nous
 
 ### Accueil
 
-- Title : KRAAK Consulting — Développez votre potentiel
+- Title : KRAAK — Développez votre potentiel
 - Description : Formation, accompagnement et opportunités internationales pour jeunes professionnels.
 
 ### Open Graph
 
-- Title : KRAAK Consulting
+- Title : KRAAK
 - Description : Développez vos compétences et accédez à des opportunités internationales.
 
 ---

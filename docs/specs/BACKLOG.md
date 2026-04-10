@@ -2,7 +2,7 @@
 
 - Projet : KRAAK (MVP web + base mobile)
 - Depot : https://github.com/Ange230700/kraak-group
-- Project board : https://github.com/users/Ange230700/projects/4
+- Project board : voir le board actif documenté dans `docs/runbooks/GITHUB_PROJECT_BOARD.md`
 - Mise a jour : 9 avril 2026
 
 ---
@@ -59,15 +59,15 @@ Milestone cible : `M1 - Architecture locked`
 Objectif : rendre le workspace buildable, testable et automatisable.
 Milestone cible : `M2 - Workspace bootstrapped`
 
-| Issue ID | Tache                                                              | Priorite | Dependances                  |
-| -------- | ------------------------------------------------------------------ | -------- | ---------------------------- |
-| `SET-01` | Initialiser workspace Angular monorepo (`apps/web`, `apps/mobile`) | `P0`     | `ARC-02`                     |
-| `SET-02` | Initialiser `apps/api` NestJS et wiring de base                    | `P0`     | `ARC-02`                     |
-| `SET-03` | Configurer quality gates (lint, format, typecheck)                 | `P0`     | `SET-01`, `SET-02`           |
-| `SET-04` | Configurer test runners unitaires + integration                    | `P0`     | `SET-01`, `SET-02`           |
-| `SET-05` | Configurer Playwright E2E et smoke pipeline                        | `P0`     | `SET-01`, `SET-04`           |
-| `SET-06` | Configurer CI GitHub Actions multi-apps                            | `P0`     | `SET-03`, `SET-04`, `SET-05` |
-| `SET-07` | Mettre en place variables d'environnement et runbook local dev     | `P1`     | `SET-02`                     |
+| Issue ID | Tache                                                                                              | Priorite | Dependances                  |
+| -------- | -------------------------------------------------------------------------------------------------- | -------- | ---------------------------- |
+| `SET-01` | Initialiser workspace Angular monorepo (`apps/client/projects/web`, `apps/client/projects/mobile`) | `P0`     | `ARC-02`                     |
+| `SET-02` | Initialiser `apps/api` NestJS et wiring de base                                                    | `P0`     | `ARC-02`                     |
+| `SET-03` | Configurer quality gates (lint, format, typecheck)                                                 | `P0`     | `SET-01`, `SET-02`           |
+| `SET-04` | Configurer test runners unitaires + integration                                                    | `P0`     | `SET-01`, `SET-02`           |
+| `SET-05` | Configurer Playwright E2E et smoke pipeline                                                        | `P0`     | `SET-01`, `SET-04`           |
+| `SET-06` | Configurer CI GitHub Actions multi-apps                                                            | `P0`     | `SET-03`, `SET-04`, `SET-05` |
+| `SET-07` | Mettre en place variables d'environnement et runbook local dev                                     | `P1`     | `SET-02`                     |
 
 ---
 
@@ -105,13 +105,13 @@ Milestone cible : `M5 - Core participant flows ready`
 Objectif : fournir l'ossature mobile Ionic/Capacitor prete pour les modules.
 Milestone cible : `M3 - Mobile shell ready`
 
-| Issue ID | Tache                                                           | Priorite | Dependances        |
-| -------- | --------------------------------------------------------------- | -------- | ------------------ |
-| `MOB-01` | Initialiser app Ionic Angular dans `apps/mobile`                | `P0`     | `SET-01`           |
-| `MOB-02` | Mettre en place navigation shell (tabs/stack) et layout de base | `P0`     | `MOB-01`           |
-| `MOB-03` | Integrer theming, design tokens et composants UI de base        | `P1`     | `MOB-01`, `LIB-01` |
-| `MOB-04` | Configurer Capacitor (Android/iOS) et builds debug              | `P0`     | `MOB-01`           |
-| `MOB-05` | Ajouter service notifications push stub (FCM wiring initial)    | `P1`     | `MOB-04`, `SET-02` |
+| Issue ID | Tache                                                            | Priorite | Dependances        |
+| -------- | ---------------------------------------------------------------- | -------- | ------------------ |
+| `MOB-01` | Initialiser app Ionic Angular dans `apps/client/projects/mobile` | `P0`     | `SET-01`           |
+| `MOB-02` | Mettre en place navigation shell (tabs/stack) et layout de base  | `P0`     | `MOB-01`           |
+| `MOB-03` | Integrer theming, design tokens et composants UI de base         | `P1`     | `MOB-01`, `LIB-01` |
+| `MOB-04` | Configurer Capacitor (Android/iOS) et builds debug               | `P0`     | `MOB-01`           |
+| `MOB-05` | Ajouter service notifications push stub (FCM wiring initial)     | `P1`     | `MOB-04`, `SET-02` |
 
 ---
 

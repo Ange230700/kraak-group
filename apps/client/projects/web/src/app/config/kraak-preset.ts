@@ -1,11 +1,20 @@
 import { definePreset, palette } from '@primeuix/themes';
 import Aura from '@primeuix/themes/aura';
+import {
+  BRAND_NAVY,
+  BRAND_BLUE,
+  BRAND_CYAN,
+  BRAND_GOLD,
+  BRAND_GRAY,
+  BRAND_WHITE,
+  NEUTRAL,
+} from '@kraak/tokens';
 
-// Palettes générées à partir des couleurs de marque KRAAK
-const navy = palette('#122b4a');
-const blue = palette('#1673ae');
-const cyan = palette('#4cc3d9');
-const gold = palette('#f0c433');
+// Palettes générées à partir des jetons de marque KRAAK
+const navy = palette(BRAND_NAVY);
+const blue = palette(BRAND_BLUE);
+const cyan = palette(BRAND_CYAN);
+const gold = palette(BRAND_GOLD);
 
 export const KraakPreset = definePreset(Aura, {
   primitive: {
@@ -50,7 +59,7 @@ export const KraakPreset = definePreset(Aura, {
       light: {
         primary: {
           color: '{navy.600}',
-          contrastColor: '#ffffff',
+          contrastColor: BRAND_WHITE,
           hoverColor: '{navy.700}',
           activeColor: '{navy.800}',
         },
@@ -61,23 +70,23 @@ export const KraakPreset = definePreset(Aura, {
           focusColor: '{navy.900}',
         },
         surface: {
-          0: '#ffffff',
-          50: '#f8f8f8',
-          100: '#f3f3f3',
-          200: '#e5e7eb',
-          300: '#d1d5db',
-          400: '#9ca3af',
-          500: '#6b7280',
-          600: '#4b5563',
-          700: '#374151',
-          800: '#1f2937',
-          900: '#111827',
-          950: '#030712',
+          0: NEUTRAL[0],
+          50: NEUTRAL[50],
+          100: NEUTRAL[100],
+          200: NEUTRAL[200],
+          300: NEUTRAL[300],
+          400: NEUTRAL[400],
+          500: NEUTRAL[500],
+          600: NEUTRAL[600],
+          700: NEUTRAL[700],
+          800: NEUTRAL[800],
+          900: NEUTRAL[900],
+          950: NEUTRAL[950],
         },
         text: {
           color: '{surface.900}',
           hoverColor: '{surface.800}',
-          mutedColor: '#8b8d92',
+          mutedColor: BRAND_GRAY,
           hoverMutedColor: '{surface.600}',
         },
         content: {

@@ -1,12 +1,14 @@
-# Brief MVP — Site web KRAAK Consulting
+# Brief MVP — Site web KRAAK
 
 ## 1. Objectif du MVP 🎯
 
-Le MVP du site web de **KRAAK Consulting** a pour objectif principal de **présenter clairement l’organisation, ses services et sa proposition de valeur**, tout en créant un premier point de contact efficace avec ses publics cibles.
+Le MVP du site web de **KRAAK** a pour objectif principal de **présenter
+clairement l’organisation, ses services et sa proposition de valeur**, tout en
+créant un premier point de contact efficace avec ses publics cibles.
 
 Le site doit permettre de :
 
-- expliquer qui est KRAAK Consulting et ce qu’elle défend ;
+- expliquer qui est KRAAK et ce qu’elle défend ;
 - présenter de manière simple et crédible ses domaines d’intervention ;
 - rassurer les visiteurs sur le sérieux de l’organisation ;
 - faciliter la prise de contact, la demande d’accompagnement ou la manifestation d’intérêt pour ses programmes.
@@ -58,4 +60,6 @@ Pour rester simple et efficace, le MVP peut inclure les pages suivantes :
 
 ## 6. Résultat attendu
 
-Un site vitrine professionnel, simple, crédible et orienté conversion, capable de poser les bases de la présence digitale de KRAAK Consulting et de soutenir ses premières prises de contact commerciales et institutionnelles.
+Un site vitrine professionnel, simple, crédible et orienté conversion, capable
+de poser les bases de la présence digitale de KRAAK et de soutenir ses
+premières prises de contact commerciales et institutionnelles.

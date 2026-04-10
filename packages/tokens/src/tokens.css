@@ -1,0 +1,41 @@
+/* ============================================================
+   Jeton de design KRAAK — source canonique
+   Consommé par web (Tailwind @theme) et mobile (Tailwind + Ionic)
+   ============================================================ */
+
+:root {
+  /* --- Couleurs de marque --- */
+  --kr-brand-navy: #122b4a;
+  --kr-brand-navy-soft: #1c4e86;
+  --kr-brand-blue: #1673ae;
+  --kr-brand-cyan: #4cc3d9;
+  --kr-brand-gold: #f0c433;
+  --kr-brand-gray: #8b8d92;
+  --kr-brand-white: #ffffff;
+  --kr-brand-page: #f3f3f3;
+
+  /* --- Échelle de neutres --- */
+  --kr-neutral-0: #ffffff;
+  --kr-neutral-50: #f8f8f8;
+  --kr-neutral-100: #f3f3f3;
+  --kr-neutral-200: #e5e7eb;
+  --kr-neutral-300: #d1d5db;
+  --kr-neutral-400: #9ca3af;
+  --kr-neutral-500: #6b7280;
+  --kr-neutral-600: #4b5563;
+  --kr-neutral-700: #374151;
+  --kr-neutral-800: #1f2937;
+  --kr-neutral-900: #111827;
+
+  /* --- Typographie --- */
+  --kr-font-sans: 'Poppins', 'Avenir Next', 'Segoe UI', sans-serif;
+  --kr-font-mono: 'IBM Plex Mono', monospace;
+
+  /* --- Rayons de bordure --- */
+  --kr-radius-btn: 0.75rem;
+  --kr-radius-card: 1.25rem;
+
+  /* --- Ombres --- */
+  --kr-shadow-card:
+    0 1px 3px oklch(0 0 0 / 0.08), 0 1px 2px oklch(0 0 0 / 0.06);
+}

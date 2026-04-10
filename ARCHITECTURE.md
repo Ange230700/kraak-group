@@ -2,8 +2,8 @@
 
 ## Objectif
 
-Ce document fixe la décision d'architecture active pour KRAAK après gel du
-périmètre, avant setup du dépôt applicatif et avant travail UI.
+Ce document fixe la décision d'architecture active pour KRAAK et sert de
+référence après l’amorçage initial du dépôt.
 
 Il sert de référence technique prioritaire quand un choix concret entre en
 conflit avec la pile par défaut mentionnée dans `AGENTS.md`.
@@ -13,10 +13,19 @@ conflit avec la pile par défaut mentionnée dans `AGENTS.md`.
 ## Statut De La Décision
 
 - Statut : validé
-- Moment de déclaration : juste après gel du scope, avant setup repo et avant
-  travail UI
+- Moment de déclaration : après cadrage MVP, puis mis à jour au fil de la mise
+  en place réelle du monorepo
 - Portée : site web MVP, application mobile MVP, API/backend, données,
   notifications, analytics, déploiement
+
+### État Actuel Du Repo
+
+- `apps/client` contient le workspace Angular avec les projets `web` et
+  `mobile`
+- `apps/api` contient le bootstrap NestJS et les premiers répertoires de modules
+- `packages/tokens` est déjà actif ; `packages/contracts`, `packages/domain` et
+  `packages/api-client` sont scaffoldés mais pas encore implémentés
+- `vercel.json` et `render.yaml` sont déjà présents pour cadrer le déploiement
 
 ---
 
@@ -61,9 +70,8 @@ Objectifs :
 
 Cette décision autorise plusieurs applications dans le même socle, en priorité :
 
-- `apps/web` pour le site marketing
-- `apps/mobile` pour l'application mobile Ionic Angular si cette partie est
-  effectivement lancée
+- `apps/client/projects/web` pour le site marketing
+- `apps/client/projects/mobile` pour l'application mobile Ionic Angular
 
 ### 2. Web Et Mobile Séparés Dans Leur UI, Unifiés Dans Le Socle
 
@@ -165,16 +173,19 @@ Structure cible recommandée :
 ```txt
 /
 ├─ apps/
-│  ├─ web/          # site Angular + PrimeNG
-│  ├─ mobile/       # Ionic Angular + Capacitor
-│  └─ api/          # NestJS
+│  ├─ api/                    # NestJS
+│  └─ client/
+│     ├─ angular.json         # configuration du workspace Angular
+│     ├─ projects/
+│     │  ├─ web/              # site Angular + PrimeNG
+│     │  └─ mobile/           # Ionic Angular + Capacitor
+│     └─ tests/
+│        └─ e2e/              # Playwright web
 ├─ packages/
+│  ├─ tokens/
 │  ├─ contracts/
 │  ├─ api-client/
 │  └─ domain/
-├─ supabase/
-│  ├─ migrations/
-│  └─ functions/    # uniquement si besoin validé
 └─ docs/
 ```
 
@@ -185,6 +196,8 @@ Structure cible recommandée :
 - les contenus et états utilisateurs mobiles ne doivent pas être embarqués en
   dur comme stratégie par défaut
 - les contrats consommés par le mobile doivent être stables, typés et versionnables
+- les packages `contracts`, `domain` et `api-client` peuvent rester à l’état de
+  squelette tant qu’aucun flux métier partagé n’exige leur implémentation réelle
 
 ### SEO Et Web Marketing
 
@@ -227,14 +240,16 @@ L'application mobile doit être pensée pour :
 
 ## Prochaines Étapes Techniques
 
-1. Créer le workspace Angular comme fondation frontend commune.
-2. Initialiser `apps/web` avec Angular + PrimeNG.
-3. Initialiser `apps/mobile` avec Ionic Angular + Capacitor.
-4. Initialiser `apps/api` avec NestJS.
-5. Définir les premiers contrats backend/mobile/web.
-6. Préparer l'intégration Supabase.
-7. Définir la stratégie de rendu du site web pour le SEO.
-8. Préparer la stratégie de notifications mobile.
+1. Brancher les routes Angular web/mobile aux répertoires `features/` déjà créés.
+2. Remplacer le bootstrap API minimal par de vrais modules métier dans
+   `apps/api/src/`.
+3. Donner un manifeste et une implémentation réelle à `packages/contracts`,
+   `packages/domain` et `packages/api-client` dès qu’un partage cross-surface
+   devient concret.
+4. Préparer l'intégration Supabase et Resend côté API.
+5. Stabiliser la stratégie de rendu web pour le SEO sur le projet `web`.
+6. Préparer la stratégie de notifications mobile quand le flux participant le
+   justifiera.
 
 ---
 

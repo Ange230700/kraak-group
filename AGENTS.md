@@ -12,20 +12,23 @@ KRAAK, et livrable.
 Utiliser ce fichier avec :
 
 - `ARCHITECTURE.md` pour les limites techniques
-- `TASKS.md` pour l’ordre d’exécution
+- `docs/specs/BACKLOG.md` pour le backlog et l’ordre de priorité
 - `README.md` pour les conventions de structure du dépôt
 
 ---
 
 ## Stade Actuel Du Projet
 
-État actuel (8 avril 2026) :
+État actuel (10 avril 2026) :
 
-- Le dépôt est en **phase d’amorçage / cadrage MVP**.
+- Le dépôt a déjà son **socle monorepo en place** avec `apps/client` pour le
+  workspace Angular et `apps/api` pour l’API NestJS.
+- Les répertoires fonctionnels web/mobile/API existent déjà en grande partie,
+  mais beaucoup de flux métier restent encore à implémenter ou à brancher.
 - Le contexte de marque, les orientations de contenu, et les artefacts de travail
-  ou de proposition peuvent exister dans `docs/context/`.
-- Le code de production final du site n’est pas encore considéré comme mature ni
-  complètement stabilisé.
+  ou de proposition restent centralisés dans `docs/context/`.
+- Le code de production final du site et des parcours participants n’est pas
+  encore considéré comme mature ni complètement stabilisé.
 
 Les assistants ne doivent pas supposer l’existence d’une base de code déjà
 solide ou complète. Il faut d’abord poser des fondations propres.
@@ -66,24 +69,25 @@ Ne pas faire glisser le périmètre V1.1 dans le MVP sauf demande explicite.
 
 ---
 
-## Architecture Par Défaut
+## Architecture Active
 
-Pile cible par défaut :
+Pile actuellement retenue dans ce dépôt :
 
-- Frontend : `Next.js` (App Router) dans `apps/web`
-- Système UI : `Tailwind CSS`
-- État client : approche `server-first`, état local simple d’abord ; n’ajouter un
-  état global que si la complexité le justifie clairement
-- Backend / API : `Next.js Route Handlers` ou backend léger dédié uniquement si
-  le besoin métier l’exige
-- Données / formulaires / stockage : solution minimale d’abord (`Resend`,
-  `Formspree`, `Tally`, `Supabase`, ou équivalent) selon le besoin réel du MVP
-- CMS / contenu : contenu statique ou fichiers contrôlés par dépôt d’abord ; CMS
-  headless uniquement si la fréquence éditoriale l’exige
-- Analytics : `Google Analytics`, `Google Search Console`, ou équivalent léger
-- Déploiement : `Vercel`
-- Email transactionnel : `Resend` (ou équivalent)
-- SEO technique : sitemap, metadata, Open Graph, robots, canonicals
+- Frontend : workspace `Angular` dans `apps/client`
+- Web : projet `web` dans `apps/client/projects/web` avec `PrimeNG` +
+  `Tailwind CSS`
+- Mobile : projet `mobile` dans `apps/client/projects/mobile` avec `Ionic` +
+  `Capacitor`
+- Backend / API : `NestJS` dans `apps/api`
+- Packages partagés : `packages/tokens` actif ; `packages/contracts`,
+  `packages/domain` et `packages/api-client` déjà scaffoldés et à compléter
+- Données / formulaires / stockage : cible `Supabase` + `Resend`, à brancher au
+  fil des fonctionnalités MVP
+- Analytics : `Google Analytics` et outils légers seulement si le besoin réel du
+  MVP le justifie
+- Déploiement : `Vercel` pour le front, `Render` pour l’API
+- SEO technique : prerender / SSR Angular, metadata, Open Graph, sitemap,
+  robots
 
 Si un choix d’implémentation entre en conflit avec cette base, documenter la
 raison et mettre à jour `ARCHITECTURE.md`.
@@ -96,6 +100,19 @@ comme défaut :
   et documenter la décision dans `ARCHITECTURE.md` et `docs/decisions/` avant
   de l’ajouter.
 
+### Règle De Style Des Composants (Obligatoire)
+
+Les composants et pages Angular utilisent exclusivement **Tailwind CSS** (classes
+utilitaires) et **PrimeNG** (classes de composants) pour tout le style visuel.
+
+- Chaque composant ou page se compose uniquement de `.ts` + `.html` + `.spec.ts`.
+- Ne **pas** créer de fichier `.scss` ni `.css` dédié par composant ou page.
+- Ne **pas** utiliser `styleUrl` ni `styleUrls` dans les décorateurs `@Component`.
+- Si un style global est nécessaire, l'ajouter dans `tailwind.css` via `@theme`
+  ou `@utility`, ou dans `styles.scss` s'il ne peut pas être exprimé en
+  Tailwind.
+- Préférer les classes utilitaires Tailwind directement dans le template HTML.
+
 ---
 
 ## Règles D’Organisation Du Dépôt
@@ -103,25 +120,29 @@ comme défaut :
 - Garder les documents de pilotage des assistants à la racine du dépôt :
   - `AGENTS.md`
   - `ARCHITECTURE.md`
-  - `TASKS.md`
+  - `docs/specs/BACKLOG.md`
   - `README.md`
 - Traiter `docs/context/` comme un espace de référence source.
 - Mettre les nouvelles spécifications techniques dans `docs/specs/`.
 - Mettre les décisions d’architecture / produit dans `docs/decisions/`.
 - Mettre les playbooks opérationnels dans `docs/runbooks/`.
-- Placer le frontend du site dans `apps/web/`.
-- Placer un backend dédié éventuel dans `apps/api/` seulement si un vrai besoin
-  apparaît.
+- Placer le frontend Angular dans `apps/client/`, avec :
+  - `apps/client/projects/web/` pour le site vitrine
+  - `apps/client/projects/mobile/` pour l’application mobile
+- Placer le backend dédié dans `apps/api/`.
 - Placer les migrations / politiques SQL dans `supabase/migrations/` lorsqu’un
   PostgreSQL géré par Supabase est utilisé.
 - Garder `supabase/functions/` comme espace à utiliser seulement si ce choix est
   réellement retenu par l’architecture validée.
 - Si du code partagé devient nécessaire, utiliser :
+  - `packages/tokens/` pour les design tokens partagés
   - `packages/contracts/` pour les contrats partagés sûrs côté API
   - `packages/api-client/` pour les helpers typés de consommation d’API
   - `packages/domain/` pour la logique métier sans dépendance de framework
 - Garder les scripts dans `scripts/`.
-- Garder les tests dans `tests/` (intégration et e2e).
+- Garder les E2E web dans `apps/client/tests/e2e/` et les tests unitaires /
+  specs à proximité du code tant que le dépôt n’a pas besoin d’un dossier
+  `tests/` centralisé.
 
 ---
 
@@ -201,7 +222,8 @@ Comportement obligatoire pour les assistants :
 Métadonnées du dépôt pour les assistants :
 
 - Propriétaire GitHub : `Ange230700`
-- GitHub Project lié (principal) : `#4`
+- GitHub Project lié (principal) : vérifier le board actif documenté dans
+  `docs/runbooks/GITHUB_PROJECT_BOARD.md` avant toute automatisation
 
 Quand l’accès aux GitHub Projects est disponible :
 
@@ -279,7 +301,7 @@ Dans ce dépôt, le BDD signifie :
 Règle d’outillage E2E :
 
 - utiliser `Playwright` par défaut pour la couverture E2E web
-- garder les tests E2E sous `tests/e2e/`
+- garder les tests E2E web sous `apps/client/tests/e2e/`
 - maintenir au minimum des scénarios smoke des parcours utilisateurs critiques du
   MVP
 - garder des noms de scénarios E2E orientés comportement (et non implémentation)
@@ -324,7 +346,8 @@ Règle de langue du dépôt (obligatoire, tout le repo) :
 - Les noms propres techniques (frameworks, bibliothèques, commandes, standards)
   restent dans leur forme officielle.
 
-Pour **tout travail sous `apps/web` et `apps/api`**, les assistants doivent
+Pour **tout travail sous `apps/client/projects/web`**,
+**`apps/client/projects/mobile`** et **`apps/api`**, les assistants doivent
 appliquer cette politique strictement, y compris dans les réponses API et les
 commentaires.
 
@@ -334,12 +357,14 @@ Cette règle est obligatoire pour l’assistant IA dans ce dépôt.
 
 ## Modèle De Travail Pour Les Agents
 
-1. Prendre exactement une tâche dans `TASKS.md`.
+1. Prendre exactement une tâche dans `docs/specs/BACKLOG.md` ou dans l’item
+   GitHub Project explicitement lié au travail.
 2. Confirmer que la tâche reste compatible avec le MVP (sauf si l’utilisateur
    demande explicitement du V1.1+).
 3. Implémenter le plus petit incrément viable.
 4. Ne valider que ce qui est pertinent pour cet incrément.
-5. Mettre à jour la documentation si l’architecture, le comportement, ou l’ordre
+5. Mettre à jour la documentation si l’architecture, le comportement, la
+   structure du codebase, les scripts, l’environnement, ou l’ordre
    d’exécution change.
 6. Rapporter clairement : ce qui a changé, comment cela a été validé, et ce qu’il
    reste à faire.
@@ -367,6 +392,8 @@ Cette règle est obligatoire pour l’assistant IA dans ce dépôt.
   avec l’identité visuelle de KRAAK, sa lisibilité, sa crédibilité et son ton.
 - Lorsqu’une route API est ajoutée ou mise à jour, mettre à jour la documentation
   OpenAPI / Swagger dans le même changement si une couche API documentée existe.
+- Toute modification du codebase qui rend une doc inexacte impose une mise à
+  jour documentaire dans le même changement.
 - Ne pas étendre silencieusement le périmètre.
 
 ---
@@ -397,6 +424,15 @@ Mettre à jour la documentation dans le même changement lorsque vous modifiez :
 - les hypothèses de modèle de données
 - le séquencement des tâches
 - les attentes d’environnement et de déploiement
+- la structure du dépôt, les scripts, le workflow Git, ou les chemins de fichiers
+  référencés dans la doc
+
+Règle supplémentaire obligatoire :
+
+- toute évolution du codebase qui rend un document Markdown incomplet, faux ou
+  ambigu doit entraîner la mise à jour du ou des `.md` concernés dans le même
+  passage ; ne jamais laisser la documentation “pour plus tard” quand le besoin
+  est déjà identifié
 
 La documentation doit rester concise, pratique, et orientée implémentation.
 

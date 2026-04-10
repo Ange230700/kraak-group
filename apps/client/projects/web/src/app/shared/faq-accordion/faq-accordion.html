@@ -1,0 +1,12 @@
+<div class="faq-accordion">
+  <p-accordion [multiple]="true">
+    @for (item of items; track item.question) {
+      <p-accordion-panel>
+        <p-accordion-header>{{ item.question }}</p-accordion-header>
+        <p-accordion-content>
+          <p class="faq-accordion__answer">{{ item.answer }}</p>
+        </p-accordion-content>
+      </p-accordion-panel>
+    }
+  </p-accordion>
+</div>

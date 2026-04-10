@@ -1,0 +1,9 @@
+{
+  "compilerOptions": {
+    "strict": true,
+    "skipLibCheck": true,
+    "experimentalDecorators": true,
+    "target": "ES2022",
+    "noFallthroughCasesInSwitch": true
+  }
+}

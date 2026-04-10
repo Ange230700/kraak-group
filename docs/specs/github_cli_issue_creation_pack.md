@@ -59,7 +59,7 @@ create_task_issue "ARC-04" "Definir modeles de donnees MVP" "architecture" "ARC"
 create_task_issue "ARC-05" "Documenter ADRs et criteres anti-scope-creep" "architecture" "ARC" "P1" "M1 - Architecture locked" "ARC-02, ARC-04"
 
 # SET (M2)
-create_task_issue "SET-01" "Initialiser workspace Angular monorepo (apps/web, apps/mobile)" "workspace" "SET" "P0" "M2 - Workspace bootstrapped" "ARC-02"
+create_task_issue "SET-01" "Initialiser workspace Angular monorepo (apps/client/projects/web, apps/client/projects/mobile)" "workspace" "SET" "P0" "M2 - Workspace bootstrapped" "ARC-02"
 create_task_issue "SET-02" "Initialiser apps/api NestJS et wiring de base" "workspace" "SET" "P0" "M2 - Workspace bootstrapped" "ARC-02"
 create_task_issue "SET-03" "Configurer quality gates (lint, format, typecheck)" "workspace" "SET" "P0" "M2 - Workspace bootstrapped" "SET-01, SET-02"
 create_task_issue "SET-04" "Configurer test runners unitaires + integration" "workspace" "SET" "P0" "M2 - Workspace bootstrapped" "SET-01, SET-02"
@@ -81,7 +81,7 @@ create_task_issue "WEB-04" "Ajouter analytics web (PostHog/GA)" "website" "WEB" 
 create_task_issue "WEB-05" "Optimiser accessibilite/performance (objectif Lighthouse > 90)" "website" "WEB" "P1" "M5 - Core participant flows ready" "WEB-01, WEB-03"
 
 # MOB (M3)
-create_task_issue "MOB-01" "Initialiser app Ionic Angular dans apps/mobile" "mobile-shell" "MOB" "P0" "M3 - Mobile shell ready" "SET-01"
+create_task_issue "MOB-01" "Initialiser app Ionic Angular dans apps/client/projects/mobile" "mobile-shell" "MOB" "P0" "M3 - Mobile shell ready" "SET-01"
 create_task_issue "MOB-02" "Mettre en place navigation shell (tabs/stack) et layout de base" "mobile-shell" "MOB" "P0" "M3 - Mobile shell ready" "MOB-01"
 create_task_issue "MOB-03" "Integrer theming, design tokens et composants UI de base" "mobile-shell" "MOB" "P1" "M3 - Mobile shell ready" "MOB-01, LIB-01"
 create_task_issue "MOB-04" "Configurer Capacitor (Android/iOS) et builds debug" "mobile-shell" "MOB" "P0" "M3 - Mobile shell ready" "MOB-01"

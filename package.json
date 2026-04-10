@@ -18,19 +18,54 @@
     "test:api": "pnpm --filter @kraak/api test",
     "lint:api": "pnpm --filter @kraak/api lint",
     "lint": "pnpm -r lint",
+    "typecheck:web": "pnpm --filter @kraak/client exec tsc --noEmit -p projects/web/tsconfig.app.json",
+    "typecheck:mobile": "pnpm --filter @kraak/client exec tsc --noEmit -p projects/mobile/tsconfig.app.json",
+    "typecheck:api": "pnpm --filter @kraak/api exec tsc --noEmit -p tsconfig.build.json",
+    "typecheck": "pnpm typecheck:web && pnpm typecheck:mobile && pnpm typecheck:api",
     "test:unit": "pnpm --filter @kraak/client test",
     "test:e2e": "pnpm --filter @kraak/client e2e",
     "format": "prettier --write \"**/*.{ts,html,scss,css,json,md}\"",
     "format:check": "prettier --check \"**/*.{ts,html,scss,css,json,md}\"",
+    "commit": "git-cz",
     "prepare": "husky"
   },
   "validate-branch-name": {
     "pattern": "^(main|feat|fix|chore|docs|test|refactor|ci|style|perf|revert|build)/.+$",
     "errorMsg": "Le nom de branche doit suivre le format <type>/<sujet> (ex: feat/login-page, fix/header-layout)"
   },
+  "config": {
+    "commitizen": {
+      "path": "cz-git"
+    }
+  },
+  "cz-git": {
+    "disableEmoji": true,
+    "useEmoji": false,
+    "allowCustomScopes": false,
+    "scopes": [
+      "root",
+      "repo",
+      "workspace",
+      "config",
+      "docs",
+      "scripts",
+      "web",
+      "mobile",
+      "api",
+      "client",
+      "contracts",
+      "domain",
+      "api-client",
+      "tokens",
+      "infra",
+      "ci"
+    ]
+  },
   "devDependencies": {
     "@commitlint/cli": "^20.5.0",
     "@commitlint/config-conventional": "^20.5.0",
+    "commitizen": "^4.3.1",
+    "cz-git": "^1.12.0",
     "husky": "^9.1.7",
     "prettier": "^3.8.1",
     "validate-branch-name": "^1.3.2"

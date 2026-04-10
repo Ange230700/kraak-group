@@ -1,12 +1,12 @@
-import { Component, signal } from '@angular/core';
+import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+
+import { Footer } from './layouts/footer/footer';
+import { Navbar } from './layouts/navbar/navbar';
 
 @Component({
   selector: 'kraak-root',
-  imports: [RouterOutlet],
+  imports: [RouterOutlet, Navbar, Footer],
   templateUrl: './app.html',
-  styleUrl: './app.scss',
 })
-export class App {
-  protected readonly title = signal('web');
-}
+export class App {}
