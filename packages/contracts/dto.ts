@@ -1,0 +1,236 @@
+import type {
+  UserRoleValue,
+  LifecycleStatusValue,
+  PublicationStatusValue,
+  ProgramVisibilityValue,
+  CohortStatusValue,
+  SessionStatusValue,
+  LocationTypeValue,
+  ResourceTypeValue,
+  AudienceTypeValue,
+  EnrollmentStatusValue,
+  NotificationTypeValue,
+  NotificationChannelValue,
+  SupportRequestStatusValue,
+  SupportCategoryValue,
+} from './enums';
+
+// ---------------------------------------------------------------------------
+// AppUser
+// ---------------------------------------------------------------------------
+export interface AppUserDto {
+  id: string;
+  email: string;
+  role: UserRoleValue;
+  firstName: string;
+  lastName: string;
+  phone: string | null;
+  preferredContactChannel: string | null;
+  isActive: boolean;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export type CreateAppUserDto = Omit<
+  AppUserDto,
+  'id' | 'createdAt' | 'updatedAt'
+>;
+export type UpdateAppUserDto = Partial<CreateAppUserDto>;
+
+// ---------------------------------------------------------------------------
+// Participant
+// ---------------------------------------------------------------------------
+export interface ParticipantDto {
+  id: string;
+  userId: string;
+  lifecycleStatus: LifecycleStatusValue;
+  referenceCode: string | null;
+  country: string | null;
+  city: string | null;
+  notes: string | null;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export type CreateParticipantDto = Omit<
+  ParticipantDto,
+  'id' | 'createdAt' | 'updatedAt'
+>;
+export type UpdateParticipantDto = Partial<CreateParticipantDto>;
+
+// ---------------------------------------------------------------------------
+// Program
+// ---------------------------------------------------------------------------
+export interface ProgramDto {
+  id: string;
+  slug: string;
+  title: string;
+  summary: string;
+  description: string;
+  status: PublicationStatusValue;
+  visibility: ProgramVisibilityValue;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export type CreateProgramDto = Omit<
+  ProgramDto,
+  'id' | 'createdAt' | 'updatedAt'
+>;
+export type UpdateProgramDto = Partial<CreateProgramDto>;
+
+// ---------------------------------------------------------------------------
+// Cohort
+// ---------------------------------------------------------------------------
+export interface CohortDto {
+  id: string;
+  programId: string;
+  name: string;
+  code: string | null;
+  status: CohortStatusValue;
+  startDate: string;
+  endDate: string | null;
+  capacity: number | null;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export type CreateCohortDto = Omit<CohortDto, 'id' | 'createdAt' | 'updatedAt'>;
+export type UpdateCohortDto = Partial<CreateCohortDto>;
+
+// ---------------------------------------------------------------------------
+// Session
+// ---------------------------------------------------------------------------
+export interface SessionDto {
+  id: string;
+  cohortId: string;
+  title: string;
+  description: string | null;
+  status: SessionStatusValue;
+  startsAt: string;
+  endsAt: string;
+  locationType: LocationTypeValue;
+  locationLabel: string | null;
+  meetingLink: string | null;
+  trainerUserId: string | null;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export type CreateSessionDto = Omit<
+  SessionDto,
+  'id' | 'createdAt' | 'updatedAt'
+>;
+export type UpdateSessionDto = Partial<CreateSessionDto>;
+
+// ---------------------------------------------------------------------------
+// Resource
+// ---------------------------------------------------------------------------
+export interface ResourceDto {
+  id: string;
+  programId: string | null;
+  cohortId: string | null;
+  title: string;
+  description: string | null;
+  resourceType: ResourceTypeValue;
+  url: string | null;
+  filePath: string | null;
+  status: PublicationStatusValue;
+  publishedAt: string | null;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export type CreateResourceDto = Omit<
+  ResourceDto,
+  'id' | 'createdAt' | 'updatedAt'
+>;
+export type UpdateResourceDto = Partial<CreateResourceDto>;
+
+// ---------------------------------------------------------------------------
+// Announcement
+// ---------------------------------------------------------------------------
+export interface AnnouncementDto {
+  id: string;
+  title: string;
+  body: string;
+  audienceType: AudienceTypeValue;
+  programId: string | null;
+  cohortId: string | null;
+  status: PublicationStatusValue;
+  publishedAt: string | null;
+  createdByUserId: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export type CreateAnnouncementDto = Omit<
+  AnnouncementDto,
+  'id' | 'createdAt' | 'updatedAt'
+>;
+export type UpdateAnnouncementDto = Partial<CreateAnnouncementDto>;
+
+// ---------------------------------------------------------------------------
+// Enrollment
+// ---------------------------------------------------------------------------
+export interface EnrollmentDto {
+  id: string;
+  participantId: string;
+  programId: string;
+  cohortId: string | null;
+  status: EnrollmentStatusValue;
+  enrolledAt: string;
+  completedAt: string | null;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export type CreateEnrollmentDto = Omit<
+  EnrollmentDto,
+  'id' | 'createdAt' | 'updatedAt' | 'enrolledAt'
+>;
+export type UpdateEnrollmentDto = Partial<CreateEnrollmentDto>;
+
+// ---------------------------------------------------------------------------
+// Notification (immutable — no UpdateDto, no updatedAt)
+// ---------------------------------------------------------------------------
+export interface NotificationDto {
+  id: string;
+  userId: string;
+  title: string;
+  body: string;
+  notificationType: NotificationTypeValue;
+  channel: NotificationChannelValue;
+  isRead: boolean;
+  readAt: string | null;
+  sourceType: string | null;
+  sourceId: string | null;
+  createdAt: string;
+}
+
+export type CreateNotificationDto = Omit<
+  NotificationDto,
+  'id' | 'createdAt' | 'isRead' | 'readAt'
+>;
+
+// ---------------------------------------------------------------------------
+// SupportRequest
+// ---------------------------------------------------------------------------
+export interface SupportRequestDto {
+  id: string;
+  userId: string;
+  participantId: string | null;
+  subject: string;
+  message: string;
+  status: SupportRequestStatusValue;
+  category: SupportCategoryValue;
+  assignedToUserId: string | null;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export type CreateSupportRequestDto = Omit<
+  SupportRequestDto,
+  'id' | 'createdAt' | 'updatedAt'
+>;
+export type UpdateSupportRequestDto = Partial<CreateSupportRequestDto>;
