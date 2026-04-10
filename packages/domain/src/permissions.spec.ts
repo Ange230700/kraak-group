@@ -13,21 +13,15 @@ const allEntities = Object.values(Entity) as EntityValue[];
 
 describe('getViewPermission', () => {
   describe('Given an admin role', () => {
-    it.each(allEntities)(
-      'When checking %s / Then returns "all"',
-      (entity) => {
-        expect(getViewPermission(UserRole.ADMIN, entity)).toBe('all');
-      },
-    );
+    it.each(allEntities)('When checking %s / Then returns "all"', (entity) => {
+      expect(getViewPermission(UserRole.ADMIN, entity)).toBe('all');
+    });
   });
 
   describe('Given a participant role', () => {
-    it.each(allEntities)(
-      'When checking %s / Then returns "own"',
-      (entity) => {
-        expect(getViewPermission(UserRole.PARTICIPANT, entity)).toBe('own');
-      },
-    );
+    it.each(allEntities)('When checking %s / Then returns "own"', (entity) => {
+      expect(getViewPermission(UserRole.PARTICIPANT, entity)).toBe('own');
+    });
   });
 
   describe('Given a trainer role', () => {
@@ -43,17 +37,14 @@ describe('getViewPermission', () => {
       Entity.SUPPORT_REQUEST,
     ];
 
-    it.each(ownEntities)(
-      'When checking %s / Then returns "own"',
-      (entity) => {
-        expect(getViewPermission(UserRole.TRAINER, entity)).toBe('own');
-      },
-    );
+    it.each(ownEntities)('When checking %s / Then returns "own"', (entity) => {
+      expect(getViewPermission(UserRole.TRAINER, entity)).toBe('own');
+    });
 
     it('When checking Enrollment / Then returns "none"', () => {
-      expect(
-        getViewPermission(UserRole.TRAINER, Entity.ENROLLMENT),
-      ).toBe('none');
+      expect(getViewPermission(UserRole.TRAINER, Entity.ENROLLMENT)).toBe(
+        'none',
+      );
     });
   });
 });
@@ -62,12 +53,9 @@ describe('getViewPermission', () => {
 
 describe('getEditPermission', () => {
   describe('Given an admin role', () => {
-    it.each(allEntities)(
-      'When checking %s / Then returns "all"',
-      (entity) => {
-        expect(getEditPermission(UserRole.ADMIN, entity)).toBe('all');
-      },
-    );
+    it.each(allEntities)('When checking %s / Then returns "all"', (entity) => {
+      expect(getEditPermission(UserRole.ADMIN, entity)).toBe('all');
+    });
   });
 
   describe('Given a participant role', () => {
@@ -86,12 +74,9 @@ describe('getEditPermission', () => {
       Entity.NOTIFICATION,
     ];
 
-    it.each(ownEntities)(
-      'When checking %s / Then returns "own"',
-      (entity) => {
-        expect(getEditPermission(UserRole.PARTICIPANT, entity)).toBe('own');
-      },
-    );
+    it.each(ownEntities)('When checking %s / Then returns "own"', (entity) => {
+      expect(getEditPermission(UserRole.PARTICIPANT, entity)).toBe('own');
+    });
 
     it.each(noneEntities)(
       'When checking %s / Then returns "none"',
@@ -117,12 +102,9 @@ describe('getEditPermission', () => {
       Entity.NOTIFICATION,
     ];
 
-    it.each(ownEntities)(
-      'When checking %s / Then returns "own"',
-      (entity) => {
-        expect(getEditPermission(UserRole.TRAINER, entity)).toBe('own');
-      },
-    );
+    it.each(ownEntities)('When checking %s / Then returns "own"', (entity) => {
+      expect(getEditPermission(UserRole.TRAINER, entity)).toBe('own');
+    });
 
     it.each(noneEntities)(
       'When checking %s / Then returns "none"',

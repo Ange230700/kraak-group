@@ -310,9 +310,9 @@ describe('canTransitionSupportRequestStatus', () => {
 
 describe('getNextSupportRequestStatuses', () => {
   it('returns [in_progress] from open', () => {
-    expect(
-      getNextSupportRequestStatuses(SupportRequestStatus.OPEN),
-    ).toEqual([SupportRequestStatus.IN_PROGRESS]);
+    expect(getNextSupportRequestStatuses(SupportRequestStatus.OPEN)).toEqual([
+      SupportRequestStatus.IN_PROGRESS,
+    ]);
   });
 
   it('returns [resolved] from in_progress', () => {
@@ -328,9 +328,9 @@ describe('getNextSupportRequestStatuses', () => {
   });
 
   it('returns [] from closed', () => {
-    expect(
-      getNextSupportRequestStatuses(SupportRequestStatus.CLOSED),
-    ).toEqual([]);
+    expect(getNextSupportRequestStatuses(SupportRequestStatus.CLOSED)).toEqual(
+      [],
+    );
   });
 });
 
