@@ -214,6 +214,12 @@ Le site web doit être configuré pour servir correctement :
 Le choix Angular pour le site implique de traiter explicitement la stratégie de
 rendu et de pré-rendu au moment du setup applicatif.
 
+> **Décision documentée** : la stratégie retenue est le **prerender intégral**
+> (`RenderMode.Prerender`) sur toutes les routes du site vitrine. Voir
+> [`docs/decisions/ARC-03-seo-prerender-strategy.md`](docs/decisions/ARC-03-seo-prerender-strategy.md)
+> pour le détail complet (justification, alternatives écartées, limites,
+> évolutions prévues).
+
 ### Mobile Et Notifications
 
 Le mobile n'est pas traité comme simple duplication responsive du site.
