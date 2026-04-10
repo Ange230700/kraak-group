@@ -38,6 +38,7 @@ module.exports = {
         "tokens",
         "infra",
         "ci",
+        "supabase",
       ],
     ],
     "scope-empty": [2, "never"],
