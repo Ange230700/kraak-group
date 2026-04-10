@@ -123,12 +123,18 @@ importers:
       '@ionic/angular':
         specifier: ^8.6.0
         version: 8.8.3(9511f469f4e6826adaab558be69e3456)
+      '@ionic/core':
+        specifier: 8.8.3
+        version: 8.8.3
       '@kraak/tokens':
         specifier: workspace:*
         version: link:../../packages/tokens
       '@primeuix/themes':
         specifier: ^2.0.3
         version: 2.0.3
+      '@stencil/core':
+        specifier: ^4.43.3
+        version: 4.43.3
       express:
         specifier: ^5.1.0
         version: 5.2.1

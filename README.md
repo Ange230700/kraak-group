@@ -36,17 +36,20 @@ Remplir les valeurs manquantes — voir [`docs/runbooks/ENVIRONMENT_VARIABLES.md
 ### Lancer en mode développement
 
 ```bash
+# Toutes les apps en une seule commande
+pnpm dev
+
 # Site web (Angular SSR — http://localhost:4200)
 pnpm dev:web
 
 # API backend (NestJS — http://localhost:3000)
 pnpm dev:api
 
-# Application mobile (Ionic Angular — http://localhost:4200)
+# Application mobile (Ionic Angular — http://localhost:4300)
 pnpm dev:mobile
 ```
 
-> Chaque commande lance un serveur avec rechargement automatique (hot-reload).
+> `pnpm dev` choisit automatiquement le prochain port libre pour le web et le mobile si `4200` ou `4300` sont déjà occupés. L'API reste attendue sur `3000`.
 
 ---
 
@@ -89,22 +92,25 @@ Pour les détails, voir [`ARCHITECTURE.md`](ARCHITECTURE.md).
 
 ## Scripts disponibles
 
-| Commande            | Description                            |
-| ------------------- | -------------------------------------- |
-| `pnpm dev:web`      | Lancer le site web en dev (port 4200)  |
-| `pnpm dev:api`      | Lancer l'API en dev (port 3000)        |
-| `pnpm dev:mobile`   | Lancer l'app mobile en dev             |
-| `pnpm build:web`    | Builder le site web                    |
-| `pnpm build:api`    | Builder l'API                          |
-| `pnpm build:mobile` | Builder l'app mobile                   |
-| `pnpm test:api`     | Tests unitaires API                    |
-| `pnpm typecheck`    | Vérifier le typage web, mobile et API  |
-| `pnpm test:unit`    | Tests unitaires client                 |
-| `pnpm test:e2e`     | Tests E2E (Playwright)                 |
-| `pnpm lint`         | Linter tous les projets                |
-| `pnpm format`       | Formater le code (Prettier)            |
-| `pnpm format:check` | Vérifier le formatage                  |
-| `pnpm commit`       | Ouvrir le prompt interactif Commitizen |
+| Commande            | Description                                               |
+| ------------------- | --------------------------------------------------------- |
+| `pnpm dev`          | Lancer web, mobile et API avec ports auto pour web/mobile |
+| `pnpm build`        | Builder tous les projets buildables                       |
+| `pnpm test`         | Lancer tous les tests disponibles                         |
+| `pnpm dev:web`      | Lancer le site web en dev (port 4200 par défaut)          |
+| `pnpm dev:api`      | Lancer l'API en dev (port 3000)                           |
+| `pnpm dev:mobile`   | Lancer l'app mobile en dev (port 4300)                    |
+| `pnpm build:web`    | Builder le site web                                       |
+| `pnpm build:api`    | Builder l'API                                             |
+| `pnpm build:mobile` | Builder l'app mobile                                      |
+| `pnpm test:api`     | Tests unitaires API                                       |
+| `pnpm typecheck`    | Vérifier le typage web, mobile et API                     |
+| `pnpm test:unit`    | Tests unitaires client                                    |
+| `pnpm test:e2e`     | Tests E2E (Playwright)                                    |
+| `pnpm lint`         | Linter tous les projets                                   |
+| `pnpm format`       | Formater le code (Prettier)                               |
+| `pnpm format:check` | Vérifier le formatage                                     |
+| `pnpm commit`       | Ouvrir le prompt interactif Commitizen                    |
 
 ---
 

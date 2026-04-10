@@ -1,6 +1,6 @@
-import { test, expect } from '@playwright/test';
+import { expect, test } from '@playwright/test';
 
-// Smoke E2E — page d'accueil par défaut
+// Smoke E2E — shell web KRAAK
 // Given/When/Then : vérification des éléments visibles après chargement
 
 test.describe(`Page d'accueil — smoke tests`, () => {
@@ -14,23 +14,25 @@ test.describe(`Page d'accueil — smoke tests`, () => {
     await expect(page).toHaveTitle('Web');
   });
 
-  test(`Given la page d'accueil, When elle se charge, Then le heading principal affiche "Hello, web"`, async ({
+  test(`Given la page d'accueil, When elle se charge, Then la marque KRAAK est visible dans la navigation`, async ({
     page,
   }) => {
-    await expect(page.locator('h1')).toHaveText('Hello, web');
+    await expect(page.getByRole('banner')).toContainText('KRAAK');
   });
 
-  test(`Given la page d'accueil, When elle se charge, Then le message de bienvenue est visible`, async ({
+  test(`Given la page d'accueil, When elle se charge, Then l'appel à l'action "Nous contacter" est visible`, async ({
     page,
   }) => {
     await expect(
-      page.getByText('Congratulations! Your app is running.'),
+      page.getByRole('link', { name: 'Nous contacter' }).first(),
     ).toBeVisible();
   });
 
-  test(`Given la page d'accueil, When elle se charge, Then le logo Angular est présent`, async ({
+  test(`Given la page d'accueil, When elle se charge, Then le pied de page affiche la promesse KRAAK`, async ({
     page,
   }) => {
-    await expect(page.locator('.angular-logo')).toBeVisible();
+    await expect(page.getByRole('contentinfo')).toContainText(
+      `Accompagner l'ambition. Former le leadership. Ouvrir les chemins.`,
+    );
   });
 });

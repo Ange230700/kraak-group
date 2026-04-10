@@ -208,6 +208,13 @@
               "projects/mobile/src/**/*.html"
             ]
           }
+        },
+        "test": {
+          "builder": "@angular/build:unit-test",
+          "options": {
+            "tsConfig": "projects/mobile/tsconfig.spec.json",
+            "runnerConfig": "projects/mobile/vitest.config.ts"
+          }
         }
       }
     }
