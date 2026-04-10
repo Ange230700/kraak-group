@@ -186,6 +186,8 @@ Structure cible recommandée :
 │  ├─ contracts/
 │  ├─ api-client/
 │  └─ domain/
+├─ supabase/
+│  └─ migrations/           # migrations SQL Supabase
 └─ docs/
 ```
 
@@ -246,7 +248,9 @@ L'application mobile doit être pensée pour :
 3. Donner un manifeste et une implémentation réelle à `packages/contracts`,
    `packages/domain` et `packages/api-client` dès qu’un partage cross-surface
    devient concret.
-4. Préparer l'intégration Supabase et Resend côté API.
+4. Brancher l'API NestJS au client Supabase et configurer Resend (le schéma
+   initial de la base de données est défini dans
+   `supabase/migrations/20250718000000_initial_schema.sql`).
 5. Stabiliser la stratégie de rendu web pour le SEO sur le projet `web`.
 6. Préparer la stratégie de notifications mobile quand le flux participant le
    justifiera.
