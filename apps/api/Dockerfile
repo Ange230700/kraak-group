@@ -10,15 +10,16 @@ WORKDIR /app
 
 # --- Étape 1 : installation des dépendances ---
 FROM base AS deps
-COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
+COPY package.json pnpm-lock.yaml pnpm-workspace.yaml .npmrc ./
 COPY apps/api/package.json apps/api/
+COPY apps/client/package.json apps/client/
 RUN pnpm install --frozen-lockfile
 
 # --- Étape 2 : build TypeScript ---
 FROM deps AS build
 COPY apps/api/ apps/api/
 RUN pnpm --filter @kraak/api build
-RUN pnpm deploy --filter @kraak/api --prod /prod/api
+RUN pnpm deploy --filter @kraak/api --prod --legacy /prod/api
 
 # --- Étape 3 : image de production ---
 FROM node:24-alpine AS production

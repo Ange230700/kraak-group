@@ -1,5 +1,5 @@
 # Dépendances et caches
-node_modules
+**/node_modules
 .pnpm-store
 
 # Builds et artefacts
