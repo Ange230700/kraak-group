@@ -16,6 +16,7 @@
     "dev:api": "pnpm --filter @kraak/api start:dev",
     "build:api": "pnpm --filter @kraak/api build",
     "test:api": "pnpm --filter @kraak/api test",
+    "test:libs": "pnpm -r --filter @kraak/contracts --filter @kraak/domain --filter @kraak/api-client --filter @kraak/tokens test",
     "lint:api": "pnpm --filter @kraak/api lint",
     "lint": "pnpm -r lint",
     "typecheck:web": "pnpm --filter @kraak/client exec tsc --noEmit -p projects/web/tsconfig.app.json",

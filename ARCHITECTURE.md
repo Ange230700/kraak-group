@@ -23,8 +23,9 @@ conflit avec la pile par défaut mentionnée dans `AGENTS.md`.
 - `apps/client` contient le workspace Angular avec les projets `web` et
   `mobile`
 - `apps/api` contient le bootstrap NestJS et les premiers répertoires de modules
-- `packages/tokens` est déjà actif ; `packages/contracts`, `packages/domain` et
-  `packages/api-client` sont scaffoldés mais pas encore implémentés
+- les quatre packages partagés (`packages/tokens`, `packages/contracts`,
+  `packages/domain` et `packages/api-client`) sont implémentés avec couverture
+  de tests unitaires (voir `docs/runbooks/PACKAGE_GUIDELINES.md`)
 - `vercel.json` et `render.yaml` sont déjà présents pour cadrer le déploiement
 
 ---
@@ -198,8 +199,8 @@ Structure cible recommandée :
 - les contenus et états utilisateurs mobiles ne doivent pas être embarqués en
   dur comme stratégie par défaut
 - les contrats consommés par le mobile doivent être stables, typés et versionnables
-- les packages `contracts`, `domain` et `api-client` peuvent rester à l’état de
-  squelette tant qu’aucun flux métier partagé n’exige leur implémentation réelle
+- les packages `contracts`, `domain` et `api-client` sont implémentés et testés ;
+  les étendre au fil des flux métier partagés
 
 ### SEO Et Web Marketing
 
@@ -251,9 +252,9 @@ L'application mobile doit être pensée pour :
 1. Brancher les routes Angular web/mobile aux répertoires `features/` déjà créés.
 2. Remplacer le bootstrap API minimal par de vrais modules métier dans
    `apps/api/src/`.
-3. Donner un manifeste et une implémentation réelle à `packages/contracts`,
-   `packages/domain` et `packages/api-client` dès qu’un partage cross-surface
-   devient concret.
+3. ~~Donner un manifeste et une implémentation réelle aux packages partagés~~ —
+   fait (LIB-01 à LIB-04). Étendre les contrats et la logique métier au fil des
+   besoins.
 4. Brancher l'API NestJS au client Supabase et configurer Resend (le schéma
    initial de la base de données est défini dans
    `supabase/migrations/20250718000000_initial_schema.sql`).
