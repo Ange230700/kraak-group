@@ -1,0 +1,36 @@
+import { routes } from './app.routes';
+
+describe('Mobile routes', () => {
+  const topPaths = routes.map((r) => r.path);
+
+  it('should define onboarding and auth routes', () => {
+    expect(topPaths).toContain('welcome');
+    expect(topPaths).toContain('sign-in');
+  });
+
+  it('should define the tabs shell route', () => {
+    expect(topPaths).toContain('tabs');
+  });
+
+  it('should redirect empty path to tabs', () => {
+    const root = routes.find((r) => r.path === '' && r.redirectTo);
+    expect(root).toBeDefined();
+    expect(root!.redirectTo).toBe('tabs');
+  });
+
+  it('should have a wildcard fallback to tabs', () => {
+    const wildcard = routes.find((r) => r.path === '**');
+    expect(wildcard).toBeDefined();
+    expect(wildcard!.redirectTo).toBe('tabs');
+  });
+
+  it('should define tab children routes', () => {
+    const tabsRoute = routes.find((r) => r.path === 'tabs');
+    const childPaths = tabsRoute!.children!.map((c) => c.path);
+    expect(childPaths).toContain('accueil');
+    expect(childPaths).toContain('programmes');
+    expect(childPaths).toContain('annonces');
+    expect(childPaths).toContain('support');
+    expect(childPaths).toContain('ressources');
+  });
+});
