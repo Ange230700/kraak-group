@@ -24,7 +24,10 @@ export type PermissionLevel = 'all' | 'own' | 'none';
 
 // ── Matrices de permission ──────────────────────────────────────────
 
-type PermissionMatrix = Record<UserRoleValue, Record<EntityValue, PermissionLevel>>;
+type PermissionMatrix = Record<
+  UserRoleValue,
+  Record<EntityValue, PermissionLevel>
+>;
 
 const allEntities = Object.values(Entity) as EntityValue[];
 
