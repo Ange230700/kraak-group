@@ -148,23 +148,9 @@
 </section>
 
 <!-- CTA -->
-<section class="bg-brand-navy py-16 text-center text-brand-white">
-  <div class="mx-auto max-w-3xl px-4 lg:px-6">
-    <h2 class="text-3xl font-bold text-brand-white lg:text-4xl">
-      Prêt à passer à l'action ?
-    </h2>
-    <p class="mt-4 text-lg text-neutral-300">
-      Prenez rendez-vous pour une consultation gratuite et découvrez comment
-      KRAAK peut vous accompagner.
-    </p>
-    <div class="mt-8">
-      <a
-        pButton
-        routerLink="/contact"
-        label="Demander une consultation"
-        size="large"
-        aria-label="Demander une consultation"
-      ></a>
-    </div>
-  </div>
-</section>
+<kraak-cta-banner
+  heading="Prêt à passer à l'action ?"
+  body="Prenez rendez-vous pour une consultation gratuite et découvrez comment KRAAK peut vous accompagner."
+  ctaLabel="Demander une consultation"
+  ctaLink="/contact"
+/>

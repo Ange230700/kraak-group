@@ -1,4 +1,4 @@
-<!-- Formulaire de contact -->
+<!-- En-tête de la page contact -->
 <section class="bg-brand-navy py-20 text-center text-brand-white">
   <div class="mx-auto max-w-4xl px-4 lg:px-6">
     <h1 class="text-4xl font-bold leading-tight text-brand-white lg:text-5xl">
@@ -11,67 +11,148 @@
   </div>
 </section>
 
+<!-- Formulaire de contact -->
 <section class="bg-brand-white py-16">
   <div class="mx-auto max-w-2xl px-4 lg:px-6">
-    <form class="space-y-6">
-      <div>
-        <label for="name" class="mb-1 block text-sm font-medium">
-          Nom complet
-        </label>
-        <input
-          pInputText
-          id="name"
-          type="text"
-          placeholder="Votre nom"
-          class="w-full"
-        />
-      </div>
-      <div>
-        <label for="email" class="mb-1 block text-sm font-medium">
-          Adresse e-mail
-        </label>
-        <input
-          pInputText
-          id="email"
-          type="email"
-          placeholder="votre.email@exemple.com"
-          class="w-full"
-        />
-      </div>
-      <div>
-        <label for="subject" class="mb-1 block text-sm font-medium">
-          Objet
-        </label>
-        <input
-          pInputText
-          id="subject"
-          type="text"
-          placeholder="Sujet de votre message"
-          class="w-full"
-        />
-      </div>
-      <div>
-        <label for="message" class="mb-1 block text-sm font-medium">
-          Message
-        </label>
-        <textarea
-          pTextarea
-          id="message"
-          rows="6"
-          placeholder="Décrivez votre besoin ou votre question..."
-          class="w-full"
-        ></textarea>
-      </div>
-      <div class="text-center">
-        <button
-          pButton
-          type="submit"
-          label="Envoyer le message"
-          size="large"
-          aria-label="Envoyer le message"
-        ></button>
-      </div>
-    </form>
+    @if (success()) {
+      <p-message
+        severity="success"
+        text="Votre message a bien été envoyé. Nous vous répondrons dans les plus brefs délais."
+        [closable]="false"
+        styleClass="w-full mb-6"
+      />
+    } @else {
+      @if (apiErrors().length > 0) {
+        <div class="mb-6">
+          @for (err of apiErrors(); track err) {
+            <p-message
+              severity="error"
+              [text]="err"
+              [closable]="false"
+              styleClass="w-full mb-2"
+            />
+          }
+        </div>
+      }
+
+      <form [formGroup]="form" (ngSubmit)="onSubmit()" novalidate class="space-y-6">
+        <!-- Nom -->
+        <div>
+          <label for="name" class="mb-1 block text-sm font-medium">
+            Nom complet <span class="text-red-500" aria-hidden="true">*</span>
+          </label>
+          <input
+            pInputText
+            id="name"
+            type="text"
+            placeholder="Votre nom"
+            formControlName="name"
+            [class]="'w-full' + (isInvalid(name) ? ' ng-invalid ng-dirty' : '')"
+            aria-required="true"
+            [attr.aria-invalid]="isInvalid(name)"
+            aria-describedby="name-error"
+          />
+          @if (isInvalid(name)) {
+            <p id="name-error" class="mt-1 text-sm text-red-600" role="alert">
+              @if (name.errors?.['required']) {
+                Le nom est requis.
+              } @else if (name.errors?.['minlength']) {
+                Le nom doit contenir au moins 2 caractères.
+              }
+            </p>
+          }
+        </div>
+
+        <!-- E-mail -->
+        <div>
+          <label for="email" class="mb-1 block text-sm font-medium">
+            Adresse e-mail <span class="text-red-500" aria-hidden="true">*</span>
+          </label>
+          <input
+            pInputText
+            id="email"
+            type="email"
+            placeholder="votre.email@exemple.com"
+            formControlName="email"
+            [class]="'w-full' + (isInvalid(email) ? ' ng-invalid ng-dirty' : '')"
+            aria-required="true"
+            [attr.aria-invalid]="isInvalid(email)"
+            aria-describedby="email-error"
+          />
+          @if (isInvalid(email)) {
+            <p id="email-error" class="mt-1 text-sm text-red-600" role="alert">
+              @if (email.errors?.['required']) {
+                L'adresse e-mail est requise.
+              } @else if (email.errors?.['email']) {
+                Veuillez saisir une adresse e-mail valide.
+              }
+            </p>
+          }
+        </div>
+
+        <!-- Objet -->
+        <div>
+          <label for="subject" class="mb-1 block text-sm font-medium">
+            Objet <span class="text-red-500" aria-hidden="true">*</span>
+          </label>
+          <input
+            pInputText
+            id="subject"
+            type="text"
+            placeholder="Sujet de votre message"
+            formControlName="subject"
+            [class]="'w-full' + (isInvalid(subject) ? ' ng-invalid ng-dirty' : '')"
+            aria-required="true"
+            [attr.aria-invalid]="isInvalid(subject)"
+            aria-describedby="subject-error"
+          />
+          @if (isInvalid(subject)) {
+            <p id="subject-error" class="mt-1 text-sm text-red-600" role="alert">
+              L'objet est requis.
+            </p>
+          }
+        </div>
+
+        <!-- Message -->
+        <div>
+          <label for="message" class="mb-1 block text-sm font-medium">
+            Message <span class="text-red-500" aria-hidden="true">*</span>
+          </label>
+          <textarea
+            pTextarea
+            id="message"
+            rows="6"
+            placeholder="Décrivez votre besoin ou votre question..."
+            formControlName="message"
+            [class]="'w-full' + (isInvalid(message) ? ' ng-invalid ng-dirty' : '')"
+            aria-required="true"
+            [attr.aria-invalid]="isInvalid(message)"
+            aria-describedby="message-error"
+          ></textarea>
+          @if (isInvalid(message)) {
+            <p id="message-error" class="mt-1 text-sm text-red-600" role="alert">
+              @if (message.errors?.['required']) {
+                Le message est requis.
+              } @else if (message.errors?.['minlength']) {
+                Le message doit contenir au moins 10 caractères.
+              }
+            </p>
+          }
+        </div>
+
+        <div class="text-center">
+          <button
+            pButton
+            type="submit"
+            label="Envoyer le message"
+            size="large"
+            aria-label="Envoyer le message"
+            [loading]="loading()"
+            [disabled]="loading()"
+          ></button>
+        </div>
+      </form>
+    }
   </div>
 </section>
 

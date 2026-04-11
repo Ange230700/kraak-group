@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
-import { RouterLink } from '@angular/router';
-import { ButtonDirective } from 'primeng/button';
+
+import { CtaBanner } from '../../shared/cta-banner/cta-banner';
 
 @Component({
   selector: 'kraak-services-page',
   standalone: true,
-  imports: [RouterLink, ButtonDirective],
+  imports: [CtaBanner],
   templateUrl: './services.page.html',
 })
 export default class ServicesPage {}
