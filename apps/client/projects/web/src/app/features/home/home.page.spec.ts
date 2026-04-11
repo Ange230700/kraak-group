@@ -1,10 +1,12 @@
 import { TestBed } from '@angular/core/testing';
+import { provideRouter } from '@angular/router';
 import HomePage from './home.page';
 
 describe('HomePage', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [HomePage],
+      providers: [provideRouter([])],
     }).compileComponents();
   });
 
@@ -17,6 +19,6 @@ describe('HomePage', () => {
     const fixture = TestBed.createComponent(HomePage);
     fixture.detectChanges();
     const heading = fixture.nativeElement.querySelector('h1');
-    expect(heading?.textContent).toContain('Bienvenue chez KRAAK');
+    expect(heading?.textContent).toContain('Développez votre potentiel');
   });
 });

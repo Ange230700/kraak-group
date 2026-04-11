@@ -1,15 +1,11 @@
 import { Component } from '@angular/core';
+import { RouterLink } from '@angular/router';
+import { ButtonDirective } from 'primeng/button';
 
 @Component({
   selector: 'kraak-about-page',
   standalone: true,
-  template: `
-    <section class="px-6 py-16">
-      <h1 class="text-4xl font-bold mb-4">À propos de KRAAK</h1>
-      <p class="text-lg text-gray-600">
-        Notre vision, notre mission et nos valeurs — contenu à venir.
-      </p>
-    </section>
-  `,
+  imports: [RouterLink, ButtonDirective],
+  templateUrl: './about.page.html',
 })
 export default class AboutPage {}

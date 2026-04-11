@@ -28,7 +28,7 @@ export default defineConfig({
     },
   ],
   webServer: {
-    command: `pnpm ng serve web --port ${localWebPort}`,
+    command: `npx ng serve web --port ${localWebPort}`,
     url: localWebBaseUrl,
     reuseExistingServer: !process.env['CI'],
     timeout: 120_000,
