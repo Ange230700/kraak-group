@@ -12,6 +12,10 @@
       <a
         pButton
         routerLink="/contact"
+        [queryParams]="{
+          intent: 'consultation',
+          source: 'homeHero',
+        }"
         label="Demander une consultation"
         size="large"
         aria-label="Demander une consultation"
@@ -190,6 +194,10 @@
       <a
         pButton
         routerLink="/contact"
+        [queryParams]="{
+          intent: 'consultation',
+          source: 'homeBottomCta',
+        }"
         label="Demander une consultation"
         size="large"
         aria-label="Demander une consultation"
@@ -218,6 +226,10 @@
     <a
       pButton
       routerLink="/contact"
+      [queryParams]="{
+        intent: 'information',
+        source: 'homeTeaser',
+      }"
       label="Nous contacter"
       severity="secondary"
       aria-label="Nous contacter"

@@ -143,6 +143,11 @@
       <a
         pButton
         routerLink="/contact"
+        [queryParams]="{
+          service: 'training',
+          intent: 'programApplication',
+          source: 'programsBottomCta',
+        }"
         label="S'inscrire maintenant"
         size="large"
         aria-label="S'inscrire maintenant"

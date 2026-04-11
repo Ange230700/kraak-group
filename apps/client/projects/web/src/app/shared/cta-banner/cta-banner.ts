@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { Params, RouterLink } from '@angular/router';
 import { ButtonDirective } from 'primeng/button';
 import { Card } from 'primeng/card';
 
@@ -14,4 +14,5 @@ export class CtaBanner {
   @Input() body = '';
   @Input() ctaLabel = '';
   @Input() ctaLink = '';
+  @Input() ctaQueryParams: Params | null = null;
 }

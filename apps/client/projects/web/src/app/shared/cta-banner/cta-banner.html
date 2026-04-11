@@ -27,6 +27,7 @@
             <a
               pButton
               [routerLink]="ctaLink"
+              [queryParams]="ctaQueryParams || undefined"
               [label]="ctaLabel"
               [attr.aria-label]="ctaLabel"
               class="mt-8 text-sm"

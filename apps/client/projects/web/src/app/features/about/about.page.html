@@ -98,6 +98,10 @@
       <a
         pButton
         routerLink="/contact"
+        [queryParams]="{
+          intent: 'information',
+          source: 'aboutBottomCta',
+        }"
         label="Nous contacter"
         size="large"
         aria-label="Nous contacter"
