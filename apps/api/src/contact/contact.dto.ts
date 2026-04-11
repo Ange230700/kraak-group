@@ -5,6 +5,19 @@ export interface ContactDto {
   message: string;
 }
 
+/** Vérifie qu'une adresse e-mail a la forme minimale user@domain.tld (vérification linéaire). */
+function isValidEmail(email: string): boolean {
+  const parts = email.split('@');
+  if (parts.length !== 2) return false;
+  const [local, domain] = parts;
+  if (!local || local.includes(' ')) return false;
+  const domainParts = domain.split('.');
+  return (
+    domainParts.length >= 2 &&
+    domainParts.every((p) => p.length > 0 && !p.includes(' '))
+  );
+}
+
 export function validateContactDto(body: unknown): {
   valid: boolean;
   errors: string[];
@@ -20,11 +33,10 @@ export function validateContactDto(body: unknown): {
     errors.push('Le nom est requis.');
   }
 
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   if (
     !dto['email'] ||
     typeof dto['email'] !== 'string' ||
-    !emailRegex.test(dto['email'])
+    !isValidEmail(dto['email'])
   ) {
     errors.push("L'adresse e-mail est invalide.");
   }

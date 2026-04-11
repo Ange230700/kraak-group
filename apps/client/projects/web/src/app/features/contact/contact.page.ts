@@ -1,3 +1,4 @@
+import { NgClass } from '@angular/common';
 import { Component, inject, signal } from '@angular/core';
 import {
   AbstractControl,
@@ -11,12 +12,12 @@ import { InputText } from 'primeng/inputtext';
 import { Textarea } from 'primeng/textarea';
 import { Message } from 'primeng/message';
 
-import { ContactService, ContactErrorResponse } from './contact.service';
+import { ContactService } from './contact.service';
 
 @Component({
   selector: 'kraak-contact-page',
   standalone: true,
-  imports: [ReactiveFormsModule, ButtonDirective, InputText, Textarea, Message],
+  imports: [ReactiveFormsModule, NgClass, ButtonDirective, InputText, Textarea, Message],
   templateUrl: './contact.page.html',
 })
 export default class ContactPage {
@@ -75,7 +76,7 @@ export default class ContactPage {
         next: (res) => {
           this.loading.set(false);
           if ('errors' in res) {
-            this.apiErrors.set((res as ContactErrorResponse).errors);
+            this.apiErrors.set(res.errors);
           } else {
             this.success.set(true);
             this.form.reset();
