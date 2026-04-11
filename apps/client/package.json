@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
+    "clean": "node ../../scripts/clean.mjs",
     "ng": "ng",
     "dev": "pnpm --dir ../.. dev",
     "dev:web": "ng serve web",
@@ -38,6 +39,7 @@
     "@stencil/core": "^4.43.3",
     "express": "^5.1.0",
     "ionicons": "^7.4.0",
+    "primeicons": "^7.0.0",
     "primeng": "^21.1.5",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0"

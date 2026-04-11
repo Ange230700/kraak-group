@@ -1,8 +1,12 @@
 import net from 'node:net';
 import { spawn } from 'node:child_process';
+import { readdir, rm } from 'node:fs/promises';
+import path from 'node:path';
 
 const portInUsePattern = /Port \d+ is already in use/i;
 const addressInUsePattern = /EADDRINUSE|address already in use/i;
+const viteCacheLockPattern =
+  /EPERM: operation not permitted, rename .*\.angular[\\/]+cache.*[\\/]+vite[\\/]+deps_temp_/i;
 
 const services = [
   {
@@ -20,6 +24,7 @@ const services = [
     cwd: process.cwd(),
     command: ['pnpm.cmd', '--filter', '@kraak/client', 'run', 'dev:mobile'],
     portArg: true,
+    angularCacheProject: 'mobile',
   },
   {
     name: 'api',
@@ -88,6 +93,59 @@ async function findAvailablePort(preferredPort) {
   return port;
 }
 
+function isPathInsideWorkspace(targetPath) {
+  const workspaceRoot = path.resolve(process.cwd());
+  const resolvedTarget = path.resolve(targetPath);
+
+  return (
+    resolvedTarget === workspaceRoot ||
+    resolvedTarget.startsWith(`${workspaceRoot}${path.sep}`)
+  );
+}
+
+async function clearAngularViteCache(projectName) {
+  if (!projectName) {
+    return;
+  }
+
+  const cacheRoot = path.resolve(process.cwd(), 'apps', 'client', '.angular', 'cache');
+
+  if (!isPathInsideWorkspace(cacheRoot)) {
+    throw new Error(`Refus de supprimer un cache hors workspace: ${cacheRoot}`);
+  }
+
+  let versionEntries = [];
+
+  try {
+    versionEntries = await readdir(cacheRoot, { withFileTypes: true });
+  } catch (error) {
+    if (error && typeof error === 'object' && 'code' in error && error.code === 'ENOENT') {
+      return;
+    }
+
+    throw error;
+  }
+
+  for (const entry of versionEntries) {
+    if (!entry.isDirectory()) {
+      continue;
+    }
+
+    const projectCachePath = path.resolve(cacheRoot, entry.name, projectName);
+
+    if (!isPathInsideWorkspace(projectCachePath)) {
+      throw new Error(`Refus de supprimer un cache hors workspace: ${projectCachePath}`);
+    }
+
+    await rm(projectCachePath, {
+      recursive: true,
+      force: true,
+      maxRetries: 3,
+      retryDelay: 150,
+    });
+  }
+}
+
 function shutdown(exitCode = 0) {
   if (shuttingDown) {
     return;
@@ -114,6 +172,7 @@ function shutdown(exitCode = 0) {
 
 async function startService(service) {
   const allowPortFallback = service.allowPortFallback ?? true;
+  const cacheRecoveryAttempts = service.cacheRecoveryAttempts ?? 0;
 
   if (!(await isPortFree(service.preferredPort)) && !allowPortFallback) {
     process.stdout.write(
@@ -123,8 +182,8 @@ async function startService(service) {
   }
 
   const port = allowPortFallback
-    ? service.preferredPort
-    : await findAvailablePort(service.preferredPort);
+    ? await findAvailablePort(service.preferredPort)
+    : service.preferredPort;
   const args = [...service.command];
   const env = { ...process.env };
 
@@ -166,6 +225,7 @@ async function startService(service) {
   children.add(child);
   let retryOnNextPort = false;
   let portBusyOnStart = false;
+  let recoverViteCache = false;
 
   forwardStream(child.stdout, service.name, service.color);
   forwardStream(child.stderr, service.name, service.color, (line) => {
@@ -177,6 +237,20 @@ async function startService(service) {
         );
         child.kill('SIGTERM');
       }
+      return;
+    }
+
+    if (
+      service.angularCacheProject &&
+      cacheRecoveryAttempts < 2 &&
+      !recoverViteCache &&
+      viteCacheLockPattern.test(line)
+    ) {
+      recoverViteCache = true;
+      process.stdout.write(
+        `${service.color}[${service.name}]${reset} verrou de cache Vite détecté, nettoyage du cache Angular ${service.angularCacheProject} puis relance.\n`,
+      );
+      child.kill('SIGTERM');
       return;
     }
 
@@ -200,6 +274,21 @@ async function startService(service) {
         console.error(error);
         shutdown(1);
       });
+      return;
+    }
+
+    if (recoverViteCache) {
+      clearAngularViteCache(service.angularCacheProject)
+        .then(() =>
+          startService({
+            ...service,
+            cacheRecoveryAttempts: cacheRecoveryAttempts + 1,
+          }),
+        )
+        .catch((error) => {
+          console.error(error);
+          shutdown(1);
+        });
       return;
     }
 

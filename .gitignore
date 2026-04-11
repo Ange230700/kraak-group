@@ -53,3 +53,6 @@ pnpm-debug.log*
 *.tgz
 .cache/
 tmp/
+
+# Playwright MCP
+.playwright-mcp/

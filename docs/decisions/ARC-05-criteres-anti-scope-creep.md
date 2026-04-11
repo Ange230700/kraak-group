@@ -133,14 +133,15 @@ utilisateur immédiate.
 
 ### 4.1 Arborescence
 
-```
-docs/decisions/
-  README.md                              # Index des ADR
-  ARC-01-architecture-cible-mvp.md       # Architecture globale
-  ARC-02-conventions-repo.md             # Conventions dépôt et Git
-  ARC-03-seo-prerender-strategy.md       # SEO et prerendering
-  ARC-04-modeles-donnees-mvp.md          # Schéma de données MVP
-  ARC-05-criteres-anti-scope-creep.md    # Ce document
+```mermaid
+flowchart TD
+    decisions["docs/decisions/"]
+    decisions --> decisionsindex["README.md - Index des ADR"]
+    decisions --> arc01["ARC-01-architecture-cible-mvp.md - Architecture globale"]
+    decisions --> arc02["ARC-02-conventions-repo.md - Conventions dépôt et Git"]
+    decisions --> arc03["ARC-03-seo-prerender-strategy.md - SEO et prerendering"]
+    decisions --> arc04["ARC-04-modeles-donnees-mvp.md - Schéma de données MVP"]
+    decisions --> arc05["ARC-05-criteres-anti-scope-creep.md - Ce document"]
 ```
 
 ### 4.2 Intégration dans le workflow

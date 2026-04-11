@@ -1,19 +1,17 @@
 @import 'tailwindcss';
 @import '@kraak/tokens/tokens.css';
 
-/* ──────────────────────────────────────────────────────────
-   THEME — Design tokens (colors, fonts, spacing, radii)
+/*
+   THEME - Design tokens (colors, fonts, spacing, radii)
    Tailwind v4 CSS-first configuration: every --* variable
    defined here becomes a utility automatically.
    Les valeurs brutes proviennent de @kraak/tokens/tokens.css.
-   ────────────────────────────────────────────────────────── */
+*/
 
 @theme {
-  /* ── Fonts ── */
   --font-sans: var(--kr-font-sans);
   --font-mono: var(--kr-font-mono);
 
-  /* ── Brand colors ── */
   --color-brand-navy: var(--kr-brand-navy);
   --color-brand-navy-soft: var(--kr-brand-navy-soft);
   --color-brand-blue: var(--kr-brand-blue);
@@ -23,7 +21,6 @@
   --color-brand-white: var(--kr-brand-white);
   --color-brand-page: var(--kr-brand-page);
 
-  /* ── Neutral scale ── */
   --color-neutral-0: var(--kr-neutral-0);
   --color-neutral-50: var(--kr-neutral-50);
   --color-neutral-100: var(--kr-neutral-100);
@@ -36,7 +33,6 @@
   --color-neutral-800: var(--kr-neutral-800);
   --color-neutral-900: var(--kr-neutral-900);
 
-  /* ── Semantic roles ── */
   --color-primary: var(--color-brand-navy);
   --color-primary-hover: var(--color-brand-navy-soft);
   --color-secondary: var(--color-brand-blue);
@@ -47,17 +43,15 @@
   --color-text: var(--color-neutral-900);
   --color-text-muted: var(--color-brand-gray);
 
-  /* ── Border radius ── */
   --radius-btn: var(--kr-radius-btn);
   --radius-card: var(--kr-radius-card);
 
-  /* ── Shadows ── */
   --shadow-card: var(--kr-shadow-card);
 }
 
-/* ──────────────────────────────────────────────────────────
-   BASE — Global resets & default element styles
-   ────────────────────────────────────────────────────────── */
+/*
+   BASE - Global resets & default element styles
+*/
 
 @layer base {
   html {
@@ -96,86 +90,10 @@
   }
 }
 
-/* ──────────────────────────────────────────────────────────
-   COMPONENTS — Reusable UI patterns
-   ────────────────────────────────────────────────────────── */
-
-@layer components {
-  /* ── Buttons ── */
-  .btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.5rem;
-    padding: 0.75rem 1.25rem;
-    font-weight: 600;
-    border-radius: var(--radius-btn);
-    cursor: pointer;
-    transition:
-      background-color 0.15s ease,
-      color 0.15s ease,
-      box-shadow 0.15s ease;
-  }
-
-  .btn-primary {
-    background-color: var(--color-primary);
-    color: var(--color-brand-white);
-  }
-
-  .btn-primary:hover {
-    background-color: var(--color-primary-hover);
-  }
-
-  .btn-secondary {
-    background-color: var(--color-brand-white);
-    color: var(--color-primary);
-    border: 1px solid var(--color-primary);
-  }
-
-  .btn-secondary:hover {
-    background-color: var(--color-neutral-50);
-  }
-
-  .btn-ghost {
-    background-color: transparent;
-    color: var(--color-secondary);
-    padding: 0;
-  }
-
-  .btn-ghost:hover {
-    text-decoration: underline;
-  }
-
-  /* ── Cards ── */
-  .card {
-    background-color: var(--color-surface);
-    border-radius: var(--radius-card);
-    padding: 1.25rem 1.5rem;
-    box-shadow: var(--shadow-card);
-  }
-
-  /* ── Section wrapper ── */
-  .section {
-    padding-block: 4rem;
-  }
-
-  .section-lg {
-    padding-block: 6rem;
-  }
-
-  /* ── Container ── */
-  .container-page {
-    width: 100%;
-    max-width: 72rem;
-    margin-inline: auto;
-    padding-inline: 1rem;
-  }
-}
-
-/* ──────────────────────────────────────────────────────────
-   UTILITIES — One-off helpers (Tailwind generates most of
+/*
+   UTILITIES - One-off helpers (Tailwind generates most of
    these; add only custom ones below)
-   ────────────────────────────────────────────────────────── */
+*/
 
 @layer utilities {
   .text-balance {

@@ -41,19 +41,22 @@ pnpm dev:web
 - URL : **http://localhost:4200**
 - Hot-reload : oui (les modifications dans `apps/client/projects/web/` se reflètent automatiquement)
 - Commande sous-jacente : `ng serve web`
+- Option utile pour les tests/outils en PowerShell :
+  `$env:KRAAK_WEB_PORT='4201'; pnpm.cmd --filter @kraak/client exec playwright test`
 
 ### Structure du code web
 
-```
-apps/client/projects/web/src/
-├── app/           # Composants, routes, logique applicative
-├── environments/  # Fichiers d'environnement Angular
-├── index.html     # Point d'entrée HTML
-├── main.ts        # Bootstrap client
-├── main.server.ts # Bootstrap SSR (server-side rendering)
-├── server.ts      # Serveur Express pour le SSR
-├── styles.scss    # Styles globaux
-└── tailwind.css   # Import Tailwind
+```mermaid
+flowchart TD
+    websrc["apps/client/projects/web/src/"]
+    websrc --> webapp["app/ - Composants, routes, logique applicative"]
+    websrc --> webenv["environments/ - Fichiers d'environnement Angular"]
+    websrc --> webindex["index.html - Point d'entrée HTML"]
+    websrc --> webmain["main.ts - Bootstrap client"]
+    websrc --> webservermain["main.server.ts - Bootstrap SSR (server-side rendering)"]
+    websrc --> webserver["server.ts - Serveur Express pour le SSR"]
+    websrc --> webstyles["styles.scss - Styles globaux"]
+    websrc --> webtailwind["tailwind.css - Import Tailwind"]
 ```
 
 ---
@@ -70,18 +73,19 @@ pnpm dev:api
 
 ### Structure du code API
 
-```
-apps/api/src/
-├── main.ts                 # Point d'entrée, bootstrap NestJS
-├── app.module.ts           # Module racine actuel
-├── app.controller.ts       # Route health (`GET /health`)
-├── app.service.ts          # Service principal
-├── announcements/          # Répertoire métier scaffoldé
-├── auth/                   # Répertoire métier scaffoldé
-├── dashboard/              # Répertoire métier scaffoldé
-├── programs/               # Répertoire métier scaffoldé
-├── resources/              # Répertoire métier scaffoldé
-└── support/                # Répertoire métier scaffoldé
+```mermaid
+flowchart TD
+    apisrc["apps/api/src/"]
+    apisrc --> apimain["main.ts - Point d'entrée, bootstrap NestJS"]
+    apisrc --> apimodule["app.module.ts - Module racine actuel"]
+    apisrc --> apicontroller["app.controller.ts - Route health (GET /health)"]
+    apisrc --> apiservice["app.service.ts - Service principal"]
+    apisrc --> apiannouncements["announcements/ - Répertoire métier scaffoldé"]
+    apisrc --> apiauth["auth/ - Répertoire métier scaffoldé"]
+    apisrc --> apidashboard["dashboard/ - Répertoire métier scaffoldé"]
+    apisrc --> apiprograms["programs/ - Répertoire métier scaffoldé"]
+    apisrc --> apiresources["resources/ - Répertoire métier scaffoldé"]
+    apisrc --> apisupport["support/ - Répertoire métier scaffoldé"]
 ```
 
 > À ce stade, `AppModule` reste minimal et les répertoires métier servent encore
@@ -114,6 +118,16 @@ pnpm dev
 - Web : **http://localhost:4200** par défaut, ou le prochain port libre
 - Mobile : **http://localhost:4300** par défaut, ou le prochain port libre
 - API : **http://localhost:3000**
+
+Le script `pnpm dev` sonde les ports web et mobile avant démarrage pour éviter
+une première tentative en échec quand `4200` ou `4300` sont déjà utilisés.
+
+Pour les outils qui doivent cibler explicitement le serveur web local
+(notamment Playwright), la variable `KRAAK_WEB_PORT` permet d'aligner l'URL de
+base sur le port réellement utilisé.
+
+Si le site web local consomme l'API et tourne sur un port différent de `4200`,
+penser aussi à aligner `CORS_ALLOWED_ORIGINS` côté API locale.
 
 Si vous avez besoin de lancer une seule app, les commandes `pnpm dev:web`, `pnpm dev:mobile` et `pnpm dev:api` restent disponibles.
 
@@ -186,6 +200,8 @@ pnpm lint:api
 
 - Fermer l'autre processus qui utilise le port
 - Ou changer le port : `ng serve web --port 4201`
+- Ou lancer `pnpm dev` pour laisser le script choisir automatiquement le
+  prochain port libre côté web/mobile
 
 ### Les hooks Git bloquent mon commit
 
@@ -198,3 +214,12 @@ pnpm lint:api
 
 - Vérifier que le fichier `.env` existe à la racine
 - Redémarrer le serveur de développement après avoir modifié un `.env`
+
+### Vite échoue avec `EPERM ... .angular/cache ... deps_temp`
+
+- Ce cas apparaît parfois sous Windows quand Vite réoptimise les dépendances
+  après un changement de lockfile
+- `pnpm dev` tente maintenant de nettoyer le cache Angular/Vite du projet
+  concerné puis de relancer automatiquement le service
+- Si le verrou persiste, arrêter les serveurs, supprimer `apps/client/.angular/cache/`,
+  puis relancer `pnpm dev`

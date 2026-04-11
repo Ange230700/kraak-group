@@ -104,16 +104,21 @@ Ne pas remettre une mise à jour documentaire nécessaire à plus tard.
 
 ## Workflow Git complet
 
+Avant de commencer à coder, chaque collaborateur doit **s'assigner une tâche**
+sur le **GitHub Project lié à ce dépôt**. Ne pas démarrer un travail sans item
+de Project clairement pris en charge.
+
 ```
-1. git checkout main && git pull origin main
-2. git checkout -b feat/ma-feature
-3. # implémenter + tester
-4. git add .
-5. pnpm commit
-6. git push -u origin feat/ma-feature
-7. # ouvrir une Pull Request sur GitHub
-8. # review + merge dans main
-9. # supprimer la branche locale et distante
+1. s'assigner la tâche correspondante sur le GitHub Project du dépôt
+2. git checkout main && git pull origin main
+3. git checkout -b feat/ma-feature
+4. # implémenter + tester
+5. git add .
+6. pnpm commit
+7. git push -u origin feat/ma-feature
+8. # ouvrir une Pull Request sur GitHub
+9. # review + merge dans main
+10. # supprimer la branche locale et distante
 ```
 
 ---

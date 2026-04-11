@@ -1,22 +1,30 @@
-<div class="testimonials">
+<div>
   @if (items.length > 0) {
-    <div class="testimonials__grid">
+    <div class="grid gap-6 lg:grid-cols-3">
       @for (item of items; track item.author) {
-        <blockquote class="testimonials__card card">
-          <p class="testimonials__quote">&laquo; {{ item.quote }} &raquo;</p>
-          <footer class="testimonials__author">
-            <strong>{{ item.author }}</strong>
+        <blockquote
+          class="rounded-[var(--kr-radius-card)] bg-brand-white p-6 shadow-[var(--kr-shadow-card)]"
+        >
+          <p class="text-base leading-7 text-neutral-800">
+            &laquo; {{ item.quote }} &raquo;
+          </p>
+          <footer class="mt-6 flex flex-col gap-1">
+            <strong class="text-sm font-semibold text-primary">{{
+              item.author
+            }}</strong>
             @if (item.role) {
-              <span class="testimonials__role">{{ item.role }}</span>
+              <span class="text-sm text-neutral-600">{{ item.role }}</span>
             }
           </footer>
         </blockquote>
       }
     </div>
   } @else if (placeholder) {
-    <div class="testimonials__placeholder">
-      <p class="testimonials__placeholder-text">
-        Témoignages à venir — nos participants partagent bientôt leurs
+    <div
+      class="rounded-[var(--kr-radius-card)] border border-dashed border-neutral-300 bg-neutral-50 p-6 text-center"
+    >
+      <p class="text-sm leading-7 text-neutral-600">
+        Témoignages à venir - nos participants partagent bientôt leurs
         expériences.
       </p>
     </div>

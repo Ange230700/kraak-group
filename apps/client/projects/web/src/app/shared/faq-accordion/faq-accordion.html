@@ -1,10 +1,12 @@
-<div class="faq-accordion">
+<div
+  class="rounded-[var(--kr-radius-card)] bg-brand-white p-2 shadow-[var(--kr-shadow-card)]"
+>
   <p-accordion [multiple]="true">
     @for (item of items; track item.question) {
       <p-accordion-panel>
         <p-accordion-header>{{ item.question }}</p-accordion-header>
         <p-accordion-content>
-          <p class="faq-accordion__answer">{{ item.answer }}</p>
+          <p class="text-sm leading-7 text-neutral-700">{{ item.answer }}</p>
         </p-accordion-content>
       </p-accordion-panel>
     }

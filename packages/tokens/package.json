@@ -9,6 +9,7 @@
     "./tokens.css": "./src/tokens.css"
   },
   "scripts": {
+    "clean": "node ../../scripts/clean.mjs",
     "test": "vitest run",
     "test:watch": "vitest"
   },

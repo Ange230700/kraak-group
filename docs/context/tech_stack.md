@@ -197,26 +197,29 @@ C’est cohérent avec ton choix initial.
 
 ## Structure du dépôt
 
-```txt
-/
-├─ apps/
-│  ├─ api/                 # NestJS backend
-│  └─ client/
-│     ├─ angular.json      # workspace Angular
-│     ├─ projects/
-│     │  ├─ web/           # Angular frontend web
-│     │  └─ mobile/        # Ionic Angular mobile
-│     └─ tests/e2e/        # Playwright web
-├─ packages/
-│  ├─ tokens/              # design tokens actifs
-│  ├─ contracts/           # contrats partagés (scaffold)
-│  ├─ domain/              # logique métier (scaffold)
-│  └─ api-client/          # client API typé (scaffold)
-├─ pnpm-workspace.yaml
-├─ package.json
-├─ pnpm-lock.yaml
-├─ render.yaml
-└─ .github/workflows/
+```mermaid
+flowchart TD
+    root["/"]
+    root --> apps["apps/"]
+    root --> packages["packages/"]
+    root --> workspace["pnpm-workspace.yaml"]
+    root --> packagejson["package.json"]
+    root --> lockfile["pnpm-lock.yaml"]
+    root --> render["render.yaml"]
+    root --> workflows[".github/workflows/"]
+
+    apps --> api["api/ - NestJS backend"]
+    apps --> client["client/"]
+    client --> angularjson["angular.json - workspace Angular"]
+    client --> projects["projects/"]
+    client --> e2e["tests/e2e/ - Playwright web"]
+    projects --> web["web/ - Angular frontend web"]
+    projects --> mobile["mobile/ - Ionic Angular mobile"]
+
+    packages --> tokens["tokens/ - design tokens actifs"]
+    packages --> contracts["contracts/ - contrats partagés (scaffold)"]
+    packages --> domain["domain/ - logique métier (scaffold)"]
+    packages --> apiclient["api-client/ - client API typé (scaffold)"]
 ```
 
 ## Pipeline CI/CD

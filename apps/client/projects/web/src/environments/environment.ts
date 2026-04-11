@@ -1,6 +1,14 @@
+const defaultSiteUrl = 'http://localhost:4200';
+const runtimeOrigin =
+  typeof globalThis !== 'undefined' &&
+  'location' in globalThis &&
+  globalThis.location?.origin
+    ? globalThis.location.origin
+    : defaultSiteUrl;
+
 export const environment = {
   production: false,
-  siteUrl: 'http://localhost:4200',
+  siteUrl: runtimeOrigin,
   apiBaseUrl: 'http://localhost:3000',
   ga4Id: '',
 };

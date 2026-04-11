@@ -6,12 +6,9 @@ import { Tag } from 'primeng/tag';
   standalone: true,
   imports: [Tag],
   template: `
-    <p-tag [value]="label" [severity]="severity" [rounded]="rounded" />
-  `,
-  styles: `
-    :host {
-      display: inline-flex;
-    }
+    <span class="inline-flex">
+      <p-tag [value]="label" [severity]="severity" [rounded]="rounded" />
+    </span>
   `,
 })
 export class Badge {

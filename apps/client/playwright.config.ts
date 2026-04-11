@@ -4,6 +4,9 @@ import { defineConfig, devices } from '@playwright/test';
  * Configuration Playwright pour les tests E2E du site web KRAAK.
  * Voir https://playwright.dev/docs/test-configuration
  */
+const localWebPort = Number(process.env['KRAAK_WEB_PORT'] ?? '4200');
+const localWebBaseUrl = `http://localhost:${localWebPort}`;
+
 export default defineConfig({
   testDir: './tests/e2e',
   fullyParallel: true,
@@ -14,7 +17,7 @@ export default defineConfig({
     ? 'github'
     : [['list'], ['html', { open: 'never' }]],
   use: {
-    baseURL: 'http://localhost:4200',
+    baseURL: localWebBaseUrl,
     trace: 'on-first-retry',
     screenshot: 'only-on-failure',
   },
@@ -25,8 +28,8 @@ export default defineConfig({
     },
   ],
   webServer: {
-    command: 'pnpm ng serve web',
-    url: 'http://localhost:4200',
+    command: `pnpm ng serve web --port ${localWebPort}`,
+    url: localWebBaseUrl,
     reuseExistingServer: !process.env['CI'],
     timeout: 120_000,
   },

@@ -29,15 +29,16 @@ packages internes du monorepo KRAAK, situés dans `packages/`.
 
 ## Structure canonique d'un package
 
-```txt
-packages/<nom>/
-├─ package.json
-├─ tsconfig.json
-├─ vitest.config.ts
-└─ src/
-   ├─ index.ts          # barrel d'export principal
-   ├─ <module>.ts        # fichier(s) source
-   └─ <module>.spec.ts   # tests unitaires
+```mermaid
+flowchart TD
+    pkg["packages/<nom>/"]
+    pkg --> pkgjson["package.json"]
+    pkg --> pkgtsconfig["tsconfig.json"]
+    pkg --> pkgvitest["vitest.config.ts"]
+    pkg --> pkgsrc["src/"]
+    pkgsrc --> pkgindex["index.ts - barrel d'export principal"]
+    pkgsrc --> pkgmodule["<module>.ts - fichier(s) source"]
+    pkgsrc --> pkgspec["<module>.spec.ts - tests unitaires"]
 ```
 
 ### Champs obligatoires du `package.json`
@@ -53,6 +54,7 @@ packages/<nom>/
     ".": "./src/index.ts",
   },
   "scripts": {
+    "clean": "node ../../scripts/clean.mjs",
     "test": "vitest run",
     "test:watch": "vitest",
   },
@@ -114,6 +116,9 @@ export default defineConfig({
 ### Exécution
 
 ```bash
+# nettoyer un package
+pnpm --filter @kraak/<nom> clean
+
 # un seul package
 pnpm --filter @kraak/<nom> test
 

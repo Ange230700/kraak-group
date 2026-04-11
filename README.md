@@ -95,6 +95,7 @@ Pour les détails, voir [`ARCHITECTURE.md`](ARCHITECTURE.md).
 | Commande            | Description                                               |
 | ------------------- | --------------------------------------------------------- |
 | `pnpm dev`          | Lancer web, mobile et API avec ports auto pour web/mobile |
+| `pnpm clean`        | Nettoyer les artefacts generes dans tout le monorepo      |
 | `pnpm build`        | Builder tous les projets buildables                       |
 | `pnpm test`         | Lancer tous les tests disponibles                         |
 | `pnpm dev:web`      | Lancer le site web en dev (port 4200 par défaut)          |
@@ -133,12 +134,13 @@ changement.
 
 ## Documentation complémentaire
 
-| Document                                                                           | Contenu                                         |
-| ---------------------------------------------------------------------------------- | ----------------------------------------------- |
-| [`CONTRIBUTING.md`](CONTRIBUTING.md)                                               | Workflow Git, conventions de commits, hooks, PR |
-| [`ARCHITECTURE.md`](ARCHITECTURE.md)                                               | Décisions d'architecture validées               |
-| [`AGENTS.md`](AGENTS.md)                                                           | Règles de fonctionnement pour les assistants IA |
-| [`docs/runbooks/ENVIRONMENT_VARIABLES.md`](docs/runbooks/ENVIRONMENT_VARIABLES.md) | Variables d'environnement                       |
-| [`docs/runbooks/DEV_MODE.md`](docs/runbooks/DEV_MODE.md)                           | Guide détaillé du mode développement            |
-| [`docs/runbooks/TECH_OVERVIEW.md`](docs/runbooks/TECH_OVERVIEW.md)                 | Vue d'ensemble de la stack pour débutants       |
-| [`docs/runbooks/GITHUB_PROJECT_BOARD.md`](docs/runbooks/GITHUB_PROJECT_BOARD.md)   | Pilotage du board GitHub Project                |
+| Document                                                                                             | Contenu                                            |
+| ---------------------------------------------------------------------------------------------------- | -------------------------------------------------- |
+| [`CONTRIBUTING.md`](CONTRIBUTING.md)                                                                 | Workflow Git, conventions de commits, hooks, PR    |
+| [`ARCHITECTURE.md`](ARCHITECTURE.md)                                                                 | Décisions d'architecture validées                  |
+| [`AGENTS.md`](AGENTS.md)                                                                             | Règles de fonctionnement pour les assistants IA    |
+| [`docs/runbooks/ENVIRONMENT_VARIABLES.md`](docs/runbooks/ENVIRONMENT_VARIABLES.md)                   | Variables d'environnement                          |
+| [`docs/runbooks/DEV_MODE.md`](docs/runbooks/DEV_MODE.md)                                             | Guide détaillé du mode développement               |
+| [`docs/runbooks/TECH_OVERVIEW.md`](docs/runbooks/TECH_OVERVIEW.md)                                   | Vue d'ensemble de la stack pour débutants          |
+| [`docs/runbooks/OFFICIAL_DOCUMENTATION_SOURCES.md`](docs/runbooks/OFFICIAL_DOCUMENTATION_SOURCES.md) | Sources officielles des documentations de la stack |
+| [`docs/runbooks/GITHUB_PROJECT_BOARD.md`](docs/runbooks/GITHUB_PROJECT_BOARD.md)                     | Pilotage du board GitHub Project                   |

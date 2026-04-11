@@ -5,32 +5,27 @@
 - GitHub Project principal : `#6 - KRAAK MVP - Product Backlog`
 - Proprietaire : `@me` / `Ange230700`
 - Depot : `Ange230700/kraak-group`
-- Mise a jour : 10 avril 2026
+- Mise a jour : 11 avril 2026
 
 ---
 
-## Diagnostic Actuel
+## Etat Actuel
 
-Constat releve sur le board live :
+Le rework du board a ete execute le 10-11 avril 2026.
 
-- le project contient `43` items au total
-- `38` items proviennent de l'ancien backlog web-only (`#1` a `#38`)
-- seulement `5` items du backlog MVP canonique y sont presents (`#70` a `#74`)
-- `45` issues MVP recentes manquent encore du board
+- le project contient `80` items (tous issus du backlog MVP canonique)
+- les `38` anciennes issues web-only (`#1` a `#38`) ont ete retirees
+- tous les champs duo (`Lane`, `Surface`, `Coupling`, `Wave`) sont renseignes
+  sur chaque item (553 field-edit commands, zero erreurs)
+- la vue Board par defaut est configuree en Kanban avec swimlanes, tri, et
+  slicing
+- `6` vues personnalisees sont creees et sauvegardees
 
-Conclusion :
-
-- le board n'est plus une source de verite exploitable pour travailler a deux
-- il melange un ancien plan centré site web et un backlog MVP plus large
-- il faut **cesser de piloter en parallele deux familles d'issues**
-
-Source canonique a retenir des maintenant :
+Source canonique :
 
 - backlog metier : `docs/specs/BACKLOG.md`
 - projection board duo : `docs/specs/github_project_import_parallel_duo.csv`
 - famille d'issues canonique : `[EPIC][ID]` et `[TASK][ID]`
-
-Les anciennes issues `#1` a `#38` ne doivent plus servir de plan principal.
 
 ---
 
@@ -110,71 +105,80 @@ Usage attendu :
 
 ---
 
-## Vues Recommandees
+## Vue Board Par Defaut (View 1)
 
-### 1. `Master backlog`
+La vue Board est configuree en Kanban optimise pour le travail duo :
 
-Filtres :
+- **Layout** : Board (Kanban)
+- **Column by** : Status (Todo / In Progress / Done)
+- **Fields affiches** : Title, Assignees, Status, Sub-issues progress, Priority,
+  Lane, Wave, Effort
+- **Swimlanes** : Lane (Lane A / Lane B / Shared handoff)
+- **Sort** : Priority (ascending — critical en haut)
+- **Slice by** : Wave (filtrage rapide par vague)
+- **Field sum** : Effort (somme des points par colonne)
 
-- tous les items canoniques `[EPIC]` et `[TASK]`
+---
+
+## Vues Personnalisees (Views 2-7)
+
+Toutes les vues ci-dessous sont creees et sauvegardees.
+
+### 2. `Master backlog`
+
+Layout : Table
+
+Filtres : aucun (tous les items)
 
 Tri :
 
-1. `Wave`
-2. `Priority`
-3. `Effort`
+1. `Wave` (ascending)
+2. `Priority` (ascending)
 
-### 2. `Lane A - Web public`
+### 3. `Lane A - Web public`
 
-Filtres :
+Layout : Table
 
-- `Lane = Lane A - Web public`
-- `Status != Done`
+Filtre : `lane:"Lane A - Web public" -status:Done`
 
-### 3. `Lane B - Platform & participant`
+Tri : `Wave` (ascending), `Priority` (ascending)
 
-Filtres :
+### 4. `Lane B - Platform & participant`
 
-- `Lane = Lane B - Platform & participant`
-- `Status != Done`
+Layout : Table
 
-### 4. `Shared handoff`
+Filtre : `lane:"Lane B - Platform & participant" -status:Done`
 
-Filtres :
+Tri : `Wave` (ascending), `Priority` (ascending)
 
-- `Lane = Shared handoff`
-- `Status != Done`
+### 5. `Shared handoff`
 
-But :
+Layout : Table
 
-- surveiller les points de passage courts
-- eviter qu'une tache shared reste ouverte trop longtemps
+Filtre : `lane:"Shared handoff" -status:Done`
 
-### 5. `Ready now`
+Tri : `Wave` (ascending), `Priority` (ascending)
 
-Filtres :
+### 6. `Ready now`
 
-- `Status = Todo` ou `Status = In Progress`
-- `Coupling != paired`
+Layout : Table
 
-But :
+Filtre : `-status:Done -coupling:paired`
 
-- faire emerger les prochaines taches qui n'ont pas besoin d'un travail en duo
+Tri : `Priority` (ascending), `Wave` (ascending)
 
-Clarification importante :
+But : faire emerger les taches sans besoin de travail en duo.
 
-- dans le champ natif GitHub Project `Status`, la valeur de file d'attente est
-  `Todo`
-- dans les artefacts backlog et le CSV d'import, la valeur historique
-  correspondante reste `backlog`
-- la regle de lecture a appliquer est donc : `backlog -> Todo`
+Clarification : dans GitHub Project `Status`, la valeur de file d'attente est
+`Todo` (correspond a `backlog` dans le CSV d'import).
 
-### 6. `Release critical`
+### 7. `Release critical`
 
-Filtres :
+Layout : Table
 
-- `Launch blocker = Yes` si ce champ est utilise
-- sinon `Priority = P0`
+Filtre : `launch-blocker:Yes`
+
+Tri : `Priority` (ascending), `Wave` (ascending)
 
 ---
 
@@ -214,59 +218,21 @@ Regle pratique :
 
 ---
 
-## Migration Recommandee
+## Migration (Effectuee)
 
-### Etape 1 - Geler l'ancien plan comme archive
+Les etapes suivantes ont ete realisees le 10-11 avril 2026 :
 
-Ne plus ajouter de nouveaux mouvements de pilotage sur les anciennes issues
-`#1` a `#38`.
+1. **Legacy purge** : les 38 anciennes issues web-only ont ete retirees du
+   project.
+2. **Ajout canonique** : les 80 issues MVP (`[EPIC]` + `[TASK]`) ont ete
+   ajoutees.
+3. **Champs duo** : `Lane`, `Surface`, `Coupling`, `Wave` renseignes sur
+   chaque item via 553 commandes `gh project item-edit` (zero erreurs).
+4. **Board optimise** : vue Board configuree en Kanban avec swimlanes, tri,
+   slicing, et somme d'effort.
+5. **6 vues personnalisees** : creees, filtrees, triees, et sauvegardees.
 
-### Etape 2 - Garder une seule famille d'issues actives
-
-Conserver comme reference active :
-
-- epics `[EPIC][ID]`
-- tasks `[TASK][ID]`
-
-### Etape 3 - Purger le board des items legacy
-
-Retirer du project les anciennes issues `#1` a `#38` une fois la bascule
-confirmee.
-
-Commande type :
-
-```bash
-gh project item-delete 6 --owner "@me" --id <project-item-id>
-```
-
-### Etape 4 - Ajouter les issues canoniques manquantes
-
-Ajouter toutes les issues MVP qui ne sont pas encore dans le project.
-
-Commande type :
-
-```bash
-gh project item-add 6 --owner "@me" --url https://github.com/Ange230700/kraak-group/issues/75
-```
-
-### Etape 5 - Renseigner les champs duo
-
-Renseigner `Lane`, `Surface`, `Coupling`, `Wave` a partir de
-`docs/specs/github_project_import_parallel_duo.csv`.
-
-Commande type :
-
-```bash
-gh project item-edit \
-  --id <item-id> \
-  --project-id <project-id> \
-  --field-id <field-id> \
-  --single-select-option-id <option-id>
-```
-
-### Etape 6 - Aligner le cycle de vie
-
-Pour chaque tache :
+### Cycle de vie
 
 - `Status` : `Todo -> In Progress -> Done`
 - mapping CSV / backlog : `backlog -> Todo`

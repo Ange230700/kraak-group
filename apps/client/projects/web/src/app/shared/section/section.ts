@@ -5,12 +5,12 @@ import { Component, Input } from '@angular/core';
   standalone: true,
   template: `
     <section [class]="sectionClass">
-      <div class="container-page">
+      <div class="mx-auto w-full max-w-6xl px-4 lg:px-6">
         @if (title) {
-          <header class="section__header">
-            <h2 class="section__title">{{ title }}</h2>
+          <header class="mb-10 max-w-3xl">
+            <h2 [class]="titleClass">{{ title }}</h2>
             @if (subtitle) {
-              <p class="section__subtitle">{{ subtitle }}</p>
+              <p [class]="subtitleClass">{{ subtitle }}</p>
             }
           </header>
         }
@@ -26,9 +26,25 @@ export class Section {
   @Input() background: 'default' | 'alt' | 'primary' = 'default';
 
   protected get sectionClass(): string {
-    const sizeClass = this.size === 'lg' ? 'section-lg' : 'section';
-    const bgClass =
-      this.background !== 'default' ? `section--${this.background}` : '';
+    const sizeClass = this.size === 'lg' ? 'py-24 lg:py-28' : 'py-16 lg:py-20';
+    const bgClass = {
+      default: '',
+      alt: 'bg-neutral-50',
+      primary: 'bg-primary text-brand-white',
+    }[this.background];
+
     return `${sizeClass} ${bgClass}`.trim();
+  }
+
+  protected get titleClass(): string {
+    return this.background === 'primary'
+      ? 'text-3xl font-semibold text-brand-white lg:text-4xl'
+      : 'text-3xl font-semibold text-primary lg:text-4xl';
+  }
+
+  protected get subtitleClass(): string {
+    return this.background === 'primary'
+      ? 'mt-4 text-base leading-7 text-brand-white/80'
+      : 'mt-4 text-base leading-7 text-neutral-700';
   }
 }

@@ -1,21 +1,39 @@
-<article class="card">
-  @if (icon) {
-    <div class="card__icon">
-      <i [class]="icon"></i>
+<p-card
+  class="block h-full shadow-[var(--kr-shadow-card)]"
+  [style]="{ height: '100%' }"
+>
+  <ng-template #content>
+    <div class="flex h-full flex-col">
+      @if (icon) {
+        <div
+          class="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-neutral-50 text-xl text-secondary"
+        >
+          <i [class]="icon"></i>
+        </div>
+      }
+      <ng-content select="[cardHeader]" />
+      @if (title) {
+        <h3 class="text-xl font-semibold text-primary">{{ title }}</h3>
+      }
+      @if (description) {
+        <p class="mt-3 text-sm leading-7 text-neutral-700">{{ description }}</p>
+      }
+      <ng-content />
+      @if (link && linkLabel) {
+        <div class="mt-auto pt-5">
+          <a
+            pButton
+            [routerLink]="link"
+            [label]="linkLabel"
+            [attr.aria-label]="linkLabel"
+            icon="pi pi-arrow-right"
+            iconPos="right"
+            [text]="true"
+            severity="secondary"
+            class="-ml-3 text-sm"
+          ></a>
+        </div>
+      }
     </div>
-  }
-  <ng-content select="[cardHeader]" />
-  @if (title) {
-    <h3 class="card__title">{{ title }}</h3>
-  }
-  @if (description) {
-    <p class="card__description">{{ description }}</p>
-  }
-  <ng-content />
-  @if (link && linkLabel) {
-    <a [routerLink]="link" class="card__link">
-      {{ linkLabel }}
-      <span aria-hidden="true">&rarr;</span>
-    </a>
-  }
-</article>
+  </ng-template>
+</p-card>

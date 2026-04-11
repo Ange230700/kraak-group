@@ -1,19 +1,25 @@
-<header class="navbar">
-  <nav class="container-page navbar__inner">
-    <!-- Logo / Marque -->
-    <a routerLink="/" class="navbar__brand" (click)="closeMobileMenu()">
-      <span class="navbar__logo-text">KRAAK</span>
+<header
+  class="sticky top-0 z-50 border-b border-neutral-200 bg-brand-white/95 backdrop-blur-sm"
+>
+  <nav
+    class="mx-auto flex w-full max-w-6xl items-center justify-between gap-4 px-4 py-4 lg:px-6"
+  >
+    <a
+      routerLink="/"
+      class="text-xl font-semibold tracking-[0.18em] text-primary transition-colors hover:text-secondary"
+      (click)="closeMobileMenu()"
+    >
+      <span>KRAAK</span>
     </a>
 
-    <!-- Liens de navigation (desktop) -->
-    <ul class="navbar__links">
+    <ul class="hidden items-center gap-6 lg:flex">
       @for (link of links; track link.path) {
         <li>
           <a
             [routerLink]="link.path"
-            routerLinkActive="navbar__link--active"
+            routerLinkActive="text-primary after:scale-x-100"
             [routerLinkActiveOptions]="{ exact: link.path === '/' }"
-            class="navbar__link"
+            class="relative inline-flex items-center py-2 text-sm font-medium text-neutral-700 transition-colors hover:text-primary after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-full after:origin-left after:scale-x-0 after:bg-secondary after:transition-transform after:duration-200"
           >
             {{ link.label }}
           </a>
@@ -21,51 +27,59 @@
       }
     </ul>
 
-    <!-- CTA desktop -->
-    <div class="navbar__actions">
-      <a routerLink="/contact" class="btn btn-primary btn--sm">
-        Nous contacter
-      </a>
+    <div class="hidden lg:block">
+      <a
+        pButton
+        routerLink="/contact"
+        label="Nous contacter"
+        aria-label="Nous contacter"
+        size="small"
+        class="text-sm"
+      ></a>
     </div>
 
-    <!-- Bouton menu mobile -->
     <button
-      class="navbar__toggle"
+      pButton
+      type="button"
+      [outlined]="true"
+      severity="secondary"
+      [icon]="mobileMenuOpen() ? 'pi pi-times' : 'pi pi-bars'"
+      class="lg:hidden"
       (click)="toggleMobileMenu()"
       [attr.aria-expanded]="mobileMenuOpen()"
       aria-label="Menu de navigation"
-    >
-      <span class="navbar__toggle-bar"></span>
-      <span class="navbar__toggle-bar"></span>
-      <span class="navbar__toggle-bar"></span>
-    </button>
+    ></button>
   </nav>
 
-  <!-- Menu mobile -->
   @if (mobileMenuOpen()) {
-    <div class="navbar__mobile-menu">
-      <ul class="navbar__mobile-links">
-        @for (link of links; track link.path) {
-          <li>
-            <a
-              [routerLink]="link.path"
-              routerLinkActive="navbar__link--active"
-              [routerLinkActiveOptions]="{ exact: link.path === '/' }"
-              class="navbar__mobile-link"
-              (click)="closeMobileMenu()"
-            >
-              {{ link.label }}
-            </a>
-          </li>
-        }
-      </ul>
-      <a
-        routerLink="/contact"
-        class="btn btn-primary"
-        (click)="closeMobileMenu()"
-      >
-        Nous contacter
-      </a>
+    <div
+      class="border-t border-neutral-200 bg-brand-white px-4 py-4 shadow-sm lg:hidden"
+    >
+      <div class="mx-auto flex w-full max-w-6xl flex-col gap-4">
+        <ul class="flex flex-col gap-2">
+          @for (link of links; track link.path) {
+            <li>
+              <a
+                [routerLink]="link.path"
+                routerLinkActive="border-primary bg-neutral-50 text-primary"
+                [routerLinkActiveOptions]="{ exact: link.path === '/' }"
+                class="block rounded-[var(--kr-radius-btn)] border border-transparent px-4 py-3 text-sm font-medium text-neutral-700 transition-colors hover:border-neutral-200 hover:bg-neutral-50 hover:text-primary"
+                (click)="closeMobileMenu()"
+              >
+                {{ link.label }}
+              </a>
+            </li>
+          }
+        </ul>
+        <a
+          pButton
+          routerLink="/contact"
+          label="Nous contacter"
+          aria-label="Nous contacter"
+          [fluid]="true"
+          (click)="closeMobileMenu()"
+        ></a>
+      </div>
     </div>
   }
 </header>

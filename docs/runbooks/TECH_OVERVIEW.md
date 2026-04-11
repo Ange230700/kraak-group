@@ -6,18 +6,16 @@ Ce document explique les technologies utilisées dans le projet KRAAK, à destin
 
 ## Vue d'ensemble
 
-```
-┌─────────────┐     ┌─────────────┐     ┌──────────────┐
-│  Site web    │     │  App mobile │     │   Supabase   │
-│  (Angular)   │     │  (Ionic)    │     │  (BDD/Auth)  │
-└──────┬───────┘     └──────┬──────┘     └──────┬───────┘
-       │                    │                    │
-       └────────┬───────────┘                    │
-                │                                │
-         ┌──────▼──────┐                         │
-         │  API NestJS │◄────────────────────────┘
-         │  (backend)  │
-         └─────────────┘
+```mermaid
+flowchart TD
+    web["Site web<br />(Angular)"]
+    mobile["App mobile<br />(Ionic)"]
+    api["API NestJS<br />(backend)"]
+    supabase["Supabase<br />(BDD/Auth)"]
+
+    web --> api
+    mobile --> api
+    api --> supabase
 ```
 
 Le site web et l'app mobile communiquent avec l'API backend (NestJS), qui elle-même communique avec Supabase pour la base de données, l'authentification et le stockage.
@@ -171,6 +169,10 @@ le même changement.
 ---
 
 ## Pour aller plus loin
+
+Pour une liste plus exhaustive des technologies déclarées dans le dépôt et de
+leurs URLs officielles, voir
+[`OFFICIAL_DOCUMENTATION_SOURCES.md`](./OFFICIAL_DOCUMENTATION_SOURCES.md).
 
 | Ressource                  | Lien                                                            |
 | -------------------------- | --------------------------------------------------------------- |
