@@ -1,0 +1,19 @@
+# Architecture Decision Records (ADR)
+
+Ce répertoire centralise les décisions d'architecture formelles du projet KRAAK.
+
+## Convention
+
+- Chaque ADR suit le format : `ARC-XX-titre-court.md`
+- Langue : français pour le contenu, anglais pour les identifiants techniques
+- Statuts possibles : `Proposée`, `Acceptée`, `Remplacée`, `Abandonnée`
+
+## Index
+
+| ID       | Titre                                    | Statut   | Date       |
+| -------- | ---------------------------------------- | -------- | ---------- |
+| `ARC-01` | Architecture cible MVP                   | Acceptée | 2025-07-18 |
+| `ARC-02` | Conventions dépôt et workflow Git        | Acceptée | 2025-07-18 |
+| `ARC-03` | Stratégie SEO et prerendering            | Acceptée | 2025-07-18 |
+| `ARC-04` | Modèles de données MVP                   | Acceptée | 2025-07-18 |
+| `ARC-05` | Critères anti-scope-creep et cadrage ADR | Acceptée | 2025-07-18 |

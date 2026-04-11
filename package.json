@@ -9,13 +9,17 @@
   },
   "packageManager": "pnpm@10.23.0",
   "scripts": {
-    "dev:web": "pnpm --filter @kraak/client dev",
+    "dev": "node ./scripts/dev-all.mjs",
+    "build": "pnpm build:web && pnpm build:mobile && pnpm build:api",
+    "test": "pnpm test:libs && pnpm test:api && pnpm test:unit && pnpm test:e2e",
+    "dev:web": "pnpm --filter @kraak/client run dev:web",
     "build:web": "pnpm --filter @kraak/client build",
-    "dev:mobile": "pnpm --filter @kraak/client dev:mobile",
+    "dev:mobile": "pnpm --filter @kraak/client run dev:mobile --port 4300",
     "build:mobile": "pnpm --filter @kraak/client build:mobile",
-    "dev:api": "pnpm --filter @kraak/api start:dev",
+    "dev:api": "pnpm --filter @kraak/api dev",
     "build:api": "pnpm --filter @kraak/api build",
     "test:api": "pnpm --filter @kraak/api test",
+    "test:libs": "pnpm -r --filter @kraak/contracts --filter @kraak/domain --filter @kraak/api-client --filter @kraak/tokens test",
     "lint:api": "pnpm --filter @kraak/api lint",
     "lint": "pnpm -r lint",
     "typecheck:web": "pnpm --filter @kraak/client exec tsc --noEmit -p projects/web/tsconfig.app.json",
@@ -30,8 +34,8 @@
     "prepare": "husky"
   },
   "validate-branch-name": {
-    "pattern": "^(main|feat|fix|chore|docs|test|refactor|ci|style|perf|revert|build)/.+$",
-    "errorMsg": "Le nom de branche doit suivre le format <type>/<sujet> (ex: feat/login-page, fix/header-layout)"
+    "pattern": "^(main|(feat|fix|chore|docs|test|refactor|ci|style|perf|revert|build)/.+)$",
+    "errorMsg": "Le nom de branche doit suivre le format <type>/<sujet> (ex: feat/login-page, fix/header-layout) ou être 'main'"
   },
   "config": {
     "commitizen": {

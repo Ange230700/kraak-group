@@ -95,9 +95,9 @@ apps/api/src/
 pnpm dev:mobile
 ```
 
-- URL : **http://localhost:4200** (ne pas lancer en même temps que `dev:web`)
+- URL : **http://localhost:4300**
 - Hot-reload : oui
-- Commande sous-jacente : `ng serve mobile`
+- Commande sous-jacente : `ng serve mobile --port 4300` via la commande racine `pnpm dev:mobile`
 
 > **Note :** Pour tester sur un appareil physique ou un émulateur, il faut configurer Capacitor séparément. Ce mode lance uniquement l'aperçu web.
 
@@ -105,31 +105,53 @@ pnpm dev:mobile
 
 ## Lancer plusieurs apps en même temps
 
-Le site web et l'API peuvent tourner en parallèle (ports différents). Ouvrir deux terminaux :
+Les trois apps peuvent tourner en parallèle avec une seule commande :
 
 ```bash
-# Terminal 1
-pnpm dev:api
-
-# Terminal 2
-pnpm dev:web
+pnpm dev
 ```
 
-> ⚠ `dev:web` et `dev:mobile` utilisent le même port (4200). Ne pas les lancer en même temps.
+- Web : **http://localhost:4200** par défaut, ou le prochain port libre
+- Mobile : **http://localhost:4300** par défaut, ou le prochain port libre
+- API : **http://localhost:3000**
+
+Si vous avez besoin de lancer une seule app, les commandes `pnpm dev:web`, `pnpm dev:mobile` et `pnpm dev:api` restent disponibles.
+
+> Si le port `3000` est déjà occupé, `pnpm dev` ne relance pas l'API sur un autre port, car le front local continue d'attendre l'API sur `http://localhost:3000`.
 
 ---
 
 ## Commandes de test
 
 ```bash
+# Tous les tests
+pnpm test
+
 # Tests unitaires API (Jest)
 pnpm test:api
 
-# Tests unitaires client (via `ng test`)
+# Tests unitaires client en une exécution (via `ng test --watch=false`)
 pnpm test:unit
+
+# Tests unitaires client en watch
+pnpm --filter @kraak/client test:watch
 
 # Tests E2E web (Playwright dans apps/client/tests/e2e)
 pnpm test:e2e
+```
+
+---
+
+## Commandes de build
+
+```bash
+# Tous les builds
+pnpm build
+
+# Builds ciblés
+pnpm build:web
+pnpm build:mobile
+pnpm build:api
 ```
 
 ---
