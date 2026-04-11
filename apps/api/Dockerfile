@@ -17,6 +17,7 @@ RUN pnpm install --frozen-lockfile
 
 # --- Étape 2 : build TypeScript ---
 FROM deps AS build
+COPY tsconfig.base.json ./
 COPY apps/api/ apps/api/
 RUN pnpm --filter @kraak/api build
 RUN pnpm deploy --filter @kraak/api --prod --legacy /prod/api
