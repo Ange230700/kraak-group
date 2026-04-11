@@ -147,6 +147,10 @@ Le serveur Express utilise `AngularNodeAppEngine` pour :
 - **`angular.json`** : `outputMode: "server"` avec entrée SSR pointant vers
   `server.ts`. Le build produit `dist/web/browser/` (HTML pré-rendu) et
   `dist/web/server/` (serveur Express).
+- **Artefacts SEO statiques** : `robots.txt` et `sitemap.xml` sont générés
+  avant le build web à partir de la configuration SEO partagée des routes
+  marketing, puis copiés dans `projects/web/public/` pour rester compatibles
+  avec le déploiement Vercel purement statique.
 - **`vercel.json`** : `outputDirectory: "apps/client/dist/web/browser"` —
   Vercel sert directement les fichiers HTML statiques pré-rendus depuis son
   CDN edge mondial.

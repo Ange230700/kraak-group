@@ -5,10 +5,13 @@
   "scripts": {
     "clean": "node ../../scripts/clean.mjs",
     "ng": "ng",
+    "seo:generate": "node ../../scripts/generate-web-seo.mjs",
     "dev": "pnpm --dir ../.. dev",
+    "predev:web": "pnpm run seo:generate",
     "dev:web": "ng serve web",
     "start": "pnpm run dev:web",
     "build": "pnpm run build:web",
+    "prebuild:web": "pnpm run seo:generate",
     "build:web": "ng build web",
     "dev:mobile": "ng serve mobile",
     "build:mobile": "ng build mobile",

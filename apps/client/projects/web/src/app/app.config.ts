@@ -2,7 +2,7 @@ import {
   ApplicationConfig,
   provideBrowserGlobalErrorListeners,
 } from '@angular/core';
-import { provideRouter } from '@angular/router';
+import { provideRouter, TitleStrategy } from '@angular/router';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import {
   provideClientHydration,
@@ -13,6 +13,7 @@ import { providePrimeNG } from 'primeng/config';
 
 import { routes } from './app.routes';
 import { KraakPreset } from './config/kraak-preset';
+import { SeoTitleStrategy } from './seo/seo-title.strategy';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -33,5 +34,9 @@ export const appConfig: ApplicationConfig = {
         },
       },
     }),
+    {
+      provide: TitleStrategy,
+      useClass: SeoTitleStrategy,
+    },
   ],
 };

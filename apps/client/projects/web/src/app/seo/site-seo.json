@@ -1,0 +1,77 @@
+[
+  {
+    "path": "",
+    "title": "KRAAK | Développez votre potentiel",
+    "description": "Formation, accompagnement et opportunités internationales pour jeunes professionnels et organisations.",
+    "openGraph": {
+      "title": "KRAAK | Développez votre potentiel",
+      "description": "Formation, accompagnement et opportunités internationales pour jeunes professionnels et organisations.",
+      "imagePath": "/open-graph/kraak-share-card.svg",
+      "imageAlt": "Carte de partage KRAAK avec son slogan et ses domaines d'accompagnement."
+    },
+    "sitemap": {
+      "changeFrequency": "weekly",
+      "priority": 1
+    }
+  },
+  {
+    "path": "a-propos",
+    "title": "À propos | Mission, vision et valeurs | KRAAK",
+    "description": "Découvrez la mission, la vision et les valeurs qui guident KRAAK dans l'accompagnement des talents et des organisations.",
+    "openGraph": {
+      "title": "À propos de KRAAK",
+      "description": "Mission, vision et valeurs au service du développement des talents et du leadership.",
+      "imagePath": "/open-graph/kraak-share-card.svg",
+      "imageAlt": "Carte de partage KRAAK avec son slogan et ses domaines d'accompagnement."
+    },
+    "sitemap": {
+      "changeFrequency": "monthly",
+      "priority": 0.8
+    }
+  },
+  {
+    "path": "services",
+    "title": "Services | Formation, gestion de projet et immigration | KRAAK",
+    "description": "Des solutions concrètes en formation, gestion de projet et conseil en immigration pour accélérer vos ambitions.",
+    "openGraph": {
+      "title": "Services KRAAK",
+      "description": "Formation, gestion de projet et accompagnement en immigration pour publics et organisations.",
+      "imagePath": "/open-graph/kraak-share-card.svg",
+      "imageAlt": "Carte de partage KRAAK avec son slogan et ses domaines d'accompagnement."
+    },
+    "sitemap": {
+      "changeFrequency": "weekly",
+      "priority": 0.9
+    }
+  },
+  {
+    "path": "programmes",
+    "title": "Programmes | Parcours de formation et d'accompagnement | KRAAK",
+    "description": "Explorez les parcours KRAAK pour renforcer votre leadership, votre gestion de projet et votre préparation à l'international.",
+    "openGraph": {
+      "title": "Programmes KRAAK",
+      "description": "Des parcours structurés pour faire grandir les compétences, la posture et l'impact.",
+      "imagePath": "/open-graph/kraak-share-card.svg",
+      "imageAlt": "Carte de partage KRAAK avec son slogan et ses domaines d'accompagnement."
+    },
+    "sitemap": {
+      "changeFrequency": "weekly",
+      "priority": 0.85
+    }
+  },
+  {
+    "path": "contact",
+    "title": "Contact | Demande de consultation et accompagnement | KRAAK",
+    "description": "Contactez KRAAK pour une demande d'accompagnement, d'information ou de consultation en formation, gestion de projet ou immigration.",
+    "openGraph": {
+      "title": "Contactez KRAAK",
+      "description": "Échangeons sur votre besoin de formation, de projet ou d'accompagnement international.",
+      "imagePath": "/open-graph/kraak-share-card.svg",
+      "imageAlt": "Carte de partage KRAAK avec son slogan et ses domaines d'accompagnement."
+    },
+    "sitemap": {
+      "changeFrequency": "weekly",
+      "priority": 0.8
+    }
+  }
+]

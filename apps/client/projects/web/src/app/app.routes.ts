@@ -1,26 +1,40 @@
-import { Routes } from '@angular/router';
+import { Route, Routes } from '@angular/router';
+
+import { findSeoPageByPath } from './seo/site-seo';
+
+const buildMarketingRoute = (
+  path: string,
+  loadComponent: Route['loadComponent'],
+): Route => {
+  const seo = findSeoPageByPath(path);
+
+  if (!seo) {
+    throw new Error(`Missing SEO configuration for route "${path}"`);
+  }
+
+  return {
+    path,
+    title: seo.title,
+    data: { seo },
+    loadComponent,
+  };
+};
 
 export const routes: Routes = [
-  {
-    path: '',
-    loadComponent: () => import('./features/home/home.page'),
-  },
-  {
-    path: 'a-propos',
-    loadComponent: () => import('./features/about/about.page'),
-  },
-  {
-    path: 'services',
-    loadComponent: () => import('./features/services/services.page'),
-  },
-  {
-    path: 'programmes',
-    loadComponent: () => import('./features/programs/programs.page'),
-  },
-  {
-    path: 'contact',
-    loadComponent: () => import('./features/contact/contact.page'),
-  },
+  buildMarketingRoute('', () => import('./features/home/home.page')),
+  buildMarketingRoute('a-propos', () => import('./features/about/about.page')),
+  buildMarketingRoute(
+    'services',
+    () => import('./features/services/services.page'),
+  ),
+  buildMarketingRoute(
+    'programmes',
+    () => import('./features/programs/programs.page'),
+  ),
+  buildMarketingRoute(
+    'contact',
+    () => import('./features/contact/contact.page'),
+  ),
   {
     path: '**',
     redirectTo: '',

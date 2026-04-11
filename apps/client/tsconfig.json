@@ -7,6 +7,7 @@
     "noImplicitReturns": true,
     "isolatedModules": true,
     "importHelpers": true,
+    "resolveJsonModule": true,
     "module": "preserve",
     "rootDir": "../..",
     "paths": {

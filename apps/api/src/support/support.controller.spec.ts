@@ -89,10 +89,10 @@ describe('SupportController', () => {
     expect((thrownError as BadRequestException).getResponse()).toEqual({
       success: false,
       errors: [
-        'Le nom doit contenir au moins 2 caracteres.',
+        'Le nom doit contenir au moins 2 caractères.',
         "L'adresse e-mail est invalide.",
         "L'objet est requis.",
-        'Le message doit contenir au moins 10 caracteres.',
+        'Le message doit contenir au moins 10 caractères.',
       ],
     });
   });

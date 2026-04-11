@@ -44,6 +44,13 @@ Les URLs publiques (site, API, GA4) sont definies dans les fichiers
 `environment.ts` / `environment.staging.ts` / `environment.production.ts`
 sous `apps/client/projects/web/src/environments/`.
 
+Usage SEO technique :
+
+- `PUBLIC_SITE_URL` alimente les URLs canoniques prerender, `robots.txt` et
+  `sitemap.xml` du projet `apps/client/projects/web`.
+- En l'absence de surcharge explicite, la valeur de repli actuellement retenue
+  dans le code est `https://kraak-group.vercel.app`.
+
 ## Domaines publics documentes
 
 - Domaine Vercel actuellement aligne sur le depot : `https://kraak-group.vercel.app`

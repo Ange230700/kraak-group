@@ -23,4 +23,13 @@ describe('Web routes', () => {
       expect(route.loadComponent).toBeDefined();
     }
   });
+
+  it('should attach a title and SEO metadata to every public marketing route', () => {
+    const pageRoutes = routes.filter((r) => r.path !== '**');
+
+    for (const route of pageRoutes) {
+      expect(route.title).toEqual(expect.any(String));
+      expect(route.data?.['seo']).toBeDefined();
+    }
+  });
 });
