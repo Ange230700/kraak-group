@@ -1,5 +1,11 @@
 # Pack Templates Issues GitHub - Child Issues MVP KRAAK
 
+> Note du 10 avril 2026 : ce pack reste utile pour creer une nouvelle issue a
+> l'unite, mais il ne doit plus servir a recreer en masse une seconde famille
+> d'issues pour le board MVP. Pour la remise a plat du project, utiliser
+> `docs/runbooks/GITHUB_PROJECT_BOARD.md` et
+> `docs/specs/github_project_import_parallel_duo.csv`.
+
 Usage rapide :
 
 1. Creer une nouvelle issue GitHub.

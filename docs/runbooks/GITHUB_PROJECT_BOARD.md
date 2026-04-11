@@ -1,211 +1,316 @@
-# Guide De Mise En Place Et De Pilotage Du GitHub Project
+# Guide De Rework Du GitHub Project
 
-## GitHub Project principal : KRAAK MVP - Product Backlog
+## Board Actif
 
-- URL : verifier le board actif avant automatisation
-- Dépôt : Ange230700/kraak-group
-- Portée : backlog MVP KRAAK (épopées + tâches)
-
-> Règle pratique : ne pas figer un numéro de Project dans les scripts ou docs
-> opérationnelles sans le revalider, car le board peut évoluer.
+- GitHub Project principal : `#6 - KRAAK MVP - Product Backlog`
+- Proprietaire : `@me` / `Ange230700`
+- Depot : `Ange230700/kraak-group`
+- Mise a jour : 10 avril 2026
 
 ---
 
-## Configuration Rapide
+## Diagnostic Actuel
 
-### Labels cibles
+Constat releve sur le board live :
 
-- Statut : `status: backlog`, `status: ready`, `status: in-progress`, `status: review`, `status: done`
-- Priorite : `priority: critical`, `priority: high`, `priority: medium`, `priority: low`
-- Type : `type: epic`, `type: feature`, `type: bug`, `type: chore`
+- le project contient `43` items au total
+- `38` items proviennent de l'ancien backlog web-only (`#1` a `#38`)
+- seulement `5` items du backlog MVP canonique y sont presents (`#70` a `#74`)
+- `45` issues MVP recentes manquent encore du board
 
-### Jalons cibles
+Conclusion :
 
-1. Scope locked
-2. Design approved
-3. Content ready
-4. Development complete
-5. QA complete
-6. Launch
+- le board n'est plus une source de verite exploitable pour travailler a deux
+- il melange un ancien plan centré site web et un backlog MVP plus large
+- il faut **cesser de piloter en parallele deux familles d'issues**
 
-### Structure backlog
+Source canonique a retenir des maintenant :
 
-- 8 épopées
-- 30 tâches
-- 38 issues au total
+- backlog metier : `docs/specs/BACKLOG.md`
+- projection board duo : `docs/specs/github_project_import_parallel_duo.csv`
+- famille d'issues canonique : `[EPIC][ID]` et `[TASK][ID]`
+
+Les anciennes issues `#1` a `#38` ne doivent plus servir de plan principal.
 
 ---
 
-## Utilisation Quotidienne Du Board
+## Objectif Du Rework
 
-### Création d'une issue
+Le board doit devenir lisible pour deux personnes qui travaillent en parallele
+avec un minimum de dependances implicites.
+
+Le principe retenu :
+
+- `Lane A - Web public` : site vitrine, conversion, SEO, contact web
+- `Lane B - Platform & participant` : packages, API, auth, mobile, parcours
+  participant
+- `Shared handoff` : cadrage, contrats, quality gates, release
+
+Une dependance acceptable doit ressembler a :
+
+- un contrat publie
+- un endpoint stable
+- une route ou un shell disponible
+- un check de qualite commun
+
+Une dependance non acceptable doit ressembler a :
+
+- "attendre que tout l'epic soit fini"
+- "attendre tout le frontend"
+- "attendre tout le backend"
+
+---
+
+## Champs Board Cibles
+
+### Champs deja presents
+
+- `Status`
+- `Priority`
+- `Area`
+- `Effort`
+- `Launch blocker`
+
+### Champs board duo
+
+Ces champs ont ete crees sur le project `#6` le `10 avril 2026`.
+
+- `Lane` (`SINGLE_SELECT`)
+  - `Lane A - Web public`
+  - `Lane B - Platform & participant`
+  - `Shared handoff`
+- `Surface` (`SINGLE_SELECT`)
+  - `docs`
+  - `shared`
+  - `api`
+  - `web`
+  - `mobile`
+  - `qa`
+  - `ops`
+- `Coupling` (`SINGLE_SELECT`)
+  - `independent`
+  - `handoff`
+  - `paired`
+  - `portfolio`
+- `Wave` (`SINGLE_SELECT`)
+  - `Wave 0 - Cadrage`
+  - `Wave 1 - Socle`
+  - `Wave 2 - Acces`
+  - `Wave 3A - Site public`
+  - `Wave 3B - Parcours participant`
+  - `Wave 4 - Qualite`
+  - `Wave 5 - Release`
+
+Usage attendu :
+
+- `Lane` = qui peut avancer dessus sans attendre l'autre
+- `Surface` = ou se fait le changement principal
+- `Coupling` = niveau de coordination requis
+- `Wave` = ordre macro d'execution
+
+---
+
+## Vues Recommandees
+
+### 1. `Master backlog`
+
+Filtres :
+
+- tous les items canoniques `[EPIC]` et `[TASK]`
+
+Tri :
+
+1. `Wave`
+2. `Priority`
+3. `Effort`
+
+### 2. `Lane A - Web public`
+
+Filtres :
+
+- `Lane = Lane A - Web public`
+- `Status != Done`
+
+### 3. `Lane B - Platform & participant`
+
+Filtres :
+
+- `Lane = Lane B - Platform & participant`
+- `Status != Done`
+
+### 4. `Shared handoff`
+
+Filtres :
+
+- `Lane = Shared handoff`
+- `Status != Done`
+
+But :
+
+- surveiller les points de passage courts
+- eviter qu'une tache shared reste ouverte trop longtemps
+
+### 5. `Ready now`
+
+Filtres :
+
+- `Status = Todo` ou `Status = In Progress`
+- `Coupling != paired`
+
+But :
+
+- faire emerger les prochaines taches qui n'ont pas besoin d'un travail en duo
+
+Clarification importante :
+
+- dans le champ natif GitHub Project `Status`, la valeur de file d'attente est
+  `Todo`
+- dans les artefacts backlog et le CSV d'import, la valeur historique
+  correspondante reste `backlog`
+- la regle de lecture a appliquer est donc : `backlog -> Todo`
+
+### 6. `Release critical`
+
+Filtres :
+
+- `Launch blocker = Yes` si ce champ est utilise
+- sinon `Priority = P0`
+
+---
+
+## Mapping De Travail Recommande
+
+### Lane A - Web public
+
+- `WEB-*`
+- `SUP-03`
+- `DSH-04` si la variante web participant est confirmee
+
+### Lane B - Platform & participant
+
+- `MOB-*`
+- `AUT-*`
+- `DSH-*` sauf `DSH-04`
+- `PRG-*`
+- `RES-*`
+- `ANN-*`
+- `SUP-01`
+- `SUP-02`
+- `SUP-04`
+- `SUP-05`
+
+### Shared handoff
+
+- `ARC-*`
+- `SET-*`
+- `LIB-*`
+- `QAT-*`
+- `DEP-*`
+
+Regle pratique :
+
+- un item `Shared handoff` doit idealement debloquer une lane sous `24h`
+- si un item shared grossit, il faut le re-decouper avant de le lancer
+
+---
+
+## Migration Recommandee
+
+### Etape 1 - Geler l'ancien plan comme archive
+
+Ne plus ajouter de nouveaux mouvements de pilotage sur les anciennes issues
+`#1` a `#38`.
+
+### Etape 2 - Garder une seule famille d'issues actives
+
+Conserver comme reference active :
+
+- epics `[EPIC][ID]`
+- tasks `[TASK][ID]`
+
+### Etape 3 - Purger le board des items legacy
+
+Retirer du project les anciennes issues `#1` a `#38` une fois la bascule
+confirmee.
+
+Commande type :
 
 ```bash
-gh issue create \
-  --title "[Nom epopee] Action specifique" \
-  --body "Contexte, criteres d'acceptation, definition de fini" \
-  --label "type: feature,priority: high,status: backlog" \
-  --milestone "Development complete"
+gh project item-delete 6 --owner "@me" --id <project-item-id>
 ```
 
-### Ajout manuel au projet (si nécessaire)
+### Etape 4 - Ajouter les issues canoniques manquantes
+
+Ajouter toutes les issues MVP qui ne sont pas encore dans le project.
+
+Commande type :
 
 ```bash
-# Recuperer le node_id de l'issue
-gh api repos/Ange230700/kraak-group/issues/42 --jq .node_id -q
-
-# Ajouter l'issue au projet
-gh project item-add <project-number> --owner Ange230700 --id <node_id>
+gh project item-add 6 --owner "@me" --url https://github.com/Ange230700/kraak-group/issues/75
 ```
 
-### Mise à jour du statut
+### Etape 5 - Renseigner les champs duo
+
+Renseigner `Lane`, `Surface`, `Coupling`, `Wave` a partir de
+`docs/specs/github_project_import_parallel_duo.csv`.
+
+Commande type :
 
 ```bash
-gh issue edit 42 --add-label "status: in-progress" --remove-label "status: backlog"
+gh project item-edit \
+  --id <item-id> \
+  --project-id <project-id> \
+  --field-id <field-id> \
+  --single-select-option-id <option-id>
 ```
 
----
+### Etape 6 - Aligner le cycle de vie
 
-## Cycle de statut recommandé
+Pour chaque tache :
 
-1. `Backlog` : travail non démarré
-2. `Ready` : prerequis leves, pret a etre lance
-3. `In Progress` : implementation en cours
-4. `Review` : en revue fonctionnelle/technique
-5. `Done` : fusionne, verifie, clos
-
-Règle pratique : chaque passage de colonne doit aussi etre reflechi dans les labels et le commentaire d'avancement.
+- `Status` : `Todo -> In Progress -> Done`
+- mapping CSV / backlog : `backlog -> Todo`
+- issue : `Open -> Closed`
+- board : aligner le meme jour que le merge vers `main`
 
 ---
 
-## Carte De Reference Des Epopees
+## Regles De Coordination A Deux
 
-| Epopee         | Issues | Priorite | Jalon                | Responsable        |
-| -------------- | ------ | -------- | -------------------- | ------------------ |
-| Contenu        | #9-11  | Critique | Content ready        | Content Lead       |
-| Design         | #12-14 | Critique | Design approved      | Design Lead        |
-| Setup frontend | #15-19 | Critique | Development complete | Frontend Lead      |
-| Pages          | #20-24 | Critique | Development complete | Frontend Team      |
-| Formulaires    | #25-27 | Critique | Development complete | Backend + Frontend |
-| SEO            | #28-31 | Haute    | Development complete | Frontend + DevOps  |
-| QA             | #32-34 | Haute    | QA complete          | QA Team            |
-| Deploiement    | #35-38 | Haute    | Launch               | DevOps             |
-
----
-
-## Organisation Kanban
-
-Colonnes recommandees :
-
-1. Backlog
-2. Ready
-3. In Progress
-4. Review
-5. Done
-
-Bonnes pratiques :
-
-- Déplacer les cartes au fil de l'execution, pas en fin de semaine.
-- Conserver une seule source de vérité : issue + labels + board alignes.
-- Ajouter le lien de PR dans l'issue des l'ouverture.
+- ne pas prendre en meme temps deux taches qui modifient le meme module
+  principal
+- preferer `contrat -> endpoint -> UI -> tests` plutot que deux personnes dans
+  le meme fichier
+- si une tache touche `packages/*`, considerer qu'elle est `Shared handoff`
+- si une tache web depend d'une API, la tache UI doit commencer sur mock,
+  structure, et etats avant le branchement final
+- si un item reste `In Progress` plus de deux jours sans merge, il est
+  probablement trop gros
 
 ---
 
-## Commandes Utiles
+## Artefact A Utiliser
 
-### Lister les issues ouvertes
+Le fichier a utiliser pour la reimportation ou la remise a plat du board est :
 
-```bash
-gh issue list --state open
-```
+- `docs/specs/github_project_import_parallel_duo.csv`
 
-### Filtrer par milestone
+Il ajoute une lecture operationnelle en plus du backlog :
 
-```bash
-gh issue list --milestone "Development complete"
-```
-
-### Filtrer par labels
-
-```bash
-gh issue list --label "type: epic,status: backlog"
-```
-
-### Verifier le projet
-
-```bash
-gh project view <project-number> --owner Ange230700
-```
+- `Lane`
+- `Surface`
+- `Coupling`
+- `Wave`
 
 ---
 
-## Revue Hebdomadaire (Template)
+## Decision Operatoire
 
-```markdown
-## Semaine X
+Par defaut :
 
-### Termine (Done)
+- backlog thematique dans `docs/specs/BACKLOG.md`
+- board live pilote en `Lane A / Lane B / Shared handoff`
+- aucune nouvelle tache ne doit etre creee dans l'ancien format web-only
 
-- [ ] Issue #X - Intitule
-
-### En cours (In Progress)
-
-- [ ] Issue #Y - avancement + blocages
-
-### Bloque
-
-- [ ] Issue #Z - raison + aide requise
-
-### Focus semaine suivante
-
-- [ ] Issue #A
-- [ ] Issue #B
-
-### Indicateurs
-
-- Issues terminees : X
-- Bloquants critiques : Y
-- Trajectoire MVP : Oui/Non
-```
-
----
-
-## Chemin Critique A Surveiller
-
-1. Contenu pret -> design valide
-2. Setup frontend -> implementation des pages
-3. Pages + formulaires -> SEO -> QA -> deploiement
-
-Questions de controle :
-
-- Les sujets critiques avancent-ils cette semaine ?
-- Un blocage depasse-t-il 24h sans plan de sortie ?
-- Le board reflete-t-il l'etat reel ?
-
----
-
-## FAQ
-
-### Comment changer le milestone d'une issue ?
-
-```bash
-gh issue edit <numero> --milestone "<nouveau milestone>"
-```
-
-### Peut-on faire des sous-tâches natives ?
-
-GitHub ne gere pas les sous-tâches natives comme Jira. Utiliser des issues liees avec references explicites (`depends on #X`, `blocks #Y`).
-
-### Quand fermer une issue ?
-
-Quand la PR est fusionnee, les criteres d'acceptation verifies et la fonctionnalite disponible sur `main`.
-
----
-
-## Support
-
-- Docs GitHub Projects : https://docs.github.com/en/issues/planning-and-tracking-with-projects
-- Docs GitHub Issues : https://docs.github.com/en/issues
-- Reference GitHub CLI : https://cli.github.com/manual/
-
-Derniere mise a jour : 9 avril 2026
+Cette organisation est celle qui minimise les dependances entre deux
+collaborateurs sans etendre le scope du MVP.

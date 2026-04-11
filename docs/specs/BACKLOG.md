@@ -3,7 +3,7 @@
 - Projet : KRAAK (MVP web + base mobile)
 - Depot : https://github.com/Ange230700/kraak-group
 - Project board : voir le board actif documenté dans `docs/runbooks/GITHUB_PROJECT_BOARD.md`
-- Mise a jour : 9 avril 2026
+- Mise a jour : 10 avril 2026
 
 ---
 
@@ -11,6 +11,13 @@
 
 Ce backlog couvre le MVP avec 13 epics, des issues detaillees, des priorites et
 des dependances explicites.
+
+Ce document reste la source de verite **metier** du MVP. Pour le pilotage
+quotidien a deux, la source de verite **operationnelle** devient :
+
+- `docs/runbooks/GITHUB_PROJECT_BOARD.md` pour les vues, champs et regles board
+- `docs/specs/github_project_import_parallel_duo.csv` pour la projection
+  `Lane / Surface / Coupling / Wave`
 
 Echelle de priorite appliquee a toutes les issues :
 
@@ -22,6 +29,50 @@ Regle de dependances :
 
 - `none` : aucune dependance
 - liste d'IDs : issue(s) a terminer avant demarrage
+
+---
+
+## Regles De Decoupage Pour Travail A Deux
+
+Objectif : reduire les blocages entre collaborateurs sans changer le scope MVP.
+
+Regles a appliquer dans le GitHub Project :
+
+- une tache active = **une surface principale** (`web`, `mobile`, `api`,
+  `shared`, `qa`, `ops`)
+- une tache active = **un resultat observable** et **une validation**
+  principal(e)
+- ne pas garder une meme issue pour `web + mobile` ou `api + UI` quand un
+  handoff explicite suffit
+- les contrats et endpoints partages servent de **point de passage court**, pas
+  de zone de travail longue
+- les tests transverses doivent etre decoupes par surface ou par parcours, puis
+  regroupes seulement au niveau du reporting
+
+Lanes recommandees :
+
+| Lane                              | Portee principale                                 | Type de travail                  |
+| --------------------------------- | ------------------------------------------------- | -------------------------------- |
+| `Lane A - Web public`             | site vitrine, conversion, SEO, contact web        | plutot independant               |
+| `Lane B - Platform & participant` | packages, API, mobile, auth, parcours participant | plutot sequentiel mais concentre |
+| `Shared handoff`                  | contrats, conventions, quality gates, release     | court, explicite, limite         |
+
+Issues a re-decouper au niveau board si elles redeviennent bloquantes :
+
+- `WEB-01` : piloter en sous-tranches `Accueil`, `A propos`, `Services`,
+  `Programmes`, `Contact`
+- `AUT-04` : separer la garde web et la garde mobile si les deux surfaces
+  avancent en parallele
+- `QAT-02` : separer couverture composants `web` et `mobile`
+- `QAT-03` : suivre les tests d'integration API par module critique
+- `QAT-04` : suivre les E2E par parcours (`auth`, `dashboard`, `programmes`,
+  `ressources`, `support`)
+
+Principe de pilotage :
+
+- garder les IDs backlog actuels pour la coherence du MVP
+- utiliser les champs board `Lane`, `Surface`, `Coupling` et `Wave` pour
+  resynchroniser le travail reel sans renumeroter tout le backlog
 
 ---
 
