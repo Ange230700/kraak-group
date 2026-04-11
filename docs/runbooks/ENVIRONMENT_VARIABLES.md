@@ -9,6 +9,12 @@ Ne jamais commiter de secrets dans le depot.
 - `PUBLIC_GA4_ID`: identifiant Google Analytics 4
 - `PUBLIC_API_BASE_URL`: URL de base de l'API backend
 
+## Domaines publics documentes
+
+- Domaine Vercel actuellement aligne sur le depot : `https://kraak-group.vercel.app`
+- Tant qu'aucun domaine custom n'est branche, garder `PUBLIC_SITE_URL` alignee
+  sur cette URL pour les environnements web publics heberges sur Vercel.
+
 ## Backend (apps/api)
 
 - `NODE_ENV`: `development` | `test` | `production`
