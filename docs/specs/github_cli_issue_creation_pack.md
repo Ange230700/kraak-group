@@ -13,6 +13,13 @@ Reference principale :
 - `docs/runbooks/GITHUB_PROJECT_BOARD.md`
 - `docs/specs/github_project_import_parallel_duo.csv`
 
+Convention de lecture a conserver :
+
+- dans le CSV d'import, `Status = backlog`
+- dans le champ natif GitHub Project, l'equivalent operationnel est
+  `Status = Todo`
+- la correspondance attendue est donc : `backlog -> Todo`
+
 ---
 
 ## Regle Importante

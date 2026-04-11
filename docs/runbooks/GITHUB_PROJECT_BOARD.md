@@ -161,6 +161,14 @@ But :
 
 - faire emerger les prochaines taches qui n'ont pas besoin d'un travail en duo
 
+Clarification importante :
+
+- dans le champ natif GitHub Project `Status`, la valeur de file d'attente est
+  `Todo`
+- dans les artefacts backlog et le CSV d'import, la valeur historique
+  correspondante reste `backlog`
+- la regle de lecture a appliquer est donc : `backlog -> Todo`
+
 ### 6. `Release critical`
 
 Filtres :
@@ -261,6 +269,7 @@ gh project item-edit \
 Pour chaque tache :
 
 - `Status` : `Todo -> In Progress -> Done`
+- mapping CSV / backlog : `backlog -> Todo`
 - issue : `Open -> Closed`
 - board : aligner le meme jour que le merge vers `main`
 
