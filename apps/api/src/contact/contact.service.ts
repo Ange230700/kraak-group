@@ -10,20 +10,17 @@ export interface ContactSubmissionResult {
 export class ContactService {
   /**
    * Traite une demande de contact entrante.
-   * Actuellement stub MVP : journalise et renvoie une confirmation.
+   * Actuellement stub MVP : renvoie une confirmation.
    * À brancher à Supabase/Resend dans SUP-04.
    */
   submit(dto: ContactDto): ContactSubmissionResult {
-    console.log('[ContactService] Nouvelle demande de contact :', {
-      name: dto.name,
-      email: dto.email,
-      subject: dto.subject,
-    });
+    const hasSubject = dto.subject.trim().length > 0;
 
     return {
       success: true,
-      message:
-        'Votre message a bien été reçu. Nous vous répondrons dans les plus brefs délais.',
+      message: hasSubject
+        ? 'Votre message a bien été reçu. Nous vous répondrons dans les plus brefs délais.'
+        : 'Votre message a bien été reçu.',
     };
   }
 }

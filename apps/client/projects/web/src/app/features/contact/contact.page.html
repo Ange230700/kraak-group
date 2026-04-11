@@ -56,7 +56,7 @@
             [ngClass]="{ 'ng-invalid ng-dirty': isInvalid(name) }"
             aria-required="true"
             [attr.aria-invalid]="isInvalid(name)"
-            aria-describedby="name-error"
+            [attr.aria-describedby]="isInvalid(name) ? 'name-error' : null"
           />
           @if (isInvalid(name)) {
             <p id="name-error" class="mt-1 text-sm text-red-600" role="alert">
@@ -85,7 +85,7 @@
             [ngClass]="{ 'ng-invalid ng-dirty': isInvalid(email) }"
             aria-required="true"
             [attr.aria-invalid]="isInvalid(email)"
-            aria-describedby="email-error"
+            [attr.aria-describedby]="isInvalid(email) ? 'email-error' : null"
           />
           @if (isInvalid(email)) {
             <p id="email-error" class="mt-1 text-sm text-red-600" role="alert">
@@ -113,7 +113,9 @@
             [ngClass]="{ 'ng-invalid ng-dirty': isInvalid(subject) }"
             aria-required="true"
             [attr.aria-invalid]="isInvalid(subject)"
-            aria-describedby="subject-error"
+            [attr.aria-describedby]="
+              isInvalid(subject) ? 'subject-error' : null
+            "
           />
           @if (isInvalid(subject)) {
             <p
@@ -141,7 +143,9 @@
             [ngClass]="{ 'ng-invalid ng-dirty': isInvalid(message) }"
             aria-required="true"
             [attr.aria-invalid]="isInvalid(message)"
-            aria-describedby="message-error"
+            [attr.aria-describedby]="
+              isInvalid(message) ? 'message-error' : null
+            "
           ></textarea>
           @if (isInvalid(message)) {
             <p
