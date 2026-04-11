@@ -13,6 +13,7 @@ FROM base AS deps
 COPY package.json pnpm-lock.yaml pnpm-workspace.yaml .npmrc ./
 COPY apps/api/package.json apps/api/
 COPY apps/client/package.json apps/client/
+COPY packages/tokens/package.json packages/tokens/
 RUN pnpm install --frozen-lockfile
 
 # --- Étape 2 : build TypeScript ---
