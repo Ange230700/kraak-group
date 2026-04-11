@@ -6,11 +6,16 @@ test.describe(`Conversion web — contact et CTA`, () => {
   }) => {
     await page.goto('/services');
 
-    await page.getByRole('link', { name: 'Parler de cette offre' }).first().click();
+    await page
+      .getByRole('link', { name: 'Parler de cette offre' })
+      .first()
+      .click();
 
     await expect(page).toHaveURL(/\/contact/);
     await expect(page.getByLabel('Service concerné')).toHaveValue('training');
-    await expect(page.getByTestId('contact-context')).toContainText('Formation');
+    await expect(page.getByTestId('contact-context')).toContainText(
+      'Formation',
+    );
   });
 
   test(`Given la page contact, When un visiteur soumet une demande valide, Then un message de confirmation s'affiche`, async ({
@@ -22,11 +27,15 @@ test.describe(`Conversion web — contact et CTA`, () => {
     await page.getByLabel('Adresse e-mail').fill('awa@example.com');
     await page.getByLabel('Téléphone (optionnel)').fill('+2250102030405');
     await page.getByLabel('Organisation (optionnel)').fill('KRAAK Labs');
-    await page.getByLabel('Message').fill(
-      "Je souhaite échanger sur un accompagnement en leadership pour notre prochaine cohorte.",
-    );
     await page
-      .getByLabel('J’accepte que KRAAK me recontacte au sujet de cette demande.')
+      .getByLabel('Message')
+      .fill(
+        'Je souhaite échanger sur un accompagnement en leadership pour notre prochaine cohorte.',
+      );
+    await page
+      .getByLabel(
+        'J’accepte que KRAAK me recontacte au sujet de cette demande.',
+      )
       .check();
 
     await page.getByRole('button', { name: 'Envoyer la demande' }).click();

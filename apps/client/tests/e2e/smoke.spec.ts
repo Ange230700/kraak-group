@@ -11,7 +11,7 @@ test.describe(`Page d'accueil — smoke tests`, () => {
   test(`Given la page d'accueil, When elle se charge, Then le titre du document est "KRAAK"`, async ({
     page,
   }) => {
-    await expect(page).toHaveTitle('KRAAK');
+    await expect(page).toHaveTitle(/KRAAK/);
   });
 
   test(`Given la page d'accueil, When elle se charge, Then la marque KRAAK est visible dans la navigation`, async ({

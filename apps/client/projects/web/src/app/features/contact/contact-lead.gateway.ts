@@ -44,12 +44,14 @@ export const CONTACT_SERVICE_OPTIONS: readonly ContactOption<ContactServiceValue
     {
       value: 'general',
       label: 'Orientation générale',
-      description: 'Vous avez besoin d’être orienté vers le bon accompagnement.',
+      description:
+        'Vous avez besoin d’être orienté vers le bon accompagnement.',
     },
     {
       value: 'training',
       label: 'Formation',
-      description: 'Développement des compétences, leadership et communication.',
+      description:
+        'Développement des compétences, leadership et communication.',
     },
     {
       value: 'projectManagement',
@@ -59,7 +61,8 @@ export const CONTACT_SERVICE_OPTIONS: readonly ContactOption<ContactServiceValue
     {
       value: 'immigration',
       label: 'Conseil en immigration',
-      description: 'Préparation d’un parcours international ou d’un projet de mobilité.',
+      description:
+        'Préparation d’un parcours international ou d’un projet de mobilité.',
     },
   ] as const;
 
@@ -78,7 +81,8 @@ export const CONTACT_INTENT_OPTIONS: readonly ContactOption<ContactIntentValue>[
     {
       value: 'programApplication',
       label: 'Candidater à un programme',
-      description: 'Vous souhaitez rejoindre une cohorte ou un parcours précis.',
+      description:
+        'Vous souhaitez rejoindre une cohorte ou un parcours précis.',
     },
     {
       value: 'partnership',

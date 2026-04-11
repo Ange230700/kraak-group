@@ -100,3 +100,185 @@
     text-wrap: balance;
   }
 }
+
+/*
+   COMPONENTS - Boutons PrimeNG harmonises avec l'identite visuelle KRAAK
+*/
+
+@layer components {
+  :where(.p-button) {
+    border-radius: var(--radius-btn);
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    transition:
+      transform 180ms ease,
+      box-shadow 220ms ease,
+      background-color 220ms ease,
+      border-color 220ms ease,
+      color 220ms ease;
+  }
+
+  :where(.p-button:not(.p-button-text):not(.p-button-link)) {
+    border-width: 1px;
+    border-style: solid;
+    box-shadow: 0 10px 20px oklch(0.33 0.07 255 / 0.18);
+    background-image: linear-gradient(
+      180deg,
+      oklch(0.35 0.08 255) 0%,
+      oklch(0.29 0.06 255) 100%
+    );
+    border-color: color-mix(in oklab, var(--color-brand-navy) 72%, white);
+  }
+
+  :where(.p-button.p-button-secondary:not(.p-button-text):not(.p-button-link)) {
+    background-image: linear-gradient(
+      180deg,
+      color-mix(in oklab, var(--color-secondary) 84%, white) 0%,
+      var(--color-secondary) 100%
+    );
+    border-color: color-mix(in oklab, var(--color-secondary) 72%, black);
+  }
+
+  :where(.p-button.p-button-contrast:not(.p-button-text):not(.p-button-link)) {
+    background-image: linear-gradient(
+      180deg,
+      var(--color-highlight) 0%,
+      color-mix(in oklab, var(--color-highlight) 78%, black) 100%
+    );
+    border-color: color-mix(in oklab, var(--color-highlight) 65%, black);
+    color: var(--color-primary);
+    box-shadow: 0 10px 20px oklch(0.72 0.12 95 / 0.28);
+  }
+
+  :where(.p-button.p-button-outlined) {
+    background: color-mix(
+      in oklab,
+      var(--color-surface) 85%,
+      var(--color-accent)
+    );
+    border-color: color-mix(in oklab, var(--color-secondary) 52%, white);
+    color: var(--color-primary);
+    box-shadow: 0 6px 14px oklch(0.33 0.06 255 / 0.09);
+  }
+
+  :where(.p-button.p-button-text) {
+    border-color: transparent;
+    box-shadow: none;
+    border-radius: 999px;
+  }
+
+  :where(
+    .p-button:not(.p-disabled):not(.p-button-text):not(.p-button-link):hover
+  ) {
+    transform: translateY(-1px);
+    box-shadow: 0 14px 28px oklch(0.32 0.07 255 / 0.26);
+  }
+
+  :where(.p-button:not(.p-disabled):active) {
+    transform: translateY(0);
+  }
+
+  :where(.p-button:focus-visible) {
+    outline: none;
+    box-shadow:
+      0 0 0 3px color-mix(in oklab, var(--color-accent) 35%, white),
+      0 10px 20px oklch(0.33 0.07 255 / 0.2);
+  }
+
+  :where(.p-button.p-button-sm) {
+    padding-block: 0.5rem;
+    padding-inline: 0.9rem;
+  }
+
+  :where(.p-button.p-button-lg) {
+    padding-block: 0.8rem;
+    padding-inline: 1.35rem;
+  }
+}
+
+/*
+   HIÉRARCHIE SÉMANTIQUE — Distinction contextuelle des boutons KRAAK
+   Navbar action / Hero CTA / Card text-link / CTA Banner
+*/
+
+@layer components {
+  /* 1. Action de navigation dans le header — compact, tracké, précis */
+  :where(
+    header
+      .p-button:not(.p-button-text):not(.p-button-secondary):not(
+        .p-button-outlined
+      )
+  ) {
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-weight: 700;
+  }
+
+  /* 2. CTA principal sur section navy (hero) — émergence gold sur fond sombre */
+  :where(
+    section.bg-brand-navy
+      .p-button:not(.p-button-contrast):not(.p-button-secondary):not(
+        .p-button-text
+      ):not(.p-button-outlined):not(:disabled)
+  ) {
+    background-image: linear-gradient(
+      135deg,
+      var(--color-highlight) 0%,
+      oklch(0.72 0.18 80) 100%
+    );
+    border-color: color-mix(in oklab, var(--color-highlight) 65%, black);
+    color: oklch(0.22 0.05 255);
+    box-shadow:
+      0 12px 32px oklch(0.75 0.17 80 / 0.4),
+      0 4px 10px oklch(0.75 0.17 80 / 0.2);
+  }
+
+  :where(
+    section.bg-brand-navy
+      .p-button:not(.p-button-contrast):not(.p-button-secondary):not(
+        .p-button-text
+      ):not(.p-button-outlined):not(:disabled)
+  ):hover {
+    box-shadow:
+      0 20px 52px oklch(0.75 0.17 80 / 0.55),
+      0 7px 20px oklch(0.75 0.17 80 / 0.3);
+    transform: translateY(-2px) scale(1.015);
+  }
+
+  /* 3. Lien de card — inline-link avec animation d'icône au survol */
+  :where(.p-button.p-button-text.p-button-secondary) {
+    border-radius: 6px;
+    font-weight: 500;
+  }
+
+  :where(.p-button.p-button-text.p-button-secondary .p-button-icon) {
+    transition: transform 0.22s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  :where(.p-button.p-button-text.p-button-secondary:hover .p-button-icon) {
+    transform: translateX(5px);
+  }
+
+  /* 4. CTA Banner contrast — emphase renforcée sur fond sombre */
+  :where(
+    .p-button.p-button-contrast:not(.p-button-text):not(.p-button-outlined):not(
+        :disabled
+      )
+  ) {
+    box-shadow:
+      0 14px 36px oklch(0.75 0.17 80 / 0.42),
+      0 4px 12px oklch(0.75 0.17 80 / 0.24);
+    letter-spacing: 0.03em;
+  }
+
+  :where(
+    .p-button.p-button-contrast:not(.p-button-text):not(.p-button-outlined):not(
+        :disabled
+      )
+  ):hover {
+    box-shadow:
+      0 22px 56px oklch(0.75 0.17 80 / 0.55),
+      0 8px 22px oklch(0.75 0.17 80 / 0.3);
+    transform: translateY(-2px);
+  }
+}

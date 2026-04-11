@@ -1,5 +1,9 @@
 import { TestBed } from '@angular/core/testing';
-import { ActivatedRoute, convertToParamMap, provideRouter } from '@angular/router';
+import {
+  ActivatedRoute,
+  convertToParamMap,
+  provideRouter,
+} from '@angular/router';
 import { BehaviorSubject, of, throwError } from 'rxjs';
 
 import ContactPage from './contact.page';
@@ -93,11 +97,15 @@ describe('ContactPage', () => {
     const element = fixture.nativeElement as HTMLElement;
 
     expect(submitCalls).toHaveLength(0);
-    expect(element.textContent).toContain('Veuillez renseigner votre nom complet.');
-    expect(element.textContent).toContain('Veuillez saisir une adresse e-mail valide.');
+    expect(element.textContent).toContain(
+      'Veuillez renseigner votre nom complet.',
+    );
+    expect(element.textContent).toContain(
+      'Veuillez saisir une adresse e-mail valide.',
+    );
     expect(element.textContent).toContain('Veuillez décrire votre besoin.');
     expect(element.textContent).toContain(
-      "Veuillez confirmer que nous pouvons vous recontacter.",
+      'Veuillez confirmer que nous pouvons vous recontacter.',
     );
   });
 
@@ -122,7 +130,7 @@ describe('ContactPage', () => {
       service: 'training',
       intent: 'consultation',
       message:
-        "Je souhaite échanger sur un accompagnement en leadership pour notre prochaine cohorte.",
+        'Je souhaite échanger sur un accompagnement en leadership pour notre prochaine cohorte.',
       source: 'direct',
     });
 
@@ -162,7 +170,7 @@ function fillValidForm(container: HTMLElement): void {
   setTextareaValue(
     container,
     'message',
-    "Je souhaite échanger sur un accompagnement en leadership pour notre prochaine cohorte.",
+    'Je souhaite échanger sur un accompagnement en leadership pour notre prochaine cohorte.',
   );
   setCheckboxValue(container, 'consent', true);
 }
