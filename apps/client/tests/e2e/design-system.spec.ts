@@ -9,19 +9,22 @@ test.describe(`Design system web — smoke styling`, () => {
     page,
   }) => {
     const heroSection = page.locator('kraak-home-page section').first();
+    const heroInner = heroSection.locator('div').first();
 
     await expect(heroSection).toBeVisible();
     await expect(heroSection).toHaveCSS('text-align', 'center');
-    await expect(heroSection).toHaveCSS('padding-top', '64px');
-    await expect(heroSection).toHaveCSS('padding-right', '24px');
-    await expect(heroSection).toHaveCSS('padding-bottom', '64px');
-    await expect(heroSection).toHaveCSS('padding-left', '24px');
+    await expect(heroSection).toHaveCSS('padding-top', '112px');
+    await expect(heroSection).toHaveCSS('padding-bottom', '112px');
+    await expect(heroInner).toHaveCSS('padding-right', '24px');
+    await expect(heroInner).toHaveCSS('padding-left', '24px');
   });
 
   test(`Given la page d'accueil, When le design system se charge, Then le bouton principal PrimeNG utilise le preset KRAAK`, async ({
     page,
   }) => {
-    const primaryCta = page.getByRole('link', { name: 'Nous contacter' }).first();
+    const primaryCta = page
+      .getByRole('link', { name: 'Nous contacter' })
+      .first();
 
     await expect(primaryCta).toBeVisible();
     await expect(primaryCta).toHaveClass(/p-button/);

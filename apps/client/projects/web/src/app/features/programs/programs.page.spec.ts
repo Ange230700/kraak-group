@@ -1,10 +1,12 @@
 import { TestBed } from '@angular/core/testing';
+import { provideRouter } from '@angular/router';
 import ProgramsPage from './programs.page';
 
 describe('ProgramsPage', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [ProgramsPage],
+      providers: [provideRouter([])],
     }).compileComponents();
   });
 
@@ -17,6 +19,6 @@ describe('ProgramsPage', () => {
     const fixture = TestBed.createComponent(ProgramsPage);
     fixture.detectChanges();
     const heading = fixture.nativeElement.querySelector('h1');
-    expect(heading?.textContent).toContain('Programmes');
+    expect(heading?.textContent).toContain('Nos programmes');
   });
 });

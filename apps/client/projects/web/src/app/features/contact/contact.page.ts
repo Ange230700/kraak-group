@@ -1,15 +1,12 @@
 import { Component } from '@angular/core';
+import { ButtonDirective } from 'primeng/button';
+import { InputText } from 'primeng/inputtext';
+import { Textarea } from 'primeng/textarea';
 
 @Component({
   selector: 'kraak-contact-page',
   standalone: true,
-  template: `
-    <section class="px-6 py-16">
-      <h1 class="text-4xl font-bold mb-4">Contact</h1>
-      <p class="text-lg text-gray-600">
-        Formulaire de prise de contact — à venir.
-      </p>
-    </section>
-  `,
+  imports: [ButtonDirective, InputText, Textarea],
+  templateUrl: './contact.page.html',
 })
 export default class ContactPage {}
