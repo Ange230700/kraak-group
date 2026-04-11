@@ -23,20 +23,27 @@ test.describe(`Conversion web — contact et CTA`, () => {
   }) => {
     await page.goto('/contact?service=training&intent=consultation&source=e2e');
 
-    await page.getByLabel('Nom complet').fill('Awa Konate');
-    await page.getByLabel('Adresse e-mail').fill('awa@example.com');
-    await page.getByLabel('Téléphone (optionnel)').fill('+2250102030405');
-    await page.getByLabel('Organisation (optionnel)').fill('KRAAK Labs');
-    await page
-      .getByLabel('Message')
-      .fill(
-        'Je souhaite échanger sur un accompagnement en leadership pour notre prochaine cohorte.',
-      );
-    await page
-      .getByLabel(
-        'J’accepte que KRAAK me recontacte au sujet de cette demande.',
-      )
-      .check();
+    // Attend que l'hydratation Angular applique les query params au formulaire
+    await expect(page.getByLabel('Service concerné')).toHaveValue('training');
+
+    const fullName = page.getByLabel('Nom complet');
+    const email = page.getByLabel('Adresse e-mail');
+    const phone = page.getByLabel('Téléphone (optionnel)');
+    const organization = page.getByLabel('Organisation (optionnel)');
+    const message = page.getByLabel('Message');
+    const consent = page.getByLabel(
+      'J’accepte que KRAAK me recontacte au sujet de cette demande.',
+    );
+
+    await fullName.fill('Awa Konate');
+    await expect(fullName).toHaveValue('Awa Konate');
+    await email.fill('awa@example.com');
+    await phone.fill('+2250102030405');
+    await organization.fill('KRAAK Labs');
+    await message.fill(
+      'Je souhaite échanger sur un accompagnement en leadership pour notre prochaine cohorte.',
+    );
+    await consent.check();
 
     await page.getByRole('button', { name: 'Envoyer la demande' }).click();
 
