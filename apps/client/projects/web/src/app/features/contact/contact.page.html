@@ -35,7 +35,12 @@
         </div>
       }
 
-      <form [formGroup]="form" (ngSubmit)="onSubmit()" novalidate class="space-y-6">
+      <form
+        [formGroup]="form"
+        (ngSubmit)="onSubmit()"
+        novalidate
+        class="space-y-6"
+      >
         <!-- Nom -->
         <div>
           <label for="name" class="mb-1 block text-sm font-medium">
@@ -67,7 +72,8 @@
         <!-- E-mail -->
         <div>
           <label for="email" class="mb-1 block text-sm font-medium">
-            Adresse e-mail <span class="text-red-500" aria-hidden="true">*</span>
+            Adresse e-mail
+            <span class="text-red-500" aria-hidden="true">*</span>
           </label>
           <input
             pInputText
@@ -110,7 +116,11 @@
             aria-describedby="subject-error"
           />
           @if (isInvalid(subject)) {
-            <p id="subject-error" class="mt-1 text-sm text-red-600" role="alert">
+            <p
+              id="subject-error"
+              class="mt-1 text-sm text-red-600"
+              role="alert"
+            >
               L'objet est requis.
             </p>
           }
@@ -134,7 +144,11 @@
             aria-describedby="message-error"
           ></textarea>
           @if (isInvalid(message)) {
-            <p id="message-error" class="mt-1 text-sm text-red-600" role="alert">
+            <p
+              id="message-error"
+              class="mt-1 text-sm text-red-600"
+              role="alert"
+            >
               @if (message.errors?.['required']) {
                 Le message est requis.
               } @else if (message.errors?.['minlength']) {

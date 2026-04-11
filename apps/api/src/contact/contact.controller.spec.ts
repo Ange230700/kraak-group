@@ -29,9 +29,7 @@ describe('ContactController', () => {
       message: 'Bonjour, je souhaite en savoir plus sur vos services.',
     });
 
-    expect(result).toEqual(
-      expect.objectContaining({ success: true }),
-    );
+    expect(result).toEqual(expect.objectContaining({ success: true }));
   });
 
   // Given un corps de requête invalide (champs manquants)
