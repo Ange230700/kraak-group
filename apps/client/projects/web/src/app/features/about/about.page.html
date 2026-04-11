@@ -86,22 +86,9 @@
 </section>
 
 <!-- CTA -->
-<section class="bg-brand-navy py-16 text-center text-brand-white">
-  <div class="mx-auto max-w-3xl px-4 lg:px-6">
-    <h2 class="text-3xl font-bold text-brand-white lg:text-4xl">
-      Envie d'en savoir plus ?
-    </h2>
-    <p class="mt-4 text-lg text-neutral-300">
-      Contactez-nous pour découvrir comment KRAAK peut vous accompagner.
-    </p>
-    <div class="mt-8">
-      <a
-        pButton
-        routerLink="/contact"
-        label="Nous contacter"
-        size="large"
-        aria-label="Nous contacter"
-      ></a>
-    </div>
-  </div>
-</section>
+<kraak-cta-banner
+  heading="Envie d'en savoir plus ?"
+  body="Contactez-nous pour découvrir comment KRAAK peut vous accompagner."
+  ctaLabel="Nous contacter"
+  ctaLink="/contact"
+/>
