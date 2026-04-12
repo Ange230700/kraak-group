@@ -12,14 +12,14 @@ describe('SupportService', () => {
     service = module.get<SupportService>(SupportService);
   });
 
-  it('devrait etre defini', () => {
+  it('devrait être défini', () => {
     expect(service).toBeDefined();
   });
 
   // Given un DTO de contact/support valide
   // When on soumet la demande
-  // Then le service renvoie un accuse de reception simple
-  it('Given une demande valide, When submitContact est appele, Then un accuse de reception est renvoye', () => {
+  // Then le service renvoie un accusé de réception simple
+  it('Given une demande valide, When submitContact est appelé, Then un accusé de réception est renvoyé', () => {
     expect(
       service.submitContact({
         name: 'Alice Dupont',
@@ -31,7 +31,7 @@ describe('SupportService', () => {
     ).toEqual({
       success: true,
       message:
-        'Votre message a bien ete recu. Nous vous repondrons dans les plus brefs delais.',
+        'Votre message a bien été reçu. Nous vous répondrons dans les plus brefs délais.',
     });
   });
 });

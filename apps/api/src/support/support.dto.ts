@@ -54,9 +54,9 @@ export function validateContactForm(
   if (!name) {
     errors.push('Le nom est requis.');
   } else if (name.length < 2) {
-    errors.push('Le nom doit contenir au moins 2 caracteres.');
+    errors.push('Le nom doit contenir au moins 2 caractères.');
   } else if (name.length > 80) {
-    errors.push('Le nom ne peut pas depasser 80 caracteres.');
+    errors.push('Le nom ne peut pas dépasser 80 caractères.');
   }
 
   if (!email || !isValidEmail(email)) {
@@ -66,21 +66,21 @@ export function validateContactForm(
   if (!subject) {
     errors.push("L'objet est requis.");
   } else if (subject.length < 3) {
-    errors.push("L'objet doit contenir au moins 3 caracteres.");
+    errors.push("L'objet doit contenir au moins 3 caractères.");
   } else if (subject.length > 120) {
-    errors.push("L'objet ne peut pas depasser 120 caracteres.");
+    errors.push("L'objet ne peut pas dépasser 120 caractères.");
   }
 
   if (!message) {
     errors.push('Le message est requis.');
   } else if (message.length < 10) {
-    errors.push('Le message doit contenir au moins 10 caracteres.');
+    errors.push('Le message doit contenir au moins 10 caractères.');
   } else if (message.length > 2000) {
-    errors.push('Le message ne peut pas depasser 2000 caracteres.');
+    errors.push('Le message ne peut pas dépasser 2000 caractères.');
   }
 
   if (rawCategory && !isSupportCategory(rawCategory)) {
-    errors.push('La categorie de support est invalide.');
+    errors.push('La catégorie de support est invalide.');
   }
 
   if (errors.length > 0) {

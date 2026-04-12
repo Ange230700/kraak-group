@@ -39,11 +39,11 @@ describe('validateContactForm', () => {
     expect(result).toEqual({
       valid: false,
       errors: [
-        'Le nom doit contenir au moins 2 caracteres.',
+        'Le nom doit contenir au moins 2 caractères.',
         "L'adresse e-mail est invalide.",
         "L'objet est requis.",
-        'Le message doit contenir au moins 10 caracteres.',
-        'La categorie de support est invalide.',
+        'Le message doit contenir au moins 10 caractères.',
+        'La catégorie de support est invalide.',
       ],
     });
   });
@@ -54,7 +54,7 @@ describe('validateContactForm', () => {
   it('Given un corps invalide, When la validation est appliquee, Then la requete est rejetee proprement', () => {
     expect(validateContactForm(null)).toEqual({
       valid: false,
-      errors: ['Corps de requete invalide.'],
+      errors: ['Corps de requête invalide.'],
     });
   });
 });
