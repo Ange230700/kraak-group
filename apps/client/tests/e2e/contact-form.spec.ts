@@ -26,7 +26,7 @@ test.describe(`Page contact — comportement formulaire`, () => {
     await page.getByLabel('Adresse e-mail').fill('alice@exemple.com');
     await page.getByLabel('Objet').fill('Demande de renseignements');
     await page
-      .getByLabel('Message')
+      .locator('textarea#message')
       .fill('Bonjour, je souhaite discuter de vos programmes de formation.');
 
     await page.getByRole('button', { name: 'Envoyer le message' }).click();
