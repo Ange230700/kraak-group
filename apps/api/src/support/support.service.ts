@@ -10,7 +10,7 @@ export class SupportService {
     return {
       success: true,
       message:
-        'Votre message a bien ete recu. Nous vous repondrons dans les plus brefs delais.',
+        'Votre message a bien été reçu. Nous vous répondrons dans les plus brefs délais.',
     };
   }
 }
