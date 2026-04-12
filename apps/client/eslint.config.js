@@ -1,6 +1,7 @@
 // @ts-check
 const eslint = require("@eslint/js");
 const prettier = require("eslint-config-prettier/flat");
+const prettierPlugin = require("eslint-plugin-prettier");
 const sonarjs = require("eslint-plugin-sonarjs");
 const playwright = require("eslint-plugin-playwright");
 const tseslint = require("typescript-eslint");
@@ -19,6 +20,7 @@ module.exports = tseslint.config(
       ...angular.configs.tsRecommended,
     ],
     plugins: {
+      prettier: prettierPlugin,
       sonarjs,
     },
     processor: angular.processInlineTemplates,
@@ -39,6 +41,7 @@ module.exports = tseslint.config(
           style: "kebab-case",
         },
       ],
+      "prettier/prettier": "error",
       "sonarjs/no-duplicated-branches": "error",
       "sonarjs/no-identical-conditions": "error",
       "sonarjs/no-identical-expressions": "error",
@@ -60,9 +63,11 @@ module.exports = tseslint.config(
       playwright.configs["flat/recommended"],
     ],
     plugins: {
+      prettier: prettierPlugin,
       sonarjs,
     },
     rules: {
+      "prettier/prettier": "error",
       "sonarjs/no-identical-conditions": "error",
       "sonarjs/no-identical-expressions": "error",
     },

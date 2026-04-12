@@ -1,5 +1,6 @@
 import eslint from '@eslint/js';
 import prettier from 'eslint-config-prettier/flat';
+import prettierPlugin from 'eslint-plugin-prettier';
 import jest from 'eslint-plugin-jest';
 import nodePlugin from 'eslint-plugin-n';
 import promise from 'eslint-plugin-promise';
@@ -19,6 +20,7 @@ export default tseslint.config(
       promise.configs['flat/recommended'],
     ],
     plugins: {
+      prettier: prettierPlugin,
       sonarjs,
     },
     rules: {
@@ -30,6 +32,7 @@ export default tseslint.config(
       'n/no-missing-import': 'off',
       'n/no-unpublished-import': 'off',
       'n/no-unsupported-features/es-syntax': 'off',
+      'prettier/prettier': 'error',
       'sonarjs/no-duplicated-branches': 'error',
       'sonarjs/no-identical-conditions': 'error',
       'sonarjs/no-identical-expressions': 'error',
