@@ -1,3 +1,4 @@
+import { BadRequestException } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import { ContactController } from './contact.controller';
 import { ContactService } from './contact.service';
@@ -29,23 +30,20 @@ describe('ContactController', () => {
       message: 'Bonjour, je souhaite en savoir plus sur vos services.',
     });
 
-    expect(result).toEqual(
-      expect.objectContaining({ success: true }),
-    );
+    expect(result).toEqual(expect.objectContaining({ success: true }));
   });
 
   // Given un corps de requête invalide (champs manquants)
   // When le contrôleur reçoit POST /contact
-  // Then la réponse contient un tableau d'erreurs
-  it('POST /contact avec données invalides — devrait renvoyer des erreurs', () => {
-    const result = controller.submit({
-      name: '',
-      email: 'invalid',
-      subject: '',
-      message: 'Court',
-    }) as { errors: string[] };
-
-    expect(result.errors).toBeDefined();
-    expect(result.errors.length).toBeGreaterThan(0);
+  // Then il renvoie une erreur HTTP 400
+  it('POST /contact avec données invalides — devrait renvoyer une BadRequestException', () => {
+    expect(() =>
+      controller.submit({
+        name: '',
+        email: 'invalid',
+        subject: '',
+        message: 'Court',
+      }),
+    ).toThrow(BadRequestException);
   });
 });

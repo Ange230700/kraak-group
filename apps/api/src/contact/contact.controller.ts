@@ -1,6 +1,13 @@
-import { Body, Controller, HttpCode, HttpStatus, Post } from '@nestjs/common';
+import {
+  BadRequestException,
+  Body,
+  Controller,
+  HttpCode,
+  HttpStatus,
+  Post,
+} from '@nestjs/common';
 import { ContactDto, validateContactDto } from './contact.dto';
-import { ContactService } from './contact.service';
+import { ContactService, ContactSubmissionResult } from './contact.service';
 
 @Controller('contact')
 export class ContactController {
@@ -12,13 +19,11 @@ export class ContactController {
   // Then la réponse confirme la réception du message
   @Post()
   @HttpCode(HttpStatus.OK)
-  submit(
-    @Body() body: unknown,
-  ): { success: boolean; message: string } | { errors: string[] } {
+  submit(@Body() body: unknown): ContactSubmissionResult {
     const { valid, errors } = validateContactDto(body);
 
     if (!valid) {
-      return { errors };
+      throw new BadRequestException({ success: false, errors });
     }
 
     return this.contactService.submit(body as ContactDto);

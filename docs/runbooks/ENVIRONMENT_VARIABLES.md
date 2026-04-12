@@ -1,47 +1,76 @@
 # Variables d'environnement
 
-Ce document decrit les variables d'environnement du MVP.
-Ne jamais commiter de secrets dans le depot.
+Ce document decrit les variables d'environnement du MVP et leur emplacement
+dans le monorepo. Ne jamais commiter de secrets dans le depot.
 
-## Frontend (apps/client)
+## Organisation des fichiers
 
-- `PUBLIC_SITE_URL`: URL publique du site (ex: https://kraak.example)
-- `PUBLIC_GA4_ID`: identifiant Google Analytics 4
-- `PUBLIC_API_BASE_URL`: URL de base de l'API backend
+| Fichier                         | Contenu                                                |
+| ------------------------------- | ------------------------------------------------------ |
+| `apps/api/.env.example`         | Variables backend local (copier vers `.env`)           |
+| `apps/api/.env.staging.example` | Variables backend staging (copier vers `.env.staging`) |
+| `apps/client/.env.example`      | Variables client / scripts / E2E (copier vers `.env`)  |
+| `.env.example` (racine)         | Variables CI/CD uniquement                             |
+
+> Le client Angular n'utilise **pas** de `.env` a l'execution. Les URLs et cles
+> publiques sont gerees via les fichiers `environment.ts` dans
+> `apps/client/projects/web/src/environments/` et remplaces a la compilation
+> par `angular.json` (`fileReplacements`).
+
+## Backend — `apps/api/`
+
+Variables lues par `process.env` dans le code NestJS :
+
+| Variable                    | Description                        | Exemple local             |
+| --------------------------- | ---------------------------------- | ------------------------- |
+| `NODE_ENV`                  | Environnement d'execution          | `development`             |
+| `PORT`                      | Port d'ecoute de l'API             | `3000`                    |
+| `SUPABASE_URL`              | URL du projet Supabase             | `https://xxx.supabase.co` |
+| `SUPABASE_SERVICE_ROLE_KEY` | Cle service role (secret)          | —                         |
+| `RESEND_API_KEY`            | Cle API Resend (secret)            | —                         |
+| `CONTACT_TO_EMAIL`          | Email destinataire des formulaires | `contact@kraak.org`       |
+| `CORS_ALLOWED_ORIGINS`      | Origines autorisees (virgule)      | `http://localhost:4200`   |
+
+En staging, les memes variables s'appliquent avec des valeurs differentes
+(voir `apps/api/.env.staging.example`).
+
+## Client — `apps/client/`
+
+| Variable         | Description                                    | Exemple |
+| ---------------- | ---------------------------------------------- | ------- |
+| `KRAAK_WEB_PORT` | Port du serveur de dev Angular (scripts / E2E) | `4200`  |
+
+Les URLs publiques (site, API, GA4) sont definies dans les fichiers
+`environment.ts` / `environment.staging.ts` / `environment.production.ts`
+sous `apps/client/projects/web/src/environments/`.
 
 ## Domaines publics documentes
 
 - Domaine Vercel actuellement aligne sur le depot : `https://kraak-group.vercel.app`
-- Tant qu'aucun domaine custom n'est branche, garder `PUBLIC_SITE_URL` alignee
-  sur cette URL pour les environnements web publics heberges sur Vercel.
+- Tant qu'aucun domaine custom n'est branche, garder les URLs alignees sur
+  cette adresse pour les environnements web publics heberges sur Vercel.
 
-## Backend (apps/api)
+## CI/CD — `.env.example` (racine)
 
-- `NODE_ENV`: `development` | `test` | `production`
-- `PORT`: port d'ecoute de l'API
-- `SUPABASE_URL`: URL du projet Supabase
-- `SUPABASE_SERVICE_ROLE_KEY`: cle service role (secret)
-- `RESEND_API_KEY`: cle API Resend (secret)
-- `CONTACT_TO_EMAIL`: email destinataire des formulaires
-- `CORS_ALLOWED_ORIGINS`: origines autorisees separees par virgule
+| Variable            | Description                     |
+| ------------------- | ------------------------------- |
+| `VERCEL_TOKEN`      | Token d'authentification Vercel |
+| `VERCEL_ORG_ID`     | ID organisation Vercel          |
+| `VERCEL_PROJECT_ID` | ID projet Vercel                |
+| `RENDER_API_KEY`    | Cle API Render                  |
 
-## Staging / variantes documentees
+Ces variables sont injectees via GitHub Secrets et ne sont pas necessaires
+en developpement local.
 
-- `.env.staging.example` utilise actuellement `SUPABASE_PUBLISHABLE_KEY` et
-  `SUPABASE_SECRET_KEY` pour les environnements de preproduction/staging.
-- Garder les noms de variables alignes entre les fichiers d'exemple, Render,
-  Vercel et le code avant tout changement d'environnement.
+## Deploiement — Render (`render.yaml`)
 
-## CI/CD
-
-- `VERCEL_TOKEN`
-- `VERCEL_ORG_ID`
-- `VERCEL_PROJECT_ID`
-- `RENDER_API_KEY`
+Le fichier `render.yaml` declare les variables d'environnement de production
+pour l'API : `NODE_ENV`, `PORT`, `SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY`,
+`RESEND_API_KEY`, `CONTACT_TO_EMAIL`, `CORS_ALLOWED_ORIGINS`.
 
 ## Convention de gestion
 
-- Utiliser `.env.example` sans valeurs sensibles.
+- Utiliser les fichiers `.env.example` sans valeurs sensibles.
 - Mettre a jour ce document a chaque ajout, suppression ou renommage de variable.
-- Injecter les secrets via GitHub Secrets/variables d'environnement hebergeur.
+- Injecter les secrets via GitHub Secrets ou variables d'environnement de l'hebergeur.
 - Rotation immediate en cas de fuite.

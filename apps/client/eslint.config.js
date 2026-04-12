@@ -1,17 +1,28 @@
 // @ts-check
 const eslint = require("@eslint/js");
+const prettier = require("eslint-config-prettier/flat");
+const prettierPlugin = require("eslint-plugin-prettier");
+const sonarjs = require("eslint-plugin-sonarjs");
+const playwright = require("eslint-plugin-playwright");
 const tseslint = require("typescript-eslint");
 const angular = require("angular-eslint");
 
 module.exports = tseslint.config(
   {
-    files: ["**/*.ts"],
+    ignores: ["dist/", "node_modules/", "coverage/"],
+  },
+  {
+    files: ["projects/web/src/**/*.ts", "projects/mobile/src/**/*.ts"],
     extends: [
       eslint.configs.recommended,
       ...tseslint.configs.recommended,
       ...tseslint.configs.stylistic,
       ...angular.configs.tsRecommended,
     ],
+    plugins: {
+      prettier: prettierPlugin,
+      sonarjs,
+    },
     processor: angular.processInlineTemplates,
     rules: {
       "@angular-eslint/directive-selector": [
@@ -30,14 +41,36 @@ module.exports = tseslint.config(
           style: "kebab-case",
         },
       ],
+      "prettier/prettier": "error",
+      "sonarjs/no-duplicated-branches": "error",
+      "sonarjs/no-identical-conditions": "error",
+      "sonarjs/no-identical-expressions": "error",
     },
   },
   {
-    files: ["**/*.html"],
+    files: ["projects/web/src/**/*.html", "projects/mobile/src/**/*.html"],
     extends: [
       ...angular.configs.templateRecommended,
       ...angular.configs.templateAccessibility,
     ],
     rules: {},
-  }
+  },
+  {
+    files: ["tests/e2e/**/*.ts"],
+    extends: [
+      eslint.configs.recommended,
+      ...tseslint.configs.recommended,
+      playwright.configs["flat/recommended"],
+    ],
+    plugins: {
+      prettier: prettierPlugin,
+      sonarjs,
+    },
+    rules: {
+      "prettier/prettier": "error",
+      "sonarjs/no-identical-conditions": "error",
+      "sonarjs/no-identical-expressions": "error",
+    },
+  },
+  prettier
 );

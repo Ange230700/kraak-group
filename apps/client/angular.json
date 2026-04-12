@@ -96,7 +96,8 @@
           "options": {
             "lintFilePatterns": [
               "projects/web/src/**/*.ts",
-              "projects/web/src/**/*.html"
+              "projects/web/src/**/*.html",
+              "tests/e2e/**/*.ts"
             ]
           }
         }

@@ -16,19 +16,21 @@ Avant de lancer quoi que ce soit :
 ### Configurer les variables d'environnement
 
 ```bash
-# À la racine du projet
-cp .env.example .env
+# Backend
+cp apps/api/.env.example apps/api/.env
+
+# Client (optionnel, utile pour Playwright / scripts)
+cp apps/client/.env.example apps/client/.env
 ```
 
 Remplir les valeurs — voir [`ENVIRONMENT_VARIABLES.md`](ENVIRONMENT_VARIABLES.md) pour la référence complète.
 
 **Variables minimales pour développer en local :**
 
-| Variable                    | Fichier | Exemple                        |
-| --------------------------- | ------- | ------------------------------ |
-| `SUPABASE_URL`              | `.env`  | `http://127.0.0.1:54321`       |
-| `SUPABASE_SERVICE_ROLE_KEY` | `.env`  | clé fournie par Supabase local |
-| `PUBLIC_API_BASE_URL`       | `.env`  | `http://localhost:3000`        |
+| Variable                    | Fichier         | Exemple                        |
+| --------------------------- | --------------- | ------------------------------ |
+| `SUPABASE_URL`              | `apps/api/.env` | `http://127.0.0.1:54321`       |
+| `SUPABASE_SERVICE_ROLE_KEY` | `apps/api/.env` | clé fournie par Supabase local |
 
 ---
 

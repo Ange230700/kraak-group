@@ -34,7 +34,7 @@ describe('validateContactDto', () => {
   // Given un corps avec un e-mail invalide
   // When la validation est appliquée
   // Then une erreur indique que l'e-mail est invalide
-  it("devrait rejeter un e-mail invalide", () => {
+  it('devrait rejeter un e-mail invalide', () => {
     const result = validateContactDto({
       name: 'Alice',
       email: 'not-an-email',

@@ -17,7 +17,14 @@ import { ContactService } from './contact.service';
 @Component({
   selector: 'kraak-contact-page',
   standalone: true,
-  imports: [ReactiveFormsModule, NgClass, ButtonDirective, InputText, Textarea, Message],
+  imports: [
+    ReactiveFormsModule,
+    NgClass,
+    ButtonDirective,
+    InputText,
+    Textarea,
+    Message,
+  ],
   templateUrl: './contact.page.html',
 })
 export default class ContactPage {
@@ -52,7 +59,9 @@ export default class ContactPage {
   }
 
   isInvalid(control: AbstractControl): boolean {
-    return control.invalid && (control.dirty || control.touched || this.submitted());
+    return (
+      control.invalid && (control.dirty || control.touched || this.submitted())
+    );
   }
 
   onSubmit(): void {

@@ -12,7 +12,6 @@ out/
 .env.local
 .env.*.local
 .env.staging
-!.env.staging.example
 
 # IDE / Éditeurs
 .idea/
