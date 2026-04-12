@@ -7,6 +7,10 @@ dist/
 .next/
 out/
 
+# Artefacts TypeScript compilés hors dist/
+*.d.ts
+*.js.map
+
 # Environnement
 .env
 .env.local
