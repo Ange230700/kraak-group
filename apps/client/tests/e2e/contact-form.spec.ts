@@ -22,11 +22,11 @@ test.describe(`Page contact — comportement formulaire`, () => {
 
     await page.goto('/contact');
 
-    await page.locator('#name').fill('Alice Dupont');
-    await page.locator('#email').fill('alice@exemple.com');
-    await page.locator('#subject').fill('Demande de renseignements');
+    await page.getByLabel('Nom complet').fill('Alice Dupont');
+    await page.getByLabel('Adresse e-mail').fill('alice@exemple.com');
+    await page.getByLabel('Objet').fill('Demande de renseignements');
     await page
-      .locator('#message')
+      .getByRole('textbox', { name: 'Message' })
       .fill('Bonjour, je souhaite discuter de vos programmes de formation.');
 
     await page.getByRole('button', { name: 'Envoyer le message' }).click();
