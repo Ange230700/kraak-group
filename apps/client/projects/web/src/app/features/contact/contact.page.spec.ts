@@ -4,6 +4,7 @@ import {
   provideHttpClientTesting,
 } from '@angular/common/http/testing';
 import { provideHttpClient } from '@angular/common/http';
+import { provideRouter } from '@angular/router';
 
 import ContactPage from './contact.page';
 
@@ -13,7 +14,11 @@ describe('ContactPage', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [ContactPage],
-      providers: [provideHttpClient(), provideHttpClientTesting()],
+      providers: [
+        provideHttpClient(),
+        provideHttpClientTesting(),
+        provideRouter([]),
+      ],
     }).compileComponents();
 
     httpTestingController = TestBed.inject(HttpTestingController);
