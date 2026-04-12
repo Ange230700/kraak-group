@@ -97,7 +97,7 @@ describe('ContactSubmissionResultSchema', () => {
     expect(
       ContactSubmissionResultSchema.safeParse({
         success: true,
-        message: 'Votre message a bien ete recu.',
+        message: 'Votre message a bien été reçu.',
       }).success,
     ).toBe(true);
   });
