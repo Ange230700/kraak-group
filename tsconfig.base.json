@@ -1,9 +1,13 @@
 {
   "compilerOptions": {
+    "baseUrl": ".",
     "strict": true,
     "skipLibCheck": true,
     "experimentalDecorators": true,
     "target": "ES2022",
-    "noFallthroughCasesInSwitch": true
+    "noFallthroughCasesInSwitch": true,
+    "paths": {
+      "@kraak/contracts": ["packages/contracts/src/index.ts"]
+    }
   }
 }

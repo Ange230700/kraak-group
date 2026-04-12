@@ -1,6 +1,28 @@
 import { z } from 'zod';
 
 // ---------------------------------------------------------------------------
+// Contact form
+// ---------------------------------------------------------------------------
+export const ContactFormSchema = z
+  .object({
+    name: z.string().trim().min(2).max(80),
+    email: z.string().trim().email(),
+    subject: z.string().trim().min(3).max(120),
+    message: z.string().trim().min(10).max(2000),
+    category: z
+      .enum(['technical', 'program', 'session', 'billing', 'other'])
+      .default('other'),
+  })
+  .strict();
+
+export const ContactSubmissionResultSchema = z
+  .object({
+    success: z.boolean(),
+    message: z.string().trim().min(1),
+  })
+  .strict();
+
+// ---------------------------------------------------------------------------
 // AppUser
 // ---------------------------------------------------------------------------
 export const AppUserSchema = z.object({

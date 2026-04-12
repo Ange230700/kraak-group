@@ -85,19 +85,20 @@ Le site web et l'app mobile communiquent avec l'API backend (NestJS), qui elle-m
 
 **Concepts clés :**
 
-| Concept        | Explication rapide                                                       |
-| -------------- | ------------------------------------------------------------------------ |
-| **Controller** | Reçoit les requêtes HTTP (`GET /contact`, `POST /contact`).              |
-| **Service**    | Contient la logique métier (envoyer un email, lire la BDD).              |
-| **Module**     | Regroupe les contrôleurs et services liés.                               |
-| **DTO**        | (Data Transfer Object) Définit la structure des données reçues/envoyées. |
-| **Guard**      | Vérifie l'autorisation avant d'accéder à une route.                      |
+| Concept        | Explication rapide                                                                        |
+| -------------- | ----------------------------------------------------------------------------------------- |
+| **Controller** | Reçoit les requêtes HTTP (`GET /health`, `POST /support/contact`, alias `POST /contact`). |
+| **Service**    | Contient la logique métier (envoyer un email, lire la BDD).                               |
+| **Module**     | Regroupe les contrôleurs et services liés.                                                |
+| **DTO**        | (Data Transfer Object) Définit la structure des données reçues/envoyées.                  |
+| **Guard**      | Vérifie l'autorisation avant d'accéder à une route.                                       |
 
 **Fichiers importants :**
 
 - `apps/api/src/main.ts` — Point d'entrée du serveur
 - `apps/api/src/app.module.ts` — Module racine
 - `apps/api/src/app.controller.ts` — Contrôleur principal
+- `apps/api/src/support/` — Module support/contact MVP
 
 ---
 

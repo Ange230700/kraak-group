@@ -1,6 +1,8 @@
 import { describe, it, expect } from 'vitest';
 import * as schemasModule from '../schemas';
 import {
+  ContactFormSchema,
+  ContactSubmissionResultSchema,
   CreateAppUserSchema,
   CreateParticipantSchema,
   CreateProgramSchema,
@@ -38,6 +40,66 @@ import {
 describe('schemas module', () => {
   it('should be importable at runtime', () => {
     expect(schemasModule).toBeDefined();
+  });
+});
+
+// ---------------------------------------------------------------------------
+// Contact form
+// ---------------------------------------------------------------------------
+describe('ContactFormSchema', () => {
+  const valid = {
+    name: 'Alice Dupont',
+    email: 'alice@exemple.com',
+    subject: 'Demande de renseignements',
+    message: 'Bonjour, je souhaite en savoir plus sur vos services.',
+  };
+
+  it('should accept valid public contact data and default category to other', () => {
+    const result = ContactFormSchema.safeParse(valid);
+
+    expect(result.success).toBe(true);
+    if (!result.success) {
+      throw new Error('Expected ContactFormSchema to accept valid data.');
+    }
+
+    expect(result.data.category).toBe('other');
+  });
+
+  it('should trim textual fields before returning parsed data', () => {
+    const result = ContactFormSchema.safeParse({
+      ...valid,
+      name: '  Alice Dupont  ',
+      subject: '  Demande de renseignements  ',
+      message: '  Bonjour, je souhaite en savoir plus sur vos services.  ',
+    });
+
+    expect(result.success).toBe(true);
+    if (!result.success) {
+      throw new Error('Expected ContactFormSchema to trim valid data.');
+    }
+
+    expect(result.data.name).toBe('Alice Dupont');
+    expect(result.data.subject).toBe('Demande de renseignements');
+    expect(result.data.message).toBe(
+      'Bonjour, je souhaite en savoir plus sur vos services.',
+    );
+  });
+
+  it('should reject malformed email addresses', () => {
+    expect(
+      ContactFormSchema.safeParse({ ...valid, email: 'not-an-email' }).success,
+    ).toBe(false);
+  });
+});
+
+describe('ContactSubmissionResultSchema', () => {
+  it('should accept a minimal success acknowledgement payload', () => {
+    expect(
+      ContactSubmissionResultSchema.safeParse({
+        success: true,
+        message: 'Votre message a bien été reçu.',
+      }).success,
+    ).toBe(true);
   });
 });
 
