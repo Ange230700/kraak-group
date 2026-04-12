@@ -40,7 +40,7 @@ export function validateContactForm(
   body: unknown,
 ): ContactFormValidationResult {
   if (!body || typeof body !== 'object' || Array.isArray(body)) {
-    return { valid: false, errors: ['Corps de requete invalide.'] };
+    return { valid: false, errors: ['Corps de requête invalide.'] };
   }
 
   const dto = body as Record<string, unknown>;
