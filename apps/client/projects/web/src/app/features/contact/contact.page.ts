@@ -1,4 +1,5 @@
 import { NgClass } from '@angular/common';
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, inject, signal } from '@angular/core';
 import {
   AbstractControl,
@@ -9,8 +10,8 @@ import {
 } from '@angular/forms';
 import { ButtonDirective } from 'primeng/button';
 import { InputText } from 'primeng/inputtext';
-import { Textarea } from 'primeng/textarea';
 import { Message } from 'primeng/message';
+import { Textarea } from 'primeng/textarea';
 
 import { CtaBanner } from '../../shared/cta-banner/cta-banner';
 import { ContactService } from './contact.service';
@@ -75,6 +76,7 @@ export default class ContactPage {
     }
 
     this.loading.set(true);
+    this.success.set(false);
 
     this.contactService
       .submit({
@@ -84,22 +86,30 @@ export default class ContactPage {
         message: this.form.value.message!,
       })
       .subscribe({
-        next: (res) => {
+        next: () => {
           this.loading.set(false);
-          if ('errors' in res) {
-            this.apiErrors.set(res.errors);
-          } else {
-            this.success.set(true);
-            this.form.reset();
-            this.submitted.set(false);
-          }
+          this.success.set(true);
+          this.form.reset();
+          this.submitted.set(false);
         },
-        error: () => {
+        error: (errorResponse: HttpErrorResponse) => {
           this.loading.set(false);
-          this.apiErrors.set([
-            'Une erreur est survenue. Veuillez réessayer plus tard.',
-          ]);
+          this.apiErrors.set(this.extractApiErrors(errorResponse));
         },
       });
+  }
+
+  private extractApiErrors(errorResponse: HttpErrorResponse): string[] {
+    const rawErrors = (errorResponse.error as { errors?: unknown })?.errors;
+
+    if (
+      Array.isArray(rawErrors) &&
+      rawErrors.every((error) => typeof error === 'string') &&
+      rawErrors.length > 0
+    ) {
+      return rawErrors;
+    }
+
+    return ['Une erreur est survenue. Veuillez réessayer plus tard.'];
   }
 }
