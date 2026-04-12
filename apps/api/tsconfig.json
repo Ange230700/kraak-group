@@ -9,7 +9,9 @@
     "sourceMap": true,
     "outDir": "./dist",
     "incremental": true,
-    "forceConsistentCasingInFileNames": true,
-    "tsBuildInfoFile": "./dist/tsconfig.tsbuildinfo"
+    "tsBuildInfoFile": "./dist/tsconfig.tsbuildinfo",
+    "paths": {
+      "@kraak/contracts": ["../../packages/contracts/src/index.ts"]
+    }
   }
 }

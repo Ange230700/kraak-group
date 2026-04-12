@@ -5,9 +5,11 @@
     "skipLibCheck": true,
     "experimentalDecorators": true,
     "target": "ES2022",
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "isolatedModules": true,
     "noFallthroughCasesInSwitch": true,
-    "paths": {
-      "@kraak/contracts": ["packages/contracts/src/index.ts"]
-    }
+    "noImplicitOverride": true,
+    "noImplicitReturns": true
   }
 }

@@ -14,7 +14,7 @@ import {
   NotificationChannel,
   SupportRequestStatus,
   SupportCategory,
-} from '../enums';
+} from './enums';
 
 describe('Enums', () => {
   describe('UserRole', () => {

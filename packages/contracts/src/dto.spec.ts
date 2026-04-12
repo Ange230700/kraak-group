@@ -31,10 +31,10 @@ import type {
   SupportRequestDto,
   CreateSupportRequestDto,
   UpdateSupportRequestDto,
-} from '../dto';
+} from './dto';
 
 // Runtime import to ensure the module actually exists (prevents vacuous type test passes)
-import * as dtoModule from '../dto';
+import * as dtoModule from './dto';
 import type {
   UserRoleValue,
   LifecycleStatusValue,
@@ -50,7 +50,7 @@ import type {
   NotificationChannelValue,
   SupportRequestStatusValue,
   SupportCategoryValue,
-} from '../enums';
+} from './enums';
 
 // ---------------------------------------------------------------------------
 // Module existence smoke test

@@ -3,7 +3,6 @@ import prettier from 'eslint-config-prettier/flat';
 import prettierPlugin from 'eslint-plugin-prettier';
 import jest from 'eslint-plugin-jest';
 import nodePlugin from 'eslint-plugin-n';
-import promise from 'eslint-plugin-promise';
 import sonarjs from 'eslint-plugin-sonarjs';
 import tseslint from 'typescript-eslint';
 
@@ -15,10 +14,7 @@ export default tseslint.config(
   ...tseslint.configs.recommended,
   {
     files: ['src/**/*.ts'],
-    extends: [
-      nodePlugin.configs['flat/recommended'],
-      promise.configs['flat/recommended'],
-    ],
+    extends: [nodePlugin.configs['flat/recommended']],
     plugins: {
       prettier: prettierPlugin,
       sonarjs,
