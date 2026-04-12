@@ -44,7 +44,7 @@ describe('échelle de neutres', () => {
   });
 
   it.each(EXPECTED_KEYS)('palier %i est un hex valide', (key) => {
-    expect(NEUTRAL[key]).toMatch(HEX_RE);
+    expect(NEUTRAL[key as keyof typeof NEUTRAL]).toMatch(HEX_RE);
   });
 
   it('le palier 0 est blanc et le palier 950 est quasi-noir', () => {

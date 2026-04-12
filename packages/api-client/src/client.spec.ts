@@ -54,7 +54,7 @@ describe('createApiClient', () => {
     'enrollments',
     'supportRequests',
   ] as const)('%s expose getById, list, create, update, remove', (resource) => {
-    const client = createApiClient(baseConfig()) as Record<
+    const client = createApiClient(baseConfig()) as unknown as Record<
       string,
       Record<string, unknown>
     >;
@@ -71,10 +71,10 @@ describe('createApiClient', () => {
     expect(typeof client.notifications.list).toBe('function');
     expect(typeof client.notifications.create).toBe('function');
     expect(
-      (client.notifications as Record<string, unknown>)['update'],
+      (client.notifications as unknown as Record<string, unknown>)['update'],
     ).toBeUndefined();
     expect(
-      (client.notifications as Record<string, unknown>)['remove'],
+      (client.notifications as unknown as Record<string, unknown>)['remove'],
     ).toBeUndefined();
   });
 });
@@ -124,6 +124,9 @@ describe('HTTP behaviour', () => {
       role: 'admin',
       firstName: 'A',
       lastName: 'B',
+      phone: null,
+      preferredContactChannel: null,
+      isActive: true,
     };
     const result = await client.users.create(body);
 
@@ -171,6 +174,8 @@ describe('HTTP behaviour', () => {
       body: 'World',
       notificationType: 'system',
       channel: 'in_app',
+      sourceType: null,
+      sourceId: null,
     };
     const result = await client.notifications.create(body);
 

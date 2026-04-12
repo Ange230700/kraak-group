@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import * as schemasModule from '../schemas';
+import * as schemasModule from './schemas';
 import {
   ContactFormSchema,
   ContactSubmissionResultSchema,
@@ -32,7 +32,7 @@ import {
   EnrollmentSchema,
   NotificationSchema,
   SupportRequestSchema,
-} from '../schemas';
+} from './schemas';
 
 // ---------------------------------------------------------------------------
 // Module resolution smoke test
