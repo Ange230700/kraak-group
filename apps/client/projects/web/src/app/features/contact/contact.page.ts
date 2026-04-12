@@ -12,6 +12,7 @@ import { InputText } from 'primeng/inputtext';
 import { Textarea } from 'primeng/textarea';
 import { Message } from 'primeng/message';
 
+import { CtaBanner } from '../../shared/cta-banner/cta-banner';
 import { ContactService } from './contact.service';
 
 @Component({
@@ -24,6 +25,7 @@ import { ContactService } from './contact.service';
     InputText,
     Textarea,
     Message,
+    CtaBanner,
   ],
   templateUrl: './contact.page.html',
 })
