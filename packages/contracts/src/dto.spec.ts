@@ -3,6 +3,8 @@ import type {
   AppUserDto,
   CreateAppUserDto,
   UpdateAppUserDto,
+  ContactFormDto,
+  ContactSubmissionResultDto,
   ParticipantDto,
   CreateParticipantDto,
   UpdateParticipantDto,
@@ -56,6 +58,32 @@ import type {
 describe('dto module', () => {
   it('should be importable at runtime', () => {
     expect(dtoModule).toBeDefined();
+  });
+});
+
+// ---------------------------------------------------------------------------
+// ContactForm
+// ---------------------------------------------------------------------------
+describe('ContactFormDto', () => {
+  it('should expose the public contact/support payload shape', () => {
+    expectTypeOf<ContactFormDto>().toHaveProperty('name').toBeString();
+    expectTypeOf<ContactFormDto>().toHaveProperty('email').toBeString();
+    expectTypeOf<ContactFormDto>().toHaveProperty('subject').toBeString();
+    expectTypeOf<ContactFormDto>().toHaveProperty('message').toBeString();
+    expectTypeOf<ContactFormDto>()
+      .toHaveProperty('category')
+      .toEqualTypeOf<SupportCategoryValue>();
+  });
+});
+
+describe('ContactSubmissionResultDto', () => {
+  it('should expose a simple acknowledgement payload', () => {
+    expectTypeOf<ContactSubmissionResultDto>()
+      .toHaveProperty('success')
+      .toBeBoolean();
+    expectTypeOf<ContactSubmissionResultDto>()
+      .toHaveProperty('message')
+      .toBeString();
   });
 });
 

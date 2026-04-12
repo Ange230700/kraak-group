@@ -16,6 +16,22 @@ import type {
 } from './enums';
 
 // ---------------------------------------------------------------------------
+// ContactForm
+// ---------------------------------------------------------------------------
+export interface ContactFormDto {
+  name: string;
+  email: string;
+  subject: string;
+  message: string;
+  category: SupportCategoryValue;
+}
+
+export interface ContactSubmissionResultDto {
+  success: boolean;
+  message: string;
+}
+
+// ---------------------------------------------------------------------------
 // AppUser
 // ---------------------------------------------------------------------------
 export interface AppUserDto {
