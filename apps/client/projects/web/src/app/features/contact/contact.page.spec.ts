@@ -1,15 +1,26 @@
 import { TestBed } from '@angular/core/testing';
+import {
+  HttpTestingController,
+  provideHttpClientTesting,
+} from '@angular/common/http/testing';
 import { provideHttpClient } from '@angular/common/http';
-import { provideHttpClientTesting } from '@angular/common/http/testing';
 
 import ContactPage from './contact.page';
 
 describe('ContactPage', () => {
+  let httpTestingController: HttpTestingController;
+
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [ContactPage],
       providers: [provideHttpClient(), provideHttpClientTesting()],
     }).compileComponents();
+
+    httpTestingController = TestBed.inject(HttpTestingController);
+  });
+
+  afterEach(() => {
+    httpTestingController.verify();
   });
 
   // Given la page de contact est chargée
@@ -90,5 +101,74 @@ describe('ContactPage', () => {
   it('devrait initialiser loading à false', () => {
     const fixture = TestBed.createComponent(ContactPage);
     expect(fixture.componentInstance.loading()).toBe(false);
+  });
+
+  // Given un formulaire valide
+  // When la soumission API réussit
+  // Then le formulaire est réinitialisé et le message de succès est affiché
+  it('devrait afficher un succès après une soumission réussie', () => {
+    const fixture = TestBed.createComponent(ContactPage);
+    fixture.detectChanges();
+    const component = fixture.componentInstance;
+
+    component.form.setValue({
+      name: 'Alice Dupont',
+      email: 'alice@exemple.com',
+      subject: 'Renseignements',
+      message: 'Bonjour, je voudrais en savoir plus sur vos programmes.',
+    });
+
+    component.onSubmit();
+
+    const request = httpTestingController.expectOne((req) =>
+      req.url.endsWith('/contact'),
+    );
+    expect(request.request.method).toBe('POST');
+    request.flush({
+      success: true,
+      message: 'Votre message a bien été reçu.',
+    });
+
+    fixture.detectChanges();
+
+    expect(component.success()).toBe(true);
+    expect(component.apiErrors()).toEqual([]);
+    expect(component.loading()).toBe(false);
+  });
+
+  // Given un formulaire valide
+  // When l'API répond avec des erreurs de validation
+  // Then les erreurs API doivent être affichées dans la page
+  it('devrait afficher les erreurs API renvoyées par le backend', () => {
+    const fixture = TestBed.createComponent(ContactPage);
+    fixture.detectChanges();
+    const component = fixture.componentInstance;
+
+    component.form.setValue({
+      name: 'Alice Dupont',
+      email: 'alice@exemple.com',
+      subject: 'Renseignements',
+      message: 'Bonjour, je voudrais en savoir plus sur vos programmes.',
+    });
+
+    component.onSubmit();
+
+    const request = httpTestingController.expectOne((req) =>
+      req.url.endsWith('/contact'),
+    );
+    request.flush(
+      { errors: ['Le nom est requis.', "L'objet est requis."] },
+      { status: 400, statusText: 'Bad Request' },
+    );
+
+    fixture.detectChanges();
+
+    expect(component.success()).toBe(false);
+    expect(component.loading()).toBe(false);
+    expect(component.apiErrors()).toEqual([
+      'Le nom est requis.',
+      "L'objet est requis.",
+    ]);
+    expect(fixture.nativeElement.textContent).toContain('Le nom est requis.');
   });
 });
