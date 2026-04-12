@@ -8,10 +8,10 @@ test.describe(`Page d'accueil — smoke tests`, () => {
     await page.goto('/');
   });
 
-  test(`Given la page d'accueil, When elle se charge, Then le titre du document est "KRAAK"`, async ({
+  test(`Given la page d'accueil, When elle se charge, Then le titre du document contient "KRAAK"`, async ({
     page,
   }) => {
-    await expect(page).toHaveTitle('KRAAK');
+    await expect(page).toHaveTitle('KRAAK | Développez votre potentiel');
   });
 
   test(`Given la page d'accueil, When elle se charge, Then la marque KRAAK est visible dans la navigation`, async ({
