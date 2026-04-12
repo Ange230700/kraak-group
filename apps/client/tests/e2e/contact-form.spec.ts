@@ -5,6 +5,10 @@ test.describe(`Page contact — comportement formulaire`, () => {
     page,
   }) => {
     await page.route('**/contact', async (route) => {
+      if (route.request().method() !== 'POST') {
+        await route.continue();
+        return;
+      }
       await route.fulfill({
         status: 200,
         contentType: 'application/json',
@@ -18,11 +22,11 @@ test.describe(`Page contact — comportement formulaire`, () => {
 
     await page.goto('/contact');
 
-    await page.getByLabel('Nom complet *').fill('Alice Dupont');
-    await page.getByLabel('Adresse e-mail *').fill('alice@exemple.com');
-    await page.getByLabel('Objet *').fill('Demande de renseignements');
+    await page.getByLabel('Nom complet').fill('Alice Dupont');
+    await page.getByLabel('Adresse e-mail').fill('alice@exemple.com');
+    await page.getByLabel('Objet').fill('Demande de renseignements');
     await page
-      .getByLabel('Message *')
+      .getByLabel('Message')
       .fill('Bonjour, je souhaite discuter de vos programmes de formation.');
 
     await page.getByRole('button', { name: 'Envoyer le message' }).click();

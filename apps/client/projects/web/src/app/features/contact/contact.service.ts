@@ -16,21 +16,12 @@ export interface ContactResponse {
   message: string;
 }
 
-export interface ContactErrorResponse {
-  errors: string[];
-}
-
 @Injectable({ providedIn: 'root' })
 export class ContactService {
   private readonly http = inject(HttpClient);
   private readonly endpoint = `${environment.apiBaseUrl}/contact`;
 
-  submit(
-    payload: ContactPayload,
-  ): Observable<ContactResponse | ContactErrorResponse> {
-    return this.http.post<ContactResponse | ContactErrorResponse>(
-      this.endpoint,
-      payload,
-    );
+  submit(payload: ContactPayload): Observable<ContactResponse> {
+    return this.http.post<ContactResponse>(this.endpoint, payload);
   }
 }

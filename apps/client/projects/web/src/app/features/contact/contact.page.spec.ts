@@ -136,6 +136,44 @@ describe('ContactPage', () => {
     expect(component.loading()).toBe(false);
   });
 
+  // Given un succès précédent
+  // When l'utilisateur soumet à nouveau le formulaire
+  // Then success doit repasser à false immédiatement avant la réponse HTTP
+  it("devrait réinitialiser success à false au début d'une nouvelle soumission", () => {
+    const fixture = TestBed.createComponent(ContactPage);
+    fixture.detectChanges();
+    const component = fixture.componentInstance;
+
+    // Première soumission réussie
+    component.form.setValue({
+      name: 'Alice Dupont',
+      email: 'alice@exemple.com',
+      subject: 'Renseignements',
+      message: 'Bonjour, je voudrais en savoir plus sur vos programmes.',
+    });
+    component.onSubmit();
+    httpTestingController
+      .expectOne((req) => req.url.endsWith('/contact'))
+      .flush({ success: true, message: 'OK' });
+    fixture.detectChanges();
+    expect(component.success()).toBe(true);
+
+    // Deuxième soumission : success doit être false immédiatement
+    component.form.setValue({
+      name: 'Alice Dupont',
+      email: 'alice@exemple.com',
+      subject: 'Renseignements',
+      message: 'Bonjour, je voudrais en savoir plus sur vos programmes.',
+    });
+    component.onSubmit();
+    expect(component.success()).toBe(false);
+
+    // Flush pour ne pas laisser de requêtes en suspens
+    httpTestingController
+      .expectOne((req) => req.url.endsWith('/contact'))
+      .flush({ success: true, message: 'OK' });
+  });
+
   // Given un formulaire valide
   // When l'API répond avec des erreurs de validation
   // Then les erreurs API doivent être affichées dans la page
