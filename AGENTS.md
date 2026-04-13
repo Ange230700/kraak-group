@@ -100,14 +100,67 @@ comme défaut :
   et documenter la décision dans `ARCHITECTURE.md` et `docs/decisions/` avant
   de l’ajouter.
 
+### Structure Obligatoire Des Composants Et Pages (Client)
+
+Chaque composant ou page Angular (web **et** mobile) doit comporter
+**exactement trois fichiers** au minimum :
+
+| Fichier         | Rôle                             |
+| --------------- | -------------------------------- |
+| `<nom>.ts`      | Classe du composant / de la page |
+| `<nom>.html`    | Template HTML (fichier séparé)   |
+| `<nom>.spec.ts` | Tests unitaires / composants     |
+
+Règles associées :
+
+- Utiliser **`templateUrl`** dans le décorateur `@Component` pour pointer vers
+  le fichier `.html` séparé. Ne **pas** utiliser `template:` en ligne.
+- Ne **pas** créer de fichier `.scss` ni `.css` dédié par composant ou page.
+- Ne **pas** utiliser `styleUrl` ni `styleUrls` dans les décorateurs
+  `@Component`.
+- Un composant ou une page qui ne possède pas ces trois fichiers n'est **pas**
+  considéré comme terminé.
+
+### Structure Obligatoire Minimale Des Modules API (NestJS)
+
+Chaque module API fonctionnel dans `apps/api` qui expose au moins une route doit
+comporter **au minimum cinq fichiers** :
+
+| Fichier | Rôle |
+| ------- | ---- |
+| `<name>.module.ts` | Déclaration NestJS (`controllers`, `providers`) |
+| `<name>.controller.ts` | Routes HTTP + décorateurs Swagger |
+| `<name>.controller.spec.ts` | Tests unitaires du contrôleur en BDD `Given/When/Then` |
+| `<name>.service.ts` | Logique métier |
+| `<name>.service.spec.ts` | Tests unitaires du service en BDD `Given/When/Then` |
+
+Fichiers conditionnels obligatoires dès qu'une route accepte un corps de requête
+ou un payload d'entrée complexe à valider :
+
+| Fichier | Rôle |
+| ------- | ---- |
+| `<name>.dto.ts` | Validation d'entrée hand-rolled, sans `class-validator` |
+| `<name>.dto.spec.ts` | Tests unitaires de la validation |
+
+Cas particuliers et règles associées :
+
+- Un module sans route HTTP mais avec logique interne doit comporter au minimum
+  `<name>.module.ts`, `<name>.service.ts` et `<name>.service.spec.ts`.
+- Le module racine `app` suit sa structure propre et n'impose pas de DTO tant
+  qu'aucune entrée à valider n'existe.
+- Tout `guard`, `interceptor`, `pipe` ou artefact technique équivalent ajouté
+  dans un module doit être créé par paire : fichier d'implémentation +
+  fichier `.spec.ts`.
+- Ne pas créer de fichiers vides "par anticipation" ; ajouter chaque paire
+  uniquement quand le besoin réel existe.
+- Un module API qui ne respecte pas cette structure minimale n'est **pas**
+  considéré comme terminé.
+
 ### Règle De Style Des Composants (Obligatoire)
 
 Les composants et pages Angular utilisent exclusivement **Tailwind CSS** (classes
 utilitaires) et **PrimeNG** (classes de composants) pour tout le style visuel.
 
-- Chaque composant ou page se compose uniquement de `.ts` + `.html` + `.spec.ts`.
-- Ne **pas** créer de fichier `.scss` ni `.css` dédié par composant ou page.
-- Ne **pas** utiliser `styleUrl` ni `styleUrls` dans les décorateurs `@Component`.
 - Si un style global est nécessaire, l'ajouter dans `tailwind.css` via `@theme`
   ou `@utility`, ou dans `styles.scss` s'il ne peut pas être exprimé en
   Tailwind.
