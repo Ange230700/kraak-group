@@ -10,15 +10,6 @@ import {
   selector: 'kraak-program-list-page',
   standalone: true,
   imports: [IonHeader, IonToolbar, IonTitle, IonContent],
-  template: `
-    <ion-header>
-      <ion-toolbar>
-        <ion-title>Programmes</ion-title>
-      </ion-toolbar>
-    </ion-header>
-    <ion-content class="ion-padding">
-      <p>Liste des programmes à venir.</p>
-    </ion-content>
-  `,
+  templateUrl: './program-list.page.html',
 })
 export default class ProgramListPage {}

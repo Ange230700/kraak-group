@@ -3,21 +3,7 @@ import { Component, Input } from '@angular/core';
 @Component({
   selector: 'kraak-section',
   standalone: true,
-  template: `
-    <section [class]="sectionClass">
-      <div class="mx-auto w-full max-w-6xl px-4 lg:px-6">
-        @if (title) {
-          <header class="mb-10 max-w-3xl">
-            <h2 [class]="titleClass">{{ title }}</h2>
-            @if (subtitle) {
-              <p [class]="subtitleClass">{{ subtitle }}</p>
-            }
-          </header>
-        }
-        <ng-content />
-      </div>
-    </section>
-  `,
+  templateUrl: './section.html',
 })
 export class Section {
   @Input() title = '';

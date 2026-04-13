@@ -10,15 +10,6 @@ import {
   selector: 'kraak-resource-list-page',
   standalone: true,
   imports: [IonHeader, IonToolbar, IonTitle, IonContent],
-  template: `
-    <ion-header>
-      <ion-toolbar>
-        <ion-title>Ressources</ion-title>
-      </ion-toolbar>
-    </ion-header>
-    <ion-content class="ion-padding">
-      <p>Ressources et documents utiles.</p>
-    </ion-content>
-  `,
+  templateUrl: './resource-list.page.html',
 })
 export default class ResourceListPage {}

@@ -5,11 +5,7 @@ import { Tag } from 'primeng/tag';
   selector: 'kraak-badge',
   standalone: true,
   imports: [Tag],
-  template: `
-    <span class="inline-flex">
-      <p-tag [value]="label" [severity]="severity" [rounded]="rounded" />
-    </span>
-  `,
+  templateUrl: './badge.html',
 })
 export class Badge {
   @Input({ required: true }) label = '';

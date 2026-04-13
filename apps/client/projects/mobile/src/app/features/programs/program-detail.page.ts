@@ -19,18 +19,6 @@ import {
     IonButtons,
     IonBackButton,
   ],
-  template: `
-    <ion-header>
-      <ion-toolbar>
-        <ion-buttons slot="start">
-          <ion-back-button defaultHref="/tabs/programmes"></ion-back-button>
-        </ion-buttons>
-        <ion-title>Détail du programme</ion-title>
-      </ion-toolbar>
-    </ion-header>
-    <ion-content class="ion-padding">
-      <p>Détail du programme sélectionné.</p>
-    </ion-content>
-  `,
+  templateUrl: './program-detail.page.html',
 })
 export default class ProgramDetailPage {}
