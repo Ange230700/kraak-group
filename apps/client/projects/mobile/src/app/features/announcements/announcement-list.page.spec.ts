@@ -1,5 +1,6 @@
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
+import { describe, it, expect, beforeEach } from 'vitest';
 import AnnouncementListPage from './announcement-list.page';
 
 describe('Mobile AnnouncementListPage', () => {

@@ -1,6 +1,7 @@
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import HomePage from './home.page';
+import { describe, it, beforeEach, expect } from 'vitest';
 
 describe('Mobile HomePage', () => {
   beforeEach(async () => {

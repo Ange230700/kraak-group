@@ -1,3 +1,5 @@
+# Pull Request
+
 ## Resume
 
 ## Pourquoi
@@ -12,11 +14,11 @@
 
 ## Checklist
 
-- [ ] Tache liee a une issue
-- [ ] Portee MVP respectee
+- [ ] Tache liée a une issue
+- [ ] Portée MVP respectée
 - [ ] Tests RED -> GREEN -> REFACTOR appliques (si code)
-- [ ] Evidence de validation ajoutee (tests/captures)
-- [ ] Documentation mise a jour si necessaire
+- [ ] Evidence de validation ajoutée (tests/captures)
+- [ ] Documentation mise a jour si nécessaire
 - [ ] Aucun secret/variable sensible commit
 
 ## Validation

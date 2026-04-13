@@ -5,7 +5,8 @@
 
 # --- Base commune : Node 24 Alpine + pnpm ---
 FROM node:24-alpine AS base
-RUN corepack enable && corepack prepare pnpm@10.23.0 --activate
+RUN apk update && apk upgrade --no-cache && \
+    corepack enable && corepack prepare pnpm@10.23.0 --activate
 WORKDIR /app
 
 # --- Étape 1 : installation des dépendances ---
@@ -28,7 +29,8 @@ RUN pnpm deploy --filter @kraak/api --prod --legacy /prod/api
 # --- Étape 3 : image de production ---
 FROM node:24-alpine AS production
 
-RUN addgroup -g 1001 -S nestjs && adduser -S nestjs -u 1001
+RUN apk update && apk upgrade --no-cache && \
+    addgroup -g 1001 -S nestjs && adduser -S nestjs -u 1001
 
 WORKDIR /app
 ENV NODE_ENV=production

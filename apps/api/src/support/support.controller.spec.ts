@@ -15,7 +15,7 @@ describe('SupportController', () => {
     supportService.submitContact.mockReturnValue({
       success: true,
       message:
-        'Votre message a bien ete recu. Nous vous repondrons dans les plus brefs delais.',
+        'Votre message a bien été reçu. Nous vous répondrons dans les plus brefs délais.',
     });
 
     const module: TestingModule = await Test.createTestingModule({
@@ -31,14 +31,14 @@ describe('SupportController', () => {
     controller = module.get<SupportController>(SupportController);
   });
 
-  it('devrait etre defini', () => {
+  it('devrait être défini', () => {
     expect(controller).toBeDefined();
   });
 
   // Given le module support MVP
-  // When on lit ses metadonnees NestJS
-  // Then le endpoint canonique et l'alias historique sont tous les deux exposes
-  it('Given le support MVP, When on lit la route, Then POST /support/contact et POST /contact sont exposes', () => {
+  // When on lit ses métadonnées NestJS
+  // Then le endpoint canonique et l'alias historique sont tous les deux exposés
+  it('Given le support MVP, When on lit la route, Then POST /support/contact et POST /contact sont exposés', () => {
     expect(Reflect.getMetadata(PATH_METADATA, SupportController)).toEqual([
       'support/contact',
       'contact',
@@ -48,10 +48,10 @@ describe('SupportController', () => {
     );
   });
 
-  // Given une demande de contact valide sans categorie explicite
+  // Given une demande de contact valide sans catégorie explicite
   // When le client soumet le formulaire
-  // Then le service recoit des champs trims avec la categorie par defaut other
-  it('Given une demande valide, When POST est appele, Then le service recoit un payload normalise', () => {
+  // Then le service reçoit des champs trims avec la catégorie par défaut other
+  it('Given une demande valide, When POST est appelé, Then le service reçoit un payload normalisé', () => {
     controller.submit({
       name: '  Alice Dupont  ',
       email: 'alice@exemple.com',
@@ -71,7 +71,7 @@ describe('SupportController', () => {
   // Given un payload invalide
   // When le client soumet le formulaire
   // Then l'API renvoie des erreurs utilisateur explicites
-  it('Given un payload invalide, When POST est appele, Then une BadRequestException explicite est renvoyee', () => {
+  it('Given un payload invalide, When POST est appelé, Then une BadRequestException explicite est renvoyée', () => {
     let thrownError: unknown;
 
     try {

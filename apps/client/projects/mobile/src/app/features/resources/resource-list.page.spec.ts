@@ -1,5 +1,6 @@
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
+import { describe, it, beforeEach, expect } from 'vitest';
 import ResourceListPage from './resource-list.page';
 
 describe('Mobile ResourceListPage', () => {

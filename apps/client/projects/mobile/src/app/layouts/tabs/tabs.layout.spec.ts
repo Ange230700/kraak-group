@@ -8,6 +8,7 @@ import {
   IonTabButton,
   IonTabs,
 } from '@ionic/angular/standalone';
+import { describe, it, beforeEach, expect } from 'vitest';
 import { TabsLayout } from './tabs.layout';
 
 describe('TabsLayout', () => {

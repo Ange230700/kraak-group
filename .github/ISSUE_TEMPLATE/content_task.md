@@ -1,12 +1,16 @@
+# Tache contenu
+
 ---
-name: 'Tache contenu'
+
+name: 'Tâche contenu'
 about: Ajouter ou ajuster du contenu produit
 labels: ['content', 'type: chore', 'status: ready']
+
 ---
 
 ## Objectif
 
-## Zone impactee
+## Zone impactée
 
 - [ ] Accueil
 - [ ] A propos
@@ -20,6 +24,6 @@ labels: ['content', 'type: chore', 'status: ready']
 ## Criteres d'acceptation
 
 - [ ] Le ton KRAAK est respecte
-- [ ] Le texte est en francais (UI/contenu)
+- [ ] Le texte est en français (UI/contenu)
 - [ ] Les CTA sont clairs
-- [ ] Relecture terminee
+- [ ] Relecture terminée

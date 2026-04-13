@@ -14,6 +14,13 @@ module.exports = defineConfig(
     ignores: ["dist/", "node_modules/", "coverage/"],
   },
   {
+    languageOptions: {
+      parserOptions: {
+        tsconfigRootDir: __dirname,
+      },
+    },
+  },
+  {
     files: ["projects/web/src/**/*.ts", "projects/mobile/src/**/*.ts"],
     extends: [
       eslint.configs.recommended,

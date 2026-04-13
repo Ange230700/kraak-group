@@ -1,10 +1,10 @@
 import { validateContactForm } from './support.dto';
 
 describe('validateContactForm', () => {
-  // Given un corps de requete valide
-  // When la validation est appliquee
-  // Then les champs sont normalises et la categorie par defaut vaut other
-  it('Given un corps valide, When la validation est appliquee, Then les donnees sont normalisees', () => {
+  // Given un corps de requête valide
+  // When la validation est appliquée
+  // Then les champs sont normalisés et la catégorie par défaut vaut other
+  it('Given un corps valide, When la validation est appliquée, Then les données sont normalisées et la catégorie par défaut vaut other', () => {
     const result = validateContactForm({
       name: '  Alice Dupont  ',
       email: 'alice@exemple.com',
@@ -25,9 +25,9 @@ describe('validateContactForm', () => {
   });
 
   // Given un payload invalide
-  // When la validation est appliquee
+  // When la validation est appliquée
   // Then les erreurs utilisateur sont explicites
-  it('Given un payload invalide, When la validation est appliquee, Then des erreurs explicites sont renvoyees', () => {
+  it('Given un payload invalide, When la validation est appliquée, Then des erreurs explicites sont renvoyées', () => {
     const result = validateContactForm({
       name: 'A',
       email: 'not-an-email',
@@ -49,9 +49,9 @@ describe('validateContactForm', () => {
   });
 
   // Given un corps non objet
-  // When la validation est appliquee
-  // Then une erreur de requete invalide est renvoyee
-  it('Given un corps invalide, When la validation est appliquee, Then la requete est rejetee proprement', () => {
+  // When la validation est appliquée
+  // Then une erreur de requête invalide est renvoyée
+  it('Given un corps invalide, When la validation est appliquée, Then la requête est rejetée proprement', () => {
     expect(validateContactForm(null)).toEqual({
       valid: false,
       errors: ['Corps de requête invalide.'],

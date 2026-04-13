@@ -1,14 +1,18 @@
+# Signalement de bug
+
 ---
+
 name: 'Signalement de bug'
-about: Signaler un probleme qui impacte le MVP
+about: Signaler un problème qui impacte le MVP
 labels: ['type: bug', 'status: ready']
+
 ---
 
 ## Contexte
 
-Description courte du probleme.
+Description courte du problème.
 
-## Etapes pour reproduire
+## Étapes pour reproduire
 
 1.
 2.
@@ -16,18 +20,18 @@ Description courte du probleme.
 
 ## Comportement attendu
 
-## Comportement observe
+## Comportement observé
 
-## Criticite
+## Criticité
 
 - [ ] Bloquant
 - [ ] Majeur
 - [ ] Mineur
 
-## Definition de fini
+## Définition de fini
 
 - [ ] Le bug est reproduit
-- [ ] Un test RED est ajoute
-- [ ] Le correctif GREEN est implemente
-- [ ] Un refactor est applique
+- [ ] Un test RED est ajouté
+- [ ] Le correctif GREEN est implémenté
+- [ ] Un refactor est appliqué
 - [ ] Les tests sont passants

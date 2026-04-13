@@ -25,6 +25,7 @@
     "SUPABASE",
     "superadmin",
     "toggleswitch",
-    "vercel"
+    "vercel",
+    "Vitest"
   ]
 }

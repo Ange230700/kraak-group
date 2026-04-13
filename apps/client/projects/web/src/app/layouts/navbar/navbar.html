@@ -63,7 +63,7 @@
                 [routerLink]="link.path"
                 routerLinkActive="border-primary bg-neutral-50 text-primary"
                 [routerLinkActiveOptions]="{ exact: link.path === '/' }"
-                class="hover:text-primary block rounded-[var(--kr-radius-btn)] border border-transparent px-4 py-3 text-sm font-medium text-neutral-700 transition-colors hover:border-neutral-200 hover:bg-neutral-50"
+                class="hover:text-primary block rounded-(--kr-radius-btn) border border-transparent px-4 py-3 text-sm font-medium text-neutral-700 transition-colors hover:border-neutral-200 hover:bg-neutral-50"
                 (click)="closeMobileMenu()"
               >
                 {{ link.label }}

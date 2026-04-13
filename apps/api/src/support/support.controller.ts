@@ -16,7 +16,7 @@ export class SupportController {
 
   // Given une demande de contact/support valide
   // When le client soumet le formulaire
-  // Then la reponse confirme la reception du message
+  // Then la réponse confirme la réception du message
   @Post()
   @HttpCode(HttpStatus.OK)
   submit(@Body() body: unknown): ContactSubmissionResultDto {
