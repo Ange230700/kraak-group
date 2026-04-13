@@ -28,17 +28,17 @@ runTest(
       const runtimeConfig = loadClientRuntimeConfig('staging', {
         clientRootPath: tempRoot,
         processEnv: {
-          CLIENT_API_BASE_URL: 'https://kraak-api-staging.onrender.com/',
-          SUPABASE_URL: 'https://dlxijewkuuygczhjeurs.supabase.co',
+          CLIENT_API_BASE_URL: 'https://kraak-api.onrender.com/',
+          SUPABASE_URL: 'https://qgttdsnupelohowwkkwb.supabase.co',
           SUPABASE_PUBLISHABLE_KEY:
-            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.test-anon-token',
+            'sb_publishable_5CKjUPh9rFkuUlwHyLIYpQ_c_plqe57',
         },
       });
 
       assert.deepEqual(runtimeConfig, {
-        apiBaseUrl: 'https://kraak-api-staging.onrender.com/',
-        supabaseUrl: 'https://dlxijewkuuygczhjeurs.supabase.co',
-        supabasePublishableKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.test-anon-token',
+        apiBaseUrl: 'https://kraak-api.onrender.com/',
+        supabaseUrl: 'https://qgttdsnupelohowwkkwb.supabase.co',
+        supabasePublishableKey: 'sb_publishable_5CKjUPh9rFkuUlwHyLIYpQ_c_plqe57',
       });
     } finally {
       rmSync(tempRoot, { recursive: true, force: true });
