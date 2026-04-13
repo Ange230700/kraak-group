@@ -143,6 +143,9 @@ Si vous avez besoin de lancer une seule app, les commandes `pnpm dev:web`, `pnpm
 # Tous les tests
 pnpm test
 
+# Vérifier uniquement le runner de test racine
+pnpm test:workspace
+
 # Tests unitaires API (Jest)
 pnpm test:api
 
@@ -155,6 +158,9 @@ pnpm --filter @kraak/client test:watch
 # Tests E2E web (Playwright dans apps/client/tests/e2e)
 pnpm test:e2e
 ```
+
+Le runner racine exécute les phases dans cet ordre : bibliothèques partagées,
+tests API + client, puis E2E web.
 
 ---
 
