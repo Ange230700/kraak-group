@@ -5,7 +5,7 @@
     "declaration": true,
     "removeComments": true,
     "emitDecoratorMetadata": true,
-    "types": ["jest"],
+    "types": ["jest", "node"],
     "allowSyntheticDefaultImports": true,
     "sourceMap": true,
     "outDir": "./dist",
