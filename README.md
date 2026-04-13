@@ -95,7 +95,7 @@ Pour les détails, voir [`ARCHITECTURE.md`](ARCHITECTURE.md).
 | Commande            | Description                                               |
 | ------------------- | --------------------------------------------------------- |
 | `pnpm dev`          | Lancer web, mobile et API avec ports auto pour web/mobile |
-| `pnpm clean`        | Nettoyer les artefacts generes dans tout le monorepo      |
+| `pnpm clean`        | Nettoyer les artefacts générés dans tout le monorepo      |
 | `pnpm build`        | Builder tous les projets buildables                       |
 | `pnpm test`         | Lancer tous les tests disponibles                         |
 | `pnpm dev:web`      | Lancer le site web en dev (port 4200 par défaut)          |

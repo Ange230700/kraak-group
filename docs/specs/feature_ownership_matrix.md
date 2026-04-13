@@ -152,7 +152,7 @@ Surfaces cibles :
 
 | Dossier           | Priorité | Rôle                                                   |
 | ----------------- | -------- | ------------------------------------------------------ |
-| `contracts/src/`  | P0       | DTOs, enums, schemas de validation, versionning        |
+| `contracts/src/`  | P0       | DTOs, enums, schemas de validation, versioning         |
 | `domain/src/`     | P0       | règles métier pures (progression, visibilité, statuts) |
 | `api-client/src/` | P1       | client HTTP typé web/mobile → API                      |
 

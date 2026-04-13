@@ -29,7 +29,7 @@ test.describe(`SEO technique du site vitrine`, () => {
     );
   });
 
-  test(`Given la page contact, When elle se charge, Then ses metadonnees SEO orientent vers la prise de contact`, async ({
+  test(`Given la page contact, When elle se charge, Then ses métadonnées SEO orientent vers la prise de contact`, async ({
     page,
   }) => {
     await page.goto('/contact');

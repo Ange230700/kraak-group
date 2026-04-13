@@ -310,16 +310,14 @@ async function startService(service) {
   });
 }
 
-async function main() {
-  process.on('SIGINT', () => shutdown(0));
-  process.on('SIGTERM', () => shutdown(0));
+process.on('SIGINT', () => shutdown(0));
+process.on('SIGTERM', () => shutdown(0));
 
+try {
   for (const service of services) {
     await startService(service);
   }
-}
-
-main().catch((error) => {
+} catch (error) {
   console.error(error);
   shutdown(1);
-});
+}

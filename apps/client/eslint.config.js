@@ -1,13 +1,15 @@
 // @ts-check
+/** @type {any} */
+const playwright = require("eslint-plugin-playwright");
 const eslint = require("@eslint/js");
+const { defineConfig } = require("eslint/config");
 const prettier = require("eslint-config-prettier/flat");
 const prettierPlugin = require("eslint-plugin-prettier");
 const sonarjs = require("eslint-plugin-sonarjs");
-const playwright = require("eslint-plugin-playwright");
 const tseslint = require("typescript-eslint");
 const angular = require("angular-eslint");
 
-module.exports = tseslint.config(
+module.exports = defineConfig(
   {
     ignores: ["dist/", "node_modules/", "coverage/"],
   },

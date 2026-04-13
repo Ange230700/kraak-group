@@ -163,7 +163,7 @@ async function request<T>(
   const response = await fetch(url, {
     method,
     headers,
-    body: body !== undefined ? JSON.stringify(body) : undefined,
+    body: body === undefined ? undefined : JSON.stringify(body),
     signal: options?.signal,
   });
 

@@ -42,12 +42,7 @@ const targetsByWorkspace = new Map([
 
 const targets = targetsByWorkspace.get(workspacePath);
 
-if (!targets) {
-  console.error(
-    `Aucune configuration clean definie pour le workspace "${workspacePath}".`,
-  );
-  process.exitCode = 1;
-} else {
+if (targets) {
   const cleanedTargets = [];
 
   for (const target of targets) {
@@ -60,10 +55,15 @@ if (!targets) {
     cleanedTargets.push(target);
   }
 
-  const action = dryRun ? 'seraient nettoyes' : 'nettoyes';
+  const action = dryRun ? 'seraient nettoyés' : 'nettoyés';
   console.log(
     `[clean] ${workspacePath} : ${cleanedTargets.join(', ')} ${action}.`,
   );
+} else {
+  console.error(
+    `Aucune configuration clean définie pour le workspace "${workspacePath}".`,
+  );
+  process.exitCode = 1;
 }
 
 function normalizeWorkspacePath(value) {

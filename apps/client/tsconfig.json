@@ -23,6 +23,7 @@
   "references": [
     { "path": "./projects/web/tsconfig.app.json" },
     { "path": "./projects/web/tsconfig.spec.json" },
-    { "path": "./projects/mobile/tsconfig.app.json" }
+    { "path": "./projects/mobile/tsconfig.app.json" },
+    { "path": "./tsconfig.playwright.json" }
   ]
 }
