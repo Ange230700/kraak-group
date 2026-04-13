@@ -68,6 +68,14 @@
               ],
               "outputHashing": "all"
             },
+            "staging": {
+              "fileReplacements": [
+                {
+                  "replace": "projects/web/src/environments/environment.ts",
+                  "with": "projects/web/src/environments/environment.staging.ts"
+                }
+              ]
+            },
             "development": {
               "optimization": false,
               "extractLicenses": false,
@@ -81,6 +89,9 @@
           "configurations": {
             "production": {
               "buildTarget": "web:build:production"
+            },
+            "staging": {
+              "buildTarget": "web:build:staging"
             },
             "development": {
               "buildTarget": "web:build:development"
@@ -181,6 +192,14 @@
               ],
               "outputHashing": "all"
             },
+            "staging": {
+              "fileReplacements": [
+                {
+                  "replace": "projects/mobile/src/environments/environment.ts",
+                  "with": "projects/mobile/src/environments/environment.staging.ts"
+                }
+              ]
+            },
             "development": {
               "optimization": false,
               "extractLicenses": false,
@@ -194,6 +213,9 @@
           "configurations": {
             "production": {
               "buildTarget": "mobile:build:production"
+            },
+            "staging": {
+              "buildTarget": "mobile:build:staging"
             },
             "development": {
               "buildTarget": "mobile:build:development"

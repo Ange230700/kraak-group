@@ -53,7 +53,15 @@ Exemples de scripts côté `apps/api/package.json` :
 
 Les URLs publiques (site, API, GA4) sont définies dans les fichiers
 `environment.ts` / `environment.staging.ts` / `environment.production.ts`
-sous `apps/client/projects/web/src/environments/`.
+sous `apps/client/projects/web/src/environments/` pour le site web et
+`apps/client/projects/mobile/src/environments/` pour le shell mobile.
+
+Configurations Angular disponibles :
+
+- `web:build:staging` remplace `environment.ts` par
+  `projects/web/src/environments/environment.staging.ts`
+- `mobile:build:staging` remplace `environment.ts` par
+  `projects/mobile/src/environments/environment.staging.ts`
 
 Usage SEO technique :
 
