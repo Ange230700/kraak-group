@@ -51,7 +51,7 @@ describe('SupabaseService', () => {
   // Given les variables Supabase sont disponibles
   // When le module initialise le service
   // Then un client partagé est créé avec ces valeurs
-  it("Given la configuration Supabase, When onModuleInit est appelé, Then le client partagé est créé", () => {
+  it('Given la configuration Supabase, When onModuleInit est appelé, Then le client partagé est créé', () => {
     service.onModuleInit();
 
     expect(createClient).toHaveBeenCalledWith(
