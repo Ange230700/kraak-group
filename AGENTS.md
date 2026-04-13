@@ -159,6 +159,10 @@ Workflow Git par défaut dans ce dépôt :
   ni de branches permanentes par application.
 - Travailler sur une seule tâche à la fois.
 - Garder une portée de branche correspondant à une tâche et fusionner vite.
+- **Stratégie de fusion : rebase uniquement.** Ne jamais créer de merge commits.
+  Toujours rebaser la branche courte sur `main` avant de fusionner en
+  fast-forward. La configuration locale du dépôt impose `pull.rebase = true`
+  et `merge.ff = only`.
 
 Flux d’exécution d’une tâche :
 
@@ -175,7 +179,8 @@ Flux d’exécution d’une tâche :
    gardant l’issue ouverte.
 7. Implémenter le plus petit incrément valide.
 8. Exécuter la validation pertinente.
-9. Fusionner dans `main`.
+9. Rebaser la branche sur `main` (`git rebase main`) puis fusionner en
+   fast-forward (`git merge --ff-only <branche>`) dans `main`.
 10. Pousser `main`.
 11. Une fois la fusion / le push réussis, fermer l’issue liée, déplacer l’item du
     Project en `Done`, définir `Statut` sur `Termine` et `Status` sur `Done`,

@@ -108,6 +108,23 @@ Avant de commencer à coder, chaque collaborateur doit **s'assigner une tâche**
 sur le **GitHub Project lié à ce dépôt**. Ne pas démarrer un travail sans item
 de Project clairement pris en charge.
 
+### Stratégie de fusion : rebase uniquement
+
+Ne jamais créer de merge commits. Toujours rebaser la branche courte sur `main`
+avant de fusionner en fast-forward.
+
+La configuration locale du dépôt impose :
+
+```bash
+git config pull.rebase true
+git config merge.ff only
+```
+
+Ces réglages sont déjà appliqués dans le `.git/config` du dépôt. Si vous clonez
+à nouveau, ré-exécutez les deux commandes ci-dessus.
+
+### Séquence type
+
 ```
 1. s'assigner la tâche correspondante sur le GitHub Project du dépôt
 2. git checkout main && git pull origin main
@@ -116,8 +133,8 @@ de Project clairement pris en charge.
 5. git add .
 6. pnpm commit
 7. git push -u origin feat/ma-feature
-8. # ouvrir une Pull Request sur GitHub
-9. # review + merge dans main
+8. # ouvrir une Pull Request sur GitHub (rebase and merge uniquement)
+9. # review + merge (fast-forward) dans main
 10. # supprimer la branche locale et distante
 ```
 
@@ -149,6 +166,7 @@ Des vérifications automatiques s'exécutent à chaque étape :
 - Ouvrir la PR vers `main`
 - Remplir le template de PR (description, tests, captures d'écran si UI)
 - Attendre la review avant de fusionner
+- Fusionner exclusivement en **rebase and merge** (pas de merge commit, pas de squash)
 - Après fusion, supprimer la branche locale et distante :
 
 ```bash
