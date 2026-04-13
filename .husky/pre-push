@@ -1,4 +1,5 @@
 command -v pnpm >/dev/null 2>&1 || exit 0
 pnpm exec validate-branch-name
 pnpm typecheck
+pnpm format:check
 pnpm test

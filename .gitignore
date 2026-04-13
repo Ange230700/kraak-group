@@ -60,3 +60,7 @@ tmp/
 
 # Playwright MCP
 .playwright-mcp/
+
+
+apps/client/projects/mobile/src/assets/runtime-config.js
+apps/client/projects/web/public/assets/runtime-config.js
