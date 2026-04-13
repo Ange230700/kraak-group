@@ -34,6 +34,17 @@ Variables lues par `process.env` dans le code NestJS :
 En staging, les mêmes variables s'appliquent avec des valeurs différentes
 (voir `apps/api/.env.staging.example`).
 
+Ordre de chargement côté API :
+
+1. `.env.${NODE_ENV}` quand ce fichier existe
+2. `.env`
+
+Exemples de scripts côté `apps/api/package.json` :
+
+- `pnpm start:dev` charge le mode de développement local
+- `pnpm start:staging` lance NestJS avec `NODE_ENV=staging`
+- `pnpm start:prod` s'appuie sur les variables injectées par l'hébergeur
+
 ## Client — `apps/client/`
 
 | Variable         | Description                                    | Exemple |

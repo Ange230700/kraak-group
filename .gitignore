@@ -16,6 +16,7 @@ out/
 .env.local
 .env.*.local
 .env.staging
+.env.production
 
 # IDE / Éditeurs
 .idea/
