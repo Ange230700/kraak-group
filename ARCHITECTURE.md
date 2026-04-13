@@ -133,6 +133,7 @@ tard, il devra être justifié dans une décision complémentaire.
 - framework : **NestJS**
 - rôle : API métier, orchestration, intégration Supabase, exposition des données
   consommées par le mobile et les formulaires/processus utiles au web
+- documentation : **Swagger / OpenAPI** accessible à `/api-docs`
 
 ### Données / Auth / Stockage
 

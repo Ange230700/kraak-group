@@ -360,6 +360,32 @@ Cette règle est obligatoire pour l’assistant IA dans ce dépôt.
 
 ---
 
+## Règle De Documentation API (Obligatoire)
+
+Toute modification d'un contrôleur, d'une route, ou d'un DTO dans `apps/api`
+doit inclure la mise à jour des décorateurs Swagger correspondants dans le même
+changement.
+
+Décorateurs obligatoires par contrôleur / route :
+
+- `@ApiTags('<nom du domaine>')` sur chaque contrôleur
+- `@ApiOperation({ summary: '…' })` sur chaque méthode de route
+- `@ApiBody({ schema: { … } })` sur chaque route acceptant un corps de requête
+- `@ApiResponse({ status: <code>, description: '…' })` pour chaque code de
+  retour significatif (succès et erreurs)
+
+Contrainte technique : les DTOs du dépôt sont des **interfaces TypeScript**
+(dans `@kraak/contracts`), pas des classes. Les schémas Swagger doivent donc
+être définis en ligne (JSON `schema`) directement sur les décorateurs, et non
+via `@ApiProperty` sur des classes.
+
+La documentation Swagger est servie à `/api-docs`.
+
+Cette règle est obligatoire et fait partie de la définition de terminé pour
+toute tâche touchant l'API.
+
+---
+
 ## Modèle De Travail Pour Les Agents
 
 1. Prendre exactement une tâche dans `docs/specs/BACKLOG.md` ou dans l’item
