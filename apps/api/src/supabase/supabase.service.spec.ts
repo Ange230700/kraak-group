@@ -8,56 +8,81 @@ jest.mock('@supabase/supabase-js', () => ({
 }));
 
 describe('SupabaseService', () => {
-  let service: SupabaseService;
   const mockClient = { from: jest.fn() };
-  const mockConfigService = {
-    getOrThrow: jest.fn((key: string) => {
-      if (key === 'SUPABASE_URL') {
-        return 'https://example.supabase.co';
-      }
-
-      if (key === 'SUPABASE_SERVICE_ROLE_KEY') {
-        return 'service-role-key';
-      }
-
-      throw new Error(`Unexpected config key: ${key}`);
-    }),
-  };
-
-  beforeEach(async () => {
-    jest.mocked(createClient).mockReturnValue(mockClient as never);
-
-    const module: TestingModule = await Test.createTestingModule({
-      providers: [
-        SupabaseService,
-        {
-          provide: ConfigService,
-          useValue: mockConfigService,
-        },
-      ],
-    }).compile();
-
-    service = module.get<SupabaseService>(SupabaseService);
-  });
 
   afterEach(() => {
     jest.clearAllMocks();
   });
 
-  it('devrait être défini', () => {
+  async function buildService(
+    configOverrides: Record<string, string | undefined>,
+  ): Promise<SupabaseService> {
+    const mockConfigService = {
+      get: jest.fn((key: string) => configOverrides[key]),
+    };
+
+    const module: TestingModule = await Test.createTestingModule({
+      providers: [
+        SupabaseService,
+        { provide: ConfigService, useValue: mockConfigService },
+      ],
+    }).compile();
+
+    return module.get<SupabaseService>(SupabaseService);
+  }
+
+  it('devrait être défini', async () => {
+    const service = await buildService({
+      SUPABASE_URL: 'https://example.supabase.co',
+      SUPABASE_SECRET_KEY: 'service-role-key',
+    });
     expect(service).toBeDefined();
   });
 
   // Given les variables Supabase sont disponibles
   // When le module initialise le service
   // Then un client partagé est créé avec ces valeurs
-  it('Given la configuration Supabase, When onModuleInit est appelé, Then le client partagé est créé', () => {
+  it('Given la configuration Supabase, When onModuleInit est appelé, Then le client partagé est créé', async () => {
+    jest.mocked(createClient).mockReturnValue(mockClient as never);
+
+    const service = await buildService({
+      SUPABASE_URL: 'https://example.supabase.co',
+      SUPABASE_SECRET_KEY: 'service-role-key',
+    });
+
     service.onModuleInit();
 
     expect(createClient).toHaveBeenCalledWith(
       'https://example.supabase.co',
       'service-role-key',
     );
+    expect(service.enabled).toBe(true);
     expect(service.getClient()).toBe(mockClient);
+  });
+
+  // Given les variables Supabase sont absentes
+  // When le module initialise le service
+  // Then le service démarre sans erreur et reste désactivé
+  it('Given la configuration Supabase manquante, When onModuleInit est appelé, Then le service démarre en mode dégradé', async () => {
+    const service = await buildService({
+      SUPABASE_URL: undefined,
+      SUPABASE_SECRET_KEY: undefined,
+    });
+
+    expect(() => service.onModuleInit()).not.toThrow();
+    expect(service.enabled).toBe(false);
+  });
+
+  // Given le client Supabase n'est pas initialisé
+  // When getClient est appelé
+  // Then une erreur explicite est levée
+  it('Given Supabase désactivé, When getClient est appelé, Then une erreur explicite est levée', async () => {
+    const service = await buildService({
+      SUPABASE_URL: undefined,
+      SUPABASE_SECRET_KEY: undefined,
+    });
+    service.onModuleInit();
+
+    expect(() => service.getClient()).toThrow(/client Supabase/);
   });
 });

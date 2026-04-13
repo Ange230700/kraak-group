@@ -21,15 +21,15 @@ dans le monorepo. Ne jamais commiter de secrets dans le depot.
 
 Variables lues par `process.env` dans le code NestJS :
 
-| Variable                    | Description                        | Exemple local             |
-| --------------------------- | ---------------------------------- | ------------------------- |
-| `NODE_ENV`                  | Environnement d'execution          | `development`             |
-| `PORT`                      | Port D’écoute de l'API             | `3000`                    |
-| `SUPABASE_URL`              | URL du projet Supabase             | `https://xxx.supabase.co` |
-| `SUPABASE_SERVICE_ROLE_KEY` | Cle service role (secret)          | —                         |
-| `RESEND_API_KEY`            | Cle API Resend (secret)            | —                         |
-| `CONTACT_TO_EMAIL`          | Email destinataire des formulaires | `contact@kraak.org`       |
-| `CORS_ALLOWED_ORIGINS`      | Origines autorisées (virgule)      | `http://localhost:4200`   |
+| Variable               | Description                        | Exemple local             |
+| ---------------------- | ---------------------------------- | ------------------------- |
+| `NODE_ENV`             | Environnement d'execution          | `development`             |
+| `PORT`                 | Port D’écoute de l'API             | `3000`                    |
+| `SUPABASE_URL`         | URL du projet Supabase             | `https://xxx.supabase.co` |
+| `SUPABASE_SECRET_KEY`  | Cle service role (secret)          | —                         |
+| `RESEND_API_KEY`       | Cle API Resend (secret)            | —                         |
+| `CONTACT_TO_EMAIL`     | Email destinataire des formulaires | `contact@kraak.org`       |
+| `CORS_ALLOWED_ORIGINS` | Origines autorisées (virgule)      | `http://localhost:4200`   |
 
 En staging, les mêmes variables s'appliquent avec des valeurs différentes
 (voir `apps/api/.env.staging.example`).
@@ -91,7 +91,7 @@ en développement local.
 ## Déploiement — Render (`render.yaml`)
 
 Le fichier `render.yaml` déclare les variables d'environnement de production
-pour l'API : `NODE_ENV`, `PORT`, `SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY`,
+pour l'API : `NODE_ENV`, `PORT`, `SUPABASE_URL`, `SUPABASE_SECRET_KEY`,
 `RESEND_API_KEY`, `CONTACT_TO_EMAIL`, `CORS_ALLOWED_ORIGINS`.
 
 ## Convention de gestion

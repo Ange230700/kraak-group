@@ -27,10 +27,10 @@ Remplir les valeurs — voir [`ENVIRONMENT_VARIABLES.md`](ENVIRONMENT_VARIABLES.
 
 **Variables minimales pour développer en local :**
 
-| Variable                    | Fichier         | Exemple                        |
-| --------------------------- | --------------- | ------------------------------ |
-| `SUPABASE_URL`              | `apps/api/.env` | `http://127.0.0.1:54321`       |
-| `SUPABASE_SERVICE_ROLE_KEY` | `apps/api/.env` | clé fournie par Supabase local |
+| Variable              | Fichier         | Exemple                        |
+| --------------------- | --------------- | ------------------------------ |
+| `SUPABASE_URL`        | `apps/api/.env` | `http://127.0.0.1:54321`       |
+| `SUPABASE_SECRET_KEY` | `apps/api/.env` | clé fournie par Supabase local |
 
 ---
 
