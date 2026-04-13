@@ -1,3 +1,5 @@
 command -v pnpm >/dev/null 2>&1 || exit 0
 pnpm format
 pnpm lint:fix
+# Restage les fichiers corrigés par les auto-fixers avant de créer le commit.
+git update-index --again

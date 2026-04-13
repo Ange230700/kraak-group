@@ -126,21 +126,21 @@ Règles associées :
 Chaque module API fonctionnel dans `apps/api` qui expose au moins une route doit
 comporter **au minimum cinq fichiers** :
 
-| Fichier | Rôle |
-| ------- | ---- |
-| `<name>.module.ts` | Déclaration NestJS (`controllers`, `providers`) |
-| `<name>.controller.ts` | Routes HTTP + décorateurs Swagger |
+| Fichier                     | Rôle                                                   |
+| --------------------------- | ------------------------------------------------------ |
+| `<name>.module.ts`          | Déclaration NestJS (`controllers`, `providers`)        |
+| `<name>.controller.ts`      | Routes HTTP + décorateurs Swagger                      |
 | `<name>.controller.spec.ts` | Tests unitaires du contrôleur en BDD `Given/When/Then` |
-| `<name>.service.ts` | Logique métier |
-| `<name>.service.spec.ts` | Tests unitaires du service en BDD `Given/When/Then` |
+| `<name>.service.ts`         | Logique métier                                         |
+| `<name>.service.spec.ts`    | Tests unitaires du service en BDD `Given/When/Then`    |
 
 Fichiers conditionnels obligatoires dès qu'une route accepte un corps de requête
 ou un payload d'entrée complexe à valider :
 
-| Fichier | Rôle |
-| ------- | ---- |
-| `<name>.dto.ts` | Validation d'entrée hand-rolled, sans `class-validator` |
-| `<name>.dto.spec.ts` | Tests unitaires de la validation |
+| Fichier              | Rôle                                                    |
+| -------------------- | ------------------------------------------------------- |
+| `<name>.dto.ts`      | Validation d'entrée hand-rolled, sans `class-validator` |
+| `<name>.dto.spec.ts` | Tests unitaires de la validation                        |
 
 Cas particuliers et règles associées :
 

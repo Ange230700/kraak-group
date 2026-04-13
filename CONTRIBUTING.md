@@ -144,15 +144,15 @@ Ces réglages sont déjà appliqués dans le `.git/config` du dépôt. Si vous c
 
 Des vérifications automatiques s'exécutent à chaque étape :
 
-| Moment       | Vérification                                                              | Effet si échec |
-| ------------ | ------------------------------------------------------------------------- | -------------- |
-| `commit-msg` | Format Conventional Commits (commitlint)                                  | Commit rejeté  |
-| `pre-commit` | `pnpm format:check` + `pnpm lint`                                         | Commit rejeté  |
-| `pre-push`   | Nom de branche valide + `pnpm typecheck` + `pnpm test:api` + tests client | Push rejeté    |
+| Moment       | Vérification                                                                | Effet si échec |
+| ------------ | --------------------------------------------------------------------------- | -------------- |
+| `commit-msg` | Format Conventional Commits (commitlint)                                    | Commit rejeté  |
+| `pre-commit` | `pnpm format` + `pnpm lint:fix` + restage automatique des fichiers modifiés | Commit rejeté  |
+| `pre-push`   | Nom de branche valide + `pnpm typecheck` + `pnpm test:api` + tests client   | Push rejeté    |
 
 ### Si un hook échoue
 
-- **Formatage** : exécuter `pnpm format` puis réessayer
+- **Formatage** : le hook applique déjà `pnpm format` et restage les fichiers corrigés ; si l'échec persiste, corriger le blocage signalé puis recommiter
 - **Lint** : corriger les erreurs signalées par ESLint
 - **Typecheck** : corriger les erreurs TypeScript signalées par `pnpm typecheck`
 - **Nom de branche** : renommer avec `git branch -m <nouveau-nom>`
@@ -190,7 +190,7 @@ pnpm format
 pnpm format:check
 ```
 
-> Le hook `pre-commit` vérifie automatiquement le formatage. Exécuter `pnpm format` avant de commiter évite les surprises.
+> Le hook `pre-commit` applique automatiquement `pnpm format` et `pnpm lint:fix`, puis restage les fichiers corrigés avant le commit.
 
 ---
 
