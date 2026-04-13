@@ -98,6 +98,7 @@ Pour les détails, voir [`ARCHITECTURE.md`](ARCHITECTURE.md).
 | `pnpm clean`        | Nettoyer les artefacts générés dans tout le monorepo      |
 | `pnpm build`        | Builder tous les projets buildables                       |
 | `pnpm test`         | Lancer tous les tests disponibles                         |
+| `pnpm test:workspace` | Vérifier le workflow du runner de test racine          |
 | `pnpm dev:web`      | Lancer le site web en dev (port 4200 par défaut)          |
 | `pnpm dev:api`      | Lancer l'API en dev (port 3000)                           |
 | `pnpm dev:mobile`   | Lancer l'app mobile en dev (port 4300)                    |
