@@ -13,7 +13,7 @@ Objectifs métiers prioritaires :
 
 ## 2. Audience mobile principale
 
-Utilisateurs cibles du MVP (ordre de priorite) :
+Utilisateurs cibles du MVP (ordre de priorité) :
 
 1. Participants inscrits
 2. Prospects déjà engagés dans un parcours KRAAK
@@ -70,100 +70,100 @@ Passer à la phase suivante uniquement si toutes ces conditions sont vraies :
 - flux utilisateurs coeur figés pour la planification implementation
 - trajectoire pilote Android-first confirmée
 
-## 7. Phase 2 - Decoupage priorise des fonctionnalites (Indispensable/Souhaite/Plus tard)
+## 7. Phase 2 - Decoupage priorise des fonctionnalités (Indispensable/Souhaite/Plus tard)
 
 Ce découpage traduit le résultat de la phase 1 en périmètre MVP prêt pour l'implementation.
 
 ### 7.1 Indispensable (critique pilote)
 
-Ces fonctionnalites sont requises pour lancer un pilote Android reel.
+Ces fonctionnalités sont requises pour lancer un pilote Android reel.
 
 1. Authentification et session
 
 - Connexion email/mot de passe
-- Persistance de session securisee
-- Deconnexion
+- Persistance de session sécurisée
+- Déconnexion
 - Reinitialisation de mot de passe (flux basique)
-- Mapping de resultat : le participant peut s'authentifier
+- Mapping de résultat : le participant peut s'authentifier
 
 2. Accueil périmètre participant
 
 - Afficher uniquement le contenu pertinent après connexion
 - Carte(s) programme : titre du programme suivi, statut, prochaine étape clé
 - Écran de bienvenue/onboarding de base après première connexion
-- Mapping de resultat : le participant voit uniquement le contenu pertinent
+- Mapping de résultat : le participant voit uniquement le contenu pertinent
 
 3. Planning et sessions
 
 - Liste des sessions a venir (date/heure, titre, lieu/lien)
 - Page detail session (description + formateur + infos de participation)
-- Mapping de resultat : consulter le planning/sessions
+- Mapping de résultat : consulter le planning/sessions
 
-4. Ressources de formation (lecture/telechargement)
+4. Ressources de formation (lecture/téléchargement)
 
 - Liste des ressources par programme/module
 - Ouvrir le detail d'une ressource et acceder au lien/fichier
-- Mapping de resultat : acceder aux ressources de formation
+- Mapping de résultat : acceder aux ressources de formation
 
 5. Annonces (base)
 
 - Fil d'annonces in-app
 - Marqueur non lu/lu (simple)
-- Mapping de resultat : notifications/annonces de base disponibles
+- Mapping de résultat : notifications/annonces de base disponibles
 
 6. Contact et support
 
 - Action de contact depuis l'application (email/WhatsApp/formulaire deeplink)
 - Informations de contact support/formateur visibles
-- Mapping de resultat : rester connecte a KRAAK
+- Mapping de résultat : rester connecte a KRAAK
 
 7. Preparation pilote Android
 
 - Build Android signe et installable
-- Baseline crash-free et controles de performance de base
-- Mapping de resultat : application assez stable pour un pilote reel
+- Baseline crash-free et contrôles de performance de base
+- Mapping de résultat : application assez stable pour un pilote réel
 
 ### 7.2 Souhaite (forte valeur, non bloquant lancement)
 
-Ces fonctionnalites ameliorent la qualite du pilote mais ne bloquent pas le deploiement jour 1.
+Ces fonctionnalités améliorent la qualité du pilote mais ne bloquent pas le déploiement jour 1.
 
 1. Notifications push (annonces uniquement)
 
-- Recevoir une notification push lorsqu'une nouvelle annonce est publiee
-- Ouvrir l'application directement sur l'annonce concernee
+- Recevoir une notification push lorsqu'une nouvelle annonce est publiée
+- Ouvrir l'application directement sur l'annonce concernée
 
-2. Profil participant leger
+2. Profil participant léger
 
-- Voir/modifier les champs de profil de base (nom, telephone, contact prefere)
+- Voir/modifier les champs de profil de base (nom, téléphone, contact préféré)
 
 3. Marqueurs de progression des ressources
 
-- Marquer une ressource comme vue/telechargee
+- Marquer une ressource comme vue/téléchargée
 
 4. Rappels de session
 
-- Rappel local 24 h/1 h avant une session a venir
+- Rappel local 24 h/1 h avant une session à venir
 
 5. Feedback in-app basique
 
-- Formulaire rapide "Besoin d'aide" ou "Signaler un probleme"
+- Formulaire rapide "Besoin d'aide" ou "Signaler un problème"
 
 ### 7.3 Plus tard (candidats post-pilote)
 
-Ces elements sont utiles mais volontairement reportes apres le pilote MVP.
+Ces éléments sont utiles mais volontairement reportés après le pilote MVP.
 
 1. Packaging iOS et distribution TestFlight
 2. Cache offline pour certaines ressources
 3. Messagerie/chat in-app avec le formateur
-4. Tableaux de bord avances par role
+4. Tableaux de bord avancés par rôle
 5. Vues analytiques riches pour les participants
 
-## 8. Matrice de correspondance (fonctionnalite -> criteres de succes phase 1)
+## 8. Matrice de correspondance (fonctionnalité -> critères de succès phase 1)
 
-| Decoupage fonctionnalites                     | Auth ok | Contenu pertinent uniquement | Android first | Annonces disponibles | Stabilite pilote |
+| Découpage fonctionnalités                     | Auth ok | Contenu pertinent uniquement | Android first | Annonces disponibles | Stabilité pilote |
 | --------------------------------------------- | ------- | ---------------------------- | ------------- | -------------------- | ---------------- |
 | Indispensable - Authentification/session      | Oui     | Indirect                     | Oui           | Non                  | Oui              |
-| Indispensable - Accueil perimetre participant | Non     | Oui                          | Oui           | Non                  | Oui              |
+| Indispensable - Accueil périmètre participant | Non     | Oui                          | Oui           | Non                  | Oui              |
 | Indispensable - Planning/sessions             | Non     | Oui                          | Oui           | Non                  | Oui              |
 | Indispensable - Ressources                    | Non     | Oui                          | Oui           | Non                  | Oui              |
 | Indispensable - Fil d'annonces                | Non     | Oui                          | Oui           | Oui                  | Oui              |
@@ -181,20 +181,20 @@ Sprint 1 (fondations indispensables) :
 
 - Authentification/session
 - Onboarding/welcome de base
-- Accueil perimetre participant
+- Accueil périmètre participant
 - Planning/sessions
 - Contact/support
 
-Sprint 2 (finalisation indispensable + souhaites selectifs) :
+Sprint 2 (finalisation indispensable + souhaites sélectifs) :
 
 - Ressources
 - Fil d'annonces
 - Stabilisation pilote Android
-- Optionnel : notifications push si la stabilite est confirmee
+- Optionnel : notifications push si la stabilité est confirmée
 
 Go/No-Go vers pilote :
 
-- Toutes les user stories indispensables sont acceptees
+- Toutes les user stories indispensables sont acceptées
 - Aucun blocker P1 ouvert
 - Flux participant de bout en bout valide sur Android
 
@@ -202,21 +202,21 @@ Go/No-Go vers pilote :
 
 Cette section gèle le périmètre de la première release et précise ce qui est priorisé maintenant versus plus tard.
 
-### 10.1 Indispensable (release 1 verrouillee)
+### 10.1 Indispensable (release 1 verrouillée)
 
 - Authentification participant
 - Onboarding / welcome de base
 - Liste des programmes/cours
 - Calendrier ou planning de session
-- Bibliotheque de ressources
+- Bibliothèque de ressources
 - Annonces / notifications
 - Contact/support
-- Deconnexion / gestion de session
+- Déconnexion / gestion de session
 
 ### 10.2 Souhaite (non bloquant release 1)
 
 - Profil participant
-- Preparation de base des notifications push
+- Préparation de base des notifications push
 - Marqueurs de progression des ressources
 - Rappels de session
 - Feedback in-app basique
@@ -224,17 +224,17 @@ Cette section gèle le périmètre de la première release et précise ce qui es
 ### 10.3 Plus tard (hors MVP)
 
 - LMS complet
-- Classes video en direct dans l'application
+- Classes vidéo en direct dans l'application
 - Paiements in-app
 - Packaging iOS et distribution TestFlight
 - Cache offline pour certaines ressources
 - Messagerie/chat in-app avec le formateur
-- Synchronisation offline a grande echelle
-- Communaute/forum/chat
+- Synchronisation offline à grande échelle
+- Communauté/forum/chat
 - Moteur de notation des devoirs
 - Tableaux de bord analytiques approfondis pour les utilisateurs
-- Moteur avance de certificats
-- Panneau admin multi-role dans l'application mobile
+- Moteur avancé de certificats
+- Panneau admin multi-rôle dans l'application mobile
 - Gamification complexe
 
 ### 10.4 Périmètre de la première release - gelé
@@ -246,41 +246,41 @@ Enveloppe MVP (globale) :
 - **Dans MVP** = Indispensable + Souhaite
 - **Hors MVP** = Plus tard
 
-### 10.5 Matrice de classification complete (toutes les fonctionnalites demandees)
+### 10.5 Matrice de classification complète (toutes les fonctionnalités demandées)
 
-| Fonctionnalite                             | Classification |
+| Fonctionnalité                             | Classification |
 | ------------------------------------------ | -------------- |
 | Authentification participant               | Indispensable  |
 | Onboarding / welcome de base               | Indispensable  |
-| Accueil perimetre participant              | Indispensable  |
+| Accueil périmètre participant              | Indispensable  |
 | Profil participant                         | Souhaite       |
 | Liste des programmes/cours                 | Indispensable  |
 | Calendrier ou planning de session          | Indispensable  |
-| Bibliotheque de ressources                 | Indispensable  |
+| Bibliothèque de ressources                 | Indispensable  |
 | Annonces / notifications                   | Indispensable  |
 | Contact/support                            | Indispensable  |
-| Preparation pilote Android                 | Indispensable  |
-| Preparation de base des notifications push | Souhaite       |
+| Préparation pilote Android                 | Indispensable  |
+| Préparation de base des notifications push | Souhaite       |
 | Marqueurs de progression des ressources    | Souhaite       |
 | Rappels de session                         | Souhaite       |
 | Feedback in-app basique                    | Souhaite       |
-| Deconnexion / gestion de session           | Indispensable  |
+| Déconnexion / gestion de session           | Indispensable  |
 | LMS complet                                | Plus tard      |
-| Classes video en direct dans l'application | Plus tard      |
+| Classes vidéo en direct dans l'application | Plus tard      |
 | Paiements in-app                           | Plus tard      |
 | Packaging iOS et distribution TestFlight   | Plus tard      |
 | Cache offline pour certaines ressources    | Plus tard      |
 | Messagerie/chat in-app avec le formateur   | Plus tard      |
-| Synchronisation offline a grande echelle   | Plus tard      |
-| Communaute/forum/chat                      | Plus tard      |
+| Synchronisation offline à grande échelle   | Plus tard      |
+| Communauté/forum/chat                      | Plus tard      |
 | Moteur de notation des devoirs             | Plus tard      |
 | Tableaux de bord analytiques utilisateurs  | Plus tard      |
-| Moteur avance de certificats               | Plus tard      |
-| Panneau admin multi-role dans le mobile    | Plus tard      |
+| Moteur avancé de certificats               | Plus tard      |
+| Panneau admin multi-rôle dans le mobile    | Plus tard      |
 | Gamification complexe                      | Plus tard      |
 
-Regles d'execution :
+### Règles d'exécution :
 
-- Le design et l'engineering demarrent depuis les fonctionnalites Indispensable uniquement.
-- Les elements Souhaite ne peuvent etre pris que si l'Indispensable est termine et que la stabilite pilote n'est pas a risque.
-- Les elements Plus tard restent hors perimetre jusqu'a decision post-pilote.
+- Le design et l'engineering démarrent depuis les fonctionnalités Indispensable uniquement.
+- Les éléments Souhaite ne peuvent être pris que si l'Indispensable est terminé et que la stabilité pilote n'est pas à risque.
+- Les éléments Plus tard restent hors périmètre jusqu'à décision post-pilote.

@@ -3,13 +3,13 @@
 ## Board Actif
 
 - GitHub Project principal : `#6 - KRAAK MVP - Product Backlog`
-- Proprietaire : `@me` / `Ange230700`
+- Propriétaire : `@me` / `Ange230700`
 - Depot : `Ange230700/kraak-group`
 - Mise a jour : 11 avril 2026
 
 ---
 
-## Etat Actuel
+## État Actuel
 
 Le rework du board a ete execute le 10-11 avril 2026.
 
@@ -17,13 +17,13 @@ Le rework du board a ete execute le 10-11 avril 2026.
 - les `38` anciennes issues web-only (`#1` a `#38`) ont ete retirees
 - tous les champs duo (`Lane`, `Surface`, `Coupling`, `Wave`) sont renseignes
   sur chaque item (553 field-edit commands, zero erreurs)
-- la vue Board par defaut est configuree en Kanban avec swimlanes, tri, et
+- la vue Board par défaut est configurée en Kanban avec swimlanes, tri, et
   slicing
-- `6` vues personnalisees sont creees et sauvegardees
+- `6` vues personnalisées sont créées et sauvegardées
 
 Source canonique :
 
-- backlog metier : `docs/specs/BACKLOG.md`
+- backlog métier : `docs/specs/BACKLOG.md`
 - projection board duo : `docs/specs/github_project_import_parallel_duo.csv`
 - famille d'issues canonique : `[EPIC][ID]` et `[TASK][ID]`
 
@@ -31,8 +31,8 @@ Source canonique :
 
 ## Objectif Du Rework
 
-Le board doit devenir lisible pour deux personnes qui travaillent en parallele
-avec un minimum de dependances implicites.
+Le board doit devenir lisible pour deux personnes qui travaillent en parallèle
+avec un minimum de dépendances implicites.
 
 Le principe retenu :
 
@@ -41,14 +41,14 @@ Le principe retenu :
   participant
 - `Shared handoff` : cadrage, contrats, quality gates, release
 
-Une dependance acceptable doit ressembler a :
+Une dépendance acceptable doit ressembler à :
 
-- un contrat publie
+- un contrat publié
 - un endpoint stable
 - une route ou un shell disponible
-- un check de qualite commun
+- un check de qualité commun
 
-Une dependance non acceptable doit ressembler a :
+Une dépendance non acceptable doit ressembler à :
 
 - "attendre que tout l'epic soit fini"
 - "attendre tout le frontend"
@@ -68,7 +68,7 @@ Une dependance non acceptable doit ressembler a :
 
 ### Champs board duo
 
-Ces champs ont ete crees sur le project `#6` le `10 avril 2026`.
+Ces champs ont ete créés sur le project `#6` le `10 avril 2026`.
 
 - `Lane` (`SINGLE_SELECT`)
   - `Lane A - Web public`
@@ -90,10 +90,10 @@ Ces champs ont ete crees sur le project `#6` le `10 avril 2026`.
 - `Wave` (`SINGLE_SELECT`)
   - `Wave 0 - Cadrage`
   - `Wave 1 - Socle`
-  - `Wave 2 - Acces`
+  - `Wave 2 - Accès`
   - `Wave 3A - Site public`
   - `Wave 3B - Parcours participant`
-  - `Wave 4 - Qualite`
+  - `Wave 4 - Qualité`
   - `Wave 5 - Release`
 
 Usage attendu :
@@ -105,9 +105,9 @@ Usage attendu :
 
 ---
 
-## Vue Board Par Defaut (View 1)
+## Vue Board Par Défaut (View 1)
 
-La vue Board est configuree en Kanban optimise pour le travail duo :
+La vue Board est configurée en Kanban optimisé pour le travail duo :
 
 - **Layout** : Board (Kanban)
 - **Column by** : Status (Todo / In Progress / Done)
@@ -120,9 +120,9 @@ La vue Board est configuree en Kanban optimise pour le travail duo :
 
 ---
 
-## Vues Personnalisees (Views 2-7)
+## Vues Personnalisées (Views 2-7)
 
-Toutes les vues ci-dessous sont creees et sauvegardees.
+Toutes les vues ci-dessous sont créées et sauvegardées.
 
 ### 2. `Master backlog`
 
@@ -167,7 +167,7 @@ Filtre : `-status:Done -coupling:paired`
 
 Tri : `Priority` (ascending), `Wave` (ascending)
 
-But : faire emerger les taches sans besoin de travail en duo.
+But : faire émerger les taches sans besoin de travail en duo.
 
 Clarification : dans GitHub Project `Status`, la valeur de file d'attente est
 `Todo` (correspond a `backlog` dans le CSV d'import).
@@ -188,7 +188,7 @@ Tri : `Priority` (ascending), `Wave` (ascending)
 
 - `WEB-*`
 - `SUP-03`
-- `DSH-04` si la variante web participant est confirmee
+- `DSH-04` si la variante web participant est confirmée
 
 ### Lane B - Platform & participant
 
@@ -211,26 +211,26 @@ Tri : `Priority` (ascending), `Wave` (ascending)
 - `QAT-*`
 - `DEP-*`
 
-Regle pratique :
+Règle pratique :
 
-- un item `Shared handoff` doit idealement debloquer une lane sous `24h`
-- si un item shared grossit, il faut le re-decouper avant de le lancer
+- un item `Shared handoff` doit idéalement débloquer une lane sous `24h`
+- si un item shared grossit, il faut le re-découper avant de le lancer
 
 ---
 
-## Migration (Effectuee)
+## Migration (Effectuée)
 
-Les etapes suivantes ont ete realisees le 10-11 avril 2026 :
+Les étapes suivantes ont été réalisées le 10-11 avril 2026 :
 
 1. **Legacy purge** : les 38 anciennes issues web-only ont ete retirees du
    project.
 2. **Ajout canonique** : les 80 issues MVP (`[EPIC]` + `[TASK]`) ont ete
-   ajoutees.
+   ajoutées.
 3. **Champs duo** : `Lane`, `Surface`, `Coupling`, `Wave` renseignes sur
    chaque item via 553 commandes `gh project item-edit` (zero erreurs).
-4. **Board optimise** : vue Board configuree en Kanban avec swimlanes, tri,
+4. **Board optimise** : vue Board configurée en Kanban avec swimlanes, tri,
    slicing, et somme d'effort.
-5. **6 vues personnalisees** : creees, filtrees, triees, et sauvegardees.
+5. **6 vues personnalisées** : créées, filtrées, triées, et sauvegardées.
 
 ### Cycle de vie
 
@@ -241,15 +241,15 @@ Les etapes suivantes ont ete realisees le 10-11 avril 2026 :
 
 ---
 
-## Regles De Coordination A Deux
+## Règles De Coordination A Deux
 
 - ne pas prendre en meme temps deux taches qui modifient le meme module
   principal
-- preferer `contrat -> endpoint -> UI -> tests` plutot que deux personnes dans
+- préférer `contrat -> endpoint -> UI -> tests` plutôt que deux personnes dans
   le meme fichier
 - si une tache touche `packages/*`, considerer qu'elle est `Shared handoff`
 - si une tache web depend d'une API, la tache UI doit commencer sur mock,
-  structure, et etats avant le branchement final
+  structure, et états avant le branchement final
 - si un item reste `In Progress` plus de deux jours sans merge, il est
   probablement trop gros
 
@@ -261,7 +261,7 @@ Le fichier a utiliser pour la reimportation ou la remise a plat du board est :
 
 - `docs/specs/github_project_import_parallel_duo.csv`
 
-Il ajoute une lecture operationnelle en plus du backlog :
+Il ajoute une lecture opérationnelle en plus du backlog :
 
 - `Lane`
 - `Surface`
@@ -270,13 +270,13 @@ Il ajoute une lecture operationnelle en plus du backlog :
 
 ---
 
-## Decision Operatoire
+## Decision Opératoire
 
-Par defaut :
+Par défaut :
 
-- backlog thematique dans `docs/specs/BACKLOG.md`
+- backlog thématique dans `docs/specs/BACKLOG.md`
 - board live pilote en `Lane A / Lane B / Shared handoff`
-- aucune nouvelle tache ne doit etre creee dans l'ancien format web-only
+- aucune nouvelle tâche ne doit être créée dans l'ancien format web-only
 
-Cette organisation est celle qui minimise les dependances entre deux
-collaborateurs sans etendre le scope du MVP.
+Cette organisation est celle qui minimise les dépendances entre deux
+collaborateurs sans étendre le scope du MVP.

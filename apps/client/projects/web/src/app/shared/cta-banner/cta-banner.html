@@ -1,7 +1,7 @@
 <aside class="py-16 lg:py-24">
   <div class="mx-auto w-full max-w-6xl px-4 lg:px-6">
     <p-card
-      class="block shadow-[var(--kr-shadow-card)]"
+      class="shadow-card block"
       [style]="{
         background: 'var(--kr-brand-navy)',
         color: 'var(--kr-brand-white)',
@@ -11,13 +11,13 @@
       <ng-template #content>
         <div class="px-2 py-2 sm:px-4 lg:px-6">
           <h2
-            class="max-w-3xl text-balance text-3xl font-semibold text-brand-white lg:text-4xl"
+            class="text-brand-white max-w-3xl text-3xl font-semibold text-balance lg:text-4xl"
           >
             {{ heading }}
           </h2>
           @if (body) {
             <p
-              class="mt-4 max-w-2xl text-balance text-base leading-7 text-brand-white/80"
+              class="text-brand-white/80 mt-4 max-w-2xl text-base leading-7 text-balance"
             >
               {{ body }}
             </p>

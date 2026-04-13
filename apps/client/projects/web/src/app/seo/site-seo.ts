@@ -38,10 +38,10 @@ const runtimeGlobals = globalThis as typeof globalThis & {
 export const seoPages = siteSeoDefinitions as SeoPageDefinition[];
 
 const normalizeRoutePath = (path: string): string =>
-  path.replace(/^\/+|\/+$/g, '');
+  path.replaceAll(/^\/+|\/+$/g, '');
 
 export const normalizeSiteUrl = (siteUrl: string): string =>
-  siteUrl.replace(/\/+$/g, '') || DEFAULT_SITE_URL;
+  siteUrl.replaceAll(/\/+$/g, '') || DEFAULT_SITE_URL;
 
 export const resolvePublicSiteUrl = (siteUrl?: string): string => {
   const runtimeSiteUrl = runtimeGlobals.process?.env?.['PUBLIC_SITE_URL'] ?? '';

@@ -3,7 +3,6 @@ import {
   provideBrowserGlobalErrorListeners,
 } from '@angular/core';
 import { provideRouter, TitleStrategy } from '@angular/router';
-import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import {
   provideClientHydration,
   withEventReplay,
@@ -20,7 +19,6 @@ export const appConfig: ApplicationConfig = {
     provideBrowserGlobalErrorListeners(),
     provideRouter(routes),
     provideClientHydration(withEventReplay()),
-    provideAnimationsAsync(),
     provideHttpClient(withFetch()),
     providePrimeNG({
       theme: {

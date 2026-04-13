@@ -1,8 +1,8 @@
 # Pack GitHub CLI - Rework Du Project MVP
 
-Ce document ne sert plus a recreer en masse une deuxieme famille d'issues.
+Ce document ne sert plus a recréer en masse une deuxième famille d'issues.
 
-Objectif desormais :
+Objectif désormais :
 
 - repartir d'une seule famille d'issues canonique `[EPIC][ID]` / `[TASK][ID]`
 - remettre le GitHub Project en phase avec le backlog MVP
@@ -16,19 +16,19 @@ Reference principale :
 Convention de lecture a conserver :
 
 - dans le CSV d'import, `Status = backlog`
-- dans le champ natif GitHub Project, l'equivalent operationnel est
+- dans le champ natif GitHub Project, l'equivalent opérationnel est
   `Status = Todo`
 - la correspondance attendue est donc : `backlog -> Todo`
 
 ---
 
-## Regle Importante
+## Règle Importante
 
 Ne pas relancer un script de creation brute des tasks si les issues existent
-deja. Le probleme actuel n'est pas l'absence d'issues ; c'est la coexistence de
+deja. Le problème actuel n'est pas l'absence d'issues ; c'est la coexistence de
 deux plans concurrents sur le board.
 
-Priorite :
+Priorité :
 
 1. retirer les items legacy du project
 2. ajouter les issues canoniques manquantes
@@ -36,11 +36,11 @@ Priorite :
 
 ---
 
-## Prerequis
+## Prérequis
 
 1. `gh auth status`
-2. acces au project `#6`
-3. acces ecriture au depot `Ange230700/kraak-group`
+2. accès au project `#6`
+3. accès écriture au dépôt `Ange230700/kraak-group`
 
 ---
 
@@ -70,7 +70,7 @@ gh project item-delete 6 --owner "@me" --id <project-item-id>
 gh project field-list 6 --owner "@me"
 ```
 
-### Creer un champ single-select
+### Créer un champ single-select
 
 ```bash
 gh project field-create 6 \
@@ -111,10 +111,10 @@ gh project field-create 6 \
 
 - `Wave 0 - Cadrage`
 - `Wave 1 - Socle`
-- `Wave 2 - Acces`
+- `Wave 2 - Accès`
 - `Wave 3A - Site public`
 - `Wave 3B - Parcours participant`
-- `Wave 4 - Qualite`
+- `Wave 4 - Qualité`
 - `Wave 5 - Release`
 
 ---
@@ -134,9 +134,9 @@ Pseudo-sequence a suivre :
 
 ## Decision D'Usage
 
-Pour les prochaines mises a jour :
+Pour les prochaines mises à jour :
 
-- ne plus maintenir un pack de creation separe du backlog canonique
-- utiliser le CSV duo-ready comme reference de board
-- utiliser les templates d'issues seulement pour les nouvelles taches hors pack,
-  apres validation produit
+- ne plus maintenir un pack de création séparé du backlog canonique
+- utiliser le CSV duo-ready comme référence de board
+- utiliser les templates d'issues seulement pour les nouvelles tâches hors pack,
+  après validation produit

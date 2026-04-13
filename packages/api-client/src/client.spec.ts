@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { createApiClient, ApiError } from './client';
-import type { ApiClient, ApiClientConfig } from './client';
+import type { ApiClientConfig } from './client';
 import type { CreateAppUserDto, CreateNotificationDto } from '@kraak/contracts';
 
 // ---------------------------------------------------------------------------
@@ -28,7 +28,7 @@ function baseConfig(overrides?: Partial<ApiClientConfig>): ApiClientConfig {
 describe('createApiClient', () => {
   it('retourne un objet avec les 10 groupes de ressources', () => {
     const client = createApiClient(baseConfig());
-    const keys = Object.keys(client).sort();
+    const keys = Object.keys(client).sort((a, b) => a.localeCompare(b));
     expect(keys).toEqual([
       'announcements',
       'cohorts',

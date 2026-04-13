@@ -82,7 +82,7 @@ Statuts utilisés :
 | ts-node              | Actif  | Exécution TypeScript côté outillage backend            | https://typestrong.org/ts-node/docs/                    |
 | ESLint               | Actif  | Lint global du dépôt                                   | https://eslint.org/docs/latest/                         |
 | angular-eslint       | Actif  | Règles ESLint spécifiques à Angular                    | https://github.com/angular-eslint/angular-eslint#readme |
-| typescript-eslint    | Actif  | Regles TypeScript pour ESLint                          | https://typescript-eslint.io/                           |
+| typescript-eslint    | Actif  | Règles TypeScript pour ESLint                          | https://typescript-eslint.io/                           |
 | Prettier             | Actif  | Formatage du code et des fichiers Markdown             | https://prettier.io/docs/                               |
 | Husky                | Actif  | Hooks Git locaux                                       | https://typicode.github.io/husky/                       |
 | commitlint           | Actif  | Validation des messages de commit                      | https://commitlint.js.org/                              |

@@ -20,10 +20,10 @@ const publicDir = join(repoRoot, 'apps', 'client', 'projects', 'web', 'public');
 const defaultSiteUrl = 'https://kraak-group.vercel.app';
 
 const normalizeSiteUrl = (siteUrl) =>
-  siteUrl.replace(/\/+$/g, '') || defaultSiteUrl;
+  siteUrl.replaceAll(/\/+$/g, '') || defaultSiteUrl;
 
 const buildAbsoluteUrl = (path, siteUrl) => {
-  const normalizedPath = path.replace(/^\/+|\/+$/g, '');
+  const normalizedPath = path.replaceAll(/^\/+|\/+$/g, '');
   const pathname = normalizedPath.length > 0 ? `/${normalizedPath}` : '/';
 
   return new URL(pathname, `${normalizeSiteUrl(siteUrl)}/`).toString();

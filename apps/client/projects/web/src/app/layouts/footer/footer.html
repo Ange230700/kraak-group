@@ -3,7 +3,7 @@
     class="mx-auto grid w-full max-w-6xl gap-10 px-4 py-12 lg:grid-cols-[1.3fr_1.7fr] lg:px-6"
   >
     <div class="space-y-4">
-      <span class="block text-xl font-semibold tracking-[0.18em] text-primary"
+      <span class="text-primary block text-xl font-semibold tracking-[0.18em]"
         >KRAAK</span
       >
       <p class="max-w-md text-sm leading-7 text-neutral-700">
@@ -14,7 +14,7 @@
       @for (group of linkGroups; track group.title) {
         <div class="space-y-3">
           <h3
-            class="text-sm font-semibold uppercase tracking-[0.14em] text-primary"
+            class="text-primary text-sm font-semibold tracking-[0.14em] uppercase"
           >
             {{ group.title }}
           </h3>
@@ -23,7 +23,7 @@
               <li>
                 <a
                   [routerLink]="link.path"
-                  class="text-sm text-neutral-700 transition-colors hover:text-secondary hover:underline"
+                  class="hover:text-secondary text-sm text-neutral-700 transition-colors hover:underline"
                 >
                   {{ link.label }}
                 </a>
@@ -34,7 +34,7 @@
       }
     </div>
   </div>
-  <div class="border-t border-neutral-200 bg-brand-white/70">
+  <div class="bg-brand-white/70 border-t border-neutral-200">
     <div class="mx-auto w-full max-w-6xl px-4 py-4 lg:px-6">
       <p class="text-xs text-neutral-600">
         &copy; {{ currentYear }} KRAAK. Tous droits réservés.

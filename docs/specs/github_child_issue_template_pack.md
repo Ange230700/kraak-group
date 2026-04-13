@@ -1,14 +1,14 @@
 # Pack Templates Issues GitHub - Child Issues MVP KRAAK
 
-> Note du 10 avril 2026 : ce pack reste utile pour creer une nouvelle issue a
-> l'unite, mais il ne doit plus servir a recreer en masse une seconde famille
+> Note du 10 avril 2026 : ce pack reste utile pour créer une nouvelle issue a
+> l'unite, mais il ne doit plus servir a recréer en masse une seconde famille
 > d'issues pour le board MVP. Pour la remise a plat du project, utiliser
 > `docs/runbooks/GITHUB_PROJECT_BOARD.md` et
 > `docs/specs/github_project_import_parallel_duo.csv`.
 
 Usage rapide :
 
-1. Creer une nouvelle issue GitHub.
+1. Créer une nouvelle issue GitHub.
 2. Copier-coller le bloc correspondant a l'ID.
 3. Ajouter labels et milestone proposes.
 4. Lier l'issue a son epic parent.
@@ -16,8 +16,8 @@ Usage rapide :
 Convention :
 
 - `type: task` pour tous les child issues (coherence bulk-create)
-- `status: backlog` au demarrage
-- dependances sous forme d'IDs backlog
+- `status: backlog` au démarrage
+- dépendances sous forme d'IDs backlog
 
 ---
 
@@ -50,13 +50,13 @@ ARC
 
 Valider l'architecture cible et les limites du scope MVP.
 
-## Dependances
+## Dépendances
 
 - none
 
-## Criteres d'acceptation
+## Critères d'acceptation
 
-- [ ] Architecture cible confirmee
+- [ ] Architecture cible confirmée
 - [ ] Scope MVP valide
 - [ ] Risques majeurs identifies
 ```
@@ -64,7 +64,7 @@ Valider l'architecture cible et les limites du scope MVP.
 ### ARC-02
 
 ```md
-Title: [TASK][ARC-02] Definir conventions repo (naming, structure, quality gates)
+Title: [TASK][ARC-02] Définir conventions repo (naming, structure, quality gates)
 
 Labels:
 
@@ -86,23 +86,23 @@ ARC
 
 ## Description
 
-Definir conventions de structure, nomenclature et qualite.
+Définir conventions de structure, nomenclature et qualité.
 
-## Dependances
+## Dépendances
 
 - ARC-01
 
-## Criteres d'acceptation
+## Critères d'acceptation
 
-- [ ] Conventions documentees
-- [ ] Structure cible validee
-- [ ] Quality gates definis
+- [ ] Conventions documentées
+- [ ] Structure cible validée
+- [ ] Quality gates définis
 ```
 
 ### ARC-03
 
 ```md
-Title: [TASK][ARC-03] Definir strategie de rendu web (SEO/prerender)
+Title: [TASK][ARC-03] Définir stratégie de rendu web (SEO/prerender)
 
 Labels:
 
@@ -124,23 +124,23 @@ ARC
 
 ## Description
 
-Fixer la strategie de rendu web adaptee au SEO MVP.
+Fixer la stratégie de rendu web adaptée au SEO MVP.
 
-## Dependances
+## Dépendances
 
 - ARC-01
 
-## Criteres d'acceptation
+## Critères d'acceptation
 
-- [ ] Strategie de rendu documentee
-- [ ] Impacts SEO clarifies
-- [ ] Impacts build/deploy clarifies
+- [ ] Stratégie de rendu documentée
+- [ ] Impacts SEO clarifiés
+- [ ] Impacts build/deploy clarifiés
 ```
 
 ### ARC-04
 
 ```md
-Title: [TASK][ARC-04] Definir modeles de donnees MVP
+Title: [TASK][ARC-04] Définir modèles de donnees MVP
 
 Labels:
 
@@ -162,23 +162,23 @@ ARC
 
 ## Description
 
-Definir les modeles participant, programme, ressource, annonce, support.
+Définir les modèles participant, programme, ressource, annonce, support.
 
-## Dependances
+## Dépendances
 
 - ARC-01
 
-## Criteres d'acceptation
+## Critères d'acceptation
 
-- [ ] Modeles entites MVP definis
-- [ ] Relations principales definies
-- [ ] Hypotheses documentees
+- [ ] Modèles entités MVP définis
+- [ ] Relations principales définies
+- [ ] Hypothèses documentées
 ```
 
 ### ARC-05
 
 ```md
-Title: [TASK][ARC-05] Documenter ADRs et criteres anti-scope-creep
+Title: [TASK][ARC-05] Documenter ADRs et critères anti-scope-creep
 
 Labels:
 
@@ -200,18 +200,18 @@ ARC
 
 ## Description
 
-Documenter les decisions d'architecture et regles de protection MVP.
+Documenter les décisions d'architecture et règles de protection MVP.
 
-## Dependances
+## Dépendances
 
 - ARC-02
 - ARC-04
 
-## Criteres d'acceptation
+## Critères d'acceptation
 
-- [ ] ADRs redigees
-- [ ] Criteres anti-scope-creep explicites
-- [ ] Validation equipe obtenue
+- [ ] ADRs rédigées
+- [ ] Critères anti-scope-creep explicites
+- [ ] Validation équipe obtenue
 ```
 
 ---
@@ -245,14 +245,14 @@ SET
 
 Initialiser le monorepo Angular avec web et mobile.
 
-## Dependances
+## Dépendances
 
 - ARC-02
 
-## Criteres d'acceptation
+## Critères d'acceptation
 
-- [ ] apps/client/projects/web cree
-- [ ] apps/client/projects/mobile cree
+- [ ] apps/client/projects/web crée
+- [ ] apps/client/projects/mobile crée
 - [ ] build local passe
 ```
 
@@ -283,13 +283,13 @@ SET
 
 Initialiser le backend NestJS et son wiring minimal.
 
-## Dependances
+## Dépendances
 
 - ARC-02
 
-## Criteres d'acceptation
+## Critères d'acceptation
 
-- [ ] apps/api cree
+- [ ] apps/api créée
 - [ ] route health disponible
 - [ ] lancement local valide
 ```
@@ -319,18 +319,18 @@ SET
 
 ## Description
 
-Configurer les controles qualite standard pour tout le workspace.
+Configurer les contrôles qualité standard pour tout le workspace.
 
-## Dependances
+## Dépendances
 
 - SET-01
 - SET-02
 
-## Criteres d'acceptation
+## Critères d'acceptation
 
-- [ ] lint operationnel
-- [ ] format operationnel
-- [ ] typecheck operationnel
+- [ ] lint opérationnel
+- [ ] format opérationnel
+- [ ] typecheck opérationnel
 ```
 
 ### SET-04
@@ -358,18 +358,18 @@ SET
 
 ## Description
 
-Mettre en place les runners de tests unitaires et integration.
+Mettre en place les runners de tests unitaires et d'intégration.
 
-## Dependances
+## Dépendances
 
 - SET-01
 - SET-02
 
-## Criteres d'acceptation
+## Critères d'acceptation
 
-- [ ] tests unitaires executables
-- [ ] tests integration executables
-- [ ] scripts npm/pnpm documentes
+- [ ] tests unitaires exécutables
+- [ ] tests d'intégration exécutables
+- [ ] scripts npm/pnpm documentés
 ```
 
 ### SET-05
@@ -399,16 +399,16 @@ SET
 
 Mettre en place Playwright avec scenario smoke initial.
 
-## Dependances
+## Dépendances
 
 - SET-01
 - SET-04
 
-## Criteres d'acceptation
+## Critères d'acceptation
 
-- [ ] Playwright configure
-- [ ] scenario smoke actif
-- [ ] execution CI possible
+- [ ] Playwright configuré
+- [ ] scénario smoke actif
+- [ ] exécution CI possible
 ```
 
 ### SET-06
@@ -438,17 +438,17 @@ SET
 
 Mettre en place la CI pour web, mobile, api et libs.
 
-## Dependances
+## Dépendances
 
 - SET-03
 - SET-04
 - SET-05
 
-## Criteres d'acceptation
+## Critères d'acceptation
 
 - [ ] workflow CI en place
 - [ ] checks bloquants actifs
-- [ ] execution PR validee
+- [ ] exécution PR validée
 ```
 
 ### SET-07
@@ -478,15 +478,15 @@ SET
 
 Documenter et standardiser les variables d'environnement locales.
 
-## Dependances
+## Dépendances
 
 - SET-02
 
-## Criteres d'acceptation
+## Critères d'acceptation
 
-- [ ] fichier exemple env cree
-- [ ] runbook local mis a jour
-- [ ] variables critiques listees
+- [ ] fichier exemple env créé
+- [ ] runbook local mis à jour
+- [ ] variables critiques listées
 ```
 
 ---
@@ -496,7 +496,7 @@ Documenter et standardiser les variables d'environnement locales.
 ### LIB-01
 
 ```md
-Title: [TASK][LIB-01] Creer packages/contracts (DTO, schema validation, versioning)
+Title: [TASK][LIB-01] Créer packages/contracts (DTO, schema validation, versioning)
 
 Labels:
 
@@ -518,24 +518,24 @@ LIB
 
 ## Description
 
-Creer les contrats types et schemas de validation partages.
+Créer les contrats types et schémas de validation partagés.
 
-## Dependances
+## Dépendances
 
 - ARC-04
 - SET-02
 
-## Criteres d'acceptation
+## Critères d'acceptation
 
-- [ ] contrats de base definis
-- [ ] validation schema active
-- [ ] versioning des contrats documente
+- [ ] contrats de base définis
+- [ ] validation schéma active
+- [ ] versioning des contrats documenté
 ```
 
 ### LIB-02
 
 ```md
-Title: [TASK][LIB-02] Creer packages/domain (regles metier pures MVP)
+Title: [TASK][LIB-02] Créer packages/domain (règles métier pures MVP)
 
 Labels:
 
@@ -557,24 +557,24 @@ LIB
 
 ## Description
 
-Centraliser les regles metier pures sans dependance framework.
+Centraliser les règles métier pures sans dépendance framework.
 
-## Dependances
+## Dépendances
 
 - ARC-04
 - LIB-01
 
-## Criteres d'acceptation
+## Critères d'acceptation
 
-- [ ] fonctions metier pures creees
-- [ ] tests unitaires passes
+- [ ] fonctions métier pures créées
+- [ ] tests unitaires passés
 - [ ] usage dans apps possible
 ```
 
 ### LIB-03
 
 ```md
-Title: [TASK][LIB-03] Creer packages/api-client (typed client web/mobile vers API)
+Title: [TASK][LIB-03] Créer packages/api-client (typed client web/mobile vers API)
 
 Labels:
 
@@ -596,18 +596,18 @@ LIB
 
 ## Description
 
-Creer un client API type pour web et mobile.
+Créer un client API type pour web et mobile.
 
-## Dependances
+## Dépendances
 
 - LIB-01
 - SET-02
 
-## Criteres d'acceptation
+## Critères d'acceptation
 
 - [ ] client API type disponible
-- [ ] gestion erreurs standardisee
-- [ ] exemple d'utilisation ajoute
+- [ ] gestion erreurs standardisée
+- [ ] exemple d'utilisation ajouté
 ```
 
 ### LIB-04
@@ -635,14 +635,14 @@ LIB
 
 ## Description
 
-Renforcer la fiabilite des libs et documenter leur publication interne.
+Renforcer la fiabilité des libs et documenter leur publication interne.
 
-## Dependances
+## Dépendances
 
 - LIB-02
 - LIB-03
 
-## Criteres d'acceptation
+## Critères d'acceptation
 
 - [ ] tests unitaires libs complets
 - [ ] guide publication documente
@@ -680,12 +680,12 @@ WEB
 
 Implementer les pages publiques coeur du site MVP.
 
-## Dependances
+## Dépendances
 
 - SET-01
 - ARC-03
 
-## Criteres d'acceptation
+## Critères d'acceptation
 
 - [ ] 5 pages MVP disponibles
 - [ ] responsive mobile-first
@@ -695,7 +695,7 @@ Implementer les pages publiques coeur du site MVP.
 ### WEB-02
 
 ```md
-Title: [TASK][WEB-02] Integrer formulaires de contact et CTA conversion
+Title: [TASK][WEB-02] Intégrer formulaires de contact et CTA conversion
 
 Labels:
 
@@ -719,14 +719,14 @@ WEB
 
 Ajouter les formulaires et CTA pour la conversion utile.
 
-## Dependances
+## Dépendances
 
 - WEB-01
 - SUP-01
 
-## Criteres d'acceptation
+## Critères d'acceptation
 
-- [ ] formulaire contact integre
+- [ ] formulaire contact intégré
 - [ ] CTA clairs et fonctionnels
 - [ ] validation utilisateur visible
 ```
@@ -758,14 +758,14 @@ WEB
 
 Mettre en place les fondamentaux SEO techniques du site.
 
-## Dependances
+## Dépendances
 
 - WEB-01
 
-## Criteres d'acceptation
+## Critères d'acceptation
 
 - [ ] metadata par page
-- [ ] sitemap et robots generes
+- [ ] sitemap et robots générés
 - [ ] Open Graph configure
 ```
 
@@ -796,21 +796,21 @@ WEB
 
 Instrumenter le site pour mesurer les parcours et conversions.
 
-## Dependances
+## Dépendances
 
 - WEB-01
 
-## Criteres d'acceptation
+## Critères d'acceptation
 
 - [ ] events critiques traces
-- [ ] pages vues tracees
+- [ ] pages vues tracées
 - [ ] verification data en env test
 ```
 
 ### WEB-05
 
 ```md
-Title: [TASK][WEB-05] Optimiser accessibilite/performance (objectif Lighthouse > 90)
+Title: [TASK][WEB-05] Optimiser accessibilité/performance (objectif Lighthouse > 90)
 
 Labels:
 
@@ -832,18 +832,18 @@ WEB
 
 ## Description
 
-Ameliorer accessibilite et performance des pages MVP.
+Améliorer accessibilité et performance des pages MVP.
 
-## Dependances
+## Dépendances
 
 - WEB-01
 - WEB-03
 
-## Criteres d'acceptation
+## Critères d'acceptation
 
 - [ ] score perf cible atteint
 - [ ] checks a11y de base valides
-- [ ] regressions majeures corrigees
+- [ ] regressions majeures corrigées
 ```
 
 ---
@@ -877,15 +877,15 @@ MOB
 
 Initialiser l'application mobile Ionic Angular dans le workspace.
 
-## Dependances
+## Dépendances
 
 - SET-01
 
-## Criteres d'acceptation
+## Critères d'acceptation
 
-- [ ] app mobile generee
-- [ ] run local operationnel
-- [ ] structure de base validee
+- [ ] app mobile générée
+- [ ] run local opérationnel
+- [ ] structure de base validée
 ```
 
 ### MOB-02
@@ -915,11 +915,11 @@ MOB
 
 Implementer la navigation principale et le layout shell.
 
-## Dependances
+## Dépendances
 
 - MOB-01
 
-## Criteres d'acceptation
+## Critères d'acceptation
 
 - [ ] navigation tabs/stack fonctionnelle
 - [ ] layout coherent mobile
@@ -929,7 +929,7 @@ Implementer la navigation principale et le layout shell.
 ### MOB-03
 
 ```md
-Title: [TASK][MOB-03] Integrer theming, design tokens et composants UI de base
+Title: [TASK][MOB-03] Intégrer theming, design tokens et composants UI de base
 
 Labels:
 
@@ -953,16 +953,16 @@ MOB
 
 Appliquer le theming et les composants UI minimaux de l'app.
 
-## Dependances
+## Dépendances
 
 - MOB-01
 - LIB-01
 
-## Criteres d'acceptation
+## Critères d'acceptation
 
 - [ ] tokens appliques
 - [ ] composants UI de base disponibles
-- [ ] coherence visuelle assuree
+- [ ] coherence visuelle assurée
 ```
 
 ### MOB-04
@@ -992,13 +992,13 @@ MOB
 
 Configurer Capacitor pour Android/iOS et valider les builds debug.
 
-## Dependances
+## Dépendances
 
 - MOB-01
 
-## Criteres d'acceptation
+## Critères d'acceptation
 
-- [ ] config Capacitor validee
+- [ ] config Capacitor validée
 - [ ] build Android debug OK
 - [ ] build iOS debug OK
 ```
@@ -1030,15 +1030,15 @@ MOB
 
 Ajouter la base technique pour notifications push (stub).
 
-## Dependances
+## Dépendances
 
 - MOB-04
 - SET-02
 
-## Criteres d'acceptation
+## Critères d'acceptation
 
 - [ ] service push stub disponible
-- [ ] token device recupere (mock/stub)
+- [ ] token device récupéré (mock/stub)
 - [ ] workflow documente
 ```
 
@@ -1073,15 +1073,15 @@ AUT
 
 Configurer l'authentification Supabase et policies minimales.
 
-## Dependances
+## Dépendances
 
 - ARC-04
 - SET-02
 
-## Criteres d'acceptation
+## Critères d'acceptation
 
 - [ ] provider(s) auth configures
-- [ ] policies de base appliquees
+- [ ] policies de base appliquées
 - [ ] tests auth initiaux valides
 ```
 
@@ -1112,22 +1112,22 @@ AUT
 
 Implementer les endpoints auth/session cote API.
 
-## Dependances
+## Dépendances
 
 - AUT-01
 - LIB-01
 
-## Criteres d'acceptation
+## Critères d'acceptation
 
 - [ ] endpoints auth exposes
 - [ ] gestion session stable
-- [ ] erreurs auth normalisees
+- [ ] erreurs auth normalisées
 ```
 
 ### AUT-03
 
 ```md
-Title: [TASK][AUT-03] Implementer ecrans login/signup/reset mobile
+Title: [TASK][AUT-03] Implementer écrans login/signup/reset mobile
 
 Labels:
 
@@ -1149,14 +1149,14 @@ AUT
 
 ## Description
 
-Construire les ecrans d'authentification mobile.
+Construire les écrans d'authentification mobile.
 
-## Dependances
+## Dépendances
 
 - MOB-02
 - AUT-02
 
-## Criteres d'acceptation
+## Critères d'acceptation
 
 - [ ] login mobile fonctionnel
 - [ ] signup mobile fonctionnel
@@ -1188,18 +1188,18 @@ AUT
 
 ## Description
 
-Ajouter les gardes d'acces pour routes privees web/mobile.
+Ajouter les gardes d'accès pour routes privées web/mobile.
 
-## Dependances
+## Dépendances
 
 - AUT-02
 - LIB-03
 
-## Criteres d'acceptation
+## Critères d'acceptation
 
-- [ ] routes privees bloquees sans session
+- [ ] routes privées bloquées sans session
 - [ ] redirection utilisateur correcte
-- [ ] etat auth synchro web/mobile
+- [ ] état auth synchro web/mobile
 ```
 
 ### AUT-05
@@ -1229,14 +1229,14 @@ AUT
 
 Implementer la gestion minimale des roles et autorisations.
 
-## Dependances
+## Dépendances
 
 - AUT-02
 - ARC-04
 
-## Criteres d'acceptation
+## Critères d'acceptation
 
-- [ ] roles minimaux definis
+- [ ] roles minimaux définis
 - [ ] verification autorisation active
 - [ ] cas limites documentes
 ```
@@ -1248,7 +1248,7 @@ Implementer la gestion minimale des roles et autorisations.
 ### DSH-01
 
 ```md
-Title: [TASK][DSH-01] Definir contenu dashboard MVP (cartes, rappels, dernieres actus)
+Title: [TASK][DSH-01] Définir contenu dashboard MVP (cartes, rappels, dernières actus)
 
 Labels:
 
@@ -1270,23 +1270,23 @@ DSH
 
 ## Description
 
-Definir la composition fonctionnelle du dashboard participant.
+Définir la composition fonctionnelle du dashboard participant.
 
-## Dependances
+## Dépendances
 
 - ARC-04
 
-## Criteres d'acceptation
+## Critères d'acceptation
 
-- [ ] sections dashboard listees
-- [ ] priorites contenu valides
-- [ ] version MVP approuvee
+- [ ] sections dashboard listées
+- [ ] priorités contenu valides
+- [ ] version MVP approuvée
 ```
 
 ### DSH-02
 
 ```md
-Title: [TASK][DSH-02] Exposer endpoint dashboard aggregate cote API
+Title: [TASK][DSH-02] Exposer endpoint dashboard aggregate côté API
 
 Labels:
 
@@ -1308,18 +1308,18 @@ DSH
 
 ## Description
 
-Exposer un endpoint agregateur pour alimenter le dashboard.
+Exposer un endpoint agrégateur pour alimenter le dashboard.
 
-## Dependances
+## Dépendances
 
 - SET-02
 - LIB-01
 - AUT-02
 
-## Criteres d'acceptation
+## Critères d'acceptation
 
 - [ ] endpoint aggregate disponible
-- [ ] contrat stable documente
+- [ ] contrat stable documenté
 - [ ] performance acceptable en MVP
 ```
 
@@ -1348,25 +1348,25 @@ DSH
 
 ## Description
 
-Implementer l'ecran dashboard dans l'application mobile.
+Implementer l’écran dashboard dans l'application mobile.
 
-## Dependances
+## Dépendances
 
 - MOB-02
 - AUT-04
 - DSH-02
 
-## Criteres d'acceptation
+## Critères d'acceptation
 
 - [ ] dashboard mobile rendu
-- [ ] donnees endpoint affichees
-- [ ] etats loading/error geres
+- [ ] données endpoint affichées
+- [ ] états loading/error gérés
 ```
 
 ### DSH-04
 
 ```md
-Title: [TASK][DSH-04] Implementer vue dashboard web participant (si activee MVP)
+Title: [TASK][DSH-04] Implementer vue dashboard web participant (si activée MVP)
 
 Labels:
 
@@ -1388,19 +1388,19 @@ DSH
 
 ## Description
 
-Ajouter une variante web participant du dashboard si confirmee.
+Ajouter une variante web participant du dashboard si confirmée.
 
-## Dependances
+## Dépendances
 
 - WEB-01
 - AUT-04
 - DSH-02
 
-## Criteres d'acceptation
+## Critères d'acceptation
 
-- [ ] decision scope web confirmee
-- [ ] vue web implementee si retenue
-- [ ] parite fonctionnelle minimale assuree
+- [ ] décision scope web confirmée
+- [ ] vue web implémentée si retenue
+- [ ] parité fonctionnelle minimale assurée
 ```
 
 ---
@@ -1410,7 +1410,7 @@ Ajouter une variante web participant du dashboard si confirmee.
 ### PRG-01
 
 ```md
-Title: [TASK][PRG-01] Definir modele programme/cohorte/statut progression MVP
+Title: [TASK][PRG-01] Définir modèle programme/cohorte/statut progression MVP
 
 Labels:
 
@@ -1432,17 +1432,17 @@ PRG
 
 ## Description
 
-Definir le modele de donnees programme/cohorte/progression.
+Définir le modèle de données programme/cohorte/progression.
 
-## Dependances
+## Dépendances
 
 - ARC-04
 
-## Criteres d'acceptation
+## Critères d'acceptation
 
-- [ ] modele metier valide
-- [ ] etats progression definis
-- [ ] contraintes principales documentees
+- [ ] modèle métier valide
+- [ ] états progression définis
+- [ ] contraintes principales documentées
 ```
 
 ### PRG-02
@@ -1472,14 +1472,14 @@ PRG
 
 Implementer les endpoints API de consultation programmes.
 
-## Dependances
+## Dépendances
 
 - SET-02
 - LIB-01
 - AUT-02
 - PRG-01
 
-## Criteres d'acceptation
+## Critères d'acceptation
 
 - [ ] endpoint liste disponible
 - [ ] endpoint detail disponible
@@ -1489,7 +1489,7 @@ Implementer les endpoints API de consultation programmes.
 ### PRG-03
 
 ```md
-Title: [TASK][PRG-03] Implementer ecran mobile liste + detail programme
+Title: [TASK][PRG-03] Implémenter écran mobile liste + détail programme
 
 Labels:
 
@@ -1511,14 +1511,14 @@ PRG
 
 ## Description
 
-Implementer les ecrans mobiles liste et detail programme.
+Implementer les écrans mobiles liste et detail programme.
 
-## Dependances
+## Dépendances
 
 - MOB-02
 - PRG-02
 
-## Criteres d'acceptation
+## Critères d'acceptation
 
 - [ ] liste programmes visible
 - [ ] detail programme accessible
@@ -1552,16 +1552,16 @@ PRG
 
 Permettre un suivi minimal de progression programme.
 
-## Dependances
+## Dépendances
 
 - PRG-02
 - LIB-02
 
-## Criteres d'acceptation
+## Critères d'acceptation
 
 - [ ] marquage progression enregistre
-- [ ] restitution etat progression
-- [ ] regles metier appliquees
+- [ ] restitution état progression
+- [ ] règles metier appliquées
 ```
 
 ### PRG-05
@@ -1591,15 +1591,15 @@ PRG
 
 Ajouter la couverture comportementale BDD des parcours programmes.
 
-## Dependances
+## Dépendances
 
 - PRG-03
 - PRG-04
 - QAT-01
 
-## Criteres d'acceptation
+## Critères d'acceptation
 
-- [ ] scenarios Given/When/Then rediges
+- [ ] scenarios Given/When/Then rédigés
 - [ ] execution E2E possible
 - [ ] assertions comportement explicites
 ```
@@ -1611,7 +1611,7 @@ Ajouter la couverture comportementale BDD des parcours programmes.
 ### RES-01
 
 ```md
-Title: [TASK][RES-01] Definir taxonomie ressources (type, theme, audience)
+Title: [TASK][RES-01] Définir taxonomie ressources (type, theme, audience)
 
 Labels:
 
@@ -1633,17 +1633,17 @@ RES
 
 ## Description
 
-Definir la taxonomie fonctionnelle des ressources.
+Définir la taxonomie fonctionnelle des ressources.
 
-## Dependances
+## Dépendances
 
 - ARC-04
 
-## Criteres d'acceptation
+## Critères d'acceptation
 
-- [ ] types de ressources definis
-- [ ] themes definis
-- [ ] cibles audience definies
+- [ ] types de ressources définis
+- [ ] themes définis
+- [ ] cibles audience définies
 ```
 
 ### RES-02
@@ -1673,24 +1673,24 @@ RES
 
 Implementer les endpoints API pour ressources et filtres.
 
-## Dependances
+## Dépendances
 
 - SET-02
 - LIB-01
 - AUT-02
 - RES-01
 
-## Criteres d'acceptation
+## Critères d'acceptation
 
-- [ ] endpoint liste operationnel
-- [ ] endpoint detail operationnel
+- [ ] endpoint liste opérationnel
+- [ ] endpoint detail opérationnel
 - [ ] filtres MVP disponibles
 ```
 
 ### RES-03
 
 ```md
-Title: [TASK][RES-03] Implementer ecran mobile ressources (recherche/filtre)
+Title: [TASK][RES-03] Implementer écran mobile ressources (recherche/filtre)
 
 Labels:
 
@@ -1712,14 +1712,14 @@ RES
 
 ## Description
 
-Implementer l'ecran mobile de consultation des ressources.
+Implementer l’écran mobile de consultation des ressources.
 
-## Dependances
+## Dépendances
 
 - MOB-02
 - RES-02
 
-## Criteres d'acceptation
+## Critères d'acceptation
 
 - [ ] recherche fonctionnelle
 - [ ] filtres fonctionnels
@@ -1753,15 +1753,15 @@ RES
 
 Tracer les consultations de ressources pour suivi produit.
 
-## Dependances
+## Dépendances
 
 - RES-02
 - WEB-04
 
-## Criteres d'acceptation
+## Critères d'acceptation
 
 - [ ] events consultation traces
-- [ ] metadonnees minimales capturees
+- [ ] métadonnées minimales capturées
 - [ ] verification des traces en test
 ```
 
@@ -1772,7 +1772,7 @@ Tracer les consultations de ressources pour suivi produit.
 ### ANN-01
 
 ```md
-Title: [TASK][ANN-01] Definir format annonce et regles de publication MVP
+Title: [TASK][ANN-01] Définir format annonce et règles de publication MVP
 
 Labels:
 
@@ -1794,17 +1794,17 @@ ANN
 
 ## Description
 
-Definir la structure annonce et ses regles de publication.
+Définir la structure annonce et ses règles de publication.
 
-## Dependances
+## Dépendances
 
 - ARC-04
 
-## Criteres d'acceptation
+## Critères d'acceptation
 
 - [ ] format annonce valide
-- [ ] regles publication MVP definies
-- [ ] priorite annonce documentee
+- [ ] règles publication MVP définies
+- [ ] priorité annonce documentée
 ```
 
 ### ANN-02
@@ -1834,14 +1834,14 @@ ANN
 
 Implementer les endpoints API de feed et detail annonces.
 
-## Dependances
+## Dépendances
 
 - SET-02
 - LIB-01
 - AUT-02
 - ANN-01
 
-## Criteres d'acceptation
+## Critères d'acceptation
 
 - [ ] endpoint feed disponible
 - [ ] endpoint detail disponible
@@ -1875,17 +1875,17 @@ ANN
 
 Afficher les annonces dans l'application mobile.
 
-## Dependances
+## Dépendances
 
 - MOB-02
 - DSH-02
 - ANN-02
 
-## Criteres d'acceptation
+## Critères d'acceptation
 
 - [ ] feed annonce visible
 - [ ] detail annonce accessible
-- [ ] integration dashboard validee
+- [ ] integration dashboard validée
 ```
 
 ### ANN-04
@@ -1913,18 +1913,18 @@ ANN
 
 ## Description
 
-Declencher une notification push pour annonces prioritaires.
+Déclencher une notification push pour annonces prioritaires.
 
-## Dependances
+## Dépendances
 
 - MOB-05
 - ANN-02
 
-## Criteres d'acceptation
+## Critères d'acceptation
 
-- [ ] regle priorite push definie
+- [ ] règle priorité push définie
 - [ ] push annonce prioritaire testable
-- [ ] fallback en cas d'echec documente
+- [ ] fallback en cas d'échec documenté
 ```
 
 ---
@@ -1958,12 +1958,12 @@ SUP
 
 Exposer un endpoint contact/support avec validation robuste.
 
-## Dependances
+## Dépendances
 
 - SET-02
 - LIB-01
 
-## Criteres d'acceptation
+## Critères d'acceptation
 
 - [ ] endpoint support disponible
 - [ ] validation payload active
@@ -1973,7 +1973,7 @@ Exposer un endpoint contact/support avec validation robuste.
 ### SUP-02
 
 ```md
-Title: [TASK][SUP-02] Integrer formulaire support dans mobile
+Title: [TASK][SUP-02] Intégrer formulaire support dans mobile
 
 Labels:
 
@@ -1997,15 +1997,15 @@ SUP
 
 Ajouter le formulaire support dans l'application mobile.
 
-## Dependances
+## Dépendances
 
 - MOB-02
 - SUP-01
 - AUT-04
 
-## Criteres d'acceptation
+## Critères d'acceptation
 
-- [ ] formulaire mobile envoye
+- [ ] formulaire mobile envoyé
 - [ ] messages validation affiches
 - [ ] confirmation envoi visible
 ```
@@ -2013,7 +2013,7 @@ Ajouter le formulaire support dans l'application mobile.
 ### SUP-03
 
 ```md
-Title: [TASK][SUP-03] Integrer formulaire contact site web
+Title: [TASK][SUP-03] Intégrer formulaire contact site web
 
 Labels:
 
@@ -2037,15 +2037,15 @@ SUP
 
 Ajouter le formulaire de contact sur le site web.
 
-## Dependances
+## Dépendances
 
 - WEB-01
 - SUP-01
 
-## Criteres d'acceptation
+## Critères d'acceptation
 
 - [ ] formulaire web envoie les demandes
-- [ ] validations front/back coherentes
+- [ ] validations front/back cohérentes
 - [ ] confirmation utilisateur claire
 ```
 
@@ -2076,15 +2076,15 @@ SUP
 
 Configurer l'envoi email pour confirmations/support.
 
-## Dependances
+## Dépendances
 
 - SUP-01
 
-## Criteres d'acceptation
+## Critères d'acceptation
 
 - [ ] provider email configure
-- [ ] email de confirmation envoye
-- [ ] erreurs d'envoi gerees
+- [ ] email de confirmation envoyé
+- [ ] erreurs d'envoi gérées
 ```
 
 ### SUP-05
@@ -2114,15 +2114,15 @@ SUP
 
 Mettre en place un suivi minimal des demandes support.
 
-## Dependances
+## Dépendances
 
 - SUP-01
 - AUT-05
 
-## Criteres d'acceptation
+## Critères d'acceptation
 
 - [ ] statut demande stocke
-- [ ] transitions minimales definies
+- [ ] transitions minimales définies
 - [ ] consultation statut possible
 ```
 
@@ -2133,7 +2133,7 @@ Mettre en place un suivi minimal des demandes support.
 ### QAT-01
 
 ```md
-Title: [TASK][QAT-01] Definir matrice de couverture (page, composant, comportement)
+Title: [TASK][QAT-01] Définir matrice de couverture (page, composant, comportement)
 
 Labels:
 
@@ -2155,24 +2155,24 @@ QAT
 
 ## Description
 
-Definir la matrice de couverture tests MVP.
+Définir la matrice de couverture tests MVP.
 
-## Dependances
+## Dépendances
 
 - SET-04
 - SET-05
 
-## Criteres d'acceptation
+## Critères d'acceptation
 
-- [ ] matrice page/composant/comportement creee
-- [ ] couverture minimale cible definie
-- [ ] scenarios critiques identifies
+- [ ] matrice page/composant/comportement créée
+- [ ] couverture minimale cible définie
+- [ ] scenarios critiques identifiés
 ```
 
 ### QAT-02
 
 ```md
-Title: [TASK][QAT-02] Ecrire tests unitaires composants critiques web/mobile
+Title: [TASK][QAT-02] Écrire tests unitaires composants critiques web/mobile
 
 Labels:
 
@@ -2196,13 +2196,13 @@ QAT
 
 Ajouter les tests unitaires des composants critiques.
 
-## Dependances
+## Dépendances
 
 - QAT-01
 - WEB-01
 - MOB-02
 
-## Criteres d'acceptation
+## Critères d'acceptation
 
 - [ ] composants critiques couverts
 - [ ] assertions explicites
@@ -2212,7 +2212,7 @@ Ajouter les tests unitaires des composants critiques.
 ### QAT-03
 
 ```md
-Title: [TASK][QAT-03] Ecrire tests integration API modules critiques
+Title: [TASK][QAT-03] Écrire tests integration API modules critiques
 
 Labels:
 
@@ -2234,9 +2234,9 @@ QAT
 
 ## Description
 
-Ecrire les tests integration pour modules API critiques.
+Écrire les tests integration pour modules API critiques.
 
-## Dependances
+## Dépendances
 
 - QAT-01
 - AUT-02
@@ -2245,17 +2245,17 @@ Ecrire les tests integration pour modules API critiques.
 - ANN-02
 - SUP-01
 
-## Criteres d'acceptation
+## Critères d'acceptation
 
 - [ ] endpoints critiques couverts
 - [ ] cas erreur couverts
-- [ ] resultats reproductibles
+- [ ] résultats reproductibles
 ```
 
 ### QAT-04
 
 ```md
-Title: [TASK][QAT-04] Ecrire E2E Given/When/Then pour parcours coeur participant
+Title: [TASK][QAT-04] Écrire E2E Given/When/Then pour parcours coeur participant
 
 Labels:
 
@@ -2279,7 +2279,7 @@ QAT
 
 Ajouter les scenarios E2E comportementaux des parcours coeur.
 
-## Dependances
+## Dépendances
 
 - QAT-01
 - AUT-03
@@ -2288,17 +2288,17 @@ Ajouter les scenarios E2E comportementaux des parcours coeur.
 - RES-03
 - SUP-02
 
-## Criteres d'acceptation
+## Critères d'acceptation
 
-- [ ] scenarios Given/When/Then implementes
-- [ ] parcours critiques executes
-- [ ] preuves d'execution disponibles
+- [ ] scenarios Given/When/Then implémentés
+- [ ] parcours critiques exécutés
+- [ ] preuves d'exécution disponibles
 ```
 
 ### QAT-05
 
 ```md
-Title: [TASK][QAT-05] Realiser campagne regression et corriger blockers
+Title: [TASK][QAT-05] Réaliser campagne régression et corriger bloqueurs
 
 Labels:
 
@@ -2320,25 +2320,25 @@ QAT
 
 ## Description
 
-Executer regression complete et corriger les bloqueurs.
+Exécuter régression complète et corriger les bloqueurs.
 
-## Dependances
+## Dépendances
 
 - QAT-02
 - QAT-03
 - QAT-04
 
-## Criteres d'acceptation
+## Critères d'acceptation
 
-- [ ] campagne regression terminee
-- [ ] blockers P0 resolus
-- [ ] rapport de stabilisation publie
+- [ ] campagne régression terminée
+- [ ] blockers P0 résolus
+- [ ] rapport de stabilisation publié
 ```
 
 ### QAT-06
 
 ```md
-Title: [TASK][QAT-06] Realiser checks accessibilite/performance pre-pilot
+Title: [TASK][QAT-06] Réaliser checks accessibilité/performance pré-pilot
 
 Labels:
 
@@ -2362,16 +2362,16 @@ QAT
 
 Valider a11y/performance avant passage au pilote.
 
-## Dependances
+## Dépendances
 
 - QAT-05
 - WEB-05
 
-## Criteres d'acceptation
+## Critères d'acceptation
 
-- [ ] checks a11y executes
-- [ ] checks performance executes
-- [ ] plan d'actions ecarts fourni
+- [ ] checks a11y exécutés
+- [ ] checks performance exécutés
+- [ ] plan d'actions écarts fourni
 ```
 
 ---
@@ -2403,23 +2403,23 @@ DEP
 
 ## Description
 
-Configurer et documenter les environnements de deploiement.
+Configurer et documenter les environnements de déploiement.
 
-## Dependances
+## Dépendances
 
 - SET-07
 
-## Criteres d'acceptation
+## Critères d'acceptation
 
-- [ ] env dev/staging/pilot definis
-- [ ] secrets et variables recenses
-- [ ] acces et roles clarifies
+- [ ] env dev/staging/pilot définis
+- [ ] secrets et variables recensés
+- [ ] accès et rôles clarifiés
 ```
 
 ### DEP-02
 
 ```md
-Title: [TASK][DEP-02] Mettre en place pipeline deploiement web
+Title: [TASK][DEP-02] Mettre en place pipeline déploiement web
 
 Labels:
 
@@ -2441,24 +2441,24 @@ DEP
 
 ## Description
 
-Automatiser le deploiement web vers l'environnement cible.
+Automatiser le déploiement web vers l'environnement cible.
 
-## Dependances
+## Dépendances
 
 - SET-06
 - WEB-05
 
-## Criteres d'acceptation
+## Critères d'acceptation
 
-- [ ] pipeline web operationnel
-- [ ] deploiement staging valide
+- [ ] pipeline web opérationnel
+- [ ] déploiement staging valide
 - [ ] rollback web documente
 ```
 
 ### DEP-03
 
 ```md
-Title: [TASK][DEP-03] Mettre en place pipeline deploiement API
+Title: [TASK][DEP-03] Mettre en place pipeline déploiement API
 
 Labels:
 
@@ -2480,17 +2480,17 @@ DEP
 
 ## Description
 
-Automatiser le deploiement API vers l'environnement cible.
+Automatiser le déploiement API vers l'environnement cible.
 
-## Dependances
+## Dépendances
 
 - SET-06
 - QAT-03
 
-## Criteres d'acceptation
+## Critères d'acceptation
 
-- [ ] pipeline API operationnel
-- [ ] deploiement staging valide
+- [ ] pipeline API opérationnel
+- [ ] déploiement staging valide
 - [ ] checks post-deploy disponibles
 ```
 
@@ -2521,22 +2521,22 @@ DEP
 
 Preparer les builds mobiles de test pour le pilote.
 
-## Dependances
+## Dépendances
 
 - MOB-04
 - QAT-04
 
-## Criteres d'acceptation
+## Critères d'acceptation
 
 - [ ] build APK test disponible
 - [ ] build iOS test disponible
-- [ ] procedure distribution test documentee
+- [ ] procedure distribution test documentée
 ```
 
 ### DEP-05
 
 ```md
-Title: [TASK][DEP-05] Finaliser observabilite et alerting minimum
+Title: [TASK][DEP-05] Finaliser observabilité et alerting minimum
 
 Labels:
 
@@ -2560,22 +2560,22 @@ DEP
 
 Mettre en place la supervision minimale avant pilote.
 
-## Dependances
+## Dépendances
 
 - DEP-02
 - DEP-03
 
-## Criteres d'acceptation
+## Critères d'acceptation
 
-- [ ] logs et metriques accessibles
-- [ ] alertes minimales configurees
+- [ ] logs et métriques accessibles
+- [ ] alertes minimales configurées
 - [ ] procedure verification en place
 ```
 
 ### DEP-06
 
 ```md
-Title: [TASK][DEP-06] Rediger runbook incident + rollback + pilot checklist
+Title: [TASK][DEP-06] Rédiger runbook incident + rollback + pilot checklist
 
 Labels:
 
@@ -2599,17 +2599,17 @@ DEP
 
 Documenter incidents, rollback et checklist go/no-go pilote.
 
-## Dependances
+## Dépendances
 
 - DEP-01
 - DEP-05
 - QAT-06
 
-## Criteres d'acceptation
+## Critères d'acceptation
 
-- [ ] runbook incident redige
-- [ ] procedure rollback redigee
-- [ ] checklist pilote prete
+- [ ] runbook incident rédigé
+- [ ] procedure rollback rédigée
+- [ ] checklist pilote prête
 ```
 
 ### DEP-07
@@ -2639,16 +2639,16 @@ DEP
 
 Executer le go/no-go final et publier la release pilote.
 
-## Dependances
+## Dépendances
 
 - DEP-02
 - DEP-03
 - DEP-04
 - DEP-06
 
-## Criteres d'acceptation
+## Critères d'acceptation
 
 - [ ] go/no-go documente
-- [ ] release pilote publiee
+- [ ] release pilote publiée
 - [ ] retour post-release capture
 ```

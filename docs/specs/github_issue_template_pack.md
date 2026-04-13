@@ -2,9 +2,9 @@
 
 Usage rapide :
 
-1. Creer une nouvelle issue GitHub.
+1. Créer une nouvelle issue GitHub.
 2. Copier-coller un bloc complet ci-dessous.
-3. Ajuster l'owner, les dates et les criteres si necessaire.
+3. Ajuster l'owner, les dates et les critères si nécessaire.
 4. Ajouter labels et milestone indiques dans le bloc.
 
 ---
@@ -12,7 +12,7 @@ Usage rapide :
 ## Bloc 1 - Epic Architecture
 
 ```md
-Title: [EPIC][ARC] Architecture MVP verrouillee
+Title: [EPIC][ARC] Architecture MVP verrouillée
 
 Labels:
 
@@ -30,7 +30,7 @@ Body:
 ## Contexte
 
 Verrouiller les choix d'architecture web/mobile/api et les conventions de base
-pour eviter le scope creep et accelerer l'execution MVP.
+pour éviter le scope creep et accélérer l'execution MVP.
 
 ## Objectif
 
@@ -39,19 +39,19 @@ Clore toutes les issues ARC-\* pour atteindre le milestone M1.
 ## Sous-taches (issues enfants)
 
 - [ ] ARC-01 - Valider architecture cible web/mobile/api avec scope MVP (P0) - deps: none
-- [ ] ARC-02 - Definir conventions repo (naming, structure, quality gates) (P0) - deps: ARC-01
-- [ ] ARC-03 - Definir strategie de rendu web (SEO/prerender) (P0) - deps: ARC-01
-- [ ] ARC-04 - Definir modeles de donnees MVP (P0) - deps: ARC-01
-- [ ] ARC-05 - Documenter ADRs et criteres anti-scope-creep (P1) - deps: ARC-02, ARC-04
+- [ ] ARC-02 - Définir conventions repo (naming, structure, quality gates) (P0) - deps: ARC-01
+- [ ] ARC-03 - Définir stratégie de rendu web (SEO/prerender) (P0) - deps: ARC-01
+- [ ] ARC-04 - Définir modèles de donnees MVP (P0) - deps: ARC-01
+- [ ] ARC-05 - Documenter ADRs et critères anti-scope-creep (P1) - deps: ARC-02, ARC-04
 
-## Dependances amont
+## Dépendances amont
 
 - none
 
-## Criteres d'acceptation
+## Critères d'acceptation
 
 - [ ] Toutes les sous-taches ARC-\* sont en done
-- [ ] Les decisions sont documentees et partagees
+- [ ] Les decisions sont documentées et partagées
 - [ ] Le scope MVP est explicite et stable
 
 ## Definition of done de l'epic
@@ -98,11 +98,11 @@ Clore toutes les issues SET-\* pour atteindre le milestone M2.
 - [ ] SET-06 - Configurer CI GitHub Actions multi-apps (P0) - deps: SET-03, SET-04, SET-05
 - [ ] SET-07 - Mettre en place variables d'environnement et runbook local dev (P1) - deps: SET-02
 
-## Dependances amont
+## Dépendances amont
 
 - ARC
 
-## Criteres d'acceptation
+## Critères d'acceptation
 
 - [ ] Build, lint, tests executables localement
 - [ ] Pipeline CI verte
@@ -135,33 +135,33 @@ Body:
 
 ## Contexte
 
-Structurer la reutilisation transverse avec des libs minimales et explicites.
+Structurer la réutilisation transverse avec des libs minimales et explicites.
 
 ## Objectif
 
-Fournir des contrats, regles metier pures et client API type.
+Fournir des contrats, règles metier pures et client API type.
 
 ## Sous-taches (issues enfants)
 
-- [ ] LIB-01 - Creer packages/contracts (DTO, schema validation, versioning) (P0) - deps: ARC-04, SET-02
-- [ ] LIB-02 - Creer packages/domain (regles metier pures MVP) (P0) - deps: ARC-04, LIB-01
-- [ ] LIB-03 - Creer packages/api-client (typed client web/mobile vers API) (P1) - deps: LIB-01, SET-02
+- [ ] LIB-01 - Créer packages/contracts (DTO, schema validation, versioning) (P0) - deps: ARC-04, SET-02
+- [ ] LIB-02 - Créer packages/domain (règles metier pures MVP) (P0) - deps: ARC-04, LIB-01
+- [ ] LIB-03 - Créer packages/api-client (typed client web/mobile vers API) (P1) - deps: LIB-01, SET-02
 - [ ] LIB-04 - Ajouter tests unitaires libs + guideline de publication interne (P1) - deps: LIB-02, LIB-03
 
-## Dependances amont
+## Dépendances amont
 
 - ARC
 - SET
 
-## Criteres d'acceptation
+## Critères d'acceptation
 
 - [ ] Contrats centralises et versionnables
-- [ ] Domaine sans dependance framework
+- [ ] Domaine sans dépendance framework
 - [ ] Client API type consomme dans apps
 
 ## Definition of done de l'epic
 
-LIB-01 et LIB-02 requis pour M2; LIB-03 et LIB-04 planifies/clos selon capacite.
+LIB-01 et LIB-02 requis pour M2; LIB-03 et LIB-04 planifies/clos selon capacité.
 ```
 
 ---
@@ -195,19 +195,19 @@ Clore les chantiers pages, formulaires, SEO et optimisation web.
 ## Sous-taches (issues enfants)
 
 - [ ] WEB-01 - Implementer pages core (Accueil, A propos, Services, Programmes, Contact) (P0) - deps: SET-01, ARC-03
-- [ ] WEB-02 - Integrer formulaires de contact et CTA conversion (P0) - deps: WEB-01, SUP-01
+- [ ] WEB-02 - Intégrer formulaires de contact et CTA conversion (P0) - deps: WEB-01, SUP-01
 - [ ] WEB-03 - Ajouter SEO technique (meta, sitemap, robots, Open Graph) (P0) - deps: WEB-01
 - [ ] WEB-04 - Ajouter analytics web (PostHog/GA) (P1) - deps: WEB-01
-- [ ] WEB-05 - Optimiser accessibilite/performance (objectif Lighthouse > 90) (P1) - deps: WEB-01, WEB-03
+- [ ] WEB-05 - Optimiser accessibilité/performance (objectif Lighthouse > 90) (P1) - deps: WEB-01, WEB-03
 
-## Dependances amont
+## Dépendances amont
 
 - SET
-- SUP (pour integration formulaire API)
+- SUP (pour intégration formulaire API)
 
-## Criteres d'acceptation
+## Critères d'acceptation
 
-- [ ] Pages MVP disponibles et coherentes
+- [ ] Pages MVP disponibles et cohérentes
 - [ ] Parcours contact fonctionnel
 - [ ] SEO technique et analytics en place
 
@@ -248,20 +248,20 @@ Clore toutes les issues MOB-\* pour atteindre M3.
 
 - [ ] MOB-01 - Initialiser app Ionic Angular dans apps/client/projects/mobile (P0) - deps: SET-01
 - [ ] MOB-02 - Mettre en place navigation shell (tabs/stack) et layout de base (P0) - deps: MOB-01
-- [ ] MOB-03 - Integrer theming, design tokens et composants UI de base (P1) - deps: MOB-01, LIB-01
+- [ ] MOB-03 - Intégrer theming, design tokens et composants UI de base (P1) - deps: MOB-01, LIB-01
 - [ ] MOB-04 - Configurer Capacitor (Android/iOS) et builds debug (P0) - deps: MOB-01
 - [ ] MOB-05 - Ajouter service notifications push stub (FCM wiring initial) (P1) - deps: MOB-04, SET-02
 
-## Dependances amont
+## Dépendances amont
 
 - SET
 - LIB
 
-## Criteres d'acceptation
+## Critères d'acceptation
 
 - [ ] Shell navigable sur mobile
 - [ ] Build debug Android/iOS execute
-- [ ] Base notifications initialisee
+- [ ] Base notifications initialisée
 
 ## Definition of done de l'epic
 
@@ -290,7 +290,7 @@ Body:
 
 ## Contexte
 
-Mettre en place une authentification securisee pour les parcours participants.
+Mettre en place une authentification sécurisée pour les parcours participants.
 
 ## Objectif
 
@@ -300,19 +300,19 @@ Clore toutes les issues AUT-\* pour atteindre M4.
 
 - [ ] AUT-01 - Configurer Supabase Auth (providers, policies de base) (P0) - deps: ARC-04, SET-02
 - [ ] AUT-02 - Implementer endpoints API auth/session (NestJS) (P0) - deps: AUT-01, LIB-01
-- [ ] AUT-03 - Implementer ecrans login/signup/reset mobile (P0) - deps: MOB-02, AUT-02
+- [ ] AUT-03 - Implementer écrans login/signup/reset mobile (P0) - deps: MOB-02, AUT-02
 - [ ] AUT-04 - Implementer garde routes protegees web/mobile (P0) - deps: AUT-02, LIB-03
 - [ ] AUT-05 - Ajouter gestion role participant/admin minimal (P1) - deps: AUT-02, ARC-04
 
-## Dependances amont
+## Dépendances amont
 
 - SET
 - LIB
 - MOB
 
-## Criteres d'acceptation
+## Critères d'acceptation
 
-- [ ] Login/signup/reset operationnels
+- [ ] Login/signup/reset opérationnels
 - [ ] Sessions et routes protegees valides
 - [ ] Roles minimaux appliques
 
@@ -351,26 +351,26 @@ Implementer le contenu dashboard, l'aggregation API et les vues clientes.
 
 ## Sous-taches (issues enfants)
 
-- [ ] DSH-01 - Definir contenu dashboard MVP (cartes, rappels, dernieres actus) (P0) - deps: ARC-04
+- [ ] DSH-01 - Définir contenu dashboard MVP (cartes, rappels, dernières actus) (P0) - deps: ARC-04
 - [ ] DSH-02 - Exposer endpoint dashboard aggregate cote API (P0) - deps: SET-02, LIB-01, AUT-02
 - [ ] DSH-03 - Implementer vue dashboard mobile (P0) - deps: MOB-02, AUT-04, DSH-02
-- [ ] DSH-04 - Implementer vue dashboard web participant (si activee MVP) (P1) - deps: WEB-01, AUT-04, DSH-02
+- [ ] DSH-04 - Implementer vue dashboard web participant (si activée MVP) (P1) - deps: WEB-01, AUT-04, DSH-02
 
-## Dependances amont
+## Dépendances amont
 
 - AUT
 - MOB
 - LIB
 
-## Criteres d'acceptation
+## Critères d'acceptation
 
 - [ ] Dashboard mobile utilisable
-- [ ] Donnees agregees fiables
-- [ ] Variante web confirmee selon scope
+- [ ] Donnees agrégées fiables
+- [ ] Variante web confirmée selon scope
 
 ## Definition of done de l'epic
 
-Contribution DSH completee pour M5.
+Contribution DSH complétée pour M5.
 ```
 
 ---
@@ -399,31 +399,31 @@ Permettre la consultation et le suivi minimum des programmes participants.
 
 ## Objectif
 
-Implementer modeles, endpoints, vues mobiles et tests de comportement.
+Implementer modèles, endpoints, vues mobiles et tests de comportement.
 
 ## Sous-taches (issues enfants)
 
-- [ ] PRG-01 - Definir modele programme/cohorte/statut progression MVP (P0) - deps: ARC-04
+- [ ] PRG-01 - Définir modèle programme/cohorte/statut progression MVP (P0) - deps: ARC-04
 - [ ] PRG-02 - Implementer endpoints liste/detail programmes (P0) - deps: SET-02, LIB-01, AUT-02, PRG-01
-- [ ] PRG-03 - Implementer ecran mobile liste + detail programme (P0) - deps: MOB-02, PRG-02
+- [ ] PRG-03 - Implementer écran mobile liste + detail programme (P0) - deps: MOB-02, PRG-02
 - [ ] PRG-04 - Implementer marquage de progression minimale (P1) - deps: PRG-02, LIB-02
 - [ ] PRG-05 - Ajouter scenarii de test Given/When/Then programmes (P1) - deps: PRG-03, PRG-04, QAT-01
 
-## Dependances amont
+## Dépendances amont
 
 - AUT
 - MOB
 - LIB
 
-## Criteres d'acceptation
+## Critères d'acceptation
 
 - [ ] Liste et detail programmes accessibles
-- [ ] Progression minimale sauvegardee
+- [ ] Progression minimale sauvegardée
 - [ ] Scenarios BDD associes
 
 ## Definition of done de l'epic
 
-Contribution PRG completee pour M5.
+Contribution PRG complétée pour M5.
 ```
 
 ---
@@ -457,26 +457,26 @@ Implementer taxonomie, endpoints, experience mobile et tracking.
 
 ## Sous-taches (issues enfants)
 
-- [ ] RES-01 - Definir taxonomie ressources (type, theme, audience) (P0) - deps: ARC-04
+- [ ] RES-01 - Définir taxonomie ressources (type, theme, audience) (P0) - deps: ARC-04
 - [ ] RES-02 - Implementer endpoints ressources (liste, filtre, detail) (P0) - deps: SET-02, LIB-01, AUT-02, RES-01
-- [ ] RES-03 - Implementer ecran mobile ressources (recherche/filtre) (P0) - deps: MOB-02, RES-02
+- [ ] RES-03 - Implementer écran mobile ressources (recherche/filtre) (P0) - deps: MOB-02, RES-02
 - [ ] RES-04 - Implementer tracking consultation ressources (P1) - deps: RES-02, WEB-04
 
-## Dependances amont
+## Dépendances amont
 
 - AUT
 - MOB
 - LIB
 
-## Criteres d'acceptation
+## Critères d'acceptation
 
-- [ ] Consultation/filtrage ressources operationnels
+- [ ] Consultation/filtrage ressources opérationnels
 - [ ] Detail ressource disponible
 - [ ] Tracking de consultation enregistre
 
 ## Definition of done de l'epic
 
-Contribution RES completee pour M5.
+Contribution RES complétée pour M5.
 ```
 
 ---
@@ -509,26 +509,26 @@ Implementer le format annonce, le feed API, l'affichage mobile et les push.
 
 ## Sous-taches (issues enfants)
 
-- [ ] ANN-01 - Definir format annonce et regles de publication MVP (P0) - deps: ARC-04
+- [ ] ANN-01 - Définir format annonce et règles de publication MVP (P0) - deps: ARC-04
 - [ ] ANN-02 - Implementer endpoints annonces (feed + detail) (P0) - deps: SET-02, LIB-01, AUT-02, ANN-01
 - [ ] ANN-03 - Implementer flux annonces dans mobile dashboard/feed (P0) - deps: MOB-02, DSH-02, ANN-02
 - [ ] ANN-04 - Ajouter notification push pour annonce prioritaire (P1) - deps: MOB-05, ANN-02
 
-## Dependances amont
+## Dépendances amont
 
 - AUT
 - MOB
 - DSH
 
-## Criteres d'acceptation
+## Critères d'acceptation
 
 - [ ] Feed annonces visible dans l'app
 - [ ] Detail annonce accessible
-- [ ] Push prioritaire declenchable
+- [ ] Push prioritaire déclenchable
 
 ## Definition of done de l'epic
 
-Contribution ANN completee pour M5.
+Contribution ANN complétée pour M5.
 ```
 
 ---
@@ -553,7 +553,7 @@ Body:
 
 ## Contexte
 
-Fournir un canal de contact/support simple, fiable et tracable.
+Fournir un canal de contact/support simple, fiable et traçable.
 
 ## Objectif
 
@@ -562,26 +562,26 @@ Mettre en place endpoint support, formulaires web/mobile et notifications email.
 ## Sous-taches (issues enfants)
 
 - [ ] SUP-01 - Implementer endpoint contact/support (API + validation) (P0) - deps: SET-02, LIB-01
-- [ ] SUP-02 - Integrer formulaire support dans mobile (P0) - deps: MOB-02, SUP-01, AUT-04
-- [ ] SUP-03 - Integrer formulaire contact site web (P0) - deps: WEB-01, SUP-01
+- [ ] SUP-02 - Intégrer formulaire support dans mobile (P0) - deps: MOB-02, SUP-01, AUT-04
+- [ ] SUP-03 - Intégrer formulaire contact site web (P0) - deps: WEB-01, SUP-01
 - [ ] SUP-04 - Configurer envoi email transactionnel (Resend ou equivalent) (P1) - deps: SUP-01
 - [ ] SUP-05 - Ajouter suivi et statut basique des demandes support (P1) - deps: SUP-01, AUT-05
 
-## Dependances amont
+## Dépendances amont
 
 - SET
 - LIB
 - AUT
 
-## Criteres d'acceptation
+## Critères d'acceptation
 
-- [ ] Formulaires web et mobile operationnels
+- [ ] Formulaires web et mobile opérationnels
 - [ ] Envoi/trace des demandes support
 - [ ] Statut basique de suivi disponible
 
 ## Definition of done de l'epic
 
-Contribution SUP completee pour M5.
+Contribution SUP complétée pour M5.
 ```
 
 ---
@@ -606,7 +606,7 @@ Body:
 
 ## Contexte
 
-Valider la qualite fonctionnelle et non-fonctionnelle avant pilot release.
+Valider la qualité fonctionnelle et non-fonctionnelle avant pilot release.
 
 ## Objectif
 
@@ -614,14 +614,14 @@ Clore toutes les issues QAT-\* pour atteindre M6.
 
 ## Sous-taches (issues enfants)
 
-- [ ] QAT-01 - Definir matrice de couverture (page, composant, comportement) (P0) - deps: SET-04, SET-05
-- [ ] QAT-02 - Ecrire tests unitaires composants critiques web/mobile (P0) - deps: QAT-01, WEB-01, MOB-02
-- [ ] QAT-03 - Ecrire tests integration API modules critiques (P0) - deps: QAT-01, AUT-02, PRG-02, RES-02, ANN-02, SUP-01
-- [ ] QAT-04 - Ecrire E2E Given/When/Then pour parcours coeur participant (P0) - deps: QAT-01, AUT-03, DSH-03, PRG-03, RES-03, SUP-02
+- [ ] QAT-01 - Définir matrice de couverture (page, composant, comportement) (P0) - deps: SET-04, SET-05
+- [ ] QAT-02 - Écrire tests unitaires composants critiques web/mobile (P0) - deps: QAT-01, WEB-01, MOB-02
+- [ ] QAT-03 - Écrire tests integration API modules critiques (P0) - deps: QAT-01, AUT-02, PRG-02, RES-02, ANN-02, SUP-01
+- [ ] QAT-04 - Écrire E2E Given/When/Then pour parcours coeur participant (P0) - deps: QAT-01, AUT-03, DSH-03, PRG-03, RES-03, SUP-02
 - [ ] QAT-05 - Realiser campagne regression et corriger blockers (P0) - deps: QAT-02, QAT-03, QAT-04
-- [ ] QAT-06 - Realiser checks accessibilite/performance pre-pilot (P1) - deps: QAT-05, WEB-05
+- [ ] QAT-06 - Realiser checks accessibilité/performance pre-pilot (P1) - deps: QAT-05, WEB-05
 
-## Dependances amont
+## Dépendances amont
 
 - WEB
 - AUT
@@ -631,11 +631,11 @@ Clore toutes les issues QAT-\* pour atteindre M6.
 - ANN
 - SUP
 
-## Criteres d'acceptation
+## Critères d'acceptation
 
 - [ ] Couverture cible atteinte
 - [ ] Parcours critiques validates
-- [ ] Blockers critiques resolus
+- [ ] Blockers critiques résolus
 
 ## Definition of done de l'epic
 
@@ -673,25 +673,25 @@ Clore toutes les issues DEP-\* pour atteindre M7.
 ## Sous-taches (issues enfants)
 
 - [ ] DEP-01 - Configurer environnements (dev/staging/pilot) (P0) - deps: SET-07
-- [ ] DEP-02 - Mettre en place pipeline deploiement web (P0) - deps: SET-06, WEB-05
-- [ ] DEP-03 - Mettre en place pipeline deploiement API (P0) - deps: SET-06, QAT-03
+- [ ] DEP-02 - Mettre en place pipeline déploiement web (P0) - deps: SET-06, WEB-05
+- [ ] DEP-03 - Mettre en place pipeline déploiement API (P0) - deps: SET-06, QAT-03
 - [ ] DEP-04 - Preparer distribution mobile test (APK/TestFlight interne) (P0) - deps: MOB-04, QAT-04
-- [ ] DEP-05 - Finaliser observabilite et alerting minimum (P1) - deps: DEP-02, DEP-03
-- [ ] DEP-06 - Rediger runbook incident + rollback + pilot checklist (P0) - deps: DEP-01, DEP-05, QAT-06
+- [ ] DEP-05 - Finaliser observabilité et alerting minimum (P1) - deps: DEP-02, DEP-03
+- [ ] DEP-06 - Rédiger runbook incident + rollback + pilot checklist (P0) - deps: DEP-01, DEP-05, QAT-06
 - [ ] DEP-07 - Executer go/no-go pilote et publier release pilote (P0) - deps: DEP-02, DEP-03, DEP-04, DEP-06
 
-## Dependances amont
+## Dépendances amont
 
 - QAT
 - WEB
 - MOB
 - SET
 
-## Criteres d'acceptation
+## Critères d'acceptation
 
-- [ ] Environnements et pipelines operationnels
+- [ ] Environnements et pipelines opérationnels
 - [ ] Runbooks et rollback valides
-- [ ] Release pilote publiee apres go/no-go
+- [ ] Release pilote publiée apres go/no-go
 
 ## Definition of done de l'epic
 

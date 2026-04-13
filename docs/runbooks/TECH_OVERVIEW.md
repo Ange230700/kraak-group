@@ -63,7 +63,7 @@ Le site web et l'app mobile communiquent avec l'API backend (NestJS), qui elle-m
 <!-- Sans Tailwind -->
 <div style="padding: 16px; background: white; border-radius: 8px;">
   <!-- Avec Tailwind -->
-  <div class="p-4 bg-white rounded-lg"></div>
+  <div class="rounded-lg bg-white p-4"></div>
 </div>
 ```
 
