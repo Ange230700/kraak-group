@@ -1,0 +1,63 @@
+{
+  "recommendations": [
+    // Angular
+    "angular.ng-template",
+
+    // Tailwind CSS
+    "bradlc.vscode-tailwindcss",
+
+    // ESLint & Prettier
+    "dbaeumer.vscode-eslint",
+    "esbenp.prettier-vscode",
+
+    // NestJS
+    "ashinzekene.nestjs",
+
+    // Playwright
+    "ms-playwright.playwright",
+
+    // TypeScript / JavaScript
+    "ms-vscode.vscode-typescript-next",
+
+    // HTML / CSS
+    "ecmel.vscode-html-css",
+
+    // EditorConfig
+    "editorconfig.editorconfig",
+
+    // GitLens
+    "eamodio.gitlens",
+
+    // Spell checker (cSpell)
+    "streetsidesoftware.code-spell-checker",
+    "streetsidesoftware.code-spell-checker-french",
+
+    // Markdown
+    "davidanson.vscode-markdownlint",
+    "marp-team.marp-vscode",
+
+    // PrimeNG (snippets)
+    "nicolefloorin.primeng-snippets",
+
+    // Ionic / Capacitor
+    "ionic.ionic",
+
+    // REST client / API testing
+    "humao.rest-client",
+
+    // Docker
+    "ms-azuretools.vscode-docker",
+
+    // YAML
+    "redhat.vscode-yaml",
+
+    // Mermaid diagrams
+    "bierner.markdown-mermaid",
+
+    // Environment variables
+    "mikestead.dotenv",
+
+    // Import sorting
+    "nsoult.typescript-imports-sort"
+  ]
+}
