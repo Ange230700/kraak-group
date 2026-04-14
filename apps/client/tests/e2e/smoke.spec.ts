@@ -18,6 +18,9 @@ test.describe(`Page d'accueil — smoke tests`, () => {
     page,
   }) => {
     await expect(page.getByRole('banner')).toContainText('KRAAK');
+    await expect(
+      page.getByRole('img', { name: 'Logo KRAAK Consulting' }),
+    ).toBeVisible();
   });
 
   test(`Given la page d'accueil, When elle se charge, Then l'appel à l'action "Nous contacter" est visible`, async ({
