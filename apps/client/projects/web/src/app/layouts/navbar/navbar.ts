@@ -1,6 +1,5 @@
 import { Component, signal } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
-import { ButtonDirective } from 'primeng/button';
 
 interface NavLink {
   label: string;
@@ -10,7 +9,7 @@ interface NavLink {
 @Component({
   selector: 'kraak-navbar',
   standalone: true,
-  imports: [RouterLink, RouterLinkActive, ButtonDirective],
+  imports: [RouterLink, RouterLinkActive],
   templateUrl: './navbar.html',
 })
 export class Navbar {

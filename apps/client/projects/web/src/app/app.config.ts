@@ -1,5 +1,6 @@
 import {
   ApplicationConfig,
+  ErrorHandler,
   provideBrowserGlobalErrorListeners,
 } from '@angular/core';
 import { provideRouter, TitleStrategy } from '@angular/router';
@@ -12,11 +13,16 @@ import { providePrimeNG } from 'primeng/config';
 
 import { routes } from './app.routes';
 import { KraakPreset } from './config/kraak-preset';
+import { KraakErrorHandler } from './core/error-handler/kraak-error-handler';
 import { SeoTitleStrategy } from './seo/seo-title.strategy';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
+    {
+      provide: ErrorHandler,
+      useClass: KraakErrorHandler,
+    },
     provideRouter(routes),
     provideClientHydration(withEventReplay()),
     provideHttpClient(withFetch()),

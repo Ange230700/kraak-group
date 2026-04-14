@@ -5,6 +5,17 @@ test.describe(`Page contact — comportement formulaire`, () => {
     page,
   }) => {
     test.setTimeout(90_000);
+    const runtimeErrors: string[] = [];
+
+    page.on('console', (message) => {
+      if (message.type() === 'error') {
+        runtimeErrors.push(message.text());
+      }
+    });
+
+    page.on('pageerror', (error) => {
+      runtimeErrors.push(error.message);
+    });
 
     await page.route('**/contact', async (route) => {
       if (route.request().method() !== 'POST') {
@@ -62,5 +73,15 @@ test.describe(`Page contact — comportement formulaire`, () => {
         ),
       ).toBeVisible({ timeout: 10_000 });
     }).toPass({ timeout: 60_000 });
+
+    await page.waitForTimeout(250);
+
+    expect(
+      runtimeErrors.filter((message) =>
+        /ResizeObserver loop completed with undelivered notifications\.|An ErrorEvent with no error occurred\./.test(
+          message,
+        ),
+      ),
+    ).toEqual([]);
   });
 });

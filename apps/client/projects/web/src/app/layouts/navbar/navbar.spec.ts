@@ -11,21 +11,23 @@ describe('Navbar', () => {
     }).compileComponents();
   });
 
-  it('should render PrimeNG buttons for key navigation actions', () => {
+  it('should render lightweight navigation actions for key paths', () => {
     const fixture = TestBed.createComponent(Navbar);
     fixture.detectChanges();
 
     const element = fixture.nativeElement as HTMLElement;
-    const buttons = element.querySelectorAll('.p-button');
     const brandImage = element.querySelector(
       'img[alt="Logo KRAAK Consulting"]',
     ) as HTMLImageElement | null;
     const primaryCta = element.querySelector(
-      'a.p-button.kr-button-primary',
+      'a[aria-label="Nous contacter"]',
     ) as HTMLAnchorElement | null;
+    const menuToggle = element.querySelector(
+      'button[aria-label="Menu de navigation"]',
+    ) as HTMLButtonElement | null;
 
-    expect(buttons.length).toBeGreaterThanOrEqual(2);
-    expect(element.querySelector('button.p-button')).toBeTruthy();
+    expect(element.querySelectorAll('.p-button').length).toBe(0);
+    expect(menuToggle).toBeTruthy();
     expect(element.textContent).toContain('Nous contacter');
     expect(brandImage?.getAttribute('src')).toContain(
       'kraak_consulting_logo_192w.png',

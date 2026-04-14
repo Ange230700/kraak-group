@@ -34,26 +34,26 @@
 
     <div class="hidden lg:block">
       <a
-        pButton
         routerLink="/contact"
-        label="Nous contacter"
         aria-label="Nous contacter"
-        size="small"
-        class="kr-button-primary text-sm"
-      ></a>
+        class="inline-flex items-center justify-center rounded-(--kr-radius-btn) border border-transparent bg-brand-blue px-5 py-2.5 text-sm font-semibold text-brand-white shadow-[0_18px_35px_rgb(18_43_74_/_16%)] transition-all hover:-translate-y-px hover:bg-brand-navy-soft"
+      >
+        Nous contacter
+      </a>
     </div>
 
     <button
-      pButton
       type="button"
-      [outlined]="true"
-      severity="secondary"
-      [icon]="mobileMenuOpen() ? 'pi pi-times' : 'pi pi-bars'"
-      class="kr-button-secondary lg:hidden"
+      class="inline-flex items-center justify-center rounded-(--kr-radius-btn) border border-brand-blue/25 bg-brand-white px-3 py-3 text-brand-navy shadow-[0_18px_35px_rgb(18_43_74_/_16%)] transition-all hover:-translate-y-px hover:border-brand-blue/45 hover:bg-brand-cyan/8 lg:hidden"
       (click)="toggleMobileMenu()"
       [attr.aria-expanded]="mobileMenuOpen()"
       aria-label="Menu de navigation"
-    ></button>
+    >
+      <i
+        [class]="mobileMenuOpen() ? 'pi pi-times' : 'pi pi-bars'"
+        aria-hidden="true"
+      ></i>
+    </button>
   </nav>
 
   @if (mobileMenuOpen()) {
@@ -77,14 +77,13 @@
           }
         </ul>
         <a
-          pButton
           routerLink="/contact"
-          label="Nous contacter"
           aria-label="Nous contacter"
-          [fluid]="true"
-          class="kr-button-primary"
+          class="inline-flex w-full items-center justify-center rounded-(--kr-radius-btn) border border-transparent bg-brand-blue px-5 py-3 text-sm font-semibold text-brand-white shadow-[0_18px_35px_rgb(18_43_74_/_16%)] transition-all hover:-translate-y-px hover:bg-brand-navy-soft"
           (click)="closeMobileMenu()"
-        ></a>
+        >
+          Nous contacter
+        </a>
       </div>
     </div>
   }
