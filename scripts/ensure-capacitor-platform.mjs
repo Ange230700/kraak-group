@@ -16,6 +16,12 @@ function getNpxCommand() {
 export function parseCapacitorPlatform(argv) {
   const platform = argv[0];
 
+  if (typeof platform !== 'string' || platform.length === 0) {
+    throw new Error(
+      'Plateforme Capacitor manquante. Usage: fournir `android` ou `ios`.'
+    );
+  }
+
   if (!supportedPlatforms.has(platform)) {
     throw new Error('Plateforme Capacitor invalide. Valeurs attendues: android, ios.');
   }
