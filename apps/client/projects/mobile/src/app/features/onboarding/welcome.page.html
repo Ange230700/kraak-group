@@ -1,31 +1,42 @@
 <kraak-page-shell
-  eyebrow="Découverte"
-  title="Bienvenue"
-  description="Découvrez KRAAK et choisissez votre prochain point d’entrée."
+  eyebrow="KRAAK Mobile"
+  title="Bienvenue dans votre espace participant"
+  description="Accédez rapidement à vos programmes, ressources et points de contact en un seul endroit."
 >
   <section
     class="rounded-card border-brand-blue/12 bg-brand-white shadow-card flex flex-col gap-3 border p-5"
   >
-    <p class="text-sm leading-6 text-neutral-700">
-      Le shell mobile est prêt à accueillir les parcours participant, les
-      contenus et les demandes d’accompagnement.
-    </p>
+    <div class="flex flex-col gap-3">
+      <ion-button
+        routerLink="/tabs/accueil"
+        expand="block"
+        class="kraak-primary-button"
+      >
+        Démarrer
+      </ion-button>
+      <ion-button
+        routerLink="/sign-in"
+        expand="block"
+        fill="outline"
+        class="kraak-secondary-button"
+      >
+        Se connecter
+      </ion-button>
+    </div>
+  </section>
 
-    <ion-button
-      routerLink="/sign-in"
-      expand="block"
-      class="kraak-primary-button"
-    >
-      Aller à la connexion
-    </ion-button>
+  <section class="grid gap-3">
+    <kraak-feature-card
+      tag="Programmes"
+      title="Suivez votre progression"
+      description="Retrouvez vos étapes clés et les prochaines actions recommandées."
+    />
 
-    <ion-button
-      routerLink="/tabs/accueil"
-      expand="block"
-      fill="outline"
-      class="kraak-secondary-button"
-    >
-      Ouvrir l’espace mobile
-    </ion-button>
+    <kraak-feature-card
+      tag="Support"
+      tone="accent"
+      title="Gardez un canal direct"
+      description="Contactez facilement l'équipe KRAAK pour obtenir une orientation personnalisée."
+    />
   </section>
 </kraak-page-shell>

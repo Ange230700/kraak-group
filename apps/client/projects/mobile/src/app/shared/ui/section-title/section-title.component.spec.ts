@@ -1,0 +1,25 @@
+import { TestBed } from '@angular/core/testing';
+import { describe, beforeEach, expect, it } from 'vitest';
+import { SectionTitleComponent } from './section-title.component';
+
+describe('SectionTitleComponent', () => {
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [SectionTitleComponent],
+    }).compileComponents();
+  });
+
+  it('Given une section title When on renseigne les inputs Then il affiche le contenu', () => {
+    const fixture = TestBed.createComponent(SectionTitleComponent);
+    fixture.componentRef.setInput('overline', 'Découvrir');
+    fixture.componentRef.setInput('title', 'Bienvenue sur KRAAK');
+    fixture.componentRef.setInput('subtitle', 'Un accompagnement structuré.');
+    fixture.detectChanges();
+
+    const text = fixture.nativeElement.textContent;
+
+    expect(text).toContain('Découvrir');
+    expect(text).toContain('Bienvenue sur KRAAK');
+    expect(text).toContain('Un accompagnement structuré.');
+  });
+});
