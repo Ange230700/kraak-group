@@ -11,26 +11,27 @@ Avant de lancer quoi que ce soit :
 1. **Node.js 24+** installé (`node -v` pour vérifier)
 2. **pnpm 10+** activé (`pnpm -v` pour vérifier)
 3. Dépendances installées : `pnpm install` à la racine
-4. Fichiers `.env` configurés (voir ci-dessous)
+4. Fichiers `.env.local` configurés (voir ci-dessous)
 
 ### Configurer les variables d'environnement
 
 ```bash
 # Backend
-cp apps/api/.env.example apps/api/.env
+cp apps/api/.env.example apps/api/.env.local
 
 # Client (optionnel, utile pour Playwright / scripts)
-cp apps/client/.env.example apps/client/.env
+cp apps/client/.env.example apps/client/.env.local
 ```
 
-Remplir les valeurs — voir [`ENVIRONMENT_VARIABLES.md`](ENVIRONMENT_VARIABLES.md) pour la référence complète.
+Compléter aussi `supabase/.env.local` si vous utilisez un projet Supabase local.
+Voir [`ENVIRONMENT_VARIABLES.md`](ENVIRONMENT_VARIABLES.md) pour la référence complète.
 
 **Variables minimales pour développer en local :**
 
 | Variable              | Fichier         | Exemple                        |
 | --------------------- | --------------- | ------------------------------ |
-| `SUPABASE_URL`        | `apps/api/.env` | `http://127.0.0.1:54321`       |
-| `SUPABASE_SECRET_KEY` | `apps/api/.env` | clé fournie par Supabase local |
+| `SUPABASE_URL`        | `apps/api/.env.local` | `http://127.0.0.1:54321` |
+| `SUPABASE_SECRET_KEY` | `apps/api/.env.local` | clé fournie par Supabase local |
 
 ---
 
@@ -42,7 +43,7 @@ pnpm dev:web
 
 - URL : **http://localhost:4200**
 - Hot-reload : oui (les modifications dans `apps/client/projects/web/` se reflètent automatiquement)
-- Commande sous-jacente : `ng serve web`
+- Commande sous-jacente : `ng serve web --configuration local`
 - Option utile pour les tests/outils en PowerShell :
   `$env:KRAAK_WEB_PORT='4201'; pnpm.cmd --filter @kraak/client exec playwright test`
 
@@ -70,7 +71,7 @@ pnpm dev:api
 ```
 
 - URL : **http://localhost:3000**
-- Hot-reload : oui (`nest start --watch`)
+- Hot-reload : oui (`cross-env NODE_ENV=local nest start --watch`)
 - Tester que ça tourne : `curl http://localhost:3000` (devrait retourner une réponse)
 
 ### Structure du code API
@@ -103,7 +104,8 @@ pnpm dev:mobile
 
 - URL : **http://localhost:4300**
 - Hot-reload : oui
-- Commande sous-jacente : `ng serve mobile --port 4300` via la commande racine `pnpm dev:mobile`
+- Commande sous-jacente : `ng serve mobile --configuration local --port 4300`
+  via la commande racine `pnpm dev:mobile`
 
 > **Note :** Pour tester sur un appareil physique ou un émulateur, il faut configurer Capacitor séparément. Ce mode lance uniquement l'aperçu web.
 
@@ -132,6 +134,14 @@ Si le site web local consomme l'API et tourne sur un port différent de `4200`,
 penser aussi à aligner `CORS_ALLOWED_ORIGINS` côté API locale.
 
 Si vous avez besoin de lancer une seule app, les commandes `pnpm dev:web`, `pnpm dev:mobile` et `pnpm dev:api` restent disponibles.
+
+Pour la recette / préproduction, les scripts dédiés sont :
+
+```bash
+pnpm dev:api:staging
+pnpm dev:web:staging
+pnpm dev:mobile:staging
+```
 
 > Si le port `3000` est déjà occupé, `pnpm dev` ne relance pas l'API sur un autre port, car le front local continue d'attendre l'API sur `http://localhost:3000`.
 
@@ -220,8 +230,9 @@ pnpm lint:api
 
 ### Les variables d'environnement ne sont pas reconnues
 
-- Vérifier que le fichier `.env` existe à la racine
-- Redémarrer le serveur de développement après avoir modifié un `.env`
+- Vérifier que `apps/api/.env.local`, `apps/client/.env.local` et, si besoin,
+  `supabase/.env.local` existent bien
+- Redémarrer le serveur de développement après avoir modifié un fichier `.env.local`
 
 ### Vite échoue avec `EPERM ... .angular/cache ... deps_temp`
 

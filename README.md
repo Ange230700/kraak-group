@@ -27,11 +27,16 @@ pnpm install
 ### Configurer les variables d'environnement
 
 ```bash
-# Copier l'exemple à la racine
-cp .env.example .env
+# API locale
+cp apps/api/.env.example apps/api/.env.local
+
+# Client local (runtime-config, scripts, E2E)
+cp apps/client/.env.example apps/client/.env.local
 ```
 
-Remplir les valeurs manquantes — voir [`docs/runbooks/ENVIRONMENT_VARIABLES.md`](docs/runbooks/ENVIRONMENT_VARIABLES.md).
+Remplir les valeurs manquantes et compléter aussi `supabase/.env.local` si vous
+travaillez avec Supabase en local — voir
+[`docs/runbooks/ENVIRONMENT_VARIABLES.md`](docs/runbooks/ENVIRONMENT_VARIABLES.md).
 
 ### Lancer en mode développement
 
@@ -100,11 +105,18 @@ Pour les détails, voir [`ARCHITECTURE.md`](ARCHITECTURE.md).
 | `pnpm test`           | Lancer tous les tests disponibles                         |
 | `pnpm test:workspace` | Vérifier le workflow du runner de test racine             |
 | `pnpm dev:web`        | Lancer le site web en dev (port 4200 par défaut)          |
+| `pnpm dev:web:staging` | Lancer le site web avec la configuration staging         |
 | `pnpm dev:api`        | Lancer l'API en dev (port 3000)                           |
+| `pnpm dev:api:staging` | Lancer l'API avec la configuration staging |
 | `pnpm dev:mobile`     | Lancer l'app mobile en dev (port 4300)                    |
+| `pnpm dev:mobile:staging` | Lancer l'app mobile avec la configuration staging    |
 | `pnpm build:web`      | Builder le site web                                       |
+| `pnpm build:web:local` | Builder le site web avec l'environnement local           |
+| `pnpm build:web:staging` | Builder le site web avec l'environnement staging      |
 | `pnpm build:api`      | Builder l'API                                             |
 | `pnpm build:mobile`   | Builder l'app mobile                                      |
+| `pnpm build:mobile:local` | Builder l'app mobile avec l'environnement local      |
+| `pnpm build:mobile:staging` | Builder l'app mobile avec l'environnement staging |
 | `pnpm test:api`       | Tests unitaires API                                       |
 | `pnpm typecheck`      | Vérifier le typage web, mobile et API                     |
 | `pnpm test:unit`      | Tests unitaires client                                    |

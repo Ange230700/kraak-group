@@ -9,8 +9,11 @@ const runtimeSiteUrl = runtimeGlobals.process?.env?.['PUBLIC_SITE_URL']
   : defaultSiteUrl;
 
 export const environment = {
+  environmentName: 'production',
   production: true,
   siteUrl: runtimeSiteUrl,
   apiBaseUrl: '',
+  supabaseUrl: '',
+  supabasePublishableKey: '',
   ga4Id: '',
 };
