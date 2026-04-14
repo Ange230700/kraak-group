@@ -4,6 +4,9 @@ const config: CapacitorConfig = {
   appId: 'com.kraak.mobile',
   appName: 'KRAAK',
   webDir: 'dist/mobile/browser',
+  server: {
+    androidScheme: 'https',
+  },
 };
 
 export default config;
