@@ -1,8 +1,46 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>Bienvenue</ion-title>
-  </ion-toolbar>
-</ion-header>
-<ion-content class="ion-padding">
-  <p>Découvrez KRAAK et commencez votre parcours.</p>
+<ion-content class="bg-brand-page">
+  <main class="flex min-h-full flex-col gap-6 px-4 py-8">
+    <section
+      class="rounded-card bg-brand-white shadow-card border-brand-blue/12 border p-5"
+    >
+      <kraak-section-title
+        overline="KRAAK Mobile"
+        title="Bienvenue dans votre espace participant"
+        subtitle="Accédez rapidement à vos programmes, ressources et points de contact en un seul endroit."
+      />
+
+      <div class="mt-5 flex flex-col gap-3">
+        <ion-button
+          routerLink="/tabs/accueil"
+          expand="block"
+          class="kraak-primary-button"
+        >
+          Démarrer
+        </ion-button>
+        <ion-button
+          routerLink="/auth/sign-in"
+          expand="block"
+          fill="outline"
+          class="kraak-secondary-button"
+        >
+          Se connecter
+        </ion-button>
+      </div>
+    </section>
+
+    <section class="grid gap-3">
+      <kraak-feature-card
+        tag="Programmes"
+        title="Suivez votre progression"
+        description="Retrouvez vos étapes clés et les prochaines actions recommandées."
+      />
+
+      <kraak-feature-card
+        tag="Support"
+        tone="accent"
+        title="Gardez un canal direct"
+        description="Contactez facilement l'équipe KRAAK pour obtenir une orientation personnalisée."
+      />
+    </section>
+  </main>
 </ion-content>
