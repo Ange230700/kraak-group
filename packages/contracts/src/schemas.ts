@@ -23,6 +23,61 @@ export const ContactSubmissionResultSchema = z
   .strict();
 
 // ---------------------------------------------------------------------------
+// Auth / Session
+// ---------------------------------------------------------------------------
+const NullableOptionalTrimmedStringSchema = z
+  .union([z.string().trim().min(1), z.null()])
+  .optional()
+  .transform((value) => value ?? null);
+
+const NullableOptionalRedirectSchema = z
+  .union([z.string().trim().url(), z.null()])
+  .optional()
+  .transform((value) => value ?? null);
+
+export const SignInRequestSchema = z
+  .object({
+    email: z.string().trim().email(),
+    password: z.string().min(8).max(128),
+  })
+  .strict();
+
+export const SignUpRequestSchema = z
+  .object({
+    email: z.string().trim().email(),
+    password: z.string().min(8).max(128),
+    firstName: z.string().trim().min(1).max(80),
+    lastName: z.string().trim().min(1).max(80),
+    phone: NullableOptionalTrimmedStringSchema,
+    preferredContactChannel: NullableOptionalTrimmedStringSchema,
+    redirectTo: NullableOptionalRedirectSchema,
+  })
+  .strict();
+
+export const RefreshSessionRequestSchema = z
+  .object({
+    refreshToken: z.string().trim().min(1),
+  })
+  .strict();
+
+export const PasswordResetRequestSchema = z
+  .object({
+    email: z.string().trim().email(),
+    redirectTo: NullableOptionalRedirectSchema,
+  })
+  .strict();
+
+export const AuthSessionTokensSchema = z
+  .object({
+    accessToken: z.string().trim().min(1),
+    refreshToken: z.string().trim().min(1),
+    expiresIn: z.number().int().positive(),
+    expiresAt: z.string().trim().min(1),
+    tokenType: z.string().trim().min(1),
+  })
+  .strict();
+
+// ---------------------------------------------------------------------------
 // AppUser
 // ---------------------------------------------------------------------------
 export const AppUserSchema = z.object({
@@ -74,6 +129,42 @@ export const CreateParticipantSchema = ParticipantSchema.omit({
 });
 
 export const UpdateParticipantSchema = CreateParticipantSchema.partial();
+
+export const AuthProfileSchema = z
+  .object({
+    appUser: AppUserSchema,
+    participant: ParticipantSchema.nullable(),
+  })
+  .strict();
+
+export const AuthSessionBundleSchema = z
+  .object({
+    session: AuthSessionTokensSchema,
+    profile: AuthProfileSchema,
+  })
+  .strict();
+
+export const SignUpResponseSchema = z
+  .object({
+    message: z.string().trim().min(1),
+    requiresEmailConfirmation: z.boolean(),
+    session: AuthSessionTokensSchema.nullable(),
+    profile: AuthProfileSchema.nullable(),
+  })
+  .strict();
+
+export const PasswordResetResponseSchema = z
+  .object({
+    success: z.boolean(),
+    message: z.string().trim().min(1),
+  })
+  .strict();
+
+export const AuthSessionContextSchema = z
+  .object({
+    profile: AuthProfileSchema,
+  })
+  .strict();
 
 // ---------------------------------------------------------------------------
 // Program

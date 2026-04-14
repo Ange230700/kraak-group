@@ -85,4 +85,43 @@ describe('SupabaseService', () => {
 
     expect(() => service.getClient()).toThrow(/client Supabase/);
   });
+
+  // Given une clé publishable Supabase est disponible
+  // When createAuthClient est appelé
+  // Then un client auth éphémère sans persistance locale est créé
+  it('Given une clé publishable disponible, When createAuthClient est appelé, Then un client auth éphémère est créé', async () => {
+    jest.mocked(createClient).mockReturnValue(mockClient as never);
+
+    const service = await buildService({
+      SUPABASE_URL: 'https://example.supabase.co',
+      SUPABASE_SECRET_KEY: 'service-role-key',
+      SUPABASE_PUBLISHABLE_KEY: 'publishable-key',
+    });
+
+    expect(service.createAuthClient()).toBe(mockClient);
+    expect(createClient).toHaveBeenCalledWith(
+      'https://example.supabase.co',
+      'publishable-key',
+      {
+        auth: {
+          autoRefreshToken: false,
+          detectSessionInUrl: false,
+          persistSession: false,
+        },
+      },
+    );
+  });
+
+  // Given aucune clé auth Supabase n'est disponible
+  // When createAuthClient est appelé
+  // Then une erreur explicite est levée
+  it('Given aucune clé auth n’est disponible, When createAuthClient est appelé, Then une erreur explicite est levée', async () => {
+    const service = await buildService({
+      SUPABASE_URL: 'https://example.supabase.co',
+      SUPABASE_SECRET_KEY: undefined,
+      SUPABASE_PUBLISHABLE_KEY: undefined,
+    });
+
+    expect(() => service.createAuthClient()).toThrow(/client Auth Supabase/);
+  });
 });

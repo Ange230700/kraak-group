@@ -28,15 +28,16 @@ dans le monorepo. Ne jamais commiter de secrets dans le dépôt.
 
 Variables lues par `process.env` dans le code NestJS :
 
-| Variable               | Description                        | Exemple local                                 |
-| ---------------------- | ---------------------------------- | --------------------------------------------- |
-| `NODE_ENV`             | Environnement d'exécution          | `local`                                       |
-| `PORT`                 | Port d'écoute de l'API             | `3000`                                        |
-| `SUPABASE_URL`         | URL du projet Supabase             | `http://127.0.0.1:54321`                      |
-| `SUPABASE_SECRET_KEY`  | Clé service role (secret)          | —                                             |
-| `RESEND_API_KEY`       | Clé API Resend (secret)            | —                                             |
-| `CONTACT_TO_EMAIL`     | Email destinataire des formulaires | `contact@kraak.org`                           |
-| `CORS_ALLOWED_ORIGINS` | Origines autorisées (virgule)      | `http://localhost:4200,http://localhost:4300` |
+| Variable                   | Description                                  | Exemple local                                 |
+| -------------------------- | -------------------------------------------- | --------------------------------------------- |
+| `NODE_ENV`                 | Environnement d'exécution                    | `local`                                       |
+| `PORT`                     | Port d'écoute de l'API                       | `3000`                                        |
+| `SUPABASE_URL`             | URL du projet Supabase                       | `http://127.0.0.1:54321`                      |
+| `SUPABASE_PUBLISHABLE_KEY` | Clé publique Supabase pour les flux auth API | —                                             |
+| `SUPABASE_SECRET_KEY`      | Clé service role (secret)                    | —                                             |
+| `RESEND_API_KEY`           | Clé API Resend (secret)                      | —                                             |
+| `CONTACT_TO_EMAIL`         | Email destinataire des formulaires           | `contact@kraak.org`                           |
+| `CORS_ALLOWED_ORIGINS`     | Origines autorisées (virgule)                | `http://localhost:4200,http://localhost:4300` |
 
 Ordre de chargement côté API :
 
@@ -50,6 +51,12 @@ Scripts utiles côté `apps/api/package.json` :
 - `pnpm start:dev` reste un alias vers `start:local`
 - `pnpm start:staging` lance NestJS avec `NODE_ENV=staging`
 - `pnpm start:prod` s'appuie sur les variables injectées par l'hébergeur
+
+Note Auth API :
+
+- `SUPABASE_SECRET_KEY` reste nécessaire pour lire les profils et les tables MVP
+- `SUPABASE_PUBLISHABLE_KEY` est recommandé pour les endpoints `auth/*`
+  exposés par l'API ; si elle manque, l'API retombe sur `SUPABASE_SECRET_KEY`
 
 Alias utiles à la racine :
 

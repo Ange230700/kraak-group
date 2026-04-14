@@ -17,11 +17,20 @@ async function bootstrap() {
   const swaggerConfig = new DocumentBuilder()
     .setTitle('KRAAK API')
     .setDescription(
-      'API backend du projet KRAAK — formation, gestion de projet et conseil en immigration.',
+      'API backend du projet KRAAK â€” formation, gestion de projet et conseil en immigration.',
     )
     .setVersion('0.1.0')
     .addTag('Health', "Vérification de l'état de l'API")
+    .addTag('Auth', 'Authentification, session et récupération de compte')
     .addTag('Support', 'Formulaire de contact et demandes de support')
+    .addBearerAuth(
+      {
+        type: 'http',
+        scheme: 'bearer',
+        bearerFormat: 'JWT',
+      },
+      'access-token',
+    )
     .build();
 
   const document = SwaggerModule.createDocument(app, swaggerConfig);

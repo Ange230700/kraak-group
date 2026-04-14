@@ -18,6 +18,20 @@ Ce socle couvre :
 - URLs de redirection web/mobile du MVP
 - templates email locaux pour confirmation et récupération
 - bootstrap automatique de `public.app_user` depuis `auth.users`
+- compatibilité avec les endpoints `auth/*` de l'API NestJS
+
+## Variables côté API
+
+Pour les endpoints `auth/*` ajoutés dans `AUT-02`, l'API lit :
+
+- `SUPABASE_URL`
+- `SUPABASE_SECRET_KEY`
+- `SUPABASE_PUBLISHABLE_KEY` quand elle est disponible
+
+La clé publishable est recommandée pour les flux `sign-in`, `sign-up`,
+`refresh`, `password-reset` et `session`. En fallback, l'API peut utiliser
+`SUPABASE_SECRET_KEY`, mais le comportement cible reste de garder un client auth
+éphémère distinct du client admin.
 
 ## Configuration hébergée à répliquer
 

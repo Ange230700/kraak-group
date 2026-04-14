@@ -36,4 +36,25 @@ export class SupabaseService implements OnModuleInit {
     }
     return this.client;
   }
+
+  createAuthClient(): SupabaseClient {
+    const url = this.configService.get<string>('SUPABASE_URL');
+    const authKey =
+      this.configService.get<string>('SUPABASE_PUBLISHABLE_KEY') ??
+      this.configService.get<string>('SUPABASE_SECRET_KEY');
+
+    if (!url || !authKey) {
+      throw new Error(
+        "Le client Auth Supabase n'est pas disponible â€” vérifiez SUPABASE_URL et SUPABASE_PUBLISHABLE_KEY ou SUPABASE_SECRET_KEY",
+      );
+    }
+
+    return createClient(url, authKey, {
+      auth: {
+        autoRefreshToken: false,
+        detectSessionInUrl: false,
+        persistSession: false,
+      },
+    });
+  }
 }

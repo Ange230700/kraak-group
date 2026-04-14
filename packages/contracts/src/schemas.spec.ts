@@ -3,6 +3,16 @@ import * as schemasModule from './schemas';
 import {
   ContactFormSchema,
   ContactSubmissionResultSchema,
+  AuthProfileSchema,
+  AuthSessionBundleSchema,
+  AuthSessionContextSchema,
+  AuthSessionTokensSchema,
+  PasswordResetRequestSchema,
+  PasswordResetResponseSchema,
+  RefreshSessionRequestSchema,
+  SignInRequestSchema,
+  SignUpRequestSchema,
+  SignUpResponseSchema,
   CreateAppUserSchema,
   CreateParticipantSchema,
   CreateProgramSchema,
@@ -98,6 +108,211 @@ describe('ContactSubmissionResultSchema', () => {
       ContactSubmissionResultSchema.safeParse({
         success: true,
         message: 'Votre message a bien été reçu.',
+      }).success,
+    ).toBe(true);
+  });
+});
+
+// ---------------------------------------------------------------------------
+// Auth / Session
+// ---------------------------------------------------------------------------
+describe('SignInRequestSchema', () => {
+  const valid = {
+    email: 'alice@example.com',
+    password: 'motdepasse-securise',
+  };
+
+  it('should accept valid credentials', () => {
+    expect(SignInRequestSchema.safeParse(valid).success).toBe(true);
+  });
+
+  it('should reject a short password', () => {
+    expect(
+      SignInRequestSchema.safeParse({ ...valid, password: 'court' }).success,
+    ).toBe(false);
+  });
+});
+
+describe('SignUpRequestSchema', () => {
+  const valid = {
+    email: 'alice@example.com',
+    password: 'motdepasse-securise',
+    firstName: 'Alice',
+    lastName: 'Dupont',
+    phone: null,
+    preferredContactChannel: null,
+    redirectTo: 'kraak://auth/callback',
+  };
+
+  it('should accept a participant signup payload', () => {
+    expect(SignUpRequestSchema.safeParse(valid).success).toBe(true);
+  });
+
+  it('should trim textual fields', () => {
+    const result = SignUpRequestSchema.safeParse({
+      ...valid,
+      firstName: '  Alice  ',
+      lastName: '  Dupont  ',
+    });
+
+    expect(result.success).toBe(true);
+    if (!result.success) {
+      throw new Error('Expected SignUpRequestSchema to trim valid data.');
+    }
+
+    expect(result.data.firstName).toBe('Alice');
+    expect(result.data.lastName).toBe('Dupont');
+  });
+
+  it('should reject an invalid redirect target', () => {
+    expect(
+      SignUpRequestSchema.safeParse({ ...valid, redirectTo: 'pas-un-lien' })
+        .success,
+    ).toBe(false);
+  });
+});
+
+describe('RefreshSessionRequestSchema', () => {
+  it('should accept a refresh token payload', () => {
+    expect(
+      RefreshSessionRequestSchema.safeParse({ refreshToken: 'refresh-token' })
+        .success,
+    ).toBe(true);
+  });
+});
+
+describe('PasswordResetRequestSchema', () => {
+  it('should accept an email with redirect target', () => {
+    expect(
+      PasswordResetRequestSchema.safeParse({
+        email: 'alice@example.com',
+        redirectTo: 'http://localhost:4300/auth/reset',
+      }).success,
+    ).toBe(true);
+  });
+
+  it('should reject an invalid email', () => {
+    expect(
+      PasswordResetRequestSchema.safeParse({
+        email: 'alice',
+        redirectTo: 'http://localhost:4300/auth/reset',
+      }).success,
+    ).toBe(false);
+  });
+});
+
+describe('AuthSessionTokensSchema', () => {
+  it('should accept a normalized token bundle', () => {
+    expect(
+      AuthSessionTokensSchema.safeParse({
+        accessToken: 'access-token',
+        refreshToken: 'refresh-token',
+        expiresIn: 3600,
+        expiresAt: '2026-04-14T12:00:00.000Z',
+        tokenType: 'bearer',
+      }).success,
+    ).toBe(true);
+  });
+});
+
+describe('AuthProfileSchema', () => {
+  it('should accept a profile with app user and optional participant', () => {
+    expect(
+      AuthProfileSchema.safeParse({
+        appUser: {
+          id: 'user-1',
+          email: 'alice@example.com',
+          role: 'participant',
+          firstName: 'Alice',
+          lastName: 'Dupont',
+          phone: null,
+          preferredContactChannel: null,
+          isActive: true,
+          createdAt: '2026-04-14T12:00:00.000Z',
+          updatedAt: '2026-04-14T12:00:00.000Z',
+        },
+        participant: null,
+      }).success,
+    ).toBe(true);
+  });
+});
+
+describe('AuthSessionBundleSchema', () => {
+  it('should accept session tokens plus profile', () => {
+    expect(
+      AuthSessionBundleSchema.safeParse({
+        session: {
+          accessToken: 'access-token',
+          refreshToken: 'refresh-token',
+          expiresIn: 3600,
+          expiresAt: '2026-04-14T12:00:00.000Z',
+          tokenType: 'bearer',
+        },
+        profile: {
+          appUser: {
+            id: 'user-1',
+            email: 'alice@example.com',
+            role: 'participant',
+            firstName: 'Alice',
+            lastName: 'Dupont',
+            phone: null,
+            preferredContactChannel: null,
+            isActive: true,
+            createdAt: '2026-04-14T12:00:00.000Z',
+            updatedAt: '2026-04-14T12:00:00.000Z',
+          },
+          participant: null,
+        },
+      }).success,
+    ).toBe(true);
+  });
+});
+
+describe('SignUpResponseSchema', () => {
+  it('should accept a pending-confirmation signup response', () => {
+    expect(
+      SignUpResponseSchema.safeParse({
+        message:
+          'Votre compte a été créé. Vérifiez votre email pour confirmer votre accès.',
+        requiresEmailConfirmation: true,
+        session: null,
+        profile: null,
+      }).success,
+    ).toBe(true);
+  });
+});
+
+describe('PasswordResetResponseSchema', () => {
+  it('should accept a reset acknowledgement', () => {
+    expect(
+      PasswordResetResponseSchema.safeParse({
+        success: true,
+        message:
+          'Si cette adresse existe, un email de réinitialisation vient d’être envoyé.',
+      }).success,
+    ).toBe(true);
+  });
+});
+
+describe('AuthSessionContextSchema', () => {
+  it('should accept the current authenticated profile payload', () => {
+    expect(
+      AuthSessionContextSchema.safeParse({
+        profile: {
+          appUser: {
+            id: 'user-1',
+            email: 'alice@example.com',
+            role: 'participant',
+            firstName: 'Alice',
+            lastName: 'Dupont',
+            phone: null,
+            preferredContactChannel: null,
+            isActive: true,
+            createdAt: '2026-04-14T12:00:00.000Z',
+            updatedAt: '2026-04-14T12:00:00.000Z',
+          },
+          participant: null,
+        },
       }).success,
     ).toBe(true);
   });

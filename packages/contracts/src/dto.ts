@@ -32,6 +32,67 @@ export interface ContactSubmissionResultDto {
 }
 
 // ---------------------------------------------------------------------------
+// Auth / Session
+// ---------------------------------------------------------------------------
+export interface SignInRequestDto {
+  email: string;
+  password: string;
+}
+
+export interface SignUpRequestDto {
+  email: string;
+  password: string;
+  firstName: string;
+  lastName: string;
+  phone?: string | null;
+  preferredContactChannel?: string | null;
+  redirectTo?: string | null;
+}
+
+export interface RefreshSessionRequestDto {
+  refreshToken: string;
+}
+
+export interface PasswordResetRequestDto {
+  email: string;
+  redirectTo?: string | null;
+}
+
+export interface AuthSessionTokensDto {
+  accessToken: string;
+  refreshToken: string;
+  expiresIn: number;
+  expiresAt: string;
+  tokenType: string;
+}
+
+export interface AuthProfileDto {
+  appUser: AppUserDto;
+  participant: ParticipantDto | null;
+}
+
+export interface AuthSessionBundleDto {
+  session: AuthSessionTokensDto;
+  profile: AuthProfileDto;
+}
+
+export interface SignUpResponseDto {
+  message: string;
+  requiresEmailConfirmation: boolean;
+  session: AuthSessionTokensDto | null;
+  profile: AuthProfileDto | null;
+}
+
+export interface PasswordResetResponseDto {
+  success: boolean;
+  message: string;
+}
+
+export interface AuthSessionContextDto {
+  profile: AuthProfileDto;
+}
+
+// ---------------------------------------------------------------------------
 // AppUser
 // ---------------------------------------------------------------------------
 export interface AppUserDto {
