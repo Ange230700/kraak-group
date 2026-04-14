@@ -13,8 +13,14 @@ describe('Mobile WelcomePage', () => {
     }).compileComponents();
   });
 
-  it('should create', () => {
+  it('Given la page welcome When elle est rendue Then elle affiche les CTA principaux', () => {
     const fixture = TestBed.createComponent(WelcomePage);
-    expect(fixture.componentInstance).toBeTruthy();
+    fixture.detectChanges();
+
+    const text = fixture.nativeElement.textContent;
+
+    expect(text).toContain('Bienvenue dans votre espace participant');
+    expect(text).toContain('Démarrer');
+    expect(text).toContain('Se connecter');
   });
 });

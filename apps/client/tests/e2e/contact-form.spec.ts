@@ -74,14 +74,14 @@ test.describe(`Page contact — comportement formulaire`, () => {
       ).toBeVisible({ timeout: 10_000 });
     }).toPass({ timeout: 60_000 });
 
-    await page.evaluate(() => new Promise((resolve) => requestAnimationFrame(resolve)));
-
-    expect(
-      runtimeErrors.filter((message) =>
-        /ResizeObserver loop completed with undelivered notifications\.|An ErrorEvent with no error occurred\./.test(
-          message,
+    await expect(async () => {
+      expect(
+        runtimeErrors.filter((message) =>
+          /ResizeObserver loop completed with undelivered notifications\.|An ErrorEvent with no error occurred\./.test(
+            message,
+          ),
         ),
-      ),
-    ).toEqual([]);
+      ).toEqual([]);
+    }).toPass({ timeout: 2_000 });
   });
 });
