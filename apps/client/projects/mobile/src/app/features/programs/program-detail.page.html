@@ -8,7 +8,25 @@
     class="rounded-card border-brand-blue/12 bg-brand-white shadow-card border p-5"
   >
     <p class="text-sm leading-6 text-neutral-700">
-      Détail du programme sélectionné.
+      Ce shell ouvre les contenus détaillés du programme sans quitter la
+      navigation principale.
     </p>
+
+    <div class="mt-4 flex flex-col gap-3">
+      <ion-button
+        routerLink="/tabs/programmes/demo/sessions/session-ouverte"
+        expand="block"
+        class="kraak-primary-button"
+      >
+        Ouvrir une session exemple
+      </ion-button>
+
+      <a
+        routerLink="/tabs/programmes/ressources/guide-demarrage"
+        class="kraak-inline-link"
+      >
+        Ouvrir une ressource liée
+      </a>
+    </div>
   </section>
 </kraak-page-shell>

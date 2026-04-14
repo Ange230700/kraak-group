@@ -11,7 +11,6 @@ import { addIcons } from 'ionicons';
 import {
   homeOutline,
   bookOutline,
-  folderOpenOutline,
   megaphoneOutline,
   helpCircleOutline,
 } from 'ionicons/icons';
@@ -26,7 +25,6 @@ interface MobileTabLink {
 addIcons({
   homeOutline,
   bookOutline,
-  folderOpenOutline,
   megaphoneOutline,
   helpCircleOutline,
 });
@@ -57,12 +55,6 @@ export class TabsLayout {
       tab: 'programmes',
       href: '/tabs/programmes',
       icon: 'book-outline',
-    },
-    {
-      label: 'Ressources',
-      tab: 'ressources',
-      href: '/tabs/ressources',
-      icon: 'folder-open-outline',
     },
     {
       label: 'Annonces',

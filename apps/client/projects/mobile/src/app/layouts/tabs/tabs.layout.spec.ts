@@ -48,11 +48,11 @@ describe('TabsLayout', () => {
     expect(outlet).toBeTruthy();
   });
 
-  it('should render five tab buttons', () => {
+  it('Given the frozen MVP shell, when the tabs layout renders, then only four primary tabs are exposed', () => {
     const fixture = TestBed.createComponent(TabsLayout);
     fixture.detectChanges();
     const buttons = fixture.nativeElement.querySelectorAll('ion-tab-button');
-    expect(buttons.length).toBe(5);
+    expect(buttons.length).toBe(4);
   });
 
   it('should display correct tab labels', () => {
@@ -64,13 +64,7 @@ describe('TabsLayout', () => {
     const texts = labels.map((l) =>
       l.innerHTML.replace(/<!--.*?-->/g, '').trim(),
     );
-    expect(texts).toEqual([
-      'Accueil',
-      'Programmes',
-      'Ressources',
-      'Annonces',
-      'Support',
-    ]);
+    expect(texts).toEqual(['Accueil', 'Programmes', 'Annonces', 'Support']);
   });
 
   it('should bind each tab button to an explicit mobile route', () => {
@@ -80,7 +74,6 @@ describe('TabsLayout', () => {
     expect(hrefs).toEqual([
       '/tabs/accueil',
       '/tabs/programmes',
-      '/tabs/ressources',
       '/tabs/annonces',
       '/tabs/support',
     ]);

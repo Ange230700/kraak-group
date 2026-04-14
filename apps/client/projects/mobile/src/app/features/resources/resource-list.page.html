@@ -1,7 +1,8 @@
 <kraak-page-shell
   eyebrow="Références"
   title="Ressources"
-  description="Accédez rapidement aux contenus utiles pour vos démarches."
+  description="Accédez rapidement aux contenus utiles depuis l'onglet Programmes."
+  backHref="/tabs/programmes"
 >
   <section
     class="rounded-card border-brand-cyan/18 bg-brand-white shadow-card border p-5"
@@ -9,5 +10,13 @@
     <p class="text-sm leading-6 text-neutral-700">
       Ressources et documents utiles.
     </p>
+
+    <ion-button
+      routerLink="/tabs/programmes/ressources/guide-demarrage"
+      expand="block"
+      class="kraak-primary-button mt-4"
+    >
+      Ouvrir une ressource exemple
+    </ion-button>
   </section>
 </kraak-page-shell>

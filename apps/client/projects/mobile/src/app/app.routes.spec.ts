@@ -25,23 +25,50 @@ describe('Mobile routes', () => {
     expect(wildcard?.redirectTo).toBe('tabs/accueil');
   });
 
-  it('should define tab children routes', () => {
+  it('Given the participant shell, when the tabs route loads, then it exposes only the four frozen MVP tabs', () => {
     const tabsRoute = routes.find((r) => r.path === 'tabs');
     const childPaths = tabsRoute?.children?.map((c) => c.path);
+
+    expect(childPaths).not.toContain('ressources');
     expect(childPaths).toContain('accueil');
     expect(childPaths).toContain('programmes');
     expect(childPaths).toContain('annonces');
     expect(childPaths).toContain('support');
-    expect(childPaths).toContain('ressources');
   });
 
-  it('should define a nested stack route for programme details', () => {
+  it('Given the Programmes tab, when nested content opens, then all detail routes stay inside the stack', () => {
     const tabsRoute = routes.find((r) => r.path === 'tabs');
     const programsRoute = tabsRoute?.children?.find(
       (child) => child.path === 'programmes',
     );
     const childPaths = programsRoute?.children?.map((child) => child.path);
 
-    expect(childPaths).toEqual(['', ':id']);
+    expect(childPaths).toEqual([
+      '',
+      'ressources',
+      'ressources/:resourceId',
+      ':programId/sessions/:sessionId',
+      ':programId',
+    ]);
+  });
+
+  it('Given the Annonces tab, when a participant opens a post, then the detail route is nested in the shell stack', () => {
+    const tabsRoute = routes.find((r) => r.path === 'tabs');
+    const announcementsRoute = tabsRoute?.children?.find(
+      (child) => child.path === 'annonces',
+    );
+    const childPaths = announcementsRoute?.children?.map((child) => child.path);
+
+    expect(childPaths).toEqual(['', ':announcementId']);
+  });
+
+  it('Given the Support tab, when a participant starts a request, then the request route stays inside the stack', () => {
+    const tabsRoute = routes.find((r) => r.path === 'tabs');
+    const supportRoute = tabsRoute?.children?.find(
+      (child) => child.path === 'support',
+    );
+    const childPaths = supportRoute?.children?.map((child) => child.path);
+
+    expect(childPaths).toEqual(['', 'demande']);
   });
 });

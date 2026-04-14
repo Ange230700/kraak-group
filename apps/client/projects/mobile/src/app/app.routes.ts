@@ -27,7 +27,22 @@ export const routes: Routes = [
               import('./features/programs/program-list.page'),
           },
           {
-            path: ':id',
+            path: 'ressources',
+            loadComponent: () =>
+              import('./features/resources/resource-list.page'),
+          },
+          {
+            path: 'ressources/:resourceId',
+            loadComponent: () =>
+              import('./features/resources/resource-detail.page'),
+          },
+          {
+            path: ':programId/sessions/:sessionId',
+            loadComponent: () =>
+              import('./features/programs/session-detail.page'),
+          },
+          {
+            path: ':programId',
             loadComponent: () =>
               import('./features/programs/program-detail.page'),
           },
@@ -35,16 +50,32 @@ export const routes: Routes = [
       },
       {
         path: 'annonces',
-        loadComponent: () =>
-          import('./features/announcements/announcement-list.page'),
+        children: [
+          {
+            path: '',
+            loadComponent: () =>
+              import('./features/announcements/announcement-list.page'),
+          },
+          {
+            path: ':announcementId',
+            loadComponent: () =>
+              import('./features/announcements/announcement-detail.page'),
+          },
+        ],
       },
       {
         path: 'support',
-        loadComponent: () => import('./features/support/support.page'),
-      },
-      {
-        path: 'ressources',
-        loadComponent: () => import('./features/resources/resource-list.page'),
+        children: [
+          {
+            path: '',
+            loadComponent: () => import('./features/support/support.page'),
+          },
+          {
+            path: 'demande',
+            loadComponent: () =>
+              import('./features/support/support-request.page'),
+          },
+        ],
       },
       { path: '', redirectTo: 'accueil', pathMatch: 'full' },
     ],

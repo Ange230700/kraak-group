@@ -76,41 +76,16 @@
     </section>
 
     <section class="grid gap-3 px-4">
-      <article
-        class="rounded-card border-brand-blue/12 bg-brand-white shadow-card border p-4"
-      >
-        <p
-          class="text-secondary text-xs font-semibold tracking-[0.24em] uppercase"
-        >
-          Formation
-        </p>
-        <h2 class="text-primary mt-2 text-lg font-semibold">
-          Avancez avec un cadre clair.
-        </h2>
-        <p class="mt-2 text-sm leading-6 text-neutral-700">
-          Accédez aux parcours et informations qui soutiennent votre
-          progression.
-        </p>
-      </article>
+      @for (highlight of highlights; track highlight.title) {
+        <kraak-feature-card
+          [tag]="highlight.tag"
+          [title]="highlight.title"
+          [description]="highlight.description"
+          [tone]="highlight.tone"
+        ></kraak-feature-card>
+      }
 
-      <article
-        class="rounded-card border-brand-cyan/18 bg-brand-white shadow-card border p-4"
-      >
-        <p
-          class="text-accent text-xs font-semibold tracking-[0.24em] uppercase"
-        >
-          Ressources
-        </p>
-        <h2 class="text-primary mt-2 text-lg font-semibold">
-          Gardez vos repères à portée de main.
-        </h2>
-        <p class="mt-2 text-sm leading-6 text-neutral-700">
-          Consultez rapidement les contenus utiles pour vos prochaines
-          démarches.
-        </p>
-      </article>
-
-      <a routerLink="/tabs/ressources" class="kraak-inline-link px-1">
+      <a [routerLink]="resourceLibraryHref" class="kraak-inline-link px-1">
         Voir les ressources utiles
       </a>
     </section>
