@@ -37,7 +37,7 @@
     "prepare": "husky"
   },
   "validate-branch-name": {
-    "pattern": "^(main|(feat|fix|chore|docs|test|refactor|ci|style|perf|revert|build)/.+)$",
+    "pattern": "^(main|(feat|fix|chore|docs|test|refactor|ci|style|perf|revert|build|copilot)/.+)$",
     "errorMsg": "Le nom de branche doit suivre le format <type>/<sujet> (ex: feat/login-page, fix/header-layout) ou être 'main'"
   },
   "config": {
