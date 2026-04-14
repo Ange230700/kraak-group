@@ -1,0 +1,25 @@
+{
+  "name": "KRAAK",
+  "short_name": "KRAAK",
+  "description": "Shell mobile KRAAK pour l'acces rapide aux parcours, ressources et accompagnements.",
+  "lang": "fr",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#122b4a",
+  "theme_color": "#122b4a",
+  "icons": [
+    {
+      "src": "icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}

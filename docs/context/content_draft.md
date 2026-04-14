@@ -110,8 +110,8 @@ Ce site utilise des cookies pour analyser le trafic.
 
 ## 5. Éléments de marque 🎨
 
-- Logo : à fournir
-- Favicon : à générer
+- Logo : variantes KRAAK intégrées
+- Favicon et icônes app : symbole KRAAK généré
 - Couleurs : noir, blanc, gris
 - Typographie : Inter + JetBrains Mono
 

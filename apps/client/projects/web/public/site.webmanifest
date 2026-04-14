@@ -1,0 +1,25 @@
+{
+  "name": "KRAAK",
+  "short_name": "KRAAK",
+  "description": "Formation, accompagnement et opportunites internationales pour jeunes professionnels et organisations.",
+  "lang": "fr",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#122b4a",
+  "theme_color": "#122b4a",
+  "icons": [
+    {
+      "src": "icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}
