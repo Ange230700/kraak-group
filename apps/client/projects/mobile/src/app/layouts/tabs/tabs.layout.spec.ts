@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import {
   IonIcon,
   IonLabel,
+  IonRouterOutlet,
   IonTabBar,
   IonTabButton,
   IonTabs,
@@ -20,7 +21,14 @@ describe('TabsLayout', () => {
     })
       .overrideComponent(TabsLayout, {
         remove: {
-          imports: [IonTabs, IonTabBar, IonTabButton, IonIcon, IonLabel],
+          imports: [
+            IonTabs,
+            IonRouterOutlet,
+            IonTabBar,
+            IonTabButton,
+            IonIcon,
+            IonLabel,
+          ],
         },
         add: { schemas: [CUSTOM_ELEMENTS_SCHEMA] },
       })
@@ -32,11 +40,19 @@ describe('TabsLayout', () => {
     expect(fixture.componentInstance).toBeTruthy();
   });
 
-  it('should render four tab buttons', () => {
+  it('should render the tabs stack outlet', () => {
+    const fixture = TestBed.createComponent(TabsLayout);
+    fixture.detectChanges();
+
+    const outlet = fixture.nativeElement.querySelector('ion-router-outlet');
+    expect(outlet).toBeTruthy();
+  });
+
+  it('should render five tab buttons', () => {
     const fixture = TestBed.createComponent(TabsLayout);
     fixture.detectChanges();
     const buttons = fixture.nativeElement.querySelectorAll('ion-tab-button');
-    expect(buttons.length).toBe(4);
+    expect(buttons.length).toBe(5);
   });
 
   it('should display correct tab labels', () => {
@@ -48,6 +64,25 @@ describe('TabsLayout', () => {
     const texts = labels.map((l) =>
       l.innerHTML.replace(/<!--.*?-->/g, '').trim(),
     );
-    expect(texts).toEqual(['Accueil', 'Programmes', 'Annonces', 'Support']);
+    expect(texts).toEqual([
+      'Accueil',
+      'Programmes',
+      'Ressources',
+      'Annonces',
+      'Support',
+    ]);
+  });
+
+  it('should bind each tab button to an explicit mobile route', () => {
+    const fixture = TestBed.createComponent(TabsLayout);
+    const hrefs = fixture.componentInstance['tabs'].map((tab) => tab.href);
+
+    expect(hrefs).toEqual([
+      '/tabs/accueil',
+      '/tabs/programmes',
+      '/tabs/ressources',
+      '/tabs/annonces',
+      '/tabs/support',
+    ]);
   });
 });

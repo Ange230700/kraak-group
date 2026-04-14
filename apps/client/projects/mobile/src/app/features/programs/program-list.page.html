@@ -1,8 +1,21 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>Programmes</ion-title>
-  </ion-toolbar>
-</ion-header>
-<ion-content class="ion-padding">
-  <p>Liste des programmes à venir.</p>
-</ion-content>
+<kraak-page-shell
+  eyebrow="Accompagnement"
+  title="Programmes"
+  description="Retrouvez les parcours KRAAK et ouvrez un détail dans la stack."
+>
+  <section
+    class="rounded-card border-brand-blue/12 bg-brand-white shadow-card flex flex-col gap-4 border p-5"
+  >
+    <p class="text-sm leading-6 text-neutral-700">
+      Liste des programmes à venir.
+    </p>
+
+    <ion-button
+      routerLink="/tabs/programmes/demo"
+      expand="block"
+      class="kraak-primary-button"
+    >
+      Ouvrir un programme exemple
+    </ion-button>
+  </section>
+</kraak-page-shell>

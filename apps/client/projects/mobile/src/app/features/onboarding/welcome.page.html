@@ -1,8 +1,31 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>Bienvenue</ion-title>
-  </ion-toolbar>
-</ion-header>
-<ion-content class="ion-padding">
-  <p>Découvrez KRAAK et commencez votre parcours.</p>
-</ion-content>
+<kraak-page-shell
+  eyebrow="Découverte"
+  title="Bienvenue"
+  description="Découvrez KRAAK et choisissez votre prochain point d’entrée."
+>
+  <section
+    class="rounded-card border-brand-blue/12 bg-brand-white shadow-card flex flex-col gap-3 border p-5"
+  >
+    <p class="text-sm leading-6 text-neutral-700">
+      Le shell mobile est prêt à accueillir les parcours participant, les
+      contenus et les demandes d’accompagnement.
+    </p>
+
+    <ion-button
+      routerLink="/sign-in"
+      expand="block"
+      class="kraak-primary-button"
+    >
+      Aller à la connexion
+    </ion-button>
+
+    <ion-button
+      routerLink="/tabs/accueil"
+      expand="block"
+      fill="outline"
+      class="kraak-secondary-button"
+    >
+      Ouvrir l’espace mobile
+    </ion-button>
+  </section>
+</kraak-page-shell>

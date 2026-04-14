@@ -1,15 +1,10 @@
 import { Component } from '@angular/core';
-import {
-  IonContent,
-  IonHeader,
-  IonTitle,
-  IonToolbar,
-} from '@ionic/angular/standalone';
+import { PageShell } from '../../shared/page-shell/page-shell';
 
 @Component({
   selector: 'kraak-sign-in-page',
   standalone: true,
-  imports: [IonHeader, IonToolbar, IonTitle, IonContent],
+  imports: [PageShell],
   templateUrl: './sign-in.page.html',
 })
 export default class SignInPage {}

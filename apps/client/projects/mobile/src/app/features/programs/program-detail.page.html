@@ -1,11 +1,14 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-back-button defaultHref="/tabs/programmes"></ion-back-button>
-    </ion-buttons>
-    <ion-title>Détail du programme</ion-title>
-  </ion-toolbar>
-</ion-header>
-<ion-content class="ion-padding">
-  <p>Détail du programme sélectionné.</p>
-</ion-content>
+<kraak-page-shell
+  eyebrow="Programme"
+  title="Détail du programme"
+  description="Consultez rapidement le contenu du programme sélectionné."
+  backHref="/tabs/programmes"
+>
+  <section
+    class="rounded-card border-brand-blue/12 bg-brand-white shadow-card border p-5"
+  >
+    <p class="text-sm leading-6 text-neutral-700">
+      Détail du programme sélectionné.
+    </p>
+  </section>
+</kraak-page-shell>

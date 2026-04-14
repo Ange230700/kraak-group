@@ -1,0 +1,33 @@
+<ion-header>
+  <ion-toolbar class="kraak-shell-toolbar">
+    @if (backHref(); as href) {
+      <ion-buttons slot="start">
+        <ion-back-button [defaultHref]="href"></ion-back-button>
+      </ion-buttons>
+    }
+
+    <div class="space-y-2 px-4 py-4">
+      @if (eyebrow()) {
+        <p
+          class="text-brand-white/72 text-xs font-semibold tracking-[0.26em] uppercase"
+        >
+          {{ eyebrow() }}
+        </p>
+      }
+
+      <ion-title>{{ title() }}</ion-title>
+
+      @if (description()) {
+        <p class="text-brand-white/82 max-w-md text-sm leading-6">
+          {{ description() }}
+        </p>
+      }
+    </div>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="bg-brand-page">
+  <div class="flex min-h-full flex-col gap-4 px-4 py-6">
+    <ng-content></ng-content>
+  </div>
+</ion-content>

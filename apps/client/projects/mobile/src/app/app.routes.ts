@@ -49,6 +49,6 @@ export const routes: Routes = [
       { path: '', redirectTo: 'accueil', pathMatch: 'full' },
     ],
   },
-  { path: '', redirectTo: 'tabs', pathMatch: 'full' },
-  { path: '**', redirectTo: 'tabs' },
+  { path: '', redirectTo: 'tabs/accueil', pathMatch: 'full' },
+  { path: '**', redirectTo: 'tabs/accueil' },
 ];

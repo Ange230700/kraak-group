@@ -1,5 +1,6 @@
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
+import { provideRouter } from '@angular/router';
 import ProgramListPage from './program-list.page';
 import { describe, it, beforeEach, expect } from 'vitest';
 
@@ -8,6 +9,7 @@ describe('Mobile ProgramListPage', () => {
     await TestBed.configureTestingModule({
       imports: [ProgramListPage],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
+      providers: [provideRouter([])],
     }).compileComponents();
   });
 
