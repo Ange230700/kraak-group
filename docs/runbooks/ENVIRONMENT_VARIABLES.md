@@ -105,6 +105,11 @@ Variable optionnelle utile côté build :
 Les fichiers `supabase/.env.local` et `supabase/.env.staging` servent de
 référence claire pour les deux environnements manipulés dans le dépôt.
 
+La configuration Auth email/password versionnée du MVP ne vit pas dans ces
+fichiers `.env` mais dans `supabase/config.toml`, avec ses templates email
+locaux dans `supabase/templates/auth/`. Voir aussi
+[`SUPABASE_AUTH_SETUP.md`](SUPABASE_AUTH_SETUP.md).
+
 Variables attendues :
 
 | Variable                   | Description                                |

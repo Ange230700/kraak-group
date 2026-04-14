@@ -25,6 +25,8 @@ cp apps/client/.env.example apps/client/.env.local
 
 Compléter aussi `supabase/.env.local` si vous utilisez un projet Supabase local.
 Voir [`ENVIRONMENT_VARIABLES.md`](ENVIRONMENT_VARIABLES.md) pour la référence complète.
+La configuration Auth locale versionnée pour le MVP est décrite dans
+[`SUPABASE_AUTH_SETUP.md`](SUPABASE_AUTH_SETUP.md).
 
 **Variables minimales pour développer en local :**
 
@@ -171,6 +173,10 @@ pnpm test:e2e
 
 Le runner racine exécute les phases dans cet ordre : bibliothèques partagées,
 tests API + client, puis E2E web.
+
+`pnpm test:workspace` inclut aussi une vérification rapide de la configuration
+Auth Supabase versionnée pour éviter les régressions sur les redirections, les
+templates email et le bootstrap `auth.users` -> `public.app_user`.
 
 ---
 

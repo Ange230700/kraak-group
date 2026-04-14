@@ -38,6 +38,10 @@ Remplir les valeurs manquantes et compléter aussi `supabase/.env.local` si vous
 travaillez avec Supabase en local — voir
 [`docs/runbooks/ENVIRONMENT_VARIABLES.md`](docs/runbooks/ENVIRONMENT_VARIABLES.md).
 
+Le provider email/password local et les templates email du MVP sont versionnés
+dans [`supabase/config.toml`](supabase/config.toml) et documentés dans
+[`docs/runbooks/SUPABASE_AUTH_SETUP.md`](docs/runbooks/SUPABASE_AUTH_SETUP.md).
+
 ### Lancer en mode développement
 
 ```bash
@@ -153,6 +157,7 @@ changement.
 | [`ARCHITECTURE.md`](ARCHITECTURE.md)                                                                 | Décisions d'architecture validées                  |
 | [`AGENTS.md`](AGENTS.md)                                                                             | Règles de fonctionnement pour les assistants IA    |
 | [`docs/runbooks/ENVIRONMENT_VARIABLES.md`](docs/runbooks/ENVIRONMENT_VARIABLES.md)                   | Variables d'environnement                          |
+| [`docs/runbooks/SUPABASE_AUTH_SETUP.md`](docs/runbooks/SUPABASE_AUTH_SETUP.md)                       | Configuration Auth Supabase du MVP                 |
 | [`docs/runbooks/DEV_MODE.md`](docs/runbooks/DEV_MODE.md)                                             | Guide détaillé du mode développement               |
 | [`docs/runbooks/TECH_OVERVIEW.md`](docs/runbooks/TECH_OVERVIEW.md)                                   | Vue d'ensemble de la stack pour débutants          |
 | [`docs/runbooks/OFFICIAL_DOCUMENTATION_SOURCES.md`](docs/runbooks/OFFICIAL_DOCUMENTATION_SOURCES.md) | Sources officielles des documentations de la stack |
