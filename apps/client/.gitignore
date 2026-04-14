@@ -5,3 +5,11 @@
 .env.local
 .env.*.local
 .env.staging
+
+# Capacitor — artefacts de build natifs
+android/app/build/
+android/.gradle/
+android/build/
+android/local.properties
+ios/App/Pods/
+ios/DerivedData/
