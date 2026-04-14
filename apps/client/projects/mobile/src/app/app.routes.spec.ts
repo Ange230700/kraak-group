@@ -37,7 +37,9 @@ describe('Mobile routes', () => {
 
   it('should define a nested stack route for programme details', () => {
     const tabsRoute = routes.find((r) => r.path === 'tabs');
-    const programsRoute = tabsRoute?.children?.find((child) => child.path === 'programmes');
+    const programsRoute = tabsRoute?.children?.find(
+      (child) => child.path === 'programmes',
+    );
     const childPaths = programsRoute?.children?.map((child) => child.path);
 
     expect(childPaths).toEqual(['', ':id']);
