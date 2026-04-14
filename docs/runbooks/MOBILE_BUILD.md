@@ -6,14 +6,14 @@ Ce runbook décrit comment générer les projets natifs Android et iOS, lancer u
 
 ## Prérequis
 
-| Outil          | Version minimale     | Remarque                                              |
-| -------------- | -------------------- | ----------------------------------------------------- |
-| Node.js        | ≥ 24.14.1            | via `.nvmrc`                                          |
-| pnpm           | ≥ 10.23.0            | via `packageManager` dans `package.json`              |
-| JDK            | 21+                  | Temurin recommandé, nécessaire pour Gradle / Android  |
-| Android Studio | Hedgehog (2023.1.1)+ | Installe le SDK Android et les émulateurs             |
-| Xcode          | 16+                  | macOS uniquement, nécessaire pour les builds iOS      |
-| CocoaPods      | 1.13+                | macOS uniquement, `sudo gem install cocoapods`        |
+| Outil          | Version minimale     | Remarque                                             |
+| -------------- | -------------------- | ---------------------------------------------------- |
+| Node.js        | ≥ 24.14.1            | via `.nvmrc`                                         |
+| pnpm           | ≥ 10.23.0            | via `packageManager` dans `package.json`             |
+| JDK            | 21+                  | Temurin recommandé, nécessaire pour Gradle / Android |
+| Android Studio | Hedgehog (2023.1.1)+ | Installe le SDK Android et les émulateurs            |
+| Xcode          | 16+                  | macOS uniquement, nécessaire pour les builds iOS     |
+| CocoaPods      | 1.13+                | macOS uniquement, `sudo gem install cocoapods`       |
 
 ---
 
@@ -46,7 +46,7 @@ Les artefacts de build intermédiaires restent exclus via `apps/client/.gitignor
 pnpm build:debug:android
 ```
 
-Sous-jacent : `pnpm build:mobile && cap sync android`
+Sous-jacent : `pnpm build:mobile`, création de la plateforme Android si besoin, puis `cap sync android`
 
 Pour assembler le debug APK via Gradle :
 
@@ -64,7 +64,7 @@ APK généré dans `apps/client/android/app/build/outputs/apk/debug/app-debug.ap
 pnpm build:debug:ios
 ```
 
-Sous-jacent : `pnpm build:mobile && cap sync ios`
+Sous-jacent : `pnpm build:mobile`, création de la plateforme iOS si besoin, puis `cap sync ios`
 
 ---
 
@@ -160,7 +160,7 @@ Le job `android-debug` du pipeline CI (`.github/workflows/ci.yml`) :
 
 - se déclenche après le job `build`
 - installe Java 21 (Temurin)
-- exécute `pnpm build:mobile` puis `cap add android` et `cap sync android`
+- exécute `pnpm build:debug:android`
 - assemble le debug APK via `./gradlew assembleDebug`
 - publie l'APK comme artefact GitHub Actions (`debug-apk`, rétention 14 jours)
 
