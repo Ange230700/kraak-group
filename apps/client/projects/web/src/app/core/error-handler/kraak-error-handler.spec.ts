@@ -8,7 +8,7 @@ describe('KraakErrorHandler', () => {
 
   beforeEach(() => {
     handler = new KraakErrorHandler();
-    consoleErrorSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
+    consoleErrorSpy = vi.spyOn(console, 'error').mockImplementation(vi.fn());
   });
 
   afterEach(() => {
