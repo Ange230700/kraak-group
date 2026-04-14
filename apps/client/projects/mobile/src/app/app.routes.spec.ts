@@ -16,13 +16,13 @@ describe('Mobile routes', () => {
   it('should redirect empty path to tabs', () => {
     const root = routes.find((r) => r.path === '' && r.redirectTo);
     expect(root).toBeDefined();
-    expect(root?.redirectTo).toBe('tabs');
+    expect(root?.redirectTo).toBe('tabs/accueil');
   });
 
   it('should have a wildcard fallback to tabs', () => {
     const wildcard = routes.find((r) => r.path === '**');
     expect(wildcard).toBeDefined();
-    expect(wildcard?.redirectTo).toBe('tabs');
+    expect(wildcard?.redirectTo).toBe('tabs/accueil');
   });
 
   it('should define tab children routes', () => {
@@ -33,5 +33,15 @@ describe('Mobile routes', () => {
     expect(childPaths).toContain('annonces');
     expect(childPaths).toContain('support');
     expect(childPaths).toContain('ressources');
+  });
+
+  it('should define a nested stack route for programme details', () => {
+    const tabsRoute = routes.find((r) => r.path === 'tabs');
+    const programsRoute = tabsRoute?.children?.find(
+      (child) => child.path === 'programmes',
+    );
+    const childPaths = programsRoute?.children?.map((child) => child.path);
+
+    expect(childPaths).toEqual(['', ':id']);
   });
 });

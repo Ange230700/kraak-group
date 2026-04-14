@@ -1,15 +1,10 @@
 import { Component } from '@angular/core';
-import {
-  IonContent,
-  IonHeader,
-  IonTitle,
-  IonToolbar,
-} from '@ionic/angular/standalone';
+import { PageShell } from '../../shared/page-shell/page-shell';
 
 @Component({
   selector: 'kraak-announcement-list-page',
   standalone: true,
-  imports: [IonHeader, IonToolbar, IonTitle, IonContent],
+  imports: [PageShell],
   templateUrl: './announcement-list.page.html',
 })
 export default class AnnouncementListPage {}
