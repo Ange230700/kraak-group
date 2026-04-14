@@ -160,9 +160,7 @@ jobs:
       - run: pnpm install --frozen-lockfile
 
       - name: Build mobile & sync Android
-        run: |
-          pnpm build:mobile
-          cd apps/client && npx cap add android && npx cap sync android
+        run: pnpm build:debug:android
 
       - name: Build debug APK
         working-directory: apps/client/android
