@@ -22,6 +22,13 @@ test('parseCapacitorPlatform rejette une plateforme inconnue', () => {
   );
 });
 
+test("parseCapacitorPlatform signale explicitement l'absence d'argument", () => {
+  assert.throws(
+    () => parseCapacitorPlatform([]),
+    /Plateforme Capacitor manquante/u,
+  );
+});
+
 test("ensureCapacitorPlatform n'appelle pas cap add quand la plateforme existe déjà", () => {
   const tempRoot = mkdtempSync(
     path.join(os.tmpdir(), 'kraak-capacitor-platform-'),

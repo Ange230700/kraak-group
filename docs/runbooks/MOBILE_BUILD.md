@@ -1,39 +1,40 @@
 # Guide de build mobile (Capacitor Android / iOS)
 
-Ce runbook décrit comment générer les projets natifs Android et iOS, lancer un build debug local, ouvrir le projet dans l'IDE natif, et tester avec le live-reload.
+Ce runbook decrit comment generer les projets natifs Android et iOS, lancer un build debug local, ouvrir le projet dans l'IDE natif, et tester avec le live-reload.
 
 ---
 
-## Prérequis
+## Prerequis
 
-| Outil          | Version minimale     | Remarque                                             |
-| -------------- | -------------------- | ---------------------------------------------------- |
-| Node.js        | ≥ 24.14.1            | via `.nvmrc`                                         |
-| pnpm           | ≥ 10.23.0            | via `packageManager` dans `package.json`             |
-| JDK            | 21+                  | Temurin recommandé, nécessaire pour Gradle / Android |
-| Android Studio | Hedgehog (2023.1.1)+ | Installe le SDK Android et les émulateurs            |
-| Xcode          | 16+                  | macOS uniquement, nécessaire pour les builds iOS     |
-| CocoaPods      | 1.13+                | macOS uniquement, `sudo gem install cocoapods`       |
+| Outil          | Version recommandee / utilisee | Remarque                                                  |
+| -------------- | ------------------------------ | --------------------------------------------------------- |
+| Node.js        | 24.14.1                        | version utilisee via `.nvmrc`                             |
+| pnpm           | 10.23.0                        | version utilisee via `packageManager` dans `package.json` |
+| JDK            | 21+                            | Temurin recommande, necessaire pour Gradle / Android      |
+| Android Studio | Hedgehog (2023.1.1)+           | Installe le SDK Android et les emulateurs                 |
+| Xcode          | 16+                            | macOS uniquement, necessaire pour les builds iOS          |
+| CocoaPods      | 1.13+                          | macOS uniquement, `sudo gem install cocoapods`            |
 
 ---
 
-## Génération des projets natifs
+## Generation des projets natifs
 
-Les dossiers `android/` et `ios/` ne sont pas générés automatiquement.
-Il faut les créer une seule fois en local avec les commandes suivantes :
+Les dossiers `android/` et `ios/` ne sont pas generes automatiquement.
+Dans l'etat actuel du depot, ils sont generes a la demande en local ou en CI.
+Si vous devez preparer manuellement les plateformes natives, utilisez :
 
 ```bash
 cd apps/client
 
-# Générer le projet Android
+# Generer le projet Android
 npx cap add android
 
-# Générer le projet iOS (macOS uniquement)
+# Generer le projet iOS (macOS uniquement)
 npx cap add ios
 ```
 
-Ces dossiers doivent ensuite être commités dans le dépôt.
-Les artefacts de build intermédiaires restent exclus via `apps/client/.gitignore`.
+Le helper utilise par `pnpm build:debug:android` et `pnpm build:debug:ios` peut aussi creer la plateforme manquante automatiquement avant `cap sync`.
+Les artefacts de build intermediaires restent exclus via `apps/client/.gitignore`.
 
 ---
 
@@ -46,7 +47,7 @@ Les artefacts de build intermédiaires restent exclus via `apps/client/.gitignor
 pnpm build:debug:android
 ```
 
-Sous-jacent : `pnpm build:mobile`, création de la plateforme Android si besoin, puis `cap sync android`
+Sous-jacent : `pnpm build:mobile`, creation de la plateforme Android si besoin, puis `cap sync android`
 
 Pour assembler le debug APK via Gradle :
 
@@ -55,7 +56,7 @@ cd apps/client/android
 ./gradlew assembleDebug
 ```
 
-APK généré dans `apps/client/android/app/build/outputs/apk/debug/app-debug.apk`.
+APK genere dans `apps/client/android/app/build/outputs/apk/debug/app-debug.apk`.
 
 ### iOS (macOS uniquement)
 
@@ -64,15 +65,15 @@ APK généré dans `apps/client/android/app/build/outputs/apk/debug/app-debug.ap
 pnpm build:debug:ios
 ```
 
-Sous-jacent : `pnpm build:mobile`, création de la plateforme iOS si besoin, puis `cap sync ios`
+Sous-jacent : `pnpm build:mobile`, creation de la plateforme iOS si besoin, puis `cap sync ios`
 
 ---
 
-## Travailler avec un environnement précis
+## Travailler avec un environnement precis
 
 Les commandes `build:debug:*` s'appuient sur `pnpm build:mobile`, donc sur la configuration standard du workspace.
 
-Si vous devez préparer explicitement un build mobile avec les variables `local` ou `staging`, utilisez d'abord :
+Si vous devez preparer explicitement un build mobile avec les variables `local` ou `staging`, utilisez d'abord :
 
 ```bash
 pnpm build:mobile:local
@@ -106,13 +107,13 @@ pnpm --filter @kraak/client cap:open:ios
 
 ## Synchronisation du build web vers natif
 
-Après chaque modification du code Angular, synchroniser les assets vers les projets natifs :
+Apres chaque modification du code Angular, synchroniser les assets vers les projets natifs :
 
 ```bash
 pnpm cap:sync
 ```
 
-Pour copier uniquement sans mettre à jour les plugins :
+Pour copier uniquement sans mettre a jour les plugins :
 
 ```bash
 pnpm --filter @kraak/client cap:copy
@@ -120,15 +121,15 @@ pnpm --filter @kraak/client cap:copy
 
 ---
 
-## Test avec live-reload (appareil physique ou émulateur)
+## Test avec live-reload (appareil physique ou emulateur)
 
-1. Démarrer le serveur de développement mobile :
+1. Demarrer le serveur de developpement mobile :
 
 ```bash
 pnpm dev:mobile
 ```
 
-2. Dans `apps/client/capacitor.config.ts`, décommenter et adapter le bloc `server.url` :
+2. Dans `apps/client/capacitor.config.ts`, ajouter ou completer les proprietes `server.url` et `cleartext` dans l'objet `server` :
 
 ```typescript
 server: {
@@ -148,9 +149,9 @@ pnpm --filter @kraak/client cap:open:android
 pnpm --filter @kraak/client cap:open:ios
 ```
 
-4. Lancer l'app depuis Android Studio ou Xcode sur un émulateur ou un appareil connecté.
+4. Lancer l'app depuis Android Studio ou Xcode sur un emulateur ou un appareil connecte.
 
-Important : ne pas commiter le bloc `url` / `cleartext` dans le dépôt, il est réservé au développement local.
+Important : ne pas commiter le bloc `url` / `cleartext` dans le depot, il est reserve au developpement local.
 
 ---
 
@@ -158,10 +159,10 @@ Important : ne pas commiter le bloc `url` / `cleartext` dans le dépôt, il est 
 
 Le job `android-debug` du pipeline CI (`.github/workflows/ci.yml`) :
 
-- se déclenche après le job `build`
+- se declenche apres le job `build`
 - installe Java 21 (Temurin)
-- exécute `pnpm build:debug:android`
+- execute `pnpm build:debug:android`
 - assemble le debug APK via `./gradlew assembleDebug`
-- publie l'APK comme artefact GitHub Actions (`debug-apk`, rétention 14 jours)
+- publie l'APK comme artefact GitHub Actions (`debug-apk`, retention 14 jours)
 
-Le debug APK est accessible dans l'onglet Actions du dépôt GitHub, dans le résumé de chaque run CI réussi.
+Le debug APK est accessible dans l'onglet Actions du depot GitHub, dans le resume de chaque run CI reussi.
