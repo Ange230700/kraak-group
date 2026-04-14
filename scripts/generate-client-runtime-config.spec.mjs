@@ -3,7 +3,7 @@
 /* global console */
 
 import assert from 'node:assert/strict';
-import { mkdtempSync, rmSync } from 'node:fs';
+import { mkdtempSync, rmSync, writeFileSync } from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 
@@ -18,6 +18,39 @@ function runTest(name, fn) {
     throw error;
   }
 }
+
+runTest(
+  'le runtime client peut lire les variables locales depuis apps/client/.env.local quand le fichier existe',
+  () => {
+    const tempRoot = mkdtempSync(path.join(os.tmpdir(), 'kraak-client-runtime-config-'));
+
+    try {
+      const envFilePath = path.join(tempRoot, '.env.local');
+      writeFileSync(
+        envFilePath,
+        [
+          'CLIENT_API_BASE_URL=http://localhost:3000',
+          'SUPABASE_URL=http://127.0.0.1:54321',
+          'SUPABASE_PUBLISHABLE_KEY=local-publishable-key',
+          '',
+        ].join('\n'),
+      );
+
+      const runtimeConfig = loadClientRuntimeConfig('local', {
+        clientRootPath: tempRoot,
+        processEnv: {},
+      });
+
+      assert.deepEqual(runtimeConfig, {
+        apiBaseUrl: 'http://localhost:3000',
+        supabaseUrl: 'http://127.0.0.1:54321',
+        supabasePublishableKey: 'local-publishable-key',
+      });
+    } finally {
+      rmSync(tempRoot, { recursive: true, force: true });
+    }
+  },
+);
 
 runTest(
   'le runtime client peut lire les variables staging depuis process.env quand aucun fichier .env n est disponible',
@@ -40,6 +73,24 @@ runTest(
         supabaseUrl: 'https://qgttdsnupelohowwkkwb.supabase.co',
         supabasePublishableKey: 'sb_publishable_5CKjUPh9rFkuUlwHyLIYpQ_c_plqe57',
       });
+    } finally {
+      rmSync(tempRoot, { recursive: true, force: true });
+    }
+  },
+);
+
+runTest(
+  'le runtime client renvoie une configuration vide en production quand aucune variable publique n est fournie',
+  () => {
+    const tempRoot = mkdtempSync(path.join(os.tmpdir(), 'kraak-client-runtime-config-'));
+
+    try {
+      const runtimeConfig = loadClientRuntimeConfig('production', {
+        clientRootPath: tempRoot,
+        processEnv: {},
+      });
+
+      assert.deepEqual(runtimeConfig, {});
     } finally {
       rmSync(tempRoot, { recursive: true, force: true });
     }

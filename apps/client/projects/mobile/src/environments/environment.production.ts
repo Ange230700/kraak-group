@@ -1,6 +1,9 @@
 export const environment = {
+  environmentName: 'production',
   production: true,
   siteUrl: 'https://kraak-group.vercel.app',
   apiBaseUrl: 'https://kraak-api.onrender.com',
+  supabaseUrl: '',
+  supabasePublishableKey: '',
   ga4Id: '',
 };

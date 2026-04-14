@@ -76,7 +76,13 @@
                 }
               ]
             },
-            "development": {
+            "local": {
+              "fileReplacements": [
+                {
+                  "replace": "projects/web/src/environments/environment.ts",
+                  "with": "projects/web/src/environments/environment.local.ts"
+                }
+              ],
               "optimization": false,
               "extractLicenses": false,
               "sourceMap": true
@@ -93,11 +99,11 @@
             "staging": {
               "buildTarget": "web:build:staging"
             },
-            "development": {
-              "buildTarget": "web:build:development"
+            "local": {
+              "buildTarget": "web:build:local"
             }
           },
-          "defaultConfiguration": "development"
+          "defaultConfiguration": "local"
         },
         "test": {
           "builder": "@angular/build:unit-test"
@@ -200,7 +206,13 @@
                 }
               ]
             },
-            "development": {
+            "local": {
+              "fileReplacements": [
+                {
+                  "replace": "projects/mobile/src/environments/environment.ts",
+                  "with": "projects/mobile/src/environments/environment.local.ts"
+                }
+              ],
               "optimization": false,
               "extractLicenses": false,
               "sourceMap": true
@@ -217,11 +229,11 @@
             "staging": {
               "buildTarget": "mobile:build:staging"
             },
-            "development": {
-              "buildTarget": "mobile:build:development"
+            "local": {
+              "buildTarget": "mobile:build:local"
             }
           },
-          "defaultConfiguration": "development"
+          "defaultConfiguration": "local"
         },
         "lint": {
           "builder": "@angular-eslint/builder:lint",

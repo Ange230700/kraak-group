@@ -287,14 +287,17 @@ flowchart TD
 
 ## 8. Variables d’environnement recommandées
 
-### Variables client (`apps/client/.env.example`)
+### Variables client (`apps/client/.env.local` / `.env.staging`)
 
+- `CLIENT_API_BASE_URL` — URL de l'API consommée par le client
+- `SUPABASE_URL` — URL publique du projet Supabase côté client
+- `SUPABASE_PUBLISHABLE_KEY` — clé publique Supabase côté client
 - `KRAAK_WEB_PORT` — port du serveur de dev Angular (scripts / Playwright)
 
 > Angular utilise des fichiers `environment.ts` compilés à la build, pas des
 > variables `.env` à l'exécution.
 
-### Variables back-end (`apps/api/.env.example`)
+### Variables back-end (`apps/api/.env.local` / `.env.staging`)
 
 - `NODE_ENV`
 - `PORT`
@@ -304,8 +307,14 @@ flowchart TD
 - `RESEND_API_KEY`
 - `CONTACT_TO_EMAIL`
 
-Les mêmes variables s'appliquent en staging (`apps/api/.env.staging.example`)
-avec des valeurs adaptées.
+Les mêmes variables s'appliquent en staging (`apps/api/.env.staging`) avec des
+valeurs adaptées.
+
+### Variables Supabase (`supabase/.env.local` / `.env.staging`)
+
+- `SUPABASE_URL`
+- `SUPABASE_PUBLISHABLE_KEY`
+- `SUPABASE_SECRET_KEY`
 
 ### Variables optionnelles mais utiles
 
