@@ -1,7 +1,12 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { createApiClient, ApiError } from './client';
 import type { ApiClientConfig } from './client';
-import type { CreateAppUserDto, CreateNotificationDto } from '@kraak/contracts';
+import type {
+  CreateAppUserDto,
+  CreateNotificationDto,
+  SignInRequestDto,
+  SignUpRequestDto,
+} from '@kraak/contracts';
 
 // ---------------------------------------------------------------------------
 // Helpers
@@ -26,11 +31,12 @@ function baseConfig(overrides?: Partial<ApiClientConfig>): ApiClientConfig {
 // ---------------------------------------------------------------------------
 
 describe('createApiClient', () => {
-  it('retourne un objet avec les 10 groupes de ressources', () => {
+  it('retourne un objet avec les 11 groupes de ressources', () => {
     const client = createApiClient(baseConfig());
     const keys = Object.keys(client).sort((a, b) => a.localeCompare(b));
     expect(keys).toEqual([
       'announcements',
+      'auth',
       'cohorts',
       'enrollments',
       'notifications',
@@ -76,6 +82,15 @@ describe('createApiClient', () => {
     expect(
       (client.notifications as unknown as Record<string, unknown>)['remove'],
     ).toBeUndefined();
+  });
+
+  it('auth expose signIn, signUp, refreshSession, requestPasswordReset et getSession', () => {
+    const client = createApiClient(baseConfig());
+    expect(typeof client.auth.signIn).toBe('function');
+    expect(typeof client.auth.signUp).toBe('function');
+    expect(typeof client.auth.refreshSession).toBe('function');
+    expect(typeof client.auth.requestPasswordReset).toBe('function');
+    expect(typeof client.auth.getSession).toBe('function');
   });
 });
 
@@ -192,6 +207,52 @@ describe('HTTP behaviour', () => {
 
     expect(fetchSpy.mock.calls[0][0]).toBe('https://api.test/support-requests');
   });
+
+  it('POST /auth/sign-in envoie les identifiants au bon endpoint', async () => {
+    fetchSpy = mockFetch(200, { session: {}, profile: {} });
+    vi.stubGlobal('fetch', fetchSpy);
+
+    const client = createApiClient(baseConfig());
+    const body: SignInRequestDto = {
+      email: 'alice@example.com',
+      password: 'motdepasse-securise',
+    };
+
+    await client.auth.signIn(body);
+
+    const [url, init] = fetchSpy.mock.calls[0];
+    expect(url).toBe('https://api.test/auth/sign-in');
+    expect(init.method).toBe('POST');
+    expect(JSON.parse(init.body as string)).toEqual(body);
+  });
+
+  it('POST /auth/sign-up envoie le payload complet au bon endpoint', async () => {
+    fetchSpy = mockFetch(201, {
+      message: 'ok',
+      requiresEmailConfirmation: true,
+      session: null,
+      profile: null,
+    });
+    vi.stubGlobal('fetch', fetchSpy);
+
+    const client = createApiClient(baseConfig());
+    const body: SignUpRequestDto = {
+      email: 'alice@example.com',
+      password: 'motdepasse-securise',
+      firstName: 'Alice',
+      lastName: 'Dupont',
+      phone: null,
+      preferredContactChannel: null,
+      redirectTo: 'kraak://auth/callback',
+    };
+
+    await client.auth.signUp(body);
+
+    const [url, init] = fetchSpy.mock.calls[0];
+    expect(url).toBe('https://api.test/auth/sign-up');
+    expect(init.method).toBe('POST');
+    expect(JSON.parse(init.body as string)).toEqual(body);
+  });
 });
 
 // ---------------------------------------------------------------------------
@@ -260,6 +321,20 @@ describe('en-têtes et authentification', () => {
     await client.users.list({ signal: controller.signal });
 
     expect(fetchSpy.mock.calls[0][1].signal).toBe(controller.signal);
+  });
+
+  it('GET /auth/session réutilise Authorization via getAuthToken', async () => {
+    const client = createApiClient(
+      baseConfig({ getAuthToken: () => 'stored-access-token' }),
+    );
+
+    await client.auth.getSession();
+
+    const [url, init] = fetchSpy.mock.calls[0];
+    const headers = init.headers as Record<string, string>;
+    expect(url).toBe('https://api.test/auth/session');
+    expect(init.method).toBe('GET');
+    expect(headers['Authorization']).toBe('Bearer stored-access-token');
   });
 });
 

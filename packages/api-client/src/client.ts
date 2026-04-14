@@ -1,7 +1,11 @@
 import type {
   AppUserDto,
+  AuthSessionBundleDto,
+  AuthSessionContextDto,
   CreateAppUserDto,
   UpdateAppUserDto,
+  PasswordResetRequestDto,
+  PasswordResetResponseDto,
   ParticipantDto,
   CreateParticipantDto,
   UpdateParticipantDto,
@@ -28,6 +32,10 @@ import type {
   SupportRequestDto,
   CreateSupportRequestDto,
   UpdateSupportRequestDto,
+  RefreshSessionRequestDto,
+  SignInRequestDto,
+  SignUpRequestDto,
+  SignUpResponseDto,
 } from '@kraak/contracts';
 
 // ---------------------------------------------------------------------------
@@ -70,11 +78,32 @@ export interface FullResourceClient<
   remove(id: string, options?: RequestOptions): Promise<void>;
 }
 
+export interface AuthClient {
+  signIn(
+    body: SignInRequestDto,
+    options?: RequestOptions,
+  ): Promise<AuthSessionBundleDto>;
+  signUp(
+    body: SignUpRequestDto,
+    options?: RequestOptions,
+  ): Promise<SignUpResponseDto>;
+  refreshSession(
+    body: RefreshSessionRequestDto,
+    options?: RequestOptions,
+  ): Promise<AuthSessionBundleDto>;
+  requestPasswordReset(
+    body: PasswordResetRequestDto,
+    options?: RequestOptions,
+  ): Promise<PasswordResetResponseDto>;
+  getSession(options?: RequestOptions): Promise<AuthSessionContextDto>;
+}
+
 // ---------------------------------------------------------------------------
 // ApiClient interface
 // ---------------------------------------------------------------------------
 
 export interface ApiClient {
+  auth: AuthClient;
   users: FullResourceClient<AppUserDto, CreateAppUserDto, UpdateAppUserDto>;
   participants: FullResourceClient<
     ParticipantDto,
@@ -224,12 +253,58 @@ function createFullResourceClient<TDto, TCreate, TUpdate>(
   };
 }
 
+function createAuthClient(config: ApiClientConfig): AuthClient {
+  return {
+    signIn: (body, options?) =>
+      request<AuthSessionBundleDto>(
+        config,
+        'POST',
+        '/auth/sign-in',
+        body,
+        options,
+      ),
+    signUp: (body, options?) =>
+      request<SignUpResponseDto>(
+        config,
+        'POST',
+        '/auth/sign-up',
+        body,
+        options,
+      ),
+    refreshSession: (body, options?) =>
+      request<AuthSessionBundleDto>(
+        config,
+        'POST',
+        '/auth/session/refresh',
+        body,
+        options,
+      ),
+    requestPasswordReset: (body, options?) =>
+      request<PasswordResetResponseDto>(
+        config,
+        'POST',
+        '/auth/password-reset',
+        body,
+        options,
+      ),
+    getSession: (options?) =>
+      request<AuthSessionContextDto>(
+        config,
+        'GET',
+        '/auth/session',
+        undefined,
+        options,
+      ),
+  };
+}
+
 // ---------------------------------------------------------------------------
 // Factory
 // ---------------------------------------------------------------------------
 
 export function createApiClient(config: ApiClientConfig): ApiClient {
   return {
+    auth: createAuthClient(config),
     users: createFullResourceClient(config, '/users'),
     participants: createFullResourceClient(config, '/participants'),
     programs: createFullResourceClient(config, '/programs'),

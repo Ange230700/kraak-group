@@ -7,6 +7,8 @@ describe('Mobile routes', () => {
   it('should define onboarding and auth routes', () => {
     expect(topPaths).toContain('welcome');
     expect(topPaths).toContain('sign-in');
+    expect(topPaths).toContain('sign-up');
+    expect(topPaths).toContain('password-reset');
   });
 
   it('should define the tabs shell route', () => {

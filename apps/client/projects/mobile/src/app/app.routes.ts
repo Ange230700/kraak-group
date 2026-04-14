@@ -10,6 +10,14 @@ export const routes: Routes = [
     loadComponent: () => import('./features/auth/sign-in.page'),
   },
   {
+    path: 'sign-up',
+    loadComponent: () => import('./features/auth/sign-up.page'),
+  },
+  {
+    path: 'password-reset',
+    loadComponent: () => import('./features/auth/password-reset.page'),
+  },
+  {
     path: 'tabs',
     loadComponent: () =>
       import('./layouts/tabs/tabs.layout').then((m) => m.TabsLayout),

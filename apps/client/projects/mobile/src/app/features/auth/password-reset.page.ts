@@ -5,40 +5,36 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
-import { Router, RouterLink } from '@angular/router';
+import { RouterLink } from '@angular/router';
 import { IonButton } from '@ionic/angular/standalone';
 import { PageShell } from '../../shared/page-shell/page-shell';
 import {
+  MOBILE_AUTH_RESET_URL,
   MobileAuthService,
   resolveAuthErrorMessage,
 } from './mobile-auth.service';
 
-interface SignInFormModel {
+interface PasswordResetFormModel {
   email: FormControl<string>;
-  password: FormControl<string>;
 }
 
 @Component({
-  selector: 'kraak-sign-in-page',
+  selector: 'kraak-password-reset-page',
   standalone: true,
   imports: [PageShell, ReactiveFormsModule, RouterLink, IonButton],
-  templateUrl: './sign-in.page.html',
+  templateUrl: './password-reset.page.html',
 })
-export default class SignInPage {
+export default class PasswordResetPage {
   private readonly authService = inject(MobileAuthService);
-  private readonly router = inject(Router);
 
-  readonly form = new FormGroup<SignInFormModel>({
+  readonly form = new FormGroup<PasswordResetFormModel>({
     email: new FormControl('', {
       nonNullable: true,
       validators: [Validators.required, Validators.email],
     }),
-    password: new FormControl('', {
-      nonNullable: true,
-      validators: [Validators.required, Validators.minLength(8)],
-    }),
   });
   readonly errorMessage = signal<string | null>(null);
+  readonly successMessage = signal<string | null>(null);
   readonly submitting = signal(false);
 
   async submit(): Promise<void> {
@@ -51,21 +47,21 @@ export default class SignInPage {
 
     this.submitting.set(true);
     this.errorMessage.set(null);
+    this.successMessage.set(null);
 
     try {
-      const { email, password } = this.form.getRawValue();
-
-      await this.authService.signIn({
+      const { email } = this.form.getRawValue();
+      const response = await this.authService.requestPasswordReset({
         email: normalizeRequiredText(email),
-        password,
+        redirectTo: MOBILE_AUTH_RESET_URL,
       });
 
-      await this.router.navigateByUrl('/tabs/accueil');
+      this.successMessage.set(response.message);
     } catch (error) {
       this.errorMessage.set(
         resolveAuthErrorMessage(
           error,
-          'Impossible de vous connecter pour le moment.',
+          "Impossible d'envoyer l'email de réinitialisation pour le moment.",
         ),
       );
     } finally {

@@ -1,0 +1,143 @@
+<kraak-page-shell
+  eyebrow="Compte"
+  title="Créer un compte"
+  description="Préparez votre accès participant avec vos informations de base, puis confirmez votre email."
+  backHref="/sign-in"
+>
+  <section
+    class="rounded-card border-brand-blue/12 bg-brand-white shadow-card flex flex-col gap-4 border p-5"
+  >
+    <form
+      [formGroup]="form"
+      (ngSubmit)="submit()"
+      class="flex flex-col gap-4"
+      novalidate
+    >
+      <div class="grid gap-4 sm:grid-cols-2">
+        <div class="flex flex-col gap-2">
+          <label
+            for="sign-up-first-name"
+            class="text-sm font-semibold text-neutral-900"
+          >
+            Prénom
+          </label>
+          <input
+            id="sign-up-first-name"
+            type="text"
+            formControlName="firstName"
+            autocomplete="given-name"
+            class="rounded-card border-brand-blue/12 focus:border-brand-blue min-h-12 border bg-white px-4 py-3 text-sm text-neutral-900 outline-none"
+          />
+        </div>
+
+        <div class="flex flex-col gap-2">
+          <label
+            for="sign-up-last-name"
+            class="text-sm font-semibold text-neutral-900"
+          >
+            Nom
+          </label>
+          <input
+            id="sign-up-last-name"
+            type="text"
+            formControlName="lastName"
+            autocomplete="family-name"
+            class="rounded-card border-brand-blue/12 focus:border-brand-blue min-h-12 border bg-white px-4 py-3 text-sm text-neutral-900 outline-none"
+          />
+        </div>
+      </div>
+
+      <div class="flex flex-col gap-2">
+        <label
+          for="sign-up-email"
+          class="text-sm font-semibold text-neutral-900"
+        >
+          Adresse email
+        </label>
+        <input
+          id="sign-up-email"
+          type="email"
+          formControlName="email"
+          autocomplete="email"
+          placeholder="vous@kraak.org"
+          class="rounded-card border-brand-blue/12 focus:border-brand-blue min-h-12 border bg-white px-4 py-3 text-sm text-neutral-900 outline-none"
+        />
+      </div>
+
+      <div class="flex flex-col gap-2">
+        <label
+          for="sign-up-password"
+          class="text-sm font-semibold text-neutral-900"
+        >
+          Mot de passe
+        </label>
+        <input
+          id="sign-up-password"
+          type="password"
+          formControlName="password"
+          autocomplete="new-password"
+          placeholder="Minimum 8 caractères"
+          class="rounded-card border-brand-blue/12 focus:border-brand-blue min-h-12 border bg-white px-4 py-3 text-sm text-neutral-900 outline-none"
+        />
+      </div>
+
+      <div class="flex flex-col gap-2">
+        <label
+          for="sign-up-phone"
+          class="text-sm font-semibold text-neutral-900"
+        >
+          Téléphone
+        </label>
+        <input
+          id="sign-up-phone"
+          type="tel"
+          formControlName="phone"
+          autocomplete="tel"
+          placeholder="+2250700000000"
+          class="rounded-card border-brand-blue/12 focus:border-brand-blue min-h-12 border bg-white px-4 py-3 text-sm text-neutral-900 outline-none"
+        />
+        <p class="text-sm leading-6 text-neutral-700">
+          Optionnel. Ajoutez-le si vous souhaitez être recontacté plus
+          facilement.
+        </p>
+      </div>
+
+      @if (form.invalid && form.touched) {
+        <p class="text-sm leading-6 text-rose-700">
+          Vérifiez vos informations avant de continuer.
+        </p>
+      }
+
+      @if (errorMessage()) {
+        <p
+          class="rounded-card bg-rose-50 px-4 py-3 text-sm leading-6 text-rose-700"
+        >
+          {{ errorMessage() }}
+        </p>
+      }
+
+      @if (successMessage()) {
+        <p
+          class="rounded-card bg-emerald-50 px-4 py-3 text-sm leading-6 text-emerald-700"
+        >
+          {{ successMessage() }}
+        </p>
+      }
+
+      <ion-button
+        type="submit"
+        expand="block"
+        class="kraak-primary-button"
+        [disabled]="submitting()"
+      >
+        {{ submitting() ? 'Création en cours...' : 'Créer un compte' }}
+      </ion-button>
+    </form>
+
+    <div class="border-brand-blue/12 border-t pt-4">
+      <a routerLink="/sign-in" class="text-brand-blue text-sm font-semibold">
+        Se connecter
+      </a>
+    </div>
+  </section>
+</kraak-page-shell>
