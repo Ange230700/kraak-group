@@ -74,6 +74,7 @@ test.describe(`Page contact — comportement formulaire`, () => {
       ).toBeVisible({ timeout: 10_000 });
     }).toPass({ timeout: 60_000 });
 
+    // eslint-disable-next-line playwright/no-wait-for-timeout
     await page.waitForTimeout(250);
 
     expect(

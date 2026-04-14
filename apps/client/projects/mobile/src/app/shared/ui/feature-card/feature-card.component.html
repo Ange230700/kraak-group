@@ -1,7 +1,9 @@
 <article [class]="cardClasses">
-  <p *ngIf="tag" [class]="tagClasses">
-    {{ tag }}
-  </p>
+  @if (tag) {
+    <p [class]="tagClasses">
+      {{ tag }}
+    </p>
+  }
   <h3 class="text-primary mt-2 text-lg font-semibold">{{ title }}</h3>
   <p class="mt-2 text-sm leading-6 text-neutral-700">
     {{ description }}
