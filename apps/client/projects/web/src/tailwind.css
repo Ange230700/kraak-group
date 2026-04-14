@@ -178,6 +178,17 @@
 
   .p-button.kr-button-primary,
   .p-button.kr-button-secondary,
+  .p-button.kr-button-contrast,
+  .p-button.kr-button-ghost {
+    padding: 0.875rem 1.5rem;
+  }
+
+  .p-button.kr-link-button {
+    padding: 0.75rem 1rem;
+  }
+
+  .p-button.kr-button-primary,
+  .p-button.kr-button-secondary,
   .p-button.kr-button-contrast {
     box-shadow: 0 18px 35px rgb(18 43 74 / 16%);
   }

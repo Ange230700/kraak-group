@@ -30,5 +30,9 @@ test.describe(`Design system web — smoke styling`, () => {
     await expect(primaryCta).toHaveClass(/p-button/);
     await expect(primaryCta).toHaveCSS('border-top-left-radius', '12px');
     await expect(primaryCta).toHaveCSS('border-top-right-radius', '12px');
+    await expect(primaryCta).toHaveCSS('padding-top', '14px');
+    await expect(primaryCta).toHaveCSS('padding-right', '24px');
+    await expect(primaryCta).toHaveCSS('padding-bottom', '14px');
+    await expect(primaryCta).toHaveCSS('padding-left', '24px');
   });
 });
