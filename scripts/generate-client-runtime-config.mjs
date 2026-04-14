@@ -12,7 +12,7 @@ const repoRoot = path.resolve(__dirname, '..');
 const clientRoot = path.join(repoRoot, 'apps', 'client');
 const supportedEnvironments = new Set(['local', 'staging']);
 const outputPaths = [
-  path.join(clientRoot, 'projects', 'mobile', 'src', 'assets', 'runtime-config.js'),
+  path.join(clientRoot, 'projects', 'mobile', 'public', 'assets', 'runtime-config.js'),
   path.join(clientRoot, 'projects', 'web', 'public', 'assets', 'runtime-config.js'),
 ];
 
