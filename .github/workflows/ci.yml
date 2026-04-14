@@ -162,7 +162,7 @@ jobs:
       - name: Build mobile & sync Android
         run: |
           pnpm build:mobile
-          cd apps/client && npx cap sync android
+          cd apps/client && npx cap add android && npx cap sync android
 
       - name: Build debug APK
         working-directory: apps/client/android
