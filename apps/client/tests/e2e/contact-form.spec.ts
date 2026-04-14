@@ -74,7 +74,7 @@ test.describe(`Page contact — comportement formulaire`, () => {
       ).toBeVisible({ timeout: 10_000 });
     }).toPass({ timeout: 60_000 });
 
-    await page.waitForTimeout(250);
+    await page.evaluate(() => new Promise((resolve) => requestAnimationFrame(resolve)));
 
     expect(
       runtimeErrors.filter((message) =>
