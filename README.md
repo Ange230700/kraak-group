@@ -97,34 +97,34 @@ Pour les détails, voir [`ARCHITECTURE.md`](ARCHITECTURE.md).
 
 ## Scripts disponibles
 
-| Commande              | Description                                               |
-| --------------------- | --------------------------------------------------------- |
-| `pnpm dev`            | Lancer web, mobile et API avec ports auto pour web/mobile |
-| `pnpm clean`          | Nettoyer les artefacts générés dans tout le monorepo      |
-| `pnpm build`          | Builder tous les projets buildables                       |
-| `pnpm test`           | Lancer tous les tests disponibles                         |
-| `pnpm test:workspace` | Vérifier le workflow du runner de test racine             |
-| `pnpm dev:web`        | Lancer le site web en dev (port 4200 par défaut)          |
-| `pnpm dev:web:staging` | Lancer le site web avec la configuration staging         |
-| `pnpm dev:api`        | Lancer l'API en dev (port 3000)                           |
-| `pnpm dev:api:staging` | Lancer l'API avec la configuration staging |
-| `pnpm dev:mobile`     | Lancer l'app mobile en dev (port 4300)                    |
-| `pnpm dev:mobile:staging` | Lancer l'app mobile avec la configuration staging    |
-| `pnpm build:web`      | Builder le site web                                       |
-| `pnpm build:web:local` | Builder le site web avec l'environnement local           |
-| `pnpm build:web:staging` | Builder le site web avec l'environnement staging      |
-| `pnpm build:api`      | Builder l'API                                             |
-| `pnpm build:mobile`   | Builder l'app mobile                                      |
-| `pnpm build:mobile:local` | Builder l'app mobile avec l'environnement local      |
-| `pnpm build:mobile:staging` | Builder l'app mobile avec l'environnement staging |
-| `pnpm test:api`       | Tests unitaires API                                       |
-| `pnpm typecheck`      | Vérifier le typage web, mobile et API                     |
-| `pnpm test:unit`      | Tests unitaires client                                    |
-| `pnpm test:e2e`       | Tests E2E (Playwright)                                    |
-| `pnpm lint`           | Linter tous les projets                                   |
-| `pnpm format`         | Formater le code (Prettier)                               |
-| `pnpm format:check`   | Vérifier le formatage                                     |
-| `pnpm commit`         | Ouvrir le prompt interactif Commitizen                    |
+| Commande                    | Description                                               |
+| --------------------------- | --------------------------------------------------------- |
+| `pnpm dev`                  | Lancer web, mobile et API avec ports auto pour web/mobile |
+| `pnpm clean`                | Nettoyer les artefacts générés dans tout le monorepo      |
+| `pnpm build`                | Builder tous les projets buildables                       |
+| `pnpm test`                 | Lancer tous les tests disponibles                         |
+| `pnpm test:workspace`       | Vérifier le workflow du runner de test racine             |
+| `pnpm dev:web`              | Lancer le site web en dev (port 4200 par défaut)          |
+| `pnpm dev:web:staging`      | Lancer le site web avec la configuration staging          |
+| `pnpm dev:api`              | Lancer l'API en dev (port 3000)                           |
+| `pnpm dev:api:staging`      | Lancer l'API avec la configuration staging                |
+| `pnpm dev:mobile`           | Lancer l'app mobile en dev (port 4300)                    |
+| `pnpm dev:mobile:staging`   | Lancer l'app mobile avec la configuration staging         |
+| `pnpm build:web`            | Builder le site web                                       |
+| `pnpm build:web:local`      | Builder le site web avec l'environnement local            |
+| `pnpm build:web:staging`    | Builder le site web avec l'environnement staging          |
+| `pnpm build:api`            | Builder l'API                                             |
+| `pnpm build:mobile`         | Builder l'app mobile                                      |
+| `pnpm build:mobile:local`   | Builder l'app mobile avec l'environnement local           |
+| `pnpm build:mobile:staging` | Builder l'app mobile avec l'environnement staging         |
+| `pnpm test:api`             | Tests unitaires API                                       |
+| `pnpm typecheck`            | Vérifier le typage web, mobile et API                     |
+| `pnpm test:unit`            | Tests unitaires client                                    |
+| `pnpm test:e2e`             | Tests E2E (Playwright)                                    |
+| `pnpm lint`                 | Linter tous les projets                                   |
+| `pnpm format`               | Formater le code (Prettier)                               |
+| `pnpm format:check`         | Vérifier le formatage                                     |
+| `pnpm commit`               | Ouvrir le prompt interactif Commitizen                    |
 
 ---
 

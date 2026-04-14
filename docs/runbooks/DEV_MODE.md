@@ -28,9 +28,9 @@ Voir [`ENVIRONMENT_VARIABLES.md`](ENVIRONMENT_VARIABLES.md) pour la référence 
 
 **Variables minimales pour développer en local :**
 
-| Variable              | Fichier         | Exemple                        |
-| --------------------- | --------------- | ------------------------------ |
-| `SUPABASE_URL`        | `apps/api/.env.local` | `http://127.0.0.1:54321` |
+| Variable              | Fichier               | Exemple                        |
+| --------------------- | --------------------- | ------------------------------ |
+| `SUPABASE_URL`        | `apps/api/.env.local` | `http://127.0.0.1:54321`       |
 | `SUPABASE_SECRET_KEY` | `apps/api/.env.local` | clé fournie par Supabase local |
 
 ---
