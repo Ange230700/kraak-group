@@ -1,6 +1,38 @@
 <!-- Hero -->
-<section class="bg-brand-navy text-brand-white py-20 text-center lg:py-28">
-  <div class="mx-auto max-w-4xl px-4 lg:px-6">
+<section
+  class="bg-brand-navy text-brand-white relative overflow-hidden py-20 text-center lg:py-28"
+>
+  <div
+    aria-hidden="true"
+    class="bg-brand-cyan/30 absolute -top-10 right-[-6rem] h-44 w-44 rounded-full blur-3xl"
+  ></div>
+  <div
+    aria-hidden="true"
+    class="bg-brand-gold/22 absolute bottom-[-4rem] left-[-2rem] h-40 w-40 rounded-full blur-3xl"
+  ></div>
+  <div
+    class="relative z-10 mx-auto flex max-w-4xl flex-col items-center px-4 lg:px-6"
+  >
+    <div
+      class="border-brand-white/14 bg-brand-white/8 mb-8 inline-flex max-w-xl items-center gap-4 rounded-full border px-4 py-3 text-left shadow-[0_18px_45px_rgb(0_0_0_/_16%)] backdrop-blur"
+    >
+      <img
+        src="/kraak_consulting_symbol_96w.png"
+        alt="Symbole KRAAK Consulting"
+        class="bg-brand-white/96 h-12 w-12 rounded-full p-2"
+      />
+      <div>
+        <p
+          class="text-brand-white/70 text-xs font-semibold tracking-[0.34em] uppercase"
+        >
+          KRAAK Consulting
+        </p>
+        <p class="text-brand-white/82 text-sm">
+          Leadership, mobilité et impact concret pour les talents et les
+          organisations.
+        </p>
+      </div>
+    </div>
     <h1 class="text-brand-white text-4xl leading-tight font-bold lg:text-5xl">
       Développez votre potentiel.<br />Construisez votre impact.
     </h1>
@@ -8,13 +40,23 @@
       KRAAK accompagne les jeunes professionnels et les organisations vers des
       opportunités concrètes, locales et internationales.
     </p>
-    <div class="mt-8">
+    <div
+      class="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row"
+    >
       <a
         pButton
         routerLink="/contact"
         label="Demander une consultation"
         size="large"
         aria-label="Demander une consultation"
+        class="kr-button-primary"
+      ></a>
+      <a
+        pButton
+        routerLink="/services"
+        label="Voir nos services"
+        aria-label="Voir nos services"
+        class="kr-button-ghost"
       ></a>
     </div>
   </div>
@@ -194,10 +236,7 @@
       <h3 class="text-xl font-bold">Une question ?</h3>
       <p class="mt-1 text-neutral-700">
         Écrivez-nous à
-        <a
-          href="mailto:contact@kraak-consulting.com"
-          class="text-secondary font-medium underline"
-        >
+        <a href="mailto:contact@kraak-consulting.com" class="kr-link">
           contact&#64;kraak-consulting.com
         </a>
       </p>
@@ -208,6 +247,7 @@
       label="Nous contacter"
       severity="secondary"
       aria-label="Nous contacter"
+      class="kr-button-secondary"
     ></a>
   </div>
 </section>

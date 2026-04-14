@@ -1,8 +1,118 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>Accueil</ion-title>
+  <ion-toolbar class="kraak-shell-toolbar">
+    <div class="flex items-center gap-3 px-4 py-3">
+      <img
+        src="/kraak_consulting_logo_192w.png"
+        alt="Logo KRAAK Consulting"
+        class="h-11 w-auto"
+      />
+      <ion-title>Votre espace KRAAK</ion-title>
+    </div>
   </ion-toolbar>
 </ion-header>
-<ion-content class="ion-padding">
-  <p>Bienvenue sur KRAAK.</p>
+<ion-content class="bg-brand-page">
+  <div class="flex min-h-full flex-col gap-6 pb-8">
+    <section
+      class="bg-brand-navy text-brand-white relative overflow-hidden px-4 pt-6 pb-8"
+    >
+      <div
+        aria-hidden="true"
+        class="bg-brand-cyan/28 absolute top-0 -right-10 h-32 w-32 rounded-full blur-3xl"
+      ></div>
+      <div
+        aria-hidden="true"
+        class="bg-brand-gold/25 absolute bottom-0 -left-6 h-28 w-28 rounded-full blur-3xl"
+      ></div>
+      <div class="relative z-10 space-y-5">
+        <div
+          class="border-brand-white/16 bg-brand-white/8 inline-flex items-center gap-3 rounded-full border px-4 py-3 backdrop-blur"
+        >
+          <img
+            src="/kraak_consulting_symbol_96w.png"
+            alt="Symbole KRAAK Consulting"
+            class="bg-brand-white/94 h-10 w-10 rounded-full p-2"
+          />
+          <div class="text-left">
+            <p
+              class="text-brand-white/70 text-xs font-semibold tracking-[0.28em] uppercase"
+            >
+              KRAAK mobile
+            </p>
+            <p class="text-brand-white/84 text-sm">
+              Un point d'entrée simple vers vos programmes, annonces et
+              ressources.
+            </p>
+          </div>
+        </div>
+
+        <div class="space-y-3">
+          <h1 class="text-brand-white text-3xl font-semibold">
+            Bienvenue sur KRAAK.
+          </h1>
+          <p class="text-brand-white/80 max-w-md text-sm leading-7">
+            Retrouvez rapidement les informations utiles, les opportunités à
+            suivre et les canaux pour rester en lien avec notre équipe.
+          </p>
+        </div>
+
+        <div class="flex flex-col gap-3">
+          <ion-button
+            routerLink="/tabs/programmes"
+            expand="block"
+            class="kraak-primary-button"
+          >
+            Explorer les programmes
+          </ion-button>
+          <ion-button
+            routerLink="/tabs/support"
+            expand="block"
+            fill="outline"
+            class="kraak-secondary-button"
+          >
+            Contacter le support
+          </ion-button>
+        </div>
+      </div>
+    </section>
+
+    <section class="grid gap-3 px-4">
+      <article
+        class="rounded-card border-brand-blue/12 bg-brand-white shadow-card border p-4"
+      >
+        <p
+          class="text-secondary text-xs font-semibold tracking-[0.24em] uppercase"
+        >
+          Formation
+        </p>
+        <h2 class="text-primary mt-2 text-lg font-semibold">
+          Avancez avec un cadre clair.
+        </h2>
+        <p class="mt-2 text-sm leading-6 text-neutral-700">
+          Accédez aux parcours et informations qui soutiennent votre
+          progression.
+        </p>
+      </article>
+
+      <article
+        class="rounded-card border-brand-cyan/18 bg-brand-white shadow-card border p-4"
+      >
+        <p
+          class="text-accent text-xs font-semibold tracking-[0.24em] uppercase"
+        >
+          Ressources
+        </p>
+        <h2 class="text-primary mt-2 text-lg font-semibold">
+          Gardez vos repères à portée de main.
+        </h2>
+        <p class="mt-2 text-sm leading-6 text-neutral-700">
+          Consultez rapidement les contenus utiles pour vos prochaines
+          démarches.
+        </p>
+      </article>
+
+      <a routerLink="/tabs/ressources" class="kraak-inline-link px-1">
+        Voir les ressources utiles
+      </a>
+    </section>
+  </div>
 </ion-content>

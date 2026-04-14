@@ -17,4 +17,20 @@ describe('Footer', () => {
 
     expect(fixture.componentInstance).toBeTruthy();
   });
+
+  it('should render the brand logo and enhanced footer links', () => {
+    const fixture = TestBed.createComponent(Footer);
+    fixture.detectChanges();
+
+    const element = fixture.nativeElement as HTMLElement;
+    const brandImage = element.querySelector(
+      'img[alt="Symbole KRAAK Consulting"]',
+    ) as HTMLImageElement | null;
+    const footerLinks = element.querySelectorAll('a.kr-link-muted');
+
+    expect(brandImage?.getAttribute('src')).toContain(
+      'kraak_consulting_symbol_96w.png',
+    );
+    expect(footerLinks.length).toBeGreaterThan(0);
+  });
 });

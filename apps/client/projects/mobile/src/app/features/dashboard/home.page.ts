@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
+import { RouterLink } from '@angular/router';
 import {
+  IonButton,
   IonContent,
   IonHeader,
   IonTitle,
@@ -9,7 +11,7 @@ import {
 @Component({
   selector: 'kraak-home-page',
   standalone: true,
-  imports: [IonHeader, IonToolbar, IonTitle, IonContent],
+  imports: [IonButton, IonHeader, IonToolbar, IonTitle, IonContent, RouterLink],
   templateUrl: './home.page.html',
 })
 export default class HomePage {}

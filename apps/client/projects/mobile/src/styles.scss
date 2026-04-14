@@ -56,3 +56,76 @@
   --ion-background-color: var(--kr-brand-page);
   --ion-text-color: var(--kr-neutral-900);
 }
+
+ion-toolbar.kraak-shell-toolbar {
+  --background: linear-gradient(
+    135deg,
+    var(--kr-brand-navy),
+    var(--kr-brand-blue)
+  );
+  --color: var(--kr-brand-white);
+  --border-color: transparent;
+  --min-height: 88px;
+  box-shadow: 0 16px 36px rgb(18 43 74 / 14%);
+}
+
+ion-tab-bar.kraak-tab-bar {
+  --background: rgb(255 255 255 / 96%);
+  --border: 0;
+  padding: 0.55rem 0.75rem calc(0.55rem + env(safe-area-inset-bottom));
+  box-shadow: 0 -12px 28px rgb(18 43 74 / 10%);
+}
+
+ion-tab-button.kraak-tab-button {
+  --color: var(--kr-neutral-600);
+  --color-selected: var(--kr-brand-blue);
+  min-height: 3.85rem;
+  border-radius: 1rem;
+  font-weight: 600;
+}
+
+ion-tab-button.kraak-tab-button.tab-selected {
+  background: rgb(76 195 217 / 10%);
+}
+
+ion-button.kraak-primary-button,
+ion-button.kraak-secondary-button {
+  font-weight: 600;
+  letter-spacing: 0.01em;
+}
+
+ion-button.kraak-primary-button {
+  --background: linear-gradient(
+    135deg,
+    var(--kr-brand-blue),
+    var(--kr-brand-cyan)
+  );
+  --background-hover: var(--kr-brand-navy-soft);
+  --background-activated: var(--kr-brand-navy);
+  --background-focused: var(--kr-brand-navy);
+  --border-radius: var(--kr-radius-btn);
+  --box-shadow: 0 18px 36px rgb(18 43 74 / 18%);
+  --color: var(--kr-brand-white);
+}
+
+ion-button.kraak-secondary-button {
+  --background: rgb(255 255 255 / 8%);
+  --background-hover: rgb(255 255 255 / 14%);
+  --background-activated: rgb(255 255 255 / 14%);
+  --background-focused: rgb(255 255 255 / 14%);
+  --border-color: rgb(255 255 255 / 28%);
+  --border-radius: var(--kr-radius-btn);
+  --border-style: solid;
+  --border-width: 1px;
+  --box-shadow: none;
+  --color: var(--kr-brand-white);
+}
+
+a.kraak-inline-link {
+  color: var(--kr-brand-blue);
+  font-weight: 600;
+  text-decoration: underline;
+  text-decoration-thickness: 0.12em;
+  text-underline-offset: 0.24em;
+  text-decoration-color: rgb(76 195 217 / 70%);
+}

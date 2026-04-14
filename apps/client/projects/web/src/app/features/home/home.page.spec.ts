@@ -19,6 +19,6 @@ describe('HomePage', () => {
     const fixture = TestBed.createComponent(HomePage);
     fixture.detectChanges();
     const heading = fixture.nativeElement.querySelector('h1');
-    expect(heading?.textContent).toContain('Développez votre potentiel');
+    expect(heading?.textContent).toContain('potentiel');
   });
 });

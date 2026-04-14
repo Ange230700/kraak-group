@@ -1,11 +1,28 @@
-<footer class="mt-16 border-t border-neutral-200 bg-neutral-50">
+<footer class="border-brand-blue/10 bg-brand-white mt-16 border-t">
   <div
     class="mx-auto grid w-full max-w-6xl gap-10 px-4 py-12 lg:grid-cols-[1.3fr_1.7fr] lg:px-6"
   >
     <div class="space-y-4">
-      <span class="text-primary block text-xl font-semibold tracking-[0.18em]"
-        >KRAAK</span
-      >
+      <div class="flex items-center gap-4">
+        <div
+          class="bg-brand-navy shadow-card inline-flex h-16 w-16 items-center justify-center rounded-3xl"
+        >
+          <img
+            src="/kraak_consulting_symbol_96w.png"
+            alt="Symbole KRAAK Consulting"
+            class="h-10 w-10"
+          />
+        </div>
+        <div>
+          <span
+            class="text-primary block text-xl font-semibold tracking-[0.18em]"
+            >KRAAK</span
+          >
+          <p class="text-secondary text-sm font-medium">
+            Accompagnement, formation et mobilité.
+          </p>
+        </div>
+      </div>
       <p class="max-w-md text-sm leading-7 text-neutral-700">
         Accompagner l'ambition. Former le leadership. Ouvrir les chemins.
       </p>
@@ -21,10 +38,7 @@
           <ul class="space-y-2">
             @for (link of group.links; track link.path + link.label) {
               <li>
-                <a
-                  [routerLink]="link.path"
-                  class="hover:text-secondary text-sm text-neutral-700 transition-colors hover:underline"
-                >
+                <a [routerLink]="link.path" class="kr-link-muted text-sm">
                   {{ link.label }}
                 </a>
               </li>
@@ -34,9 +48,9 @@
       }
     </div>
   </div>
-  <div class="bg-brand-white/70 border-t border-neutral-200">
+  <div class="border-brand-blue/10 bg-brand-navy border-t">
     <div class="mx-auto w-full max-w-6xl px-4 py-4 lg:px-6">
-      <p class="text-xs text-neutral-600">
+      <p class="text-brand-white/72 text-xs">
         &copy; {{ currentYear }} KRAAK. Tous droits réservés.
       </p>
     </div>

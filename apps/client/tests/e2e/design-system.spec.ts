@@ -9,7 +9,7 @@ test.describe(`Design system web — smoke styling`, () => {
     page,
   }) => {
     const heroSection = page.locator('kraak-home-page section').first();
-    const heroInner = heroSection.locator('div').first();
+    const heroInner = heroSection.locator('div.relative.z-10').first();
 
     await expect(heroSection).toBeVisible();
     await expect(heroSection).toHaveCSS('text-align', 'center');
