@@ -19,7 +19,7 @@ test.describe(`Design system web — smoke styling`, () => {
     await expect(heroInner).toHaveCSS('padding-left', '24px');
   });
 
-  test(`Given la page d'accueil, When le design system se charge, Then le bouton principal PrimeNG utilise le preset KRAAK`, async ({
+  test(`Given la page d'accueil, When le design system se charge, Then le CTA principal applique le style KRAAK`, async ({
     page,
   }) => {
     const primaryCta = page
@@ -27,12 +27,13 @@ test.describe(`Design system web — smoke styling`, () => {
       .first();
 
     await expect(primaryCta).toBeVisible();
-    await expect(primaryCta).toHaveClass(/p-button/);
+    await expect(primaryCta).toHaveCSS('display', 'inline-flex');
     await expect(primaryCta).toHaveCSS('border-top-left-radius', '12px');
     await expect(primaryCta).toHaveCSS('border-top-right-radius', '12px');
-    await expect(primaryCta).toHaveCSS('padding-top', '14px');
-    await expect(primaryCta).toHaveCSS('padding-right', '24px');
-    await expect(primaryCta).toHaveCSS('padding-bottom', '14px');
-    await expect(primaryCta).toHaveCSS('padding-left', '24px');
+    await expect(primaryCta).toHaveCSS('background-color', 'rgb(22, 115, 174)');
+    await expect(primaryCta).toHaveCSS('padding-top', '10px');
+    await expect(primaryCta).toHaveCSS('padding-right', '20px');
+    await expect(primaryCta).toHaveCSS('padding-bottom', '10px');
+    await expect(primaryCta).toHaveCSS('padding-left', '20px');
   });
 });
