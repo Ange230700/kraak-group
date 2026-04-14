@@ -18,9 +18,6 @@ describe('resolveApiEnvFilePaths', () => {
   });
 
   it('Given NODE_ENV is staging, When env files are resolved, Then .env.staging is loaded before the legacy fallback', () => {
-    expect(resolveApiEnvFilePaths('staging')).toEqual([
-      '.env.staging',
-      '.env',
-    ]);
+    expect(resolveApiEnvFilePaths('staging')).toEqual(['.env.staging', '.env']);
   });
 });

@@ -5,18 +5,18 @@ dans le monorepo. Ne jamais commiter de secrets dans le dépôt.
 
 ## Organisation des fichiers
 
-| Fichier                         | Contenu                                                |
-| ------------------------------- | ------------------------------------------------------ |
-| `apps/api/.env.example`         | Modèle backend local (copier vers `.env.local`)        |
-| `apps/api/.env.local`           | Variables backend local effectivement lues             |
-| `apps/api/.env.staging.example` | Modèle backend staging (copier vers `.env.staging`)    |
-| `apps/api/.env.staging`         | Variables backend staging effectivement lues           |
-| `apps/client/.env.example`      | Modèle client local / staging                          |
-| `apps/client/.env.local`        | Runtime-config client local + scripts / E2E            |
-| `apps/client/.env.staging`      | Runtime-config client staging                          |
-| `supabase/.env.local`           | Références Supabase locales                            |
-| `supabase/.env.staging`         | Références Supabase staging                            |
-| `.env.example` (racine)         | Variables CI/CD uniquement                             |
+| Fichier                         | Contenu                                             |
+| ------------------------------- | --------------------------------------------------- |
+| `apps/api/.env.example`         | Modèle backend local (copier vers `.env.local`)     |
+| `apps/api/.env.local`           | Variables backend local effectivement lues          |
+| `apps/api/.env.staging.example` | Modèle backend staging (copier vers `.env.staging`) |
+| `apps/api/.env.staging`         | Variables backend staging effectivement lues        |
+| `apps/client/.env.example`      | Modèle client local / staging                       |
+| `apps/client/.env.local`        | Runtime-config client local + scripts / E2E         |
+| `apps/client/.env.staging`      | Runtime-config client staging                       |
+| `supabase/.env.local`           | Références Supabase locales                         |
+| `supabase/.env.staging`         | Références Supabase staging                         |
+| `.env.example` (racine)         | Variables CI/CD uniquement                          |
 
 > Le client Angular n'utilise pas de `.env` à l'exécution. Les URLs et clés
 > publiques sont définies explicitement dans
@@ -28,14 +28,14 @@ dans le monorepo. Ne jamais commiter de secrets dans le dépôt.
 
 Variables lues par `process.env` dans le code NestJS :
 
-| Variable               | Description                        | Exemple local                            |
-| ---------------------- | ---------------------------------- | ---------------------------------------- |
-| `NODE_ENV`             | Environnement d'exécution          | `local`                                  |
-| `PORT`                 | Port d'écoute de l'API             | `3000`                                   |
-| `SUPABASE_URL`         | URL du projet Supabase             | `http://127.0.0.1:54321`                 |
-| `SUPABASE_SECRET_KEY`  | Clé service role (secret)          | —                                        |
-| `RESEND_API_KEY`       | Clé API Resend (secret)            | —                                        |
-| `CONTACT_TO_EMAIL`     | Email destinataire des formulaires | `contact@kraak.org`                      |
+| Variable               | Description                        | Exemple local                                 |
+| ---------------------- | ---------------------------------- | --------------------------------------------- |
+| `NODE_ENV`             | Environnement d'exécution          | `local`                                       |
+| `PORT`                 | Port d'écoute de l'API             | `3000`                                        |
+| `SUPABASE_URL`         | URL du projet Supabase             | `http://127.0.0.1:54321`                      |
+| `SUPABASE_SECRET_KEY`  | Clé service role (secret)          | —                                             |
+| `RESEND_API_KEY`       | Clé API Resend (secret)            | —                                             |
+| `CONTACT_TO_EMAIL`     | Email destinataire des formulaires | `contact@kraak.org`                           |
 | `CORS_ALLOWED_ORIGINS` | Origines autorisées (virgule)      | `http://localhost:4200,http://localhost:4300` |
 
 Ordre de chargement côté API :
@@ -60,12 +60,12 @@ Alias utiles à la racine :
 
 Variables utilisées par le runtime-config et les scripts :
 
-| Variable                   | Description                                   | Exemple local           |
-| -------------------------- | --------------------------------------------- | ----------------------- |
-| `CLIENT_API_BASE_URL`      | URL publique de l'API consommée par le client | `http://localhost:3000` |
+| Variable                   | Description                                   | Exemple local            |
+| -------------------------- | --------------------------------------------- | ------------------------ |
+| `CLIENT_API_BASE_URL`      | URL publique de l'API consommée par le client | `http://localhost:3000`  |
 | `SUPABASE_URL`             | URL publique du projet Supabase côté client   | `http://127.0.0.1:54321` |
-| `SUPABASE_PUBLISHABLE_KEY` | Clé publique Supabase côté client             | —                       |
-| `KRAAK_WEB_PORT`           | Port du serveur Angular pour scripts / E2E    | `4200`                  |
+| `SUPABASE_PUBLISHABLE_KEY` | Clé publique Supabase côté client             | —                        |
+| `KRAAK_WEB_PORT`           | Port du serveur Angular pour scripts / E2E    | `4200`                   |
 
 Les environnements Angular sont définis dans :
 
