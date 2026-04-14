@@ -86,6 +86,17 @@
               "optimization": false,
               "extractLicenses": false,
               "sourceMap": true
+            },
+            "development": {
+              "fileReplacements": [
+                {
+                  "replace": "projects/web/src/environments/environment.ts",
+                  "with": "projects/web/src/environments/environment.local.ts"
+                }
+              ],
+              "optimization": false,
+              "extractLicenses": false,
+              "sourceMap": true
             }
           },
           "defaultConfiguration": "production"
@@ -101,6 +112,9 @@
             },
             "local": {
               "buildTarget": "web:build:local"
+            },
+            "development": {
+              "buildTarget": "web:build:development"
             }
           },
           "defaultConfiguration": "local"
@@ -216,6 +230,17 @@
               "optimization": false,
               "extractLicenses": false,
               "sourceMap": true
+            },
+            "development": {
+              "fileReplacements": [
+                {
+                  "replace": "projects/mobile/src/environments/environment.ts",
+                  "with": "projects/mobile/src/environments/environment.local.ts"
+                }
+              ],
+              "optimization": false,
+              "extractLicenses": false,
+              "sourceMap": true
             }
           },
           "defaultConfiguration": "production"
@@ -231,6 +256,9 @@
             },
             "local": {
               "buildTarget": "mobile:build:local"
+            },
+            "development": {
+              "buildTarget": "mobile:build:development"
             }
           },
           "defaultConfiguration": "local"
