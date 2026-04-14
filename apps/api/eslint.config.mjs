@@ -1,7 +1,6 @@
 import eslint from '@eslint/js';
 import { defineConfig } from 'eslint/config';
 import prettier from 'eslint-config-prettier/flat';
-import prettierPlugin from 'eslint-plugin-prettier';
 import jest from 'eslint-plugin-jest';
 import nodePlugin from 'eslint-plugin-n';
 import sonarjs from 'eslint-plugin-sonarjs';
@@ -24,7 +23,6 @@ export default defineConfig(
     files: ['src/**/*.ts'],
     extends: [nodePlugin.configs['flat/recommended']],
     plugins: {
-      prettier: prettierPlugin,
       sonarjs,
     },
     rules: {
@@ -36,7 +34,6 @@ export default defineConfig(
       'n/no-missing-import': 'off',
       'n/no-unpublished-import': 'off',
       'n/no-unsupported-features/es-syntax': 'off',
-      'prettier/prettier': 'error',
       'sonarjs/no-duplicated-branches': 'error',
       'sonarjs/no-identical-conditions': 'error',
       'sonarjs/no-identical-expressions': 'error',
