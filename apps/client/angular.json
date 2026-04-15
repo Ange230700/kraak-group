@@ -247,6 +247,11 @@
         },
         "serve": {
           "builder": "@angular/build:dev-server",
+          "options": {
+            "prebundle": {
+              "exclude": ["@kraak/api-client"]
+            }
+          },
           "configurations": {
             "production": {
               "buildTarget": "mobile:build:production"
