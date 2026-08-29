@@ -8,12 +8,13 @@ describe('admin-area.routes', () => {
     expect(adminAreaCanMatch(route, [])).toBe(true);
   });
 
-  it('Given admin routes, When reading children paths, Then dashboard, programmes and ressources routes are declared', () => {
+  it('Given admin routes, When reading children paths, Then dashboard, programmes, curriculum and ressources routes are declared', () => {
     const adminRoot = adminAreaRoutes.find((route) => route.path === 'admin');
     const childPaths = (adminRoot?.children ?? []).map((child) => child.path);
 
     expect(childPaths).toContain('dashboard');
     expect(childPaths).toContain('programmes');
+    expect(childPaths).toContain('curriculum');
     expect(childPaths).toContain('ressources');
     expect(childPaths).toContain('');
   });
@@ -39,6 +40,18 @@ describe('admin-area.routes', () => {
     expect(programmesRoute?.loadComponent).toBeTypeOf('function');
 
     const module = await programmesRoute?.loadComponent?.();
+    expect(module).toBeDefined();
+  });
+
+  it('Given la route curriculum admin, When son loadComponent est invoqué, Then le module de page est résolu', async () => {
+    const adminRoot = adminAreaRoutes.find((route) => route.path === 'admin');
+    const curriculumRoute = adminRoot?.children?.find(
+      (child) => child.path === 'curriculum',
+    );
+
+    expect(curriculumRoute?.loadComponent).toBeTypeOf('function');
+
+    const module = await curriculumRoute?.loadComponent?.();
     expect(module).toBeDefined();
   });
 

@@ -69,6 +69,12 @@ const contentSnapshots: readonly ContentSnapshot[] = [
 
 const contentActions = [
   {
+    label: 'Gérer le curriculum',
+    path: '/admin/curriculum',
+    description:
+      'Composer les programmes à partir de cours pédagogiques réutilisables.',
+  },
+  {
     label: 'Voir le blog public',
     path: '/blog',
     description: 'Relire le rendu public des contenus éditoriaux.',

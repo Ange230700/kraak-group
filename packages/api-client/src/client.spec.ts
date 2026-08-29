@@ -31,19 +31,26 @@ function baseConfig(overrides?: Partial<ApiClientConfig>): ApiClientConfig {
 // ---------------------------------------------------------------------------
 
 describe('createApiClient', () => {
-  it('retourne un objet avec les 14 groupes de ressources', () => {
+  it('retourne un objet avec les groupes de ressources attendus', () => {
     const client = createApiClient(baseConfig());
     const keys = Object.keys(client).sort((a, b) => a.localeCompare(b));
     expect(keys).toEqual([
       'announcements',
       'auth',
+      'chapterLessons',
+      'chapters',
       'cohorts',
       'contact',
+      'courseModules',
+      'courses',
       'dashboard',
       'enrollments',
+      'learningModules',
+      'lessons',
       'notifications',
       'participantPrograms',
       'participants',
+      'programCourses',
       'programs',
       'resources',
       'sessions',
@@ -73,6 +80,43 @@ describe('createApiClient', () => {
     expect(typeof client[resource].update).toBe('function');
     expect(typeof client[resource].remove).toBe('function');
   });
+
+  it.each(['courses', 'learningModules', 'lessons'] as const)(
+    '%s expose list, create, update, remove sans getById',
+    (resource) => {
+      const client = createApiClient(baseConfig()) as unknown as Record<
+        string,
+        Record<string, unknown>
+      >;
+
+      expect(typeof client[resource].list).toBe('function');
+      expect(typeof client[resource].create).toBe('function');
+      expect(typeof client[resource].update).toBe('function');
+      expect(typeof client[resource].remove).toBe('function');
+      expect(client[resource].getById).toBeUndefined();
+    },
+  );
+
+  it.each([
+    'chapters',
+    'programCourses',
+    'courseModules',
+    'chapterLessons',
+  ] as const)(
+    '%s expose le CRUD de collection filtrable sans getById',
+    (resource) => {
+      const client = createApiClient(baseConfig()) as unknown as Record<
+        string,
+        Record<string, unknown>
+      >;
+
+      expect(typeof client[resource].list).toBe('function');
+      expect(typeof client[resource].create).toBe('function');
+      expect(typeof client[resource].update).toBe('function');
+      expect(typeof client[resource].remove).toBe('function');
+      expect(client[resource].getById).toBeUndefined();
+    },
+  );
 
   it('notifications expose getById, list, create mais PAS update ni remove', () => {
     const client = createApiClient(baseConfig());
@@ -209,6 +253,85 @@ describe('HTTP behaviour', () => {
 
     expect(fetchSpy.mock.calls[0][0]).toBe('https://api.test/notifications');
     expect(result).toEqual(dto);
+  });
+
+  it('le CRUD des cours utilise les endpoints curriculum', async () => {
+    const client = createApiClient(baseConfig());
+
+    fetchSpy = mockFetch(200, []);
+    vi.stubGlobal('fetch', fetchSpy);
+    await client.courses.list();
+    expect(fetchSpy.mock.calls[0][0]).toBe(
+      'https://api.test/curriculum/courses',
+    );
+    expect(fetchSpy.mock.calls[0][1].method).toBe('GET');
+
+    fetchSpy = mockFetch(201, { id: 'course-1' });
+    vi.stubGlobal('fetch', fetchSpy);
+    await client.courses.create({
+      slug: 'leadership',
+      title: 'Leadership',
+      summary: 'Résumé',
+      description: 'Description',
+      status: 'draft',
+    });
+    expect(fetchSpy.mock.calls[0][0]).toBe(
+      'https://api.test/curriculum/courses',
+    );
+    expect(fetchSpy.mock.calls[0][1].method).toBe('POST');
+
+    fetchSpy = mockFetch(200, { id: 'course-1' });
+    vi.stubGlobal('fetch', fetchSpy);
+    await client.courses.update('course-1', { status: 'published' });
+    expect(fetchSpy.mock.calls[0][0]).toBe(
+      'https://api.test/curriculum/courses/course-1',
+    );
+    expect(fetchSpy.mock.calls[0][1].method).toBe('PATCH');
+
+    fetchSpy = mockFetch(204);
+    vi.stubGlobal('fetch', fetchSpy);
+    await client.courses.remove('course-1');
+    expect(fetchSpy.mock.calls[0][0]).toBe(
+      'https://api.test/curriculum/courses/course-1',
+    );
+    expect(fetchSpy.mock.calls[0][1].method).toBe('DELETE');
+  });
+
+  it('GET /curriculum/chapters applique learningModuleId', async () => {
+    fetchSpy = mockFetch(200, []);
+    vi.stubGlobal('fetch', fetchSpy);
+
+    const client = createApiClient(baseConfig());
+    await client.chapters.list({ learningModuleId: 'module-1' });
+
+    expect(fetchSpy.mock.calls[0][0]).toBe(
+      'https://api.test/curriculum/chapters?learningModuleId=module-1',
+    );
+  });
+
+  it('les placements curriculum appliquent leurs filtres parents', async () => {
+    const client = createApiClient(baseConfig());
+
+    fetchSpy = mockFetch(200, []);
+    vi.stubGlobal('fetch', fetchSpy);
+    await client.programCourses.list({ programId: 'program-1' });
+    expect(fetchSpy.mock.calls[0][0]).toBe(
+      'https://api.test/curriculum/program-courses?programId=program-1',
+    );
+
+    fetchSpy = mockFetch(200, []);
+    vi.stubGlobal('fetch', fetchSpy);
+    await client.courseModules.list({ courseId: 'course-1' });
+    expect(fetchSpy.mock.calls[0][0]).toBe(
+      'https://api.test/curriculum/course-modules?courseId=course-1',
+    );
+
+    fetchSpy = mockFetch(200, []);
+    vi.stubGlobal('fetch', fetchSpy);
+    await client.chapterLessons.list({ chapterId: 'chapter-1' });
+    expect(fetchSpy.mock.calls[0][0]).toBe(
+      'https://api.test/curriculum/chapter-lessons?chapterId=chapter-1',
+    );
   });
 
   it('support-requests utilise le bon chemin avec tiret', async () => {

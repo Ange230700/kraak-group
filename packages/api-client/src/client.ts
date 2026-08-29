@@ -44,6 +44,27 @@ import type {
   ContactFormDto,
   ContactSubmissionResultDto,
   UpdateSupportRequestStatusDto,
+  CourseDto,
+  CreateCourseDto,
+  UpdateCourseDto,
+  LearningModuleDto,
+  CreateLearningModuleDto,
+  UpdateLearningModuleDto,
+  ChapterDto,
+  CreateChapterDto,
+  UpdateChapterDto,
+  LessonDto,
+  CreateLessonDto,
+  UpdateLessonDto,
+  ProgramCourseDto,
+  CreateProgramCourseDto,
+  UpdateProgramCourseDto,
+  CourseModuleDto,
+  CreateCourseModuleDto,
+  UpdateCourseModuleDto,
+  ChapterLessonDto,
+  CreateChapterLessonDto,
+  UpdateChapterLessonDto,
 } from '@kraak/contracts';
 
 // ---------------------------------------------------------------------------
@@ -84,6 +105,41 @@ export interface FullResourceClient<
 > extends CreatableResourceClient<TDto, TCreate> {
   update(id: string, body: TUpdate, options?: RequestOptions): Promise<TDto>;
   remove(id: string, options?: RequestOptions): Promise<void>;
+}
+
+export interface CollectionResourceClient<TDto, TCreate, TUpdate> {
+  list(options?: RequestOptions): Promise<TDto[]>;
+  create(body: TCreate, options?: RequestOptions): Promise<TDto>;
+  update(id: string, body: TUpdate, options?: RequestOptions): Promise<TDto>;
+  remove(id: string, options?: RequestOptions): Promise<void>;
+}
+
+export interface FilteredCollectionResourceClient<
+  TDto,
+  TCreate,
+  TUpdate,
+  TFilter extends object,
+> {
+  list(filter?: TFilter, options?: RequestOptions): Promise<TDto[]>;
+  create(body: TCreate, options?: RequestOptions): Promise<TDto>;
+  update(id: string, body: TUpdate, options?: RequestOptions): Promise<TDto>;
+  remove(id: string, options?: RequestOptions): Promise<void>;
+}
+
+export interface ChapterListFilter {
+  learningModuleId?: string;
+}
+
+export interface ProgramCourseListFilter {
+  programId?: string;
+}
+
+export interface CourseModuleListFilter {
+  courseId?: string;
+}
+
+export interface ChapterLessonListFilter {
+  chapterId?: string;
 }
 
 export interface AuthClient {
@@ -145,6 +201,45 @@ export interface ApiClient {
   contact: ContactClient;
   dashboard: DashboardClient;
   participantPrograms: ParticipantProgramsClient;
+  courses: CollectionResourceClient<
+    CourseDto,
+    CreateCourseDto,
+    UpdateCourseDto
+  >;
+  learningModules: CollectionResourceClient<
+    LearningModuleDto,
+    CreateLearningModuleDto,
+    UpdateLearningModuleDto
+  >;
+  chapters: FilteredCollectionResourceClient<
+    ChapterDto,
+    CreateChapterDto,
+    UpdateChapterDto,
+    ChapterListFilter
+  >;
+  lessons: CollectionResourceClient<
+    LessonDto,
+    CreateLessonDto,
+    UpdateLessonDto
+  >;
+  programCourses: FilteredCollectionResourceClient<
+    ProgramCourseDto,
+    CreateProgramCourseDto,
+    UpdateProgramCourseDto,
+    ProgramCourseListFilter
+  >;
+  courseModules: FilteredCollectionResourceClient<
+    CourseModuleDto,
+    CreateCourseModuleDto,
+    UpdateCourseModuleDto,
+    CourseModuleListFilter
+  >;
+  chapterLessons: FilteredCollectionResourceClient<
+    ChapterLessonDto,
+    CreateChapterLessonDto,
+    UpdateChapterLessonDto,
+    ChapterLessonListFilter
+  >;
   users: FullResourceClient<AppUserDto, CreateAppUserDto, UpdateAppUserDto>;
   participants: FullResourceClient<
     ParticipantDto,
@@ -294,6 +389,69 @@ function createFullResourceClient<TDto, TCreate, TUpdate>(
   };
 }
 
+function createCollectionResourceClient<TDto, TCreate, TUpdate>(
+  config: ApiClientConfig,
+  basePath: string,
+): CollectionResourceClient<TDto, TCreate, TUpdate> {
+  return {
+    list: (options?) =>
+      request<TDto[]>(config, 'GET', basePath, undefined, options),
+    create: (body, options?) =>
+      request<TDto>(config, 'POST', basePath, body, options),
+    update: (id, body, options?) =>
+      request<TDto>(config, 'PATCH', `${basePath}/${id}`, body, options),
+    remove: (id, options?) =>
+      request<void>(config, 'DELETE', `${basePath}/${id}`, undefined, options),
+  };
+}
+
+function appendQuery<TFilter extends object>(
+  basePath: string,
+  filter?: TFilter,
+): string {
+  if (!filter) {
+    return basePath;
+  }
+
+  const params = new URLSearchParams();
+
+  for (const [key, value] of Object.entries(filter)) {
+    if (typeof value === 'string' && value.length > 0) {
+      params.set(key, value);
+    }
+  }
+
+  const query = params.toString();
+  return query ? `${basePath}?${query}` : basePath;
+}
+
+function createFilteredCollectionResourceClient<
+  TDto,
+  TCreate,
+  TUpdate,
+  TFilter extends object,
+>(
+  config: ApiClientConfig,
+  basePath: string,
+): FilteredCollectionResourceClient<TDto, TCreate, TUpdate, TFilter> {
+  return {
+    list: (filter?, options?) =>
+      request<TDto[]>(
+        config,
+        'GET',
+        appendQuery(basePath, filter),
+        undefined,
+        options,
+      ),
+    create: (body, options?) =>
+      request<TDto>(config, 'POST', basePath, body, options),
+    update: (id, body, options?) =>
+      request<TDto>(config, 'PATCH', `${basePath}/${id}`, body, options),
+    remove: (id, options?) =>
+      request<void>(config, 'DELETE', `${basePath}/${id}`, undefined, options),
+  };
+}
+
 function createAuthClient(config: ApiClientConfig): AuthClient {
   return {
     signIn: (body, options?) =>
@@ -422,6 +580,28 @@ export function createApiClient(config: ApiClientConfig): ApiClient {
     contact: createContactClient(config),
     dashboard: createDashboardClient(config),
     participantPrograms: createParticipantProgramsClient(config),
+    courses: createCollectionResourceClient(config, '/curriculum/courses'),
+    learningModules: createCollectionResourceClient(
+      config,
+      '/curriculum/modules',
+    ),
+    chapters: createFilteredCollectionResourceClient(
+      config,
+      '/curriculum/chapters',
+    ),
+    lessons: createCollectionResourceClient(config, '/curriculum/lessons'),
+    programCourses: createFilteredCollectionResourceClient(
+      config,
+      '/curriculum/program-courses',
+    ),
+    courseModules: createFilteredCollectionResourceClient(
+      config,
+      '/curriculum/course-modules',
+    ),
+    chapterLessons: createFilteredCollectionResourceClient(
+      config,
+      '/curriculum/chapter-lessons',
+    ),
     users: createFullResourceClient(config, '/users'),
     participants: createFullResourceClient(config, '/participants'),
     programs: createFullResourceClient(config, '/programs'),

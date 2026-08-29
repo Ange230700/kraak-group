@@ -24,6 +24,12 @@ export const adminAreaRoutes: Routes = [
           import('./features/admin/programmes/admin-programmes.page'),
       },
       {
+        path: 'curriculum',
+        title: 'Curriculum — Admin | KRAAK Consulting',
+        loadComponent: () =>
+          import('./features/admin/curriculum/admin-curriculum.page'),
+      },
+      {
         path: 'ressources',
         title: 'Ressources — Admin | KRAAK Consulting',
         loadComponent: () =>

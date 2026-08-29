@@ -55,5 +55,6 @@ describe('DashboardPage', () => {
     expect(content).toContain('Actions rapides');
     expect(content).toContain('Formation');
     expect(content).toContain('Voir le blog public');
+    expect(content).toContain('Gérer le curriculum');
   });
 });
