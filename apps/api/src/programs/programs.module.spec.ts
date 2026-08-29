@@ -1,5 +1,6 @@
 import { MODULE_METADATA } from '@nestjs/common/constants';
 import { AuthModule } from '../auth/auth.module';
+import { CurriculumModule } from '../curriculum/curriculum.module';
 import { SupabaseModule } from '../supabase/supabase.module';
 import { ProgramsController } from './programs.controller';
 import { ProgramsModule } from './programs.module';
@@ -21,7 +22,7 @@ describe('ProgramsModule', () => {
     );
 
     expect(imports).toEqual(
-      expect.arrayContaining([AuthModule, SupabaseModule]),
+      expect.arrayContaining([AuthModule, CurriculumModule, SupabaseModule]),
     );
     expect(controllers).toEqual(expect.arrayContaining([ProgramsController]));
     expect(providers).toEqual(expect.arrayContaining([ProgramsService]));

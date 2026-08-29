@@ -92,6 +92,93 @@ describe('Web Participant ProgramDetailPage', () => {
         publishedAt: '2026-01-12T00:00:00.000Z',
       },
     ],
+    curriculum: {
+      courses: [
+        {
+          placement: {
+            id: 'program-course-1',
+            programId: 'prog-1',
+            courseId: 'course-1',
+            sortOrder: 0,
+            isRequired: true,
+            createdAt: '2026-01-01T00:00:00.000Z',
+            updatedAt: '2026-01-01T00:00:00.000Z',
+          },
+          course: {
+            id: 'course-1',
+            slug: 'leadership-foundations',
+            title: 'Fondamentaux du leadership',
+            summary: 'Construire les bases du leadership.',
+            description: 'Cours principal du programme.',
+            status: 'published',
+            createdAt: '2026-01-01T00:00:00.000Z',
+            updatedAt: '2026-01-01T00:00:00.000Z',
+          },
+          modules: [
+            {
+              placement: {
+                id: 'course-module-1',
+                courseId: 'course-1',
+                learningModuleId: 'module-1',
+                sortOrder: 0,
+                isRequired: true,
+                createdAt: '2026-01-01T00:00:00.000Z',
+                updatedAt: '2026-01-01T00:00:00.000Z',
+              },
+              learningModule: {
+                id: 'module-1',
+                slug: 'self-leadership',
+                title: 'Leadership de soi',
+                summary: 'Commencer par soi-même.',
+                description: 'Module consacré au leadership personnel.',
+                status: 'published',
+                createdAt: '2026-01-01T00:00:00.000Z',
+                updatedAt: '2026-01-01T00:00:00.000Z',
+              },
+              chapters: [
+                {
+                  chapter: {
+                    id: 'chapter-1',
+                    learningModuleId: 'module-1',
+                    slug: 'introduction',
+                    title: 'Comprendre son rôle',
+                    summary: 'Introduction au leadership personnel.',
+                    status: 'published',
+                    sortOrder: 0,
+                    createdAt: '2026-01-01T00:00:00.000Z',
+                    updatedAt: '2026-01-01T00:00:00.000Z',
+                  },
+                  lessons: [
+                    {
+                      placement: {
+                        id: 'chapter-lesson-1',
+                        chapterId: 'chapter-1',
+                        lessonId: 'lesson-1',
+                        sortOrder: 0,
+                        isRequired: true,
+                        createdAt: '2026-01-01T00:00:00.000Z',
+                        updatedAt: '2026-01-01T00:00:00.000Z',
+                      },
+                      lesson: {
+                        id: 'lesson-1',
+                        slug: 'leading-yourself',
+                        title: 'Se diriger avant de diriger',
+                        summary: 'Première leçon du parcours.',
+                        description:
+                          'Introduction aux principes de maîtrise de soi.',
+                        status: 'published',
+                        createdAt: '2026-01-01T00:00:00.000Z',
+                        updatedAt: '2026-01-01T00:00:00.000Z',
+                      },
+                    },
+                  ],
+                },
+              ],
+            },
+          ],
+        },
+      ],
+    },
   };
 
   beforeEach(async () => {
@@ -162,6 +249,11 @@ describe('Web Participant ProgramDetailPage', () => {
     expect(text).toContain('Document de référence.');
     expect(text).toContain('Formation');
     expect(text).toContain('Bienvenue dans le programme');
+    expect(text).toContain('Contenu pédagogique');
+    expect(text).toContain('Fondamentaux du leadership');
+    expect(text).toContain('Leadership de soi');
+    expect(text).toContain('Comprendre son rôle');
+    expect(text).toContain('Se diriger avant de diriger');
 
     const externalResource = element.querySelector(
       'a[href="https://example.com/guide.pdf"]',
@@ -184,12 +276,14 @@ describe('Web Participant ProgramDetailPage', () => {
         sessions: [],
         resources: [],
         announcements: [],
+        curriculum: { courses: [] },
       }),
     );
     const text = fixture.nativeElement.textContent ?? '';
 
     expect(text).toContain('Parcours individuel');
     expect(text).toContain('Aucune session programmée');
+    expect(text).toContain('Aucun contenu pédagogique publié');
     expect(text).toContain('Aucune ressource disponible');
     expect(text).toContain('Aucune annonce liée');
   });

@@ -68,6 +68,7 @@ describe('Web Participant SessionDetailPage', () => {
     ],
     resources: [],
     announcements: [],
+    curriculum: { courses: [] },
   };
 
   beforeEach(async () => {

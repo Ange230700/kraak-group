@@ -31,6 +31,7 @@ import type {
   UpdateProgramDto,
 } from '@kraak/contracts';
 import { SupabaseService } from '../supabase/supabase.service';
+import { CurriculumService } from '../curriculum/curriculum.service';
 import { mapResource, type ResourceRow } from '../shared/resource-mapper.utils';
 import {
   isSupabaseColumnMissingError,
@@ -174,7 +175,10 @@ function executeEnrollmentQueryWithFallback<T>(
 
 @Injectable()
 export class ProgramsService {
-  constructor(private readonly supabaseService: SupabaseService) {}
+  constructor(
+    private readonly supabaseService: SupabaseService,
+    private readonly curriculumService: CurriculumService,
+  ) {}
 
   async listPrograms(
     accessToken?: string,
@@ -538,10 +542,11 @@ export class ProgramsService {
     }
 
     const cohort = this.mapCohort(normalizeRelation(enrollment.cohort));
-    const [sessions, resources, announcements] = await Promise.all([
+    const [sessions, resources, announcements, curriculum] = await Promise.all([
       cohort ? this.readSessions(cohort.id) : Promise.resolve<SessionDto[]>([]),
       this.readResources(program.id, cohort?.id ?? null),
       this.readAnnouncements(program.id, cohort?.id ?? null),
+      this.curriculumService.getPublishedProgramCurriculum(program.id),
     ]);
 
     const progress = calculateProgramProgress({
@@ -559,6 +564,7 @@ export class ProgramsService {
       sessions,
       resources,
       announcements,
+      curriculum,
     };
   }
 

@@ -324,8 +324,250 @@
 
     <section
       kraakRevealOnScroll
-      [revealDelayMs]="100"
-      [revealDelayMobileMs]="50"
+      [revealDelayMs]="90"
+      [revealDelayMobileMs]="45"
+      aria-labelledby="program-curriculum-title"
+    >
+      <div
+        class="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between"
+      >
+        <div>
+          <p
+            class="text-brand-blue text-xs font-semibold tracking-[0.18em] uppercase"
+          >
+            Formation
+          </p>
+          <h2
+            id="program-curriculum-title"
+            class="mt-2 text-2xl font-semibold text-slate-950 sm:text-3xl"
+          >
+            Contenu pédagogique
+          </h2>
+          <p class="mt-3 max-w-2xl text-sm leading-6 text-slate-600">
+            Explorez les cours, modules, chapitres et leçons qui composent ce
+            programme.
+          </p>
+        </div>
+
+        <span class="text-sm font-semibold text-slate-500">
+          {{ detail.curriculum.courses.length }}
+          {{ detail.curriculum.courses.length === 1 ? 'cours' : 'cours' }}
+        </span>
+      </div>
+
+      @if (detail.curriculum.courses.length > 0) {
+        <div class="mt-7 space-y-6">
+          @for (
+            courseItem of detail.curriculum.courses;
+            track courseItem.placement.id;
+            let courseIndex = $index
+          ) {
+            <article
+              class="overflow-hidden rounded-[2rem] bg-white shadow-[0_1px_1px_rgba(0,0,0,0.06),0_-1px_1px_rgba(0,0,0,0.06)_inset,0_12px_30px_-18px_rgba(18,43,74,0.16)]"
+            >
+              <header
+                class="grid gap-5 border-b border-slate-100 px-6 py-6 sm:grid-cols-[3.5rem_minmax(0,1fr)_auto] sm:items-start sm:px-8"
+              >
+                <span
+                  class="text-brand-blue flex h-14 w-14 items-center justify-center rounded-2xl bg-blue-50 text-sm font-semibold shadow-[0_1px_2px_rgba(164,172,185,0.24),0_0_0_1px_rgba(18,55,105,0.08)]"
+                  aria-hidden="true"
+                >
+                  C{{ (courseIndex + 1).toString().padStart(2, '0') }}
+                </span>
+
+                <div class="min-w-0">
+                  <div class="flex flex-wrap items-center gap-2">
+                    <h3 class="text-xl font-semibold text-slate-950">
+                      {{ courseItem.course.title }}
+                    </h3>
+
+                    @if (courseItem.placement.isRequired) {
+                      <span
+                        class="bg-brand-cyan/15 text-brand-navy inline-flex rounded-full px-2.5 py-1 text-[11px] font-semibold"
+                      >
+                        Obligatoire
+                      </span>
+                    }
+                  </div>
+
+                  <p class="mt-2 text-sm leading-6 text-slate-600">
+                    {{ courseItem.course.summary }}
+                  </p>
+                </div>
+
+                <span
+                  class="justify-self-start rounded-full bg-slate-100 px-3 py-1.5 text-xs font-semibold text-slate-500 sm:justify-self-end"
+                >
+                  {{ courseItem.modules.length }}
+                  {{ courseItem.modules.length === 1 ? 'module' : 'modules' }}
+                </span>
+              </header>
+
+              @if (courseItem.modules.length > 0) {
+                <div class="space-y-5 px-6 py-6 sm:px-8 sm:py-8">
+                  @for (
+                    moduleItem of courseItem.modules;
+                    track moduleItem.placement.id;
+                    let moduleIndex = $index
+                  ) {
+                    <section
+                      class="rounded-3xl border border-slate-100 bg-slate-50/70 p-5 sm:p-6"
+                    >
+                      <div
+                        class="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between"
+                      >
+                        <div class="flex min-w-0 gap-4">
+                          <span
+                            class="text-brand-navy flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-white text-xs font-semibold shadow-[0_1px_2px_rgba(164,172,185,0.2),0_0_0_1px_rgba(18,55,105,0.06)]"
+                            aria-hidden="true"
+                          >
+                            M{{ moduleIndex + 1 }}
+                          </span>
+
+                          <div class="min-w-0">
+                            <h4 class="font-semibold text-slate-950">
+                              {{ moduleItem.learningModule.title }}
+                            </h4>
+                            <p class="mt-1 text-sm leading-6 text-slate-600">
+                              {{ moduleItem.learningModule.summary }}
+                            </p>
+                          </div>
+                        </div>
+
+                        <span
+                          class="shrink-0 text-xs font-semibold text-slate-400"
+                        >
+                          {{ moduleItem.chapters.length }}
+                          {{
+                            moduleItem.chapters.length === 1
+                              ? 'chapitre'
+                              : 'chapitres'
+                          }}
+                        </span>
+                      </div>
+
+                      @if (moduleItem.chapters.length > 0) {
+                        <div
+                          class="mt-5 divide-y divide-dashed divide-slate-200 border-t border-slate-200"
+                        >
+                          @for (
+                            chapterItem of moduleItem.chapters;
+                            track chapterItem.chapter.id;
+                            let chapterIndex = $index
+                          ) {
+                            <div class="py-5 last:pb-0">
+                              <div
+                                class="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between"
+                              >
+                                <div>
+                                  <p
+                                    class="text-brand-blue text-[11px] font-semibold tracking-[0.12em] uppercase"
+                                  >
+                                    Chapitre {{ chapterIndex + 1 }}
+                                  </p>
+                                  <h5
+                                    class="mt-1.5 font-semibold text-slate-900"
+                                  >
+                                    {{ chapterItem.chapter.title }}
+                                  </h5>
+                                  <p
+                                    class="mt-1.5 text-sm leading-6 text-slate-600"
+                                  >
+                                    {{ chapterItem.chapter.summary }}
+                                  </p>
+                                </div>
+
+                                <span
+                                  class="shrink-0 text-xs font-semibold text-slate-400"
+                                >
+                                  {{ chapterItem.lessons.length }}
+                                  {{
+                                    chapterItem.lessons.length === 1
+                                      ? 'leçon'
+                                      : 'leçons'
+                                  }}
+                                </span>
+                              </div>
+
+                              @if (chapterItem.lessons.length > 0) {
+                                <ol class="mt-4 space-y-2">
+                                  @for (
+                                    lessonItem of chapterItem.lessons;
+                                    track lessonItem.placement.id;
+                                    let lessonIndex = $index
+                                  ) {
+                                    <li
+                                      class="flex items-center gap-3 rounded-2xl bg-white px-4 py-3 shadow-[0_1px_2px_rgba(164,172,185,0.14),0_0_0_1px_rgba(18,55,105,0.04)]"
+                                    >
+                                      <span
+                                        class="text-brand-blue flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-blue-50 text-[11px] font-semibold"
+                                        aria-hidden="true"
+                                      >
+                                        {{ lessonIndex + 1 }}
+                                      </span>
+
+                                      <div class="min-w-0 flex-1">
+                                        <p
+                                          class="text-sm font-semibold text-slate-900"
+                                        >
+                                          {{ lessonItem.lesson.title }}
+                                        </p>
+                                        <p
+                                          class="mt-0.5 line-clamp-1 text-xs text-slate-500"
+                                        >
+                                          {{ lessonItem.lesson.summary }}
+                                        </p>
+                                      </div>
+
+                                      @if (lessonItem.placement.isRequired) {
+                                        <span
+                                          class="hidden text-[11px] font-semibold text-slate-400 sm:inline"
+                                        >
+                                          Requise
+                                        </span>
+                                      }
+                                    </li>
+                                  }
+                                </ol>
+                              } @else {
+                                <p class="mt-4 text-sm text-slate-500">
+                                  Aucune leçon publiée dans ce chapitre.
+                                </p>
+                              }
+                            </div>
+                          }
+                        </div>
+                      } @else {
+                        <p class="mt-5 text-sm text-slate-500">
+                          Aucun chapitre publié dans ce module.
+                        </p>
+                      }
+                    </section>
+                  }
+                </div>
+              } @else {
+                <p class="px-6 py-7 text-sm text-slate-500 sm:px-8">
+                  Aucun module publié dans ce cours.
+                </p>
+              }
+            </article>
+          }
+        </div>
+      } @else {
+        <div
+          class="mt-6 rounded-3xl border border-dashed border-slate-200 bg-white/60 px-6 py-8"
+        >
+          <p class="text-sm leading-6 text-slate-600">
+            Aucun contenu pédagogique publié pour le moment.
+          </p>
+        </div>
+      }
+    </section>
+
+    <section
+      kraakRevealOnScroll
+      [revealDelayMs]="110"
+      [revealDelayMobileMs]="55"
       aria-labelledby="program-sessions-title"
     >
       <div
@@ -430,8 +672,8 @@
 
     <section
       kraakRevealOnScroll
-      [revealDelayMs]="140"
-      [revealDelayMobileMs]="70"
+      [revealDelayMs]="150"
+      [revealDelayMobileMs]="75"
       class="grid gap-8 lg:grid-cols-2"
       aria-label="Ressources et annonces du programme"
     >

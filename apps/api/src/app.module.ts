@@ -7,6 +7,7 @@ import { ArticlesModule } from './articles/articles.module';
 import { AuthModule } from './auth/auth.module';
 import { CmsModule } from './cms/cms.module';
 import { DashboardModule } from './dashboard/dashboard.module';
+import { CurriculumModule } from './curriculum/curriculum.module';
 import { ProgramsModule } from './programs/programs.module';
 import { ResourcesModule } from './resources/resources.module';
 import { resolveApiEnvFilePaths } from './config/environment-files';
@@ -27,6 +28,7 @@ import { UsersModule } from './users/users.module';
     AnnouncementsModule,
     ArticlesModule,
     DashboardModule,
+    CurriculumModule,
     ProgramsModule,
     ResourcesModule,
     ServicesModule,

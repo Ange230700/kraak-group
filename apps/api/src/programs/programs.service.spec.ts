@@ -5,6 +5,7 @@ import {
 } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import { SupabaseService } from '../supabase/supabase.service';
+import { CurriculumService } from '../curriculum/curriculum.service';
 import { ProgramsService } from './programs.service';
 
 function createSingleRowQuery(result: { data: unknown; error: unknown }) {
@@ -72,6 +73,12 @@ describe('ProgramsService', () => {
     getClient: jest.fn(() => adminClient),
   };
 
+  const curriculumService = {
+    getPublishedProgramCurriculum: jest.fn().mockResolvedValue({
+      courses: [],
+    }),
+  };
+
   beforeEach(async () => {
     jest.clearAllMocks();
 
@@ -90,6 +97,14 @@ describe('ProgramsService', () => {
         {
           provide: SupabaseService,
           useValue: supabaseService,
+        },
+        {
+          provide: CurriculumService,
+          useValue: curriculumService,
+        },
+        {
+          provide: CurriculumService,
+          useValue: curriculumService,
         },
       ],
     }).compile();
@@ -1228,7 +1243,12 @@ describe('ProgramsService', () => {
       sessions: [{ id: 'session-1' }],
       resources: [{ id: 'resource-1' }],
       announcements: [{ id: 'announcement-1' }],
+      curriculum: { courses: [] },
     });
+
+    expect(
+      curriculumService.getPublishedProgramCurriculum,
+    ).toHaveBeenCalledWith('program-1');
   });
 
   // Given un enrollment introuvable pour le participant

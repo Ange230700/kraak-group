@@ -22,6 +22,13 @@ import {
   CreateAppUserSchema,
   CreateParticipantSchema,
   CreateProgramSchema,
+  CreateCourseSchema,
+  CreateLearningModuleSchema,
+  CreateChapterSchema,
+  CreateLessonSchema,
+  CreateProgramCourseSchema,
+  CreateCourseModuleSchema,
+  CreateChapterLessonSchema,
   CreateCohortSchema,
   CreateSessionSchema,
   CreateResourceSchema,
@@ -37,6 +44,13 @@ import {
   UpdateCategorySchema,
   UpdateParticipantSchema,
   UpdateProgramSchema,
+  UpdateCourseSchema,
+  UpdateLearningModuleSchema,
+  UpdateChapterSchema,
+  UpdateLessonSchema,
+  UpdateProgramCourseSchema,
+  UpdateCourseModuleSchema,
+  UpdateChapterLessonSchema,
   UpdateCohortSchema,
   UpdateSessionSchema,
   UpdateResourceSchema,
@@ -47,6 +61,13 @@ import {
   AppUserSchema,
   ParticipantSchema,
   ProgramSchema,
+  CourseSchema,
+  LearningModuleSchema,
+  ChapterSchema,
+  LessonSchema,
+  ProgramCourseSchema,
+  CourseModuleSchema,
+  ChapterLessonSchema,
   CohortSchema,
   SessionSchema,
   ResourceSchema,
@@ -765,6 +786,196 @@ describe('ProgramSchema', () => {
         updatedAt: '2025-01-01T00:00:00Z',
       }).success,
     ).toBe(true);
+  });
+});
+
+// ---------------------------------------------------------------------------
+// Curriculum
+// ---------------------------------------------------------------------------
+describe('Curriculum core schemas', () => {
+  const timestamps = {
+    createdAt: '2026-08-28T00:00:00Z',
+    updatedAt: '2026-08-28T00:00:00Z',
+  };
+
+  it('should accept reusable curriculum entities', () => {
+    expect(
+      CourseSchema.safeParse({
+        id: 'course-1',
+        slug: 'leadership-foundations',
+        title: 'Leadership Foundations',
+        summary: 'Course summary',
+        description: 'Course description',
+        status: 'published',
+        ...timestamps,
+      }).success,
+    ).toBe(true);
+
+    expect(
+      LearningModuleSchema.safeParse({
+        id: 'module-1',
+        slug: 'self-leadership',
+        title: 'Self Leadership',
+        summary: 'Module summary',
+        description: 'Module description',
+        status: 'published',
+        ...timestamps,
+      }).success,
+    ).toBe(true);
+
+    expect(
+      ChapterSchema.safeParse({
+        id: 'chapter-1',
+        learningModuleId: 'module-1',
+        slug: 'introduction',
+        title: 'Introduction',
+        summary: 'Chapter summary',
+        status: 'published',
+        sortOrder: 0,
+        ...timestamps,
+      }).success,
+    ).toBe(true);
+
+    expect(
+      LessonSchema.safeParse({
+        id: 'lesson-1',
+        slug: 'leading-yourself',
+        title: 'Leading Yourself',
+        summary: 'Lesson summary',
+        description: 'Lesson description',
+        status: 'published',
+        ...timestamps,
+      }).success,
+    ).toBe(true);
+  });
+
+  it('should accept curriculum create payloads', () => {
+    expect(
+      CreateLearningModuleSchema.safeParse({
+        slug: 'self-leadership',
+        title: 'Self Leadership',
+        summary: 'Module summary',
+        description: 'Module description',
+        status: 'draft',
+      }).success,
+    ).toBe(true);
+
+    expect(
+      CreateLessonSchema.safeParse({
+        slug: 'leading-yourself',
+        title: 'Leading Yourself',
+        summary: 'Lesson summary',
+        description: 'Lesson description',
+        status: 'draft',
+      }).success,
+    ).toBe(true);
+
+    expect(
+      CreateCourseModuleSchema.safeParse({
+        courseId: 'course-1',
+        learningModuleId: 'module-1',
+        sortOrder: 0,
+        isRequired: true,
+      }).success,
+    ).toBe(true);
+
+    expect(
+      CreateChapterLessonSchema.safeParse({
+        chapterId: 'chapter-1',
+        lessonId: 'lesson-1',
+        sortOrder: 0,
+        isRequired: true,
+      }).success,
+    ).toBe(true);
+  });
+
+  it('should accept curriculum placements', () => {
+    expect(
+      ProgramCourseSchema.safeParse({
+        id: 'program-course-1',
+        programId: 'program-1',
+        courseId: 'course-1',
+        sortOrder: 0,
+        isRequired: true,
+        ...timestamps,
+      }).success,
+    ).toBe(true);
+
+    expect(
+      CourseModuleSchema.safeParse({
+        id: 'course-module-1',
+        courseId: 'course-1',
+        learningModuleId: 'module-1',
+        sortOrder: 0,
+        isRequired: true,
+        ...timestamps,
+      }).success,
+    ).toBe(true);
+
+    expect(
+      ChapterLessonSchema.safeParse({
+        id: 'chapter-lesson-1',
+        chapterId: 'chapter-1',
+        lessonId: 'lesson-1',
+        sortOrder: 0,
+        isRequired: true,
+        ...timestamps,
+      }).success,
+    ).toBe(true);
+  });
+
+  it('should reject invalid curriculum status and negative ordering', () => {
+    expect(
+      CreateCourseSchema.safeParse({
+        slug: 'course',
+        title: 'Course',
+        summary: 'Summary',
+        description: 'Description',
+        status: 'deleted',
+      }).success,
+    ).toBe(false);
+
+    expect(
+      CreateChapterSchema.safeParse({
+        learningModuleId: 'module-1',
+        slug: 'chapter',
+        title: 'Chapter',
+        summary: 'Summary',
+        status: 'draft',
+        sortOrder: -1,
+      }).success,
+    ).toBe(false);
+
+    expect(
+      CreateProgramCourseSchema.safeParse({
+        programId: 'program-1',
+        courseId: 'course-1',
+        sortOrder: -1,
+        isRequired: true,
+      }).success,
+    ).toBe(false);
+  });
+
+  it('should accept partial curriculum updates', () => {
+    expect(UpdateCourseSchema.safeParse({ title: 'Updated' }).success).toBe(
+      true,
+    );
+    expect(
+      UpdateLearningModuleSchema.safeParse({ status: 'archived' }).success,
+    ).toBe(true);
+    expect(UpdateChapterSchema.safeParse({ sortOrder: 2 }).success).toBe(true);
+    expect(
+      UpdateLessonSchema.safeParse({ description: 'Updated' }).success,
+    ).toBe(true);
+    expect(
+      UpdateProgramCourseSchema.safeParse({ isRequired: false }).success,
+    ).toBe(true);
+    expect(UpdateCourseModuleSchema.safeParse({ sortOrder: 1 }).success).toBe(
+      true,
+    );
+    expect(UpdateChapterLessonSchema.safeParse({ sortOrder: 3 }).success).toBe(
+      true,
+    );
   });
 });
 
