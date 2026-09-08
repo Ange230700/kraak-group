@@ -7,6 +7,7 @@ import { webRouteLocaleResolver } from './i18n/web-route-locale.resolver';
 import { participantAreaRoutes } from './participant-area.routes';
 import {
   LOCALIZED_PUBLIC_LOCALES,
+  buildLocalizedBlogArticlePath,
   findLocalizedPublicRouteEntry,
   localizedPublicRouteEntries,
   renderPublicRedirects,
@@ -29,6 +30,7 @@ const publicComponentLoaders = {
   faq: () => import('./features/support/faq.page'),
   programs: () => import('./features/programs/programs.page'),
   resources: () => import('./features/resources/resources.page'),
+  blog: () => import('./features/blog/blog.page'),
   contact: () => import('./features/contact/contact.page'),
   legalNotice: () => import('./features/legal/mentions-legales.page'),
   privacyPolicy: () =>
@@ -62,6 +64,12 @@ const authResetRoute = buildMarketingRoute(
   () => import('./features/auth/auth-reset.page'),
 );
 
+const legacyBlogArticleRedirectRoute: Route = {
+  path: 'blog/:slug',
+  redirectTo: ({ params }) => buildLocalizedBlogArticlePath(params['slug']),
+  pathMatch: 'full',
+};
+
 function buildLocalizedPublicRoutes(): Routes {
   return LOCALIZED_PUBLIC_LOCALES.map((localeDefinition) => {
     const notFoundEntry = findLocalizedPublicRouteEntry(
@@ -72,6 +80,10 @@ function buildLocalizedPublicRoutes(): Routes {
     const childRoutes = localizedPublicRouteEntries
       .filter((entry) => entry.locale === localeDefinition.locale)
       .map((entry) => buildLocalizedPublicPageRoute(entry));
+    const blogEntry = findLocalizedPublicRouteEntry(
+      'blog',
+      localeDefinition.locale,
+    );
 
     return {
       path: localeDefinition.segment,
@@ -79,6 +91,14 @@ function buildLocalizedPublicRoutes(): Routes {
       resolve: { locale: webRouteLocaleResolver },
       runGuardsAndResolvers: 'always',
       children: [
+        {
+          path: `${blogEntry.childPath}/:slug`,
+          data: {
+            locale: localeDefinition.locale,
+            pageId: 'blog',
+          },
+          loadComponent: () => import('./features/blog/blog-article.page'),
+        },
         ...childRoutes,
         {
           path: '**',
@@ -145,6 +165,7 @@ export function buildRoutes(options: BuildRoutesOptions = {}): Routes {
       pathMatch: 'full',
     },
     ...buildLegacyRedirectRoutes(),
+    legacyBlogArticleRedirectRoute,
     ...buildLocalizedPublicRoutes(),
     ...adminAreaRoutes,
     ...(includeParticipantArea ? participantAreaRoutes : []),

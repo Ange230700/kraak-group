@@ -298,9 +298,14 @@ describe('Critical API Modules Integration', () => {
 
     it('Given a published resource is missing, When loading it by id, Then it returns 404', async () => {
       resourcesServiceMock.getResourceById.mockRejectedValueOnce(
-        new NotFoundException(
-          'Resource with ID resource-404 not found or is not published.',
-        ),
+        new NotFoundException({
+          statusCode: 404,
+          message: {
+            key: 'resources.notFoundOrNotPublished',
+            params: { id: 'resource-404' },
+          },
+          error: 'Not Found',
+        }),
       );
 
       await (request(app.getHttpServer())
@@ -697,7 +702,7 @@ describe('Critical API Modules Integration', () => {
       articlesServiceMock.getArticleById.mockRejectedValueOnce(
         new NotFoundException({
           success: false,
-          message: 'Article introuvable.',
+          message: { key: 'articles.notFound' },
         }),
       );
 
@@ -775,8 +780,7 @@ describe('Critical API Modules Integration', () => {
       articlesServiceMock.updateArticle.mockRejectedValueOnce(
         new BadRequestException({
           success: false,
-          message:
-            'Certaines catégories ou certains tags sont introuvables ou archivés.',
+          message: { key: 'articles.categoriesOrTagsUnavailable' },
         }),
       );
 

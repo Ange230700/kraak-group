@@ -15,6 +15,7 @@ import {
   helpCircleOutline,
 } from 'ionicons/icons';
 import { MOBILE_PRIMARY_TABS } from '../../core/navigation/mobile-shell.config';
+import { KraakTranslatePipe } from '../../../../../shared/i18n';
 
 addIcons({
   homeOutline,
@@ -33,6 +34,7 @@ addIcons({
     IonTabButton,
     IonIcon,
     IonLabel,
+    KraakTranslatePipe,
   ],
   templateUrl: './tabs.component.html',
 })

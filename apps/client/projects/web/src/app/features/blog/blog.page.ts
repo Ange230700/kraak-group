@@ -7,6 +7,11 @@ import {
   inject,
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import {
+  KraakI18nService,
+  KraakTranslatePipe,
+} from '../../../../../shared/i18n';
+import { LocalizedPublicPathPipe } from '../../routing/localized-public-path.pipe';
 import { RouterLink } from '@angular/router';
 import { ButtonDirective } from 'primeng/button';
 
@@ -23,7 +28,14 @@ const BLOG_HERO_BACKGROUND_STYLE = buildHeroBackgroundStyle(
 @Component({
   selector: 'kraak-blog-page',
   standalone: true,
-  imports: [NgStyle, RouterLink, ButtonDirective, CtaBanner],
+  imports: [
+    NgStyle,
+    RouterLink,
+    ButtonDirective,
+    CtaBanner,
+    KraakTranslatePipe,
+    LocalizedPublicPathPipe,
+  ],
   templateUrl: './blog.page.html',
 })
 export default class BlogPage implements OnInit, OnDestroy {
@@ -40,9 +52,10 @@ export default class BlogPage implements OnInit, OnDestroy {
   private readonly destroyRef = inject(DestroyRef);
   private readonly gsapService = inject(GsapAnimationsService);
   private readonly blogPublicService = inject(BlogPublicService);
+  private readonly i18n = inject(KraakI18nService);
 
   constructor() {
-    this.applyArticles([...getFallbackBlogArticles()]);
+    this.applyArticles([...getFallbackBlogArticles(this.i18n.locale())]);
   }
 
   ngOnInit(): void {
@@ -58,7 +71,7 @@ export default class BlogPage implements OnInit, OnDestroy {
   private loadPublishedArticles(): void {
     setTimeout(() => {
       this.blogPublicService
-        .listPublishedArticles()
+        .listPublishedArticles(this.i18n.locale())
         .pipe(takeUntilDestroyed(this.destroyRef))
         .subscribe((articles) => {
           this.applyArticles(articles);

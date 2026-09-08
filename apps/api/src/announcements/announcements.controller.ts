@@ -35,6 +35,7 @@ import {
   validateUpdateAnnouncementPayload,
 } from './announcements.dto';
 import { AnnouncementsService } from './announcements.service';
+import { apiMessage } from '../i18n/api-message';
 
 const ANNOUNCEMENT_PRIORITY_ENUM = ['low', 'normal', 'high', 'critical'];
 const AUDIENCE_TYPE_ENUM = ['all_participants', 'program', 'cohort'];
@@ -268,7 +269,7 @@ export class AnnouncementsController {
     if (!validated.valid) {
       throw new BadRequestException({
         success: false,
-        message: 'Payload invalide.',
+        message: apiMessage('validation.invalidPayload'),
         errors: validated.errors,
       });
     }
@@ -299,7 +300,7 @@ export class AnnouncementsController {
     if (!validated.valid) {
       throw new BadRequestException({
         success: false,
-        message: 'Payload invalide.',
+        message: apiMessage('validation.invalidPayload'),
         errors: validated.errors,
       });
     }

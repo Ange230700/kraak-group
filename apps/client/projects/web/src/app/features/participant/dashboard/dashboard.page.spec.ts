@@ -1,3 +1,4 @@
+import { ApplicationInitStatus } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
 import { ApiError } from '@kraak/api-client';
@@ -15,6 +16,10 @@ import {
   participantRoleChildGuard,
 } from '../../../core/auth/auth.guard';
 
+import {
+  KraakI18nService,
+  provideKraakI18n,
+} from '../../../../../../shared/i18n';
 const TEST_MEETING_LINK_URL = 'https://meet.example/session-1';
 
 function configureDashboardClient(
@@ -113,12 +118,21 @@ async function flush(
 
 describe('Web Participant Dashboard Page', () => {
   beforeEach(async () => {
+    globalThis.window.localStorage.setItem('kraak:locale', 'fr-CI');
     globalThis.localStorage?.removeItem(WEB_AUTH_STORAGE_KEY);
 
     await TestBed.configureTestingModule({
       imports: [DashboardPage],
-      providers: [WebAuthService, provideRouter([]), MessageService],
+      providers: [
+        provideKraakI18n(),
+        WebAuthService,
+        provideRouter([]),
+        MessageService,
+      ],
     }).compileComponents();
+
+    await TestBed.inject(ApplicationInitStatus).donePromise;
+    await TestBed.inject(KraakI18nService).setLocale('fr-CI');
   });
 
   describe('Component Creation', () => {
@@ -343,11 +357,20 @@ describe('Web Participant Dashboard Page', () => {
       TestBed.resetTestingModule();
       await TestBed.configureTestingModule({
         imports: [DashboardPage],
-        providers: [WebAuthService, provideRouter([]), MessageService],
+        providers: [
+          provideKraakI18n(),
+          WebAuthService,
+          provideRouter([]),
+          MessageService,
+        ],
       }).compileComponents();
 
       const fixture = TestBed.createComponent(DashboardPage);
       await flush(fixture);
+
+      await vi.waitFor(() => {
+        expect(fetchMock).toHaveBeenCalled();
+      });
 
       expect(fetchMock).toHaveBeenCalledWith(
         expect.stringContaining('/dashboard'),
@@ -417,6 +440,24 @@ describe('Web Participant Dashboard Page', () => {
       const text = (fixture.nativeElement as HTMLElement).textContent ?? '';
       expect(text).toContain('Aucune session planifiée pour le moment.');
     });
+  });
+
+  it('Given English locale, when the dashboard renders, then dashboard chrome is translated', async () => {
+    const i18n = TestBed.inject(KraakI18nService);
+    await TestBed.inject(ApplicationInitStatus).donePromise;
+    await i18n.setLocale('en-GB');
+
+    const fixture = TestBed.createComponent(DashboardPage);
+    configureDashboardClient(fixture, Promise.resolve(EMPTY_AGGREGATE));
+
+    await flush(fixture);
+
+    const text = (fixture.nativeElement as HTMLElement).textContent ?? '';
+
+    expect(text).toContain('Participant home');
+    expect(text).toContain('Useful summary');
+    expect(text).toContain('Your personalised overview');
+    expect(text).toContain('Quick access');
   });
 
   describe('Route Protection', () => {

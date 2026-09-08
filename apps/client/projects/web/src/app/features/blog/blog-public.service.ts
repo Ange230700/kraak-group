@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import type { ArticleDto } from '@kraak/contracts';
+import { SOURCE_LOCALE, type SupportedLocale } from '@kraak/domain';
 import { Observable, catchError, map, of } from 'rxjs';
 
 import { environment } from '../../../environments/environment';
@@ -40,26 +41,31 @@ export class BlogPublicService {
     return trimmedSlug.slice(start, end);
   }
 
-  listPublishedArticles(): Observable<BlogArticle[]> {
+  listPublishedArticles(
+    locale: SupportedLocale | string | null = SOURCE_LOCALE,
+  ): Observable<BlogArticle[]> {
     return this.http.get<ArticleDto[]>(this.endpoint).pipe(
-      map((articles) => mapPublicArticlesToBlogArticles(articles)),
+      map((articles) => mapPublicArticlesToBlogArticles(articles, locale)),
       catchError((error: unknown) => {
         console.error('[BlogPublicService] listPublishedArticles fallback', {
           error,
         });
 
-        return of([...getFallbackBlogArticles()]);
+        return of([...getFallbackBlogArticles(locale)]);
       }),
     );
   }
 
-  getPublishedArticleBySlug(slug: string): Observable<BlogArticle | null> {
+  getPublishedArticleBySlug(
+    slug: string,
+    locale: SupportedLocale | string | null = SOURCE_LOCALE,
+  ): Observable<BlogArticle | null> {
     const normalizedSlug = this.normalizeSlug(slug);
 
     return this.http.get<ArticleDto>(`${this.endpoint}/${normalizedSlug}`).pipe(
-      map((article) => mapPublicArticleToBlogArticle(article)),
+      map((article) => mapPublicArticleToBlogArticle(article, locale)),
       catchError((error: unknown) => {
-        const fallbackArticles = [...getFallbackBlogArticles()];
+        const fallbackArticles = [...getFallbackBlogArticles(locale)];
         const decodedSlug = this.decodeSlugSafely(normalizedSlug);
         const fallback =
           fallbackArticles.find((article) => article.slug === normalizedSlug) ??

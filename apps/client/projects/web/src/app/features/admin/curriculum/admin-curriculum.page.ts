@@ -21,6 +21,10 @@ import { environment } from '../../../../environments/environment';
 import { WebAuthService } from '../../../core/auth/web-auth.service';
 import { resolveApiBaseUrl } from '../../../core/runtime/runtime-config';
 
+import {
+  KraakI18nService,
+  KraakTranslatePipe,
+} from '../../../../../../shared/i18n';
 interface CourseFormModel {
   slug: FormControl<string>;
   title: FormControl<string>;
@@ -38,14 +42,22 @@ interface PlacementFormModel {
 @Component({
   selector: 'kraak-admin-curriculum-page',
   standalone: true,
-  imports: [ReactiveFormsModule, RouterLink, ButtonDirective, Message],
+  imports: [
+    ReactiveFormsModule,
+    RouterLink,
+    ButtonDirective,
+    Message,
+    KraakTranslatePipe,
+  ],
   templateUrl: './admin-curriculum.page.html',
 })
 export default class AdminCurriculumPage implements OnInit {
   private readonly authService = inject(WebAuthService);
   private placementsLoadSequence = 0;
 
+  private readonly i18n = inject(KraakI18nService);
   private readonly apiClient = createApiClient({
+    getLocale: () => this.i18n.locale(),
     baseUrl: resolveApiBaseUrl(environment.apiBaseUrl),
     getAuthToken: () => this.authService.currentSession()?.accessToken ?? null,
   });
@@ -93,6 +105,35 @@ export default class AdminCurriculumPage implements OnInit {
       (course) => course.status !== 'archived' && !assignedIds.has(course.id),
     );
   });
+
+  protected getPublicationStatusLabel(status: string): string {
+    const key = `web.admin.curriculum.statuses.${status}`;
+    const translated = this.i18n.translate(key);
+
+    return translated === key ? status : translated;
+  }
+
+  protected getProgramVisibilityLabel(visibility: string): string {
+    const key = `web.admin.curriculum.visibilities.${visibility}`;
+    const translated = this.i18n.translate(key);
+
+    return translated === key ? visibility : translated;
+  }
+
+  protected getEditCourseAriaLabel(course: { title: string }): string {
+    return this.i18n.translate('web.admin.curriculum.actions.editCourseAria', {
+      title: course.title,
+    });
+  }
+
+  protected getArchiveCourseAriaLabel(course: { title: string }): string {
+    return this.i18n.translate(
+      'web.admin.curriculum.actions.archiveCourseAria',
+      {
+        title: course.title,
+      },
+    );
+  }
 
   readonly publicationStatuses = Object.values(PublicationStatus);
 
@@ -164,7 +205,7 @@ export default class AdminCurriculumPage implements OnInit {
         error,
       );
       this.errorMessage.set(
-        'Impossible de charger le curriculum. Vérifiez la connexion et réessayez.',
+        this.i18n.translate('web.admin.curriculum.feedback.loadFailure'),
       );
     } finally {
       this.loading.set(false);
@@ -210,7 +251,9 @@ export default class AdminCurriculumPage implements OnInit {
         error,
       );
       this.errorMessage.set(
-        'Impossible de charger les cours associés à ce programme.',
+        this.i18n.translate(
+          'web.admin.curriculum.feedback.loadPlacementsFailure',
+        ),
       );
     } finally {
       if (loadSequence === this.placementsLoadSequence) {
@@ -285,13 +328,27 @@ export default class AdminCurriculumPage implements OnInit {
       if (editingId === null) {
         const created = await this.coursesClient.create(payload);
         this.courses.update((courses) => [...courses, created]);
-        this.successMessage.set(`Cours « ${created.title} » créé avec succès.`);
+        this.successMessage.set(
+          this.i18n.translate(
+            'web.admin.curriculum.feedback.createCourseSuccess',
+            {
+              title: created.title,
+            },
+          ),
+        );
       } else {
         const updated = await this.coursesClient.update(editingId, payload);
         this.courses.update((courses) =>
           courses.map((course) => (course.id === editingId ? updated : course)),
         );
-        this.successMessage.set(`Cours « ${updated.title} » mis à jour.`);
+        this.successMessage.set(
+          this.i18n.translate(
+            'web.admin.curriculum.feedback.updateCourseSuccess',
+            {
+              title: updated.title,
+            },
+          ),
+        );
       }
 
       this.cancelCourseForm();
@@ -301,7 +358,7 @@ export default class AdminCurriculumPage implements OnInit {
         error,
       );
       this.errorMessage.set(
-        'Impossible de sauvegarder ce cours. Vérifiez les champs et réessayez.',
+        this.i18n.translate('web.admin.curriculum.feedback.saveCourseFailure'),
       );
     } finally {
       this.submittingCourse.set(false);
@@ -311,7 +368,12 @@ export default class AdminCurriculumPage implements OnInit {
   async archiveCourse(course: CourseDto): Promise<void> {
     if (
       !confirm(
-        `Archiver le cours « ${course.title} » ? Il ne sera plus proposé aux participants.`,
+        this.i18n.translate(
+          'web.admin.curriculum.feedback.archiveCourseConfirm',
+          {
+            title: course.title,
+          },
+        ),
       )
     ) {
       return;
@@ -327,13 +389,24 @@ export default class AdminCurriculumPage implements OnInit {
           item.id === course.id ? { ...item, status: 'archived' } : item,
         ),
       );
-      this.successMessage.set(`Cours « ${course.title} » archivé.`);
+      this.successMessage.set(
+        this.i18n.translate(
+          'web.admin.curriculum.feedback.archiveCourseSuccess',
+          {
+            title: course.title,
+          },
+        ),
+      );
     } catch (error) {
       console.error(
         '[AdminCurriculumPage] Erreur lors de l’archivage du cours',
         error,
       );
-      this.errorMessage.set('Impossible d’archiver ce cours. Réessayez.');
+      this.errorMessage.set(
+        this.i18n.translate(
+          'web.admin.curriculum.feedback.archiveCourseFailure',
+        ),
+      );
     }
   }
 
@@ -362,6 +435,10 @@ export default class AdminCurriculumPage implements OnInit {
         isRequired: values.isRequired,
       });
 
+      if (this.selectedProgramId() !== programId) {
+        return;
+      }
+
       this.placements.update((placements) =>
         [...placements, created].sort((a, b) => a.sortOrder - b.sortOrder),
       );
@@ -369,8 +446,15 @@ export default class AdminCurriculumPage implements OnInit {
       const course = this.courseById(created.courseId);
       this.successMessage.set(
         course
-          ? `Cours « ${course.title} » ajouté au programme.`
-          : 'Cours ajouté au programme.',
+          ? this.i18n.translate(
+              'web.admin.curriculum.feedback.addCourseSuccess',
+              {
+                title: course.title,
+              },
+            )
+          : this.i18n.translate(
+              'web.admin.curriculum.feedback.addCourseFallbackSuccess',
+            ),
       );
       this.resetPlacementForm();
     } catch (error) {
@@ -379,7 +463,7 @@ export default class AdminCurriculumPage implements OnInit {
         error,
       );
       this.errorMessage.set(
-        'Impossible d’ajouter ce cours au programme. Vérifiez qu’il n’est pas déjà associé.',
+        this.i18n.translate('web.admin.curriculum.feedback.addCourseFailure'),
       );
     } finally {
       this.attachingCourse.set(false);
@@ -391,7 +475,16 @@ export default class AdminCurriculumPage implements OnInit {
 
     if (
       !confirm(
-        `Retirer ${course ? `« ${course.title} »` : 'ce cours'} du programme ?`,
+        course
+          ? this.i18n.translate(
+              'web.admin.curriculum.feedback.removeCourseConfirm',
+              {
+                title: course.title,
+              },
+            )
+          : this.i18n.translate(
+              'web.admin.curriculum.feedback.removeCourseFallbackConfirm',
+            ),
       )
     ) {
       return;
@@ -407,8 +500,15 @@ export default class AdminCurriculumPage implements OnInit {
       );
       this.successMessage.set(
         course
-          ? `Cours « ${course.title} » retiré du programme.`
-          : 'Cours retiré du programme.',
+          ? this.i18n.translate(
+              'web.admin.curriculum.feedback.removeCourseSuccess',
+              {
+                title: course.title,
+              },
+            )
+          : this.i18n.translate(
+              'web.admin.curriculum.feedback.removeCourseFallbackSuccess',
+            ),
       );
       this.resetPlacementForm();
     } catch (error) {
@@ -416,7 +516,11 @@ export default class AdminCurriculumPage implements OnInit {
         '[AdminCurriculumPage] Erreur lors du retrait du cours',
         error,
       );
-      this.errorMessage.set('Impossible de retirer ce cours du programme.');
+      this.errorMessage.set(
+        this.i18n.translate(
+          'web.admin.curriculum.feedback.removeCourseFailure',
+        ),
+      );
     }
   }
 

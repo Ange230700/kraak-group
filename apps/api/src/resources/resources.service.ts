@@ -1,3 +1,4 @@
+import { apiMessage } from '../i18n/api-message';
 import {
   Injectable,
   InternalServerErrorException,
@@ -116,7 +117,7 @@ export class ResourcesService {
     if (error) {
       throw new InternalServerErrorException({
         success: false,
-        message: 'Failed to fetch resources.',
+        message: apiMessage('resources.loadFailed'),
       });
     }
 
@@ -144,9 +145,11 @@ export class ResourcesService {
       .single();
 
     if (error || !data) {
-      throw new NotFoundException(
-        `Resource with ID ${id} not found or is not published.`,
-      );
+      throw new NotFoundException({
+        statusCode: 404,
+        message: apiMessage('resources.notFoundOrNotPublished', { id }),
+        error: 'Not Found',
+      });
     }
 
     return this.mapResource(data as ResourceRow);
@@ -179,7 +182,7 @@ export class ResourcesService {
     if (error || !data) {
       throw new InternalServerErrorException({
         success: false,
-        message: 'Failed to create resource.',
+        message: apiMessage('resources.createFailed'),
       });
     }
 
@@ -246,9 +249,11 @@ export class ResourcesService {
       .single();
 
     if (error || !data) {
-      throw new NotFoundException(
-        `Resource with ID ${id} not found or is not published.`,
-      );
+      throw new NotFoundException({
+        statusCode: 404,
+        message: apiMessage('resources.notFoundOrNotPublished', { id }),
+        error: 'Not Found',
+      });
     }
 
     return this.mapResource(data as ResourceRow);
@@ -264,9 +269,11 @@ export class ResourcesService {
       .single();
 
     if (error || !data) {
-      throw new NotFoundException(
-        `Resource with ID ${id} not found or is not published.`,
-      );
+      throw new NotFoundException({
+        statusCode: 404,
+        message: apiMessage('resources.notFoundOrNotPublished', { id }),
+        error: 'Not Found',
+      });
     }
   }
 
@@ -285,9 +292,11 @@ export class ResourcesService {
       .single();
 
     if (existingError || !existingData) {
-      throw new NotFoundException(
-        `Resource with ID ${id} not found or is not published.`,
-      );
+      throw new NotFoundException({
+        statusCode: 404,
+        message: apiMessage('resources.notFoundOrNotPublished', { id }),
+        error: 'Not Found',
+      });
     }
 
     const currentResource = existingData as ResourceTrackingRow;

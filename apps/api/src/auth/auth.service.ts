@@ -1,3 +1,9 @@
+import { ApiLocaleContext } from '../i18n/api-locale-context';
+import {
+  apiMessage,
+  translateApiMessage,
+  type ApiMessageValue,
+} from '../i18n/api-message';
 import {
   BadRequestException,
   HttpException,
@@ -64,7 +70,10 @@ type AuthUserPayload = {
 
 @Injectable()
 export class AuthService {
-  constructor(private readonly supabaseService: SupabaseService) {}
+  constructor(
+    private readonly supabaseService: SupabaseService,
+    private readonly localeContext: ApiLocaleContext,
+  ) {}
 
   async signIn(dto: SignInRequestDto): Promise<AuthSessionBundleDto> {
     const authClient = this.supabaseService.createAuthClient();
@@ -76,7 +85,7 @@ export class AuthService {
     if (error || !data.user || !data.session) {
       throw new UnauthorizedException({
         success: false,
-        message: 'Email ou mot de passe invalide.',
+        message: apiMessage('auth.invalidCredentials'),
       });
     }
 
@@ -113,9 +122,14 @@ export class AuthService {
     const requiresEmailConfirmation = !data.session;
 
     return {
-      message: requiresEmailConfirmation
-        ? 'Votre compte a été créé. Vérifiez votre email pour confirmer votre accès.'
-        : 'Votre compte est prêt. Vous êtes maintenant connecté.',
+      message: translateApiMessage(
+        this.localeContext.locale(),
+        apiMessage(
+          requiresEmailConfirmation
+            ? 'auth.signUpConfirmationRequired'
+            : 'auth.signUpReady',
+        ),
+      ),
       requiresEmailConfirmation,
       session: data.session
         ? this.mapSession(data.session as SessionPayload)
@@ -135,7 +149,7 @@ export class AuthService {
     if (error || !data.user || !data.session) {
       throw new UnauthorizedException({
         success: false,
-        message: 'La session n’est plus valide. Veuillez vous reconnecter.',
+        message: apiMessage('auth.sessionNoLongerValid'),
       });
     }
 
@@ -173,8 +187,7 @@ export class AuthService {
         throw new HttpException(
           {
             success: false,
-            message:
-              'Trop de demandes de réinitialisation ont été envoyées récemment. Réessayez dans quelques minutes.',
+            message: apiMessage('auth.passwordResetRateLimited'),
           },
           HttpStatus.TOO_MANY_REQUESTS,
         );
@@ -182,14 +195,16 @@ export class AuthService {
 
       throw new BadRequestException({
         success: false,
-        message: "Impossible d'envoyer l'email de réinitialisation.",
+        message: apiMessage('auth.passwordResetSendFailed'),
       });
     }
 
     return {
       success: true,
-      message:
-        'Si cette adresse existe, un email de réinitialisation vient d’être envoyé.',
+      message: translateApiMessage(
+        this.localeContext.locale(),
+        apiMessage('auth.passwordResetRequested'),
+      ),
     };
   }
 
@@ -200,7 +215,7 @@ export class AuthService {
     if (error || !data.user) {
       throw new UnauthorizedException({
         success: false,
-        message: 'La session est invalide ou expirée.',
+        message: apiMessage('auth.sessionInvalidOrExpired'),
       });
     }
 
@@ -250,7 +265,7 @@ export class AuthService {
     if (!profile) {
       throw new NotFoundException({
         success: false,
-        message: 'Le profil utilisateur est introuvable.',
+        message: apiMessage('auth.userProfileNotFound'),
       });
     }
 
@@ -292,7 +307,7 @@ export class AuthService {
     if (error) {
       throw new InternalServerErrorException({
         success: false,
-        message: "Le profil utilisateur n'a pas pu être provisionné.",
+        message: apiMessage('auth.userProfileProvisionFailed'),
       });
     }
   }
@@ -337,7 +352,7 @@ export class AuthService {
     if (appUserError) {
       throw new InternalServerErrorException({
         success: false,
-        message: "Le profil utilisateur n'a pas pu être chargé.",
+        message: apiMessage('auth.userProfileLoadFailed'),
       });
     }
 
@@ -356,7 +371,7 @@ export class AuthService {
     if (participantError) {
       throw new InternalServerErrorException({
         success: false,
-        message: "Le profil participant n'a pas pu être chargé.",
+        message: apiMessage('auth.participantProfileLoadFailed'),
       });
     }
 
@@ -397,25 +412,25 @@ export class AuthService {
     };
   }
 
-  private resolveSignUpErrorMessage(rawMessage?: string): string {
+  private resolveSignUpErrorMessage(rawMessage?: string): ApiMessageValue {
     const message = rawMessage?.toLowerCase() ?? '';
 
     if (message.includes('already')) {
-      return 'Un compte existe déjà pour cette adresse email.';
+      return apiMessage('auth.signUpAccountExists');
     }
 
     if (message.includes('password')) {
-      return 'Le mot de passe ne respecte pas les exigences minimales.';
+      return apiMessage('auth.signUpPasswordRequirements');
     }
 
     if (message.includes('invalid') && message.includes('email')) {
-      return "L'adresse email fournie est invalide.";
+      return apiMessage('auth.signUpEmailInvalid');
     }
 
     if (message.includes('rate') || message.includes('limit')) {
-      return "Le service d'inscription est temporairement indisponible. Réessayez plus tard.";
+      return apiMessage('auth.signUpRateLimited');
     }
 
-    return 'Impossible de créer le compte avec ces informations.';
+    return apiMessage('auth.signUpFailed');
   }
 }

@@ -37,7 +37,7 @@ describe('validateCreateUserPayload', () => {
     });
     expect(result).toMatchObject({
       valid: false,
-      error: expect.stringContaining('email'),
+      error: { key: 'users.emailRequired' },
     });
   });
 
@@ -51,7 +51,7 @@ describe('validateCreateUserPayload', () => {
 
     expect(result).toMatchObject({
       valid: false,
-      error: expect.stringContaining('email'),
+      error: { key: 'validation.invalidEmail' },
     });
   });
 
@@ -96,7 +96,10 @@ describe('validateCreateUserPayload', () => {
     });
     expect(result).toMatchObject({
       valid: false,
-      error: expect.stringContaining('rôle'),
+      error: {
+        key: 'users.roleInvalid',
+        params: { roles: 'participant, admin, trainer' },
+      },
     });
   });
 
@@ -109,7 +112,10 @@ describe('validateCreateUserPayload', () => {
 
     expect(result).toMatchObject({
       valid: false,
-      error: expect.stringContaining("Le rôle doit être l'un des suivants"),
+      error: {
+        key: 'users.roleInvalid',
+        params: { roles: 'participant, admin, trainer' },
+      },
     });
   });
 
@@ -168,7 +174,7 @@ describe('validateCreateUserPayload', () => {
 
     expect(result).toMatchObject({
       valid: false,
-      error: expect.stringContaining('booléen'),
+      error: { key: 'users.isActiveBoolean' },
     });
   });
 
@@ -181,7 +187,7 @@ describe('validateCreateUserPayload', () => {
 
     expect(result).toMatchObject({
       valid: false,
-      error: expect.stringContaining('prénom'),
+      error: { key: 'users.firstNameRequired' },
     });
   });
 
@@ -194,7 +200,7 @@ describe('validateCreateUserPayload', () => {
 
     expect(result).toMatchObject({
       valid: false,
-      error: expect.stringContaining('nom de famille'),
+      error: { key: 'users.lastNameRequired' },
     });
   });
 });
@@ -243,7 +249,7 @@ describe('validateUpdateUserPayload', () => {
     const result = validateUpdateUserPayload({ email: 'not-an-email' });
     expect(result).toMatchObject({
       valid: false,
-      error: expect.stringContaining('email'),
+      error: { key: 'validation.invalidEmail' },
     });
   });
 
@@ -256,7 +262,7 @@ describe('validateUpdateUserPayload', () => {
     const result = validateUpdateUserPayload({ firstName: '   ' });
     expect(result).toMatchObject({
       valid: false,
-      error: expect.stringContaining('prénom'),
+      error: { key: 'users.firstNameInvalid' },
     });
   });
 
@@ -264,7 +270,7 @@ describe('validateUpdateUserPayload', () => {
     const result = validateUpdateUserPayload({ lastName: '   ' });
     expect(result).toMatchObject({
       valid: false,
-      error: expect.stringContaining('nom de famille'),
+      error: { key: 'users.lastNameInvalid' },
     });
   });
 
@@ -305,7 +311,7 @@ describe('validateUpdateUserPayload', () => {
 
     expect(result).toMatchObject({
       valid: false,
-      error: expect.stringContaining('booléen'),
+      error: { key: 'users.isActiveBoolean' },
     });
   });
 

@@ -5,7 +5,10 @@
     <img
       class="relative z-0 h-full w-full object-cover"
       [src]="backgroundImageUrl"
-      [alt]="backgroundAlt"
+      [alt]="
+        backgroundAlt ??
+        ('web.shared.faqAccordion.backgroundAlt' | kraakTranslate)
+      "
       loading="lazy"
       decoding="async"
       fetchpriority="low"
@@ -18,10 +21,13 @@
       <h2
         class="text-brand-white text-3xl leading-tight font-semibold lg:text-4xl"
       >
-        {{ heading }}
+        {{ heading ?? ('web.shared.faqAccordion.heading' | kraakTranslate) }}
       </h2>
       <p class="text-brand-white/80 text-base leading-relaxed">
-        {{ description }}
+        {{
+          description ??
+            ('web.shared.faqAccordion.description' | kraakTranslate)
+        }}
       </p>
     </div>
 

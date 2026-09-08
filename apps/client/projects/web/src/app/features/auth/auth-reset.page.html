@@ -8,21 +8,20 @@
       <p
         class="text-brand-blue text-sm font-semibold tracking-[0.18em] uppercase"
       >
-        Espace participant
+        {{ 'web.auth.common.participantArea' | kraakTranslate }}
       </p>
       <h1 class="mt-3 text-3xl font-semibold text-slate-950">
-        Choisir un nouveau mot de passe
+        {{ 'web.auth.resetPassword.title' | kraakTranslate }}
       </h1>
       <p class="mt-3 text-sm leading-6 text-slate-600">
-        Définissez un nouveau mot de passe sécurisé pour finaliser la
-        récupération de votre compte.
+        {{ 'web.auth.resetPassword.subtitle' | kraakTranslate }}
       </p>
 
       @if (!tokenReady()) {
         <div class="mt-6">
           <p-message
             severity="info"
-            text="Vérification du lien de réinitialisation..."
+            [text]="'web.auth.resetPassword.loading' | kraakTranslate"
             [closable]="false"
             styleClass="w-full"
           ></p-message>
@@ -41,21 +40,23 @@
               for="web-auth-reset-password"
               class="text-sm font-semibold text-slate-900"
             >
-              Nouveau mot de passe
+              {{ 'web.auth.resetPassword.newPassword' | kraakTranslate }}
             </label>
             <input
               id="web-auth-reset-password"
               type="password"
               formControlName="password"
               autocomplete="new-password"
-              placeholder="Minimum 8 caractères"
+              [placeholder]="
+                'web.auth.common.passwordPlaceholder' | kraakTranslate
+              "
               class="focus:border-brand-blue min-h-12 rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm text-slate-900 outline-none"
             />
             @if (
               form.controls.password.touched && form.controls.password.invalid
             ) {
               <p class="text-sm leading-6 text-rose-700">
-                Votre mot de passe doit contenir au moins 8 caractères.
+                {{ 'web.auth.common.passwordMinLength' | kraakTranslate }}
               </p>
             }
           </div>
@@ -65,14 +66,16 @@
               for="web-auth-reset-confirm-password"
               class="text-sm font-semibold text-slate-900"
             >
-              Confirmer le mot de passe
+              {{ 'web.auth.resetPassword.confirmPassword' | kraakTranslate }}
             </label>
             <input
               id="web-auth-reset-confirm-password"
               type="password"
               formControlName="confirmPassword"
               autocomplete="new-password"
-              placeholder="Répétez le mot de passe"
+              [placeholder]="
+                'web.auth.resetPassword.confirmPlaceholder' | kraakTranslate
+              "
               class="focus:border-brand-blue min-h-12 rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm text-slate-900 outline-none"
             />
             @if (
@@ -80,7 +83,7 @@
               form.controls.confirmPassword.invalid
             ) {
               <p class="text-sm leading-6 text-rose-700">
-                La confirmation du mot de passe est requise.
+                {{ 'web.auth.resetPassword.confirmRequired' | kraakTranslate }}
               </p>
             }
           </div>
@@ -107,16 +110,18 @@
             type="submit"
             size="large"
             [label]="
-              submitting()
-                ? 'Mise à jour en cours...'
-                : 'Mettre à jour le mot de passe'
+              (submitting()
+                ? 'web.auth.resetPassword.submitting'
+                : 'web.auth.resetPassword.submit'
+              ) | kraakTranslate
             "
             [loading]="submitting()"
             [disabled]="submitting() || !recoveryToken()"
             [ariaLabel]="
-              submitting()
-                ? 'Mise à jour en cours...'
-                : 'Mettre à jour le mot de passe'
+              (submitting()
+                ? 'web.auth.resetPassword.submitting'
+                : 'web.auth.resetPassword.submit'
+              ) | kraakTranslate
             "
             class="kr-button-primary mt-1 w-full"
           ></p-button>
@@ -125,7 +130,7 @@
 
       <div class="mt-5 border-t border-slate-200 pt-4 text-sm font-semibold">
         <a routerLink="/connexion" class="text-brand-blue hover:underline">
-          Retour à la connexion
+          {{ 'web.auth.common.backToSignIn' | kraakTranslate }}
         </a>
       </div>
     </section>

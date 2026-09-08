@@ -23,6 +23,10 @@ import {
   resolveWebRedirectUrl,
 } from './auth-form.utils';
 
+import {
+  KraakI18nService,
+  KraakTranslatePipe,
+} from '../../../../../shared/i18n';
 interface SignUpFormModel {
   firstName: FormControl<string>;
   lastName: FormControl<string>;
@@ -33,10 +37,18 @@ interface SignUpFormModel {
 @Component({
   selector: 'kraak-web-sign-up-page',
   standalone: true,
-  imports: [ReactiveFormsModule, RouterLink, Button, Message],
+  imports: [
+    KraakTranslatePipe,
+    ReactiveFormsModule,
+    RouterLink,
+    Button,
+    Message,
+  ],
   templateUrl: './sign-up.page.html',
 })
 export default class SignUpPage {
+  private readonly i18n = inject(KraakI18nService);
+
   private readonly authService = inject(WebAuthService);
   private readonly messageService = inject(MessageService);
   private readonly router = inject(Router);
@@ -97,7 +109,7 @@ export default class SignUpPage {
       this.messageService.add({
         key: 'app-feedback',
         severity: 'success',
-        summary: 'Inscription',
+        summary: this.i18n.translate('web.auth.signUp.toastTitle'),
         detail: response.message,
         life: 6000,
       });
@@ -108,7 +120,7 @@ export default class SignUpPage {
       this.errorMessage.set(
         resolveAuthErrorMessage(
           error,
-          'Impossible de créer le compte pour le moment.',
+          this.i18n.translate('web.auth.signUp.genericError'),
         ),
       );
     } finally {

@@ -36,6 +36,7 @@ import {
   validateUpdateResourcePayload,
 } from './resources.dto';
 import { ResourcesService } from './resources.service';
+import { apiMessage } from '../i18n/api-message';
 
 const RESOURCE_THEME_ENUM = [
   'training',
@@ -251,7 +252,7 @@ export class ResourcesController {
     if (!validated.valid) {
       throw new BadRequestException({
         success: false,
-        message: 'Payload invalide.',
+        message: apiMessage('validation.invalidPayload'),
         errors: validated.errors,
       });
     }
@@ -280,7 +281,7 @@ export class ResourcesController {
     if (!validated.valid) {
       throw new BadRequestException({
         success: false,
-        message: 'Payload invalide.',
+        message: apiMessage('validation.invalidPayload'),
         errors: validated.errors,
       });
     }

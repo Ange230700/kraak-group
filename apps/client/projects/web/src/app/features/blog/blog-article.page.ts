@@ -7,6 +7,9 @@ import {
   inject,
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { KraakTranslatePipe } from '../../../../../shared/i18n';
+import { LocalizedPublicPathPipe } from '../../routing/localized-public-path.pipe';
+import { buildLocalizedBlogArticlePath } from '../../routing/localized-public-routes';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { Meta } from '@angular/platform-browser';
 import { ButtonDirective } from 'primeng/button';
@@ -31,7 +34,14 @@ import { BlogPublicService } from './blog-public.service';
 @Component({
   selector: 'kraak-blog-article-page',
   standalone: true,
-  imports: [NgStyle, RouterLink, ButtonDirective, CtaBanner],
+  imports: [
+    NgStyle,
+    RouterLink,
+    ButtonDirective,
+    CtaBanner,
+    KraakTranslatePipe,
+    LocalizedPublicPathPipe,
+  ],
   templateUrl: './blog-article.page.html',
 })
 export default class BlogArticlePage implements OnInit, OnDestroy {
@@ -62,7 +72,9 @@ export default class BlogArticlePage implements OnInit, OnDestroy {
       .pipe(distinctUntilChanged())
       .pipe(
         switchMap((slug) => {
-          const fallbackArticles = [...getFallbackBlogArticles()];
+          const fallbackArticles = [
+            ...getFallbackBlogArticles(this.routeLocale),
+          ];
           const fallbackArticle = findBlogArticleBySlug(slug, fallbackArticles);
           this.applyArticleState(
             slug,
@@ -70,27 +82,29 @@ export default class BlogArticlePage implements OnInit, OnDestroy {
             fallbackArticles,
           );
 
-          return this.blogPublicService.getPublishedArticleBySlug(slug).pipe(
-            switchMap((article) => {
-              const articleToRender = article ?? fallbackArticle ?? null;
+          return this.blogPublicService
+            .getPublishedArticleBySlug(slug, this.routeLocale)
+            .pipe(
+              switchMap((article) => {
+                const articleToRender = article ?? fallbackArticle ?? null;
 
-              if (!articleToRender) {
-                return of({
-                  slug,
-                  article: null,
-                  articlePool: [] as BlogArticle[],
-                });
-              }
+                if (!articleToRender) {
+                  return of({
+                    slug,
+                    article: null,
+                    articlePool: [] as BlogArticle[],
+                  });
+                }
 
-              return this.blogPublicService.listPublishedArticles().pipe(
-                map((publishedArticles) => ({
-                  slug,
-                  article: articleToRender,
-                  articlePool: publishedArticles,
-                })),
-              );
-            }),
-          );
+                return this.blogPublicService.listPublishedArticles().pipe(
+                  map((publishedArticles) => ({
+                    slug,
+                    article: articleToRender,
+                    articlePool: publishedArticles,
+                  })),
+                );
+              }),
+            );
         }),
       )
       .pipe(takeUntilDestroyed(this.destroyRef))
@@ -122,9 +136,18 @@ export default class BlogArticlePage implements OnInit, OnDestroy {
       : buildAbsoluteUrl(imagePathOrUrl, siteUrl);
   }
 
+  private get routeLocale(): string | null {
+    const locale = this.route.snapshot?.data?.['locale'];
+
+    return typeof locale === 'string' ? locale : null;
+  }
+
   private updateStructuredData(article: BlogArticle): void {
     const siteUrl = resolvePublicSiteUrl(environment.siteUrl);
-    const canonicalUrl = buildAbsoluteUrl(`blog/${article.slug}`, siteUrl);
+    const canonicalUrl = buildAbsoluteUrl(
+      buildLocalizedBlogArticlePath(article.slug, this.routeLocale),
+      siteUrl,
+    );
     const imageUrl = this.resolveArticleImageUrl(
       article.coverImagePath,
       siteUrl,
@@ -172,11 +195,15 @@ export default class BlogArticlePage implements OnInit, OnDestroy {
     if (!article) {
       this.meta.updateTag({ property: 'og:type', content: 'website' });
       this.removeStructuredData();
-      this.seoService.applyPageSeo(buildMissingBlogArticleSeo(slug));
+      this.seoService.applyPageSeo(
+        buildMissingBlogArticleSeo(slug, this.routeLocale),
+      );
       return;
     }
 
-    this.seoService.applyPageSeo(buildBlogArticleSeo(article));
+    this.seoService.applyPageSeo(
+      buildBlogArticleSeo(article, this.routeLocale),
+    );
     this.meta.updateTag({ property: 'og:type', content: 'article' });
     this.updateStructuredData(article);
   }

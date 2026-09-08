@@ -556,6 +556,47 @@ describe('en-têtes et authentification', () => {
     expect(headers['Accept']).toBe('application/json');
   });
 
+  it('injecte Accept-Language quand getLocale est fourni', async () => {
+    const client = createApiClient(baseConfig({ getLocale: () => 'en-GB' }));
+    await client.users.list();
+
+    const headers = fetchSpy.mock.calls[0][1].headers as Record<string, string>;
+
+    expect(headers['Accept-Language']).toBe('en-GB');
+  });
+
+  it('supporte getLocale asynchrone', async () => {
+    const client = createApiClient(
+      baseConfig({ getLocale: async () => 'fr-CI' }),
+    );
+    await client.users.list();
+
+    const headers = fetchSpy.mock.calls[0][1].headers as Record<string, string>;
+
+    expect(headers['Accept-Language']).toBe('fr-CI');
+  });
+
+  it("n'envoie pas Accept-Language quand getLocale retourne null", async () => {
+    const client = createApiClient(baseConfig({ getLocale: () => null }));
+    await client.users.list();
+
+    const headers = fetchSpy.mock.calls[0][1].headers as Record<string, string>;
+
+    expect(headers['Accept-Language']).toBeUndefined();
+  });
+
+  it('permet aux headers de requête de remplacer Accept-Language', async () => {
+    const client = createApiClient(baseConfig({ getLocale: () => 'fr-CI' }));
+
+    await client.users.list({
+      headers: { 'Accept-Language': 'en-GB' },
+    });
+
+    const headers = fetchSpy.mock.calls[0][1].headers as Record<string, string>;
+
+    expect(headers['Accept-Language']).toBe('en-GB');
+  });
+
   it('injecte le token Authorization quand getAuthToken est fourni', async () => {
     const client = createApiClient(
       baseConfig({ getAuthToken: () => 'tok_123' }),

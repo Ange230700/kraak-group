@@ -4,7 +4,7 @@ import { ApplicationInitStatus, Component } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
 
-import { provideKraakI18n } from '../../../../../shared/i18n';
+import { KraakI18nService, provideKraakI18n } from '../../../../../shared/i18n';
 import { ParticipantNavCta } from './participant-nav-cta.component';
 
 @Component({
@@ -33,6 +33,7 @@ async function compile(): Promise<void> {
   }).compileComponents();
 
   await TestBed.inject(ApplicationInitStatus).donePromise;
+  await TestBed.inject(KraakI18nService).setLocale('fr-CI');
 }
 
 describe('ParticipantNavCta', () => {

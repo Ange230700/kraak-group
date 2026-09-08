@@ -4,6 +4,7 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { SupabaseService } from '../supabase/supabase.service';
+import { apiMessage } from '../i18n/api-message';
 import type {
   CreateServiceDetailDto,
   CreateServiceDto,
@@ -19,9 +20,9 @@ const serviceSelectFields =
 const serviceDetailSelectFields =
   'id, service_id, title, description, sort_order, created_at, updated_at';
 
-const serviceListErrorMessage = 'Impossible de charger la liste des services.';
-const serviceNotFoundMessage = 'Service introuvable.';
-const serviceDetailNotFoundMessage = 'Détail de service introuvable.';
+const serviceListErrorMessage = apiMessage('services.listLoadFailed');
+const serviceNotFoundMessage = apiMessage('services.notFound');
+const serviceDetailNotFoundMessage = apiMessage('services.detailNotFound');
 
 type ServiceRow = {
   id: string;
@@ -92,7 +93,7 @@ export class ServicesService {
     if (detailError) {
       throw new InternalServerErrorException({
         success: false,
-        message: 'Impossible de charger les détails du service.',
+        message: apiMessage('services.detailsLoadFailed'),
       });
     }
 
@@ -120,7 +121,7 @@ export class ServicesService {
     if (error || !data) {
       throw new InternalServerErrorException({
         success: false,
-        message: 'Impossible de créer le service.',
+        message: apiMessage('services.createFailed'),
       });
     }
 
@@ -205,7 +206,7 @@ export class ServicesService {
     if (error || !data) {
       throw new InternalServerErrorException({
         success: false,
-        message: 'Impossible de créer le détail du service.',
+        message: apiMessage('services.detailCreateFailed'),
       });
     }
 

@@ -183,11 +183,11 @@ describe('AuthController', () => {
     expect((thrownError as BadRequestException).getResponse()).toEqual({
       success: false,
       errors: [
-        "L'adresse e-mail est invalide.",
-        'Le mot de passe doit contenir au moins 8 caractères.',
-        'Le prénom est requis.',
-        'Le nom est requis.',
-        'Le lien de redirection est invalide.',
+        { key: 'validation.invalidEmail' },
+        { key: 'auth.passwordTooShort' },
+        { key: 'auth.firstNameRequired' },
+        { key: 'auth.lastNameRequired' },
+        { key: 'auth.redirectInvalid' },
       ],
     });
   });
@@ -241,7 +241,7 @@ describe('AuthController', () => {
     expect(thrownError).toBeInstanceOf(UnauthorizedException);
     expect((thrownError as UnauthorizedException).getResponse()).toEqual({
       success: false,
-      message: "Le header d'autorisation Bearer est requis.",
+      message: { key: 'auth.bearerRequired' },
     });
   });
 

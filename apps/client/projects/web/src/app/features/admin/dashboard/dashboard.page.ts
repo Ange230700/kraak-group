@@ -1,23 +1,34 @@
 import { NgStyle } from '@angular/common';
-import { Component, OnDestroy, OnInit, inject } from '@angular/core';
+import { Component, OnDestroy, OnInit, computed, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { ButtonDirective } from 'primeng/button';
 
 import { GsapAnimationsService } from '../../../core/animations/gsap-animations.service';
+import { findLocalizedPublicRouteEntryByLegacyPath } from '../../../routing/localized-public-routes';
 import { buildHeroBackgroundStyle } from '../../../shared/brand/brand-constants';
-import { blogArticles } from '../../blog/blog.data';
+import {
+  KraakI18nService,
+  KraakTranslatePipe,
+} from '../../../../../../shared/i18n';
+import { getFallbackBlogArticles } from '../../blog/blog.data';
 
 interface ProgramSnapshot {
-  readonly label: string;
-  readonly status: string;
-  readonly description: string;
-  readonly primaryMetric: string;
+  readonly labelKey: string;
+  readonly statusKey: string;
+  readonly descriptionKey: string;
+  readonly primaryMetricKey: string;
 }
 
 interface ContentSnapshot {
-  readonly label: string;
+  readonly labelKey: string;
   readonly value: string;
-  readonly description: string;
+  readonly descriptionKey: string;
+}
+
+interface ContentAction {
+  readonly labelKey: string;
+  readonly path: string;
+  readonly descriptionKey: string;
 }
 
 const adminHeroStyle = buildHeroBackgroundStyle(
@@ -26,85 +37,97 @@ const adminHeroStyle = buildHeroBackgroundStyle(
 
 const programSnapshots: readonly ProgramSnapshot[] = [
   {
-    label: 'Formation',
-    status: 'Priorité élevée',
-    description:
-      'Structurer les parcours utiles, garder des formats courts et suivre les prochaines cohortes.',
-    primaryMetric: '3 formats actifs',
+    labelKey: 'web.admin.dashboard.programs.training.label',
+    statusKey: 'web.admin.dashboard.programs.training.status',
+    descriptionKey: 'web.admin.dashboard.programs.training.description',
+    primaryMetricKey: 'web.admin.dashboard.programs.training.metric',
   },
   {
-    label: 'Gestion de projet',
-    status: 'À consolider',
-    description:
-      'Garder les livrables, les jalons et les besoins de cadrage visibles dans une seule vue.',
-    primaryMetric: '2 programmes à suivre',
+    labelKey: 'web.admin.dashboard.programs.projectManagement.label',
+    statusKey: 'web.admin.dashboard.programs.projectManagement.status',
+    descriptionKey:
+      'web.admin.dashboard.programs.projectManagement.description',
+    primaryMetricKey: 'web.admin.dashboard.programs.projectManagement.metric',
   },
   {
-    label: 'Conseil en immigration',
-    status: 'Pilotage stable',
-    description:
-      'Suivre les dossiers, les preuves et les étapes de relance sans perdre la cohérence du projet.',
-    primaryMetric: '1 filière prioritaire',
+    labelKey: 'web.admin.dashboard.programs.immigration.label',
+    statusKey: 'web.admin.dashboard.programs.immigration.status',
+    descriptionKey: 'web.admin.dashboard.programs.immigration.description',
+    primaryMetricKey: 'web.admin.dashboard.programs.immigration.metric',
   },
 ] as const;
 
-const contentSnapshots: readonly ContentSnapshot[] = [
+const contentActions: readonly ContentAction[] = [
   {
-    label: 'Articles publiés',
-    value: `${blogArticles.length}`,
-    description: 'Contenus éditoriaux prêts pour le blog public.',
-  },
-  {
-    label: 'Articles vedettes',
-    value: `${blogArticles.filter((article) => article.featured).length}`,
-    description:
-      'Contenus à mettre en avant dans les campagnes et la page blog.',
-  },
-  {
-    label: 'Dernière mise à jour',
-    value: blogArticles[0]?.publishedLabel ?? 'N/A',
-    description: 'Dernier contenu éditorial disponible dans la bibliothèque.',
-  },
-] as const;
-
-const contentActions = [
-  {
-    label: 'Gérer le curriculum',
+    labelKey: 'web.admin.dashboard.actions.curriculum.label',
     path: '/admin/curriculum',
-    description:
-      'Composer les programmes à partir de cours pédagogiques réutilisables.',
+    descriptionKey: 'web.admin.dashboard.actions.curriculum.description',
   },
   {
-    label: 'Voir le blog public',
+    labelKey: 'web.admin.dashboard.actions.blog.label',
     path: '/blog',
-    description: 'Relire le rendu public des contenus éditoriaux.',
+    descriptionKey: 'web.admin.dashboard.actions.blog.description',
   },
   {
-    label: 'Relire les programmes',
+    labelKey: 'web.admin.dashboard.actions.programs.label',
     path: '/programmes',
-    description: 'Vérifier les textes d’orientation et les appels à l’action.',
+    descriptionKey: 'web.admin.dashboard.actions.programs.description',
   },
   {
-    label: 'Reprendre le contact',
+    labelKey: 'web.admin.dashboard.actions.contact.label',
     path: '/contact',
-    description: 'Suivre les demandes entrantes et les points de conversion.',
+    descriptionKey: 'web.admin.dashboard.actions.contact.description',
   },
 ] as const;
 
 @Component({
   selector: 'kraak-admin-dashboard-page',
   standalone: true,
-  imports: [NgStyle, RouterLink, ButtonDirective],
+  imports: [NgStyle, RouterLink, ButtonDirective, KraakTranslatePipe],
   templateUrl: './dashboard.page.html',
 })
 export default class DashboardPage implements OnInit, OnDestroy {
+  private readonly i18n = inject(KraakI18nService);
+
   protected readonly heroBackgroundStyle = adminHeroStyle;
   protected readonly programSnapshots = programSnapshots;
-  protected readonly contentSnapshots = contentSnapshots;
+  protected readonly contentSnapshots = computed<readonly ContentSnapshot[]>(
+    () => {
+      const articles = getFallbackBlogArticles(this.i18n.locale());
+
+      return [
+        {
+          labelKey: 'web.admin.dashboard.snapshots.published.label',
+          value: `${articles.length}`,
+          descriptionKey: 'web.admin.dashboard.snapshots.published.description',
+        },
+        {
+          labelKey: 'web.admin.dashboard.snapshots.featured.label',
+          value: `${articles.filter((article) => article.featured).length}`,
+          descriptionKey: 'web.admin.dashboard.snapshots.featured.description',
+        },
+        {
+          labelKey: 'web.admin.dashboard.snapshots.lastUpdated.label',
+          value: articles[0]?.publishedLabel ?? 'N/A',
+          descriptionKey:
+            'web.admin.dashboard.snapshots.lastUpdated.description',
+        },
+      ];
+    },
+  );
   protected readonly contentActions = contentActions;
-  protected readonly recentArticles = blogArticles;
+  protected readonly recentArticles = computed(() =>
+    getFallbackBlogArticles(this.i18n.locale()),
+  );
 
   private readonly gsapService = inject(GsapAnimationsService);
+
+  protected resolvePublicPath(path: string): string {
+    return (
+      findLocalizedPublicRouteEntryByLegacyPath(path, this.i18n.locale())
+        ?.path ?? path
+    );
+  }
 
   ngOnInit(): void {
     this.gsapService.animatePageIn();

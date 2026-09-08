@@ -1,16 +1,30 @@
+import { ApplicationInitStatus } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { Router, provideRouter } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { vi } from 'vitest';
 import AdminUserCreateLayoutPage from './admin-user-create-layout.page';
+import {
+  KraakI18nService,
+  provideKraakI18n,
+} from '../../../../../../shared/i18n';
 import { UserFormStateService } from './user-form-state.service';
 
 describe('AdminUserCreateLayoutPage', () => {
   beforeEach(async () => {
+    globalThis.window.localStorage.setItem('kraak:locale', 'fr-CI');
     await TestBed.configureTestingModule({
       imports: [AdminUserCreateLayoutPage],
-      providers: [provideRouter([]), MessageService, UserFormStateService],
+      providers: [
+        provideKraakI18n(),
+        provideRouter([]),
+        MessageService,
+        UserFormStateService,
+      ],
     }).compileComponents();
+
+    await TestBed.inject(ApplicationInitStatus).donePromise;
+    await TestBed.inject(KraakI18nService).setLocale('fr-CI');
   });
 
   it('Given the page is created, When initialized, Then component instance exists', () => {
@@ -26,7 +40,7 @@ describe('AdminUserCreateLayoutPage', () => {
   it('Given a step with path "basic-information", When getStepRouterLink is called, Then returns correct admin URL', () => {
     const fixture = TestBed.createComponent(AdminUserCreateLayoutPage);
     const link = fixture.componentInstance.getStepRouterLink({
-      label: 'Test',
+      labelKey: 'Test',
       icon: 'pi-user',
       path: 'basic-information',
     });
@@ -67,7 +81,7 @@ describe('AdminUserCreateLayoutPage', () => {
     );
 
     const css = comp.getStepButtonClass({
-      label: 'Informations de base',
+      labelKey: 'Informations de base',
       icon: 'pi-user',
       path: 'basic-information',
     });
@@ -84,7 +98,7 @@ describe('AdminUserCreateLayoutPage', () => {
     );
 
     const css = comp.getStepButtonClass({
-      label: 'Localisation',
+      labelKey: 'Localisation',
       icon: 'pi-map-marker',
       path: 'location-information',
     });
@@ -261,5 +275,37 @@ describe('AdminUserCreateLayoutPage', () => {
     expect((fixture.nativeElement as HTMLElement).textContent ?? '').toContain(
       'Erreur de soumission',
     );
+  });
+
+  it('Given English locale, When the create layout renders, Then it renders Create User wizard chrome in English', async () => {
+    const i18n = TestBed.inject(KraakI18nService);
+    await TestBed.inject(ApplicationInitStatus).donePromise;
+    await i18n.setLocale('en-GB');
+
+    const fixture = TestBed.createComponent(AdminUserCreateLayoutPage);
+    fixture.detectChanges();
+
+    const host = fixture.nativeElement as HTMLElement;
+    const text = host.textContent ?? '';
+
+    expect(text).toContain('Administration');
+    expect(text).toContain('New user');
+    expect(text).toContain('Invite a new member to join the KRAAK platform.');
+    expect(text).toContain('Back to list');
+
+    expect(text).toContain('Basic information');
+    expect(text).toContain('Professional info');
+    expect(text).toContain('Location');
+    expect(text).toContain('Permissions');
+    expect(text).toContain('Account status');
+
+    expect(text).toContain('Cancel');
+    expect(text).toContain('Send invitation');
+
+    const navs = host.querySelectorAll('nav');
+
+    expect(navs).toHaveLength(2);
+    expect(navs[0]?.getAttribute('aria-label')).toBe('Creation steps');
+    expect(navs[1]?.getAttribute('aria-label')).toBe('Creation steps');
   });
 });

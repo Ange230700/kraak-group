@@ -1,3 +1,4 @@
+import { apiMessage, type ApiMessageValue } from '../i18n/api-message';
 import {
   Injectable,
   InternalServerErrorException,
@@ -114,7 +115,7 @@ export class CmsService {
     if (error) {
       throw new InternalServerErrorException({
         success: false,
-        message: 'Impossible de charger les statistiques.',
+        message: apiMessage('cms.statisticsLoadFailed'),
       });
     }
 
@@ -140,7 +141,7 @@ export class CmsService {
     if (error || !data) {
       throw new InternalServerErrorException({
         success: false,
-        message: 'Impossible de créer la statistique.',
+        message: apiMessage('cms.statisticCreateFailed'),
       });
     }
 
@@ -185,7 +186,7 @@ export class CmsService {
     if (error || !data) {
       throw new NotFoundException({
         success: false,
-        message: 'Statistique introuvable.',
+        message: apiMessage('cms.statisticNotFound'),
       });
     }
 
@@ -193,7 +194,11 @@ export class CmsService {
   }
 
   async deleteStatistic(id: string): Promise<void> {
-    await this.archiveById('statistic', id, 'Statistique introuvable.');
+    await this.archiveById(
+      'statistic',
+      id,
+      apiMessage('cms.statisticNotFound'),
+    );
   }
 
   async listPartners(): Promise<PartnerDto[]> {
@@ -209,7 +214,7 @@ export class CmsService {
     if (error) {
       throw new InternalServerErrorException({
         success: false,
-        message: 'Impossible de charger les partenaires.',
+        message: apiMessage('cms.partnersLoadFailed'),
       });
     }
 
@@ -235,7 +240,7 @@ export class CmsService {
     if (error || !data) {
       throw new InternalServerErrorException({
         success: false,
-        message: 'Impossible de créer le partenaire.',
+        message: apiMessage('cms.partnerCreateFailed'),
       });
     }
 
@@ -280,7 +285,7 @@ export class CmsService {
     if (error || !data) {
       throw new NotFoundException({
         success: false,
-        message: 'Partenaire introuvable.',
+        message: apiMessage('cms.partnerNotFound'),
       });
     }
 
@@ -288,7 +293,7 @@ export class CmsService {
   }
 
   async deletePartner(id: string): Promise<void> {
-    await this.archiveById('partner', id, 'Partenaire introuvable.');
+    await this.archiveById('partner', id, apiMessage('cms.partnerNotFound'));
   }
 
   async listTestimonials(): Promise<TestimonialDto[]> {
@@ -304,7 +309,7 @@ export class CmsService {
     if (error) {
       throw new InternalServerErrorException({
         success: false,
-        message: 'Impossible de charger les témoignages.',
+        message: apiMessage('cms.testimonialsLoadFailed'),
       });
     }
 
@@ -334,7 +339,7 @@ export class CmsService {
     if (error || !data) {
       throw new InternalServerErrorException({
         success: false,
-        message: 'Impossible de créer le témoignage.',
+        message: apiMessage('cms.testimonialCreateFailed'),
       });
     }
 
@@ -387,7 +392,7 @@ export class CmsService {
     if (error || !data) {
       throw new NotFoundException({
         success: false,
-        message: 'Témoignage introuvable.',
+        message: apiMessage('cms.testimonialNotFound'),
       });
     }
 
@@ -395,7 +400,11 @@ export class CmsService {
   }
 
   async deleteTestimonial(id: string): Promise<void> {
-    await this.archiveById('testimonial', id, 'Témoignage introuvable.');
+    await this.archiveById(
+      'testimonial',
+      id,
+      apiMessage('cms.testimonialNotFound'),
+    );
   }
 
   async listTeamMembers(): Promise<TeamMemberDto[]> {
@@ -411,7 +420,7 @@ export class CmsService {
     if (error) {
       throw new InternalServerErrorException({
         success: false,
-        message: "Impossible de charger les membres d'équipe.",
+        message: apiMessage('cms.teamMembersLoadFailed'),
       });
     }
 
@@ -439,7 +448,7 @@ export class CmsService {
     if (error || !data) {
       throw new InternalServerErrorException({
         success: false,
-        message: "Impossible de créer le membre d'équipe.",
+        message: apiMessage('cms.teamMemberCreateFailed'),
       });
     }
 
@@ -492,7 +501,7 @@ export class CmsService {
     if (error || !data) {
       throw new NotFoundException({
         success: false,
-        message: "Membre d'équipe introuvable.",
+        message: apiMessage('cms.teamMemberNotFound'),
       });
     }
 
@@ -500,7 +509,11 @@ export class CmsService {
   }
 
   async deleteTeamMember(id: string): Promise<void> {
-    await this.archiveById('team_member', id, "Membre d'équipe introuvable.");
+    await this.archiveById(
+      'team_member',
+      id,
+      apiMessage('cms.teamMemberNotFound'),
+    );
   }
 
   private async listPublishedStatistics(): Promise<StatisticDto[]> {
@@ -598,7 +611,7 @@ export class CmsService {
   private async archiveById(
     tableName: 'statistic' | 'partner' | 'testimonial' | 'team_member',
     id: string,
-    notFoundMessage: string,
+    notFoundMessage: ApiMessageValue,
   ): Promise<void> {
     const adminClient = this.supabaseService.getClient();
     const { data, error } = await adminClient

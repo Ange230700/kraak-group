@@ -53,6 +53,7 @@ describe('HomePage', () => {
     }).compileComponents();
 
     await TestBed.inject(ApplicationInitStatus).donePromise;
+    await TestBed.inject(KraakI18nService).setLocale('fr-CI');
   });
 
   it('Given the home page component When it is created Then the instance exists', () => {

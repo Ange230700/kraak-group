@@ -1,3 +1,5 @@
+import type { ApiMessageValue } from '../i18n/api-message';
+import { apiMessage } from '../i18n/api-message';
 import {
   InternalServerErrorException,
   Injectable,
@@ -127,12 +129,12 @@ const enrollmentProgramSelect =
 const enrollmentProgramSelectWithoutProgress =
   'id, status, completed_at, program_id, cohort_id, program:program(id, slug, title, summary, description, status, visibility, created_at, updated_at), cohort:cohort(id, program_id, name, code, status, start_date, end_date, capacity, created_at, updated_at)';
 
-const progressUpdateErrorMessage =
-  'Impossible de mettre à jour la progression du programme.';
+const progressUpdateErrorMessage = apiMessage('programs.progressUpdateFailed');
 const sessionProgressPageSize = 200;
-const programNotFoundMessage = 'Programme introuvable pour ce participant.';
-const resourcesReadErrorMessage =
-  'Impossible de charger les ressources du programme.';
+const programNotFoundMessage = apiMessage(
+  'programs.participantProgramNotFound',
+);
+const resourcesReadErrorMessage = apiMessage('programs.resourcesLoadFailed');
 const programSelectFields =
   'id, slug, title, summary, description, status, visibility, created_at, updated_at';
 const programFeatureSelectFields =
@@ -244,7 +246,7 @@ export class ProgramsService {
           data: EnrollmentRow[] | null;
           error: unknown;
         }>,
-      'Impossible de charger la liste des programmes.',
+      apiMessage('programs.listLoadFailed'),
       'programs.listPrograms',
     );
 
@@ -255,7 +257,7 @@ export class ProgramsService {
     loadQuery: (
       selectClause: string,
     ) => PromiseLike<{ data: T; error: unknown }>,
-    errorMessage: string,
+    errorMessage: ApiMessageValue,
     context: string,
   ): Promise<T> {
     const result = await executeEnrollmentQueryWithFallback(loadQuery, context);
@@ -282,7 +284,7 @@ export class ProgramsService {
     if (error) {
       throw new InternalServerErrorException({
         success: false,
-        message: 'Impossible de charger la liste des programmes.',
+        message: apiMessage('programs.listLoadFailed'),
       });
     }
 
@@ -302,7 +304,7 @@ export class ProgramsService {
     if (error) {
       throw new InternalServerErrorException({
         success: false,
-        message: 'Impossible de charger la liste des programmes.',
+        message: apiMessage('programs.listLoadFailed'),
       });
     }
 
@@ -329,7 +331,7 @@ export class ProgramsService {
     if (error || !data) {
       throw new InternalServerErrorException({
         success: false,
-        message: 'Impossible de créer le programme.',
+        message: apiMessage('programs.createFailed'),
       });
     }
 
@@ -377,7 +379,7 @@ export class ProgramsService {
     if (error || !data) {
       throw new NotFoundException({
         success: false,
-        message: 'Programme introuvable.',
+        message: apiMessage('programs.notFound'),
       });
     }
 
@@ -396,7 +398,7 @@ export class ProgramsService {
     if (error || !data) {
       throw new NotFoundException({
         success: false,
-        message: 'Programme introuvable.',
+        message: apiMessage('programs.notFound'),
       });
     }
   }
@@ -415,7 +417,7 @@ export class ProgramsService {
     if (error) {
       throw new InternalServerErrorException({
         success: false,
-        message: 'Impossible de charger les fonctionnalités du programme.',
+        message: apiMessage('programs.featuresLoadFailed'),
       });
     }
 
@@ -444,7 +446,7 @@ export class ProgramsService {
     if (error || !data) {
       throw new InternalServerErrorException({
         success: false,
-        message: 'Impossible de créer la fonctionnalité du programme.',
+        message: apiMessage('programs.featureCreateFailed'),
       });
     }
 
@@ -478,7 +480,7 @@ export class ProgramsService {
     if (error || !data) {
       throw new NotFoundException({
         success: false,
-        message: 'Fonctionnalité de programme introuvable.',
+        message: apiMessage('programs.featureNotFound'),
       });
     }
 
@@ -501,7 +503,7 @@ export class ProgramsService {
     if (error || !data) {
       throw new NotFoundException({
         success: false,
-        message: 'Fonctionnalité de programme introuvable.',
+        message: apiMessage('programs.featureNotFound'),
       });
     }
   }
@@ -522,7 +524,7 @@ export class ProgramsService {
     const enrollment = await this.readEnrollmentByProgram(
       participantId,
       programId,
-      'Impossible de charger le programme demandé.',
+      apiMessage('programs.detailLoadFailed'),
     );
 
     if (!enrollment) {
@@ -601,7 +603,7 @@ export class ProgramsService {
     if (!cohort) {
       throw new NotFoundException({
         success: false,
-        message: 'Session introuvable pour ce programme.',
+        message: apiMessage('programs.sessionNotFound'),
       });
     }
 
@@ -610,7 +612,7 @@ export class ProgramsService {
     if (!canMarkSessionProgress(sessionIds, payload.sessionId)) {
       throw new NotFoundException({
         success: false,
-        message: 'Session introuvable pour ce programme.',
+        message: apiMessage('programs.sessionNotFound'),
       });
     }
 
@@ -675,7 +677,7 @@ export class ProgramsService {
     if (error || !data.user) {
       throw new UnauthorizedException({
         success: false,
-        message: 'La session est invalide ou expirée.',
+        message: apiMessage('auth.sessionInvalidOrExpired'),
       });
     }
 
@@ -689,7 +691,7 @@ export class ProgramsService {
     if (participantError) {
       throw new InternalServerErrorException({
         success: false,
-        message: 'Impossible de charger le participant courant.',
+        message: apiMessage('programs.currentParticipantLoadFailed'),
       });
     }
 
@@ -711,7 +713,7 @@ export class ProgramsService {
     if (error) {
       throw new InternalServerErrorException({
         success: false,
-        message: 'Impossible de charger les sessions du programme.',
+        message: apiMessage('programs.sessionsLoadFailed'),
       });
     }
 
@@ -742,7 +744,7 @@ export class ProgramsService {
           .in('status', ['scheduled', 'live', 'completed'])
           .order('id', { ascending: true })
           .range(from, to),
-      'Impossible de charger la progression des programmes.',
+      apiMessage('programs.progressLoadFailed'),
     );
 
     const grouped = new Map<string, string[]>();
@@ -780,7 +782,7 @@ export class ProgramsService {
       from: number,
       to: number,
     ) => Promise<{ data: T[] | null; error: unknown }>,
-    errorMessage: string,
+    errorMessage: ApiMessageValue,
   ): Promise<T[]> {
     const rows: T[] = [];
     let from = 0;
@@ -866,7 +868,7 @@ export class ProgramsService {
     if (error) {
       throw new InternalServerErrorException({
         success: false,
-        message: 'Impossible de charger les annonces du programme.',
+        message: apiMessage('programs.announcementsLoadFailed'),
       });
     }
 
@@ -883,7 +885,7 @@ export class ProgramsService {
   private async readEnrollmentByProgram(
     participantId: string,
     programId: string,
-    errorMessage: string,
+    errorMessage: ApiMessageValue,
   ): Promise<EnrollmentRow | null> {
     const data = await this.readEnrollmentQuery<EnrollmentRow | null>(
       (selectClause) =>
@@ -952,7 +954,7 @@ export class ProgramsService {
     if (error || !data) {
       throw new NotFoundException({
         success: false,
-        message: 'Programme introuvable.',
+        message: apiMessage('programs.notFound'),
       });
     }
   }
@@ -968,7 +970,7 @@ export class ProgramsService {
     if (error || !data) {
       throw new NotFoundException({
         success: false,
-        message: 'Programme introuvable.',
+        message: apiMessage('programs.notFound'),
       });
     }
 
@@ -977,7 +979,7 @@ export class ProgramsService {
     if (program.status !== 'published' || program.visibility !== 'public') {
       throw new NotFoundException({
         success: false,
-        message: 'Programme introuvable.',
+        message: apiMessage('programs.notFound'),
       });
     }
   }

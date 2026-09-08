@@ -1,3 +1,4 @@
+import { apiMessage } from '../i18n/api-message';
 import {
   InternalServerErrorException,
   Injectable,
@@ -96,7 +97,7 @@ export class DashboardService {
     if (error || !data.user) {
       throw new UnauthorizedException({
         success: false,
-        message: 'La session est invalide ou expirée.',
+        message: apiMessage('auth.sessionInvalidOrExpired'),
       });
     }
 
@@ -144,7 +145,7 @@ export class DashboardService {
     if (error) {
       throw new InternalServerErrorException({
         success: false,
-        message: 'Impossible de charger le participant courant.',
+        message: apiMessage('dashboard.currentParticipantLoadFailed'),
       });
     }
 
@@ -168,7 +169,7 @@ export class DashboardService {
     if (error) {
       throw new InternalServerErrorException({
         success: false,
-        message: 'Impossible de charger les programmes du dashboard.',
+        message: apiMessage('dashboard.programsLoadFailed'),
       });
     }
 
@@ -211,7 +212,7 @@ export class DashboardService {
     if (error) {
       throw new InternalServerErrorException({
         success: false,
-        message: 'Impossible de charger les sessions à venir du dashboard.',
+        message: apiMessage('dashboard.upcomingSessionsLoadFailed'),
       });
     }
 
@@ -271,7 +272,7 @@ export class DashboardService {
     if (error) {
       throw new InternalServerErrorException({
         success: false,
-        message: 'Impossible de charger les annonces du dashboard.',
+        message: apiMessage('dashboard.announcementsLoadFailed'),
       });
     }
 

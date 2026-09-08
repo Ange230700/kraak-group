@@ -14,6 +14,7 @@ export type LocalizedPublicPageId =
   | 'faq'
   | 'programs'
   | 'resources'
+  | 'blog'
   | 'contact'
   | 'legalNotice'
   | 'privacyPolicy'
@@ -29,6 +30,7 @@ export type LocalizedPublicComponentKey =
   | 'faq'
   | 'programs'
   | 'resources'
+  | 'blog'
   | 'contact'
   | 'legalNotice'
   | 'privacyPolicy'
@@ -172,13 +174,50 @@ export function buildLocalizedPublicLocalePath(
   targetLocaleCandidate: string | null | undefined,
 ): string {
   const { path, suffix } = splitPublicUrl(currentUrl);
-  const currentEntry = findLocalizedPublicRouteEntryByPath(path);
+  const normalizedPath = normalizeAbsolutePath(path);
+  const currentLocale = resolveLocaleFromPublicPath(normalizedPath);
+
+  if (currentLocale) {
+    const currentBlogEntry = findLocalizedPublicRouteEntry(
+      'blog',
+      currentLocale,
+    );
+    const articlePrefix = `${currentBlogEntry.path}/`;
+
+    if (normalizedPath.startsWith(articlePrefix)) {
+      const slug = normalizedPath.slice(articlePrefix.length);
+
+      if (slug && !slug.includes('/')) {
+        return `${buildLocalizedBlogArticlePath(
+          slug,
+          targetLocaleCandidate,
+        )}${suffix}`;
+      }
+    }
+  }
+
+  const currentEntry = findLocalizedPublicRouteEntryByPath(normalizedPath);
   const targetEntry = findLocalizedPublicRouteEntry(
     currentEntry?.pageId ?? 'home',
     targetLocaleCandidate,
   );
 
   return currentEntry ? `${targetEntry.path}${suffix}` : targetEntry.path;
+}
+
+export function buildLocalizedBlogArticlePath(
+  slug: string,
+  localeCandidate?: string | null,
+): string {
+  const normalizedSlug = slug.trim().replace(/^\/+|\/+$/g, '');
+
+  if (!normalizedSlug || normalizedSlug.includes('/')) {
+    throw new Error(`Invalid Blog article slug "${slug}".`);
+  }
+
+  const blogEntry = findLocalizedPublicRouteEntry('blog', localeCandidate);
+
+  return `${blogEntry.path}/${normalizedSlug}`;
 }
 
 export function findLegacyPublicRedirectBySourcePath(

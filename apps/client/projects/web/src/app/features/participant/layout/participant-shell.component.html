@@ -18,7 +18,7 @@
         <a
           routerLink="/participant/dashboard"
           class="focus-visible:ring-offset-brand-navy flex items-center gap-3 rounded-full text-white no-underline outline-none focus-visible:ring-2 focus-visible:ring-cyan-200 focus-visible:ring-offset-2"
-          aria-label="Espace participant KRAAK Consulting"
+          [attr.aria-label]="'web.participant.shell.brandAria' | kraakTranslate"
         >
           <span
             class="flex h-11 w-11 items-center justify-center rounded-full bg-white shadow-[0_1px_2px_rgba(18,55,105,0.12)]"
@@ -39,7 +39,7 @@
               KRAAK Consulting
             </span>
             <span class="mt-1 block text-xs text-white/60">
-              Espace participant
+              {{ 'web.participant.shell.participantArea' | kraakTranslate }}
             </span>
           </span>
         </a>
@@ -68,7 +68,7 @@
           <button
             type="button"
             class="motion-hover-lift motion-press flex h-10 w-10 cursor-pointer items-center justify-center rounded-full border border-white/12 bg-white/6 text-white/72 shadow-[0_2px_5px_rgba(255,255,255,0.05)_inset] backdrop-blur-xl transition hover:bg-white/14 hover:text-white focus-visible:ring-2 focus-visible:ring-cyan-200 focus-visible:outline-none"
-            aria-label="Se déconnecter"
+            [attr.aria-label]="'web.participant.shell.logout' | kraakTranslate"
             (click)="logout()"
           >
             <i class="pi pi-sign-out text-sm" aria-hidden="true"></i>
@@ -77,7 +77,9 @@
       </header>
 
       <nav
-        aria-label="Navigation de l'espace participant"
+        [attr.aria-label]="
+          'web.participant.shell.navigationAria' | kraakTranslate
+        "
         class="mx-auto mt-10 flex w-full max-w-[calc(100%_-_1rem)] flex-col items-center gap-2 rounded-3xl border border-white/8 bg-white/16 p-2 shadow-[0_2px_5px_rgba(255,255,255,0.06)_inset,0_12px_20px_rgba(0,0,0,0.06)] backdrop-blur-[48px] md:max-w-[55rem] md:flex-row md:rounded-full"
       >
         <a
@@ -87,7 +89,7 @@
           ariaCurrentWhenActive="page"
           class="motion-press flex h-10 w-full items-center justify-center rounded-full px-5 text-sm font-medium text-white/64 transition-all select-none hover:bg-white/10 hover:text-white focus-visible:ring-2 focus-visible:ring-cyan-200 focus-visible:outline-none md:flex-1"
         >
-          Tableau de bord
+          {{ 'web.participant.shell.dashboard' | kraakTranslate }}
         </a>
 
         <a
@@ -96,14 +98,14 @@
           ariaCurrentWhenActive="page"
           class="motion-press flex h-10 w-full items-center justify-center rounded-full px-5 text-sm font-medium text-white/64 transition-all select-none hover:bg-white/10 hover:text-white focus-visible:ring-2 focus-visible:ring-cyan-200 focus-visible:outline-none md:flex-1"
         >
-          Programmes
+          {{ 'web.participant.shell.programs' | kraakTranslate }}
         </a>
 
         <a
-          routerLink="/contact"
+          [routerLink]="supportPath()"
           class="motion-press flex h-10 w-full items-center justify-center rounded-full px-5 text-sm font-medium text-white/64 transition-all select-none hover:bg-white/10 hover:text-white focus-visible:ring-2 focus-visible:ring-cyan-200 focus-visible:outline-none md:flex-1"
         >
-          Support
+          {{ 'web.participant.shell.support' | kraakTranslate }}
         </a>
       </nav>
     </div>

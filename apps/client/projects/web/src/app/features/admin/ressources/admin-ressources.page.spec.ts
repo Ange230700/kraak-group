@@ -1,3 +1,4 @@
+import { ApplicationInitStatus } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
 import { MessageService } from 'primeng/api';
@@ -5,6 +6,10 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 import { signal } from '@angular/core';
 import { WebAuthService } from '../../../core/auth/web-auth.service';
+import {
+  KraakI18nService,
+  provideKraakI18n,
+} from '../../../../../../shared/i18n';
 import AdminRessourcesPage from './admin-ressources.page';
 import type { ResourceDto } from '@kraak/contracts';
 
@@ -79,14 +84,17 @@ describe('AdminRessourcesPage', () => {
   });
 
   beforeEach(async () => {
+    globalThis.window.localStorage.setItem('kraak:locale', 'fr-CI');
     await TestBed.configureTestingModule({
       imports: [AdminRessourcesPage],
       providers: [
+        provideKraakI18n(),
         provideRouter([]),
         MessageService,
         { provide: WebAuthService, useValue: webAuthServiceMock },
       ],
     }).compileComponents();
+    await TestBed.inject(ApplicationInitStatus).donePromise;
   });
 
   it('Given the admin ressources page When it is created Then the instance exists', () => {
@@ -412,5 +420,91 @@ describe('AdminRessourcesPage', () => {
 
     expect(fixture.componentInstance['errorMessage']()).toContain('charger');
     expect(fixture.componentInstance['loading']()).toBe(false);
+  });
+
+  it('Given English locale, When the page renders, Then it renders Admin Resources chrome in English', async () => {
+    const i18n = TestBed.inject(KraakI18nService);
+    await i18n.setLocale('en-GB');
+
+    const fixture = TestBed.createComponent(AdminRessourcesPage);
+    const comp = fixture.componentInstance;
+
+    comp.loadRessources = vi.fn().mockResolvedValue(undefined);
+    comp['loading'].set(false);
+    comp['ressources'].set([]);
+
+    fixture.detectChanges();
+
+    const host = fixture.nativeElement as HTMLElement;
+    let content = host.textContent ?? '';
+
+    expect(content).toContain('Resources');
+    expect(content).toContain(
+      'Manage KRAAK resources: creation, editing, type and publication status.',
+    );
+    expect(content).toContain('Dashboard');
+    expect(content).toContain('New resource');
+    expect(content).toContain('No resources yet.');
+    expect(content).toContain('Create the first resource');
+
+    comp.openCreateForm();
+    fixture.detectChanges();
+
+    content = host.textContent ?? '';
+
+    expect(content).toContain('New resource');
+    expect(content).toContain('Title');
+    expect(content).toContain('Description');
+    expect(content).toContain('Type');
+    expect(content).toContain('Theme');
+    expect(content).toContain('Audience');
+    expect(content).toContain('Status');
+    expect(content).toContain('URL');
+    expect(content).toContain('Create resource');
+    expect(content).toContain('Cancel');
+
+    expect(content).toContain('Link');
+    expect(content).toContain('File');
+    expect(content).toContain('Video');
+    expect(content).toContain('Document');
+
+    expect(content).toContain('Training');
+    expect(content).toContain('Project management');
+    expect(content).toContain('Immigration');
+    expect(content).toContain('Career');
+
+    expect(content).toContain('All');
+    expect(content).toContain('Young professionals and students');
+    expect(content).toContain('Organizations');
+    expect(content).toContain('International candidates');
+
+    expect(content).toContain('Draft');
+    expect(content).toContain('Published');
+    expect(content).toContain('Archived');
+
+    const titleInput = host.querySelector(
+      '#res-title',
+    ) as HTMLInputElement | null;
+
+    const descriptionInput = host.querySelector(
+      '#res-description',
+    ) as HTMLTextAreaElement | null;
+
+    const urlInput = host.querySelector('#res-url') as HTMLInputElement | null;
+
+    expect(titleInput?.placeholder).toBe('Resource title');
+    expect(descriptionInput?.placeholder).toBe(
+      'Resource description (optional)',
+    );
+    expect(urlInput?.placeholder).toBe('https://... (optional)');
+
+    expect(comp['getResourceTypeLabel']('video')).toBe('Video');
+    expect(comp['getResourceThemeLabel']('project_management')).toBe(
+      'Project management',
+    );
+    expect(comp['getResourceAudienceLabel']('international_candidates')).toBe(
+      'International candidates',
+    );
+    expect(comp['getPublicationStatusLabel']('published')).toBe('Published');
   });
 });

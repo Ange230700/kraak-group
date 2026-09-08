@@ -17,6 +17,10 @@ import {
   resolveAuthErrorMessage,
 } from '../../core/auth/web-auth.service';
 
+import {
+  KraakI18nService,
+  KraakTranslatePipe,
+} from '../../../../../shared/i18n';
 interface AuthResetFormModel {
   password: FormControl<string>;
   confirmPassword: FormControl<string>;
@@ -25,14 +29,23 @@ interface AuthResetFormModel {
 @Component({
   selector: 'kraak-web-auth-reset-page',
   standalone: true,
-  imports: [ReactiveFormsModule, RouterLink, Button, Message],
+  imports: [
+    KraakTranslatePipe,
+    ReactiveFormsModule,
+    RouterLink,
+    Button,
+    Message,
+  ],
   templateUrl: './auth-reset.page.html',
 })
 export default class AuthResetPage implements OnInit {
+  private readonly i18n = inject(KraakI18nService);
+
   private readonly authService = inject(WebAuthService);
   private readonly messageService = inject(MessageService);
-  private readonly invalidRecoveryLinkMessage =
-    'Le lien de réinitialisation est invalide ou expiré. Demandez un nouveau lien.';
+  private readonly invalidRecoveryLinkMessage = this.i18n.translate(
+    'web.auth.resetPassword.invalidLink',
+  );
 
   readonly form = new FormGroup<AuthResetFormModel>({
     password: new FormControl('', {
@@ -72,7 +85,7 @@ export default class AuthResetPage implements OnInit {
       this.errorMessage.set(
         resolveAuthErrorMessage(
           error,
-          'Impossible de préparer la réinitialisation du mot de passe.',
+          this.i18n.translate('web.auth.resetPassword.prepareError'),
         ),
       );
     } finally {
@@ -95,7 +108,9 @@ export default class AuthResetPage implements OnInit {
     const { password, confirmPassword } = this.form.getRawValue();
 
     if (password !== confirmPassword) {
-      this.errorMessage.set('Les deux mots de passe doivent être identiques.');
+      this.errorMessage.set(
+        this.i18n.translate('web.auth.resetPassword.passwordMismatch'),
+      );
       return;
     }
 
@@ -121,7 +136,7 @@ export default class AuthResetPage implements OnInit {
       this.messageService.add({
         key: 'app-feedback',
         severity: 'success',
-        summary: 'Mot de passe mis à jour',
+        summary: this.i18n.translate('web.auth.resetPassword.toastTitle'),
         detail: response.message,
         life: 6000,
       });
@@ -137,7 +152,7 @@ export default class AuthResetPage implements OnInit {
       this.errorMessage.set(
         resolveAuthErrorMessage(
           error,
-          'Impossible de mettre à jour votre mot de passe.',
+          this.i18n.translate('web.auth.resetPassword.genericError'),
         ),
       );
     } finally {

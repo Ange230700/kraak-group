@@ -34,8 +34,8 @@ describe('Services DTO validation', () => {
     expect(result).toEqual({
       valid: false,
       errors: [
-        'Le champ title est requis.',
-        'Le champ sortOrder doit être un entier.',
+        { key: 'validation.requiredField', params: { field: 'title' } },
+        { key: 'validation.integerField', params: { field: 'sortOrder' } },
       ],
     });
   });
@@ -62,7 +62,7 @@ describe('Services DTO validation', () => {
 
     expect(result).toEqual({
       valid: false,
-      errors: ['Le payload de mise à jour doit contenir au moins un champ.'],
+      errors: [{ key: 'validation.updateRequiresField' }],
     });
   });
 
@@ -71,7 +71,7 @@ describe('Services DTO validation', () => {
 
     expect(result).toEqual({
       valid: false,
-      errors: ['Corps de requête invalide.'],
+      errors: [{ key: 'validation.invalidBody' }],
     });
   });
 
@@ -80,7 +80,7 @@ describe('Services DTO validation', () => {
 
     expect(result).toEqual({
       valid: false,
-      errors: ['Corps de requête invalide.'],
+      errors: [{ key: 'validation.invalidBody' }],
     });
   });
 
@@ -94,9 +94,9 @@ describe('Services DTO validation', () => {
     expect(result).toEqual({
       valid: false,
       errors: [
-        'Le champ title est requis.',
-        'Le champ description est requis.',
-        'Le champ sortOrder doit être un entier.',
+        { key: 'validation.requiredField', params: { field: 'title' } },
+        { key: 'validation.requiredField', params: { field: 'description' } },
+        { key: 'validation.integerField', params: { field: 'sortOrder' } },
       ],
     });
   });
@@ -121,7 +121,7 @@ describe('Services DTO validation', () => {
 
     expect(result).toEqual({
       valid: false,
-      errors: ['Le payload de mise à jour doit contenir au moins un champ.'],
+      errors: [{ key: 'validation.updateRequiresField' }],
     });
   });
 
@@ -130,7 +130,7 @@ describe('Services DTO validation', () => {
 
     expect(result).toEqual({
       valid: false,
-      errors: ['Corps de requête invalide.'],
+      errors: [{ key: 'validation.invalidBody' }],
     });
   });
 
@@ -144,9 +144,9 @@ describe('Services DTO validation', () => {
     expect(result).toEqual({
       valid: false,
       errors: [
-        'Le champ title est requis.',
-        'Le champ description est requis.',
-        'Le champ sortOrder doit être un entier.',
+        { key: 'validation.requiredField', params: { field: 'title' } },
+        { key: 'validation.requiredField', params: { field: 'description' } },
+        { key: 'validation.integerField', params: { field: 'sortOrder' } },
       ],
     });
   });
@@ -156,7 +156,7 @@ describe('Services DTO validation', () => {
 
     expect(result).toEqual({
       valid: false,
-      errors: ['Corps de requête invalide.'],
+      errors: [{ key: 'validation.invalidBody' }],
     });
   });
 
@@ -170,9 +170,9 @@ describe('Services DTO validation', () => {
     expect(result).toEqual({
       valid: false,
       errors: [
-        'Le champ title est requis.',
-        'Le champ description est requis.',
-        'Le champ sortOrder doit être un entier.',
+        { key: 'validation.requiredField', params: { field: 'title' } },
+        { key: 'validation.requiredField', params: { field: 'description' } },
+        { key: 'validation.integerField', params: { field: 'sortOrder' } },
       ],
     });
   });

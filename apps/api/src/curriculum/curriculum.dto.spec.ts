@@ -127,11 +127,11 @@ describe('Curriculum DTO validation', () => {
     ).toEqual({
       valid: false,
       errors: [
-        'Le champ slug est invalide.',
-        'Le champ title est requis.',
-        'Le champ summary est requis.',
-        'Le champ description est requis.',
-        'Le champ status est invalide.',
+        { key: 'validation.invalidField', params: { field: 'slug' } },
+        { key: 'validation.requiredField', params: { field: 'title' } },
+        { key: 'validation.requiredField', params: { field: 'summary' } },
+        { key: 'validation.requiredField', params: { field: 'description' } },
+        { key: 'validation.invalidField', params: { field: 'status' } },
       ],
     });
 
@@ -156,8 +156,11 @@ describe('Curriculum DTO validation', () => {
     ).toEqual({
       valid: false,
       errors: [
-        'Le champ sortOrder doit être un entier positif ou nul.',
-        'Le champ isRequired doit être un booléen.',
+        {
+          key: 'validation.nonNegativeIntegerField',
+          params: { field: 'sortOrder' },
+        },
+        { key: 'validation.booleanField', params: { field: 'isRequired' } },
       ],
     });
   });
@@ -194,12 +197,12 @@ describe('Curriculum DTO validation', () => {
   it('Given un payload update vide ou un body invalide, When la validation est exécutée, Then le payload est rejeté', () => {
     expect(validateUpdateCoursePayload({})).toEqual({
       valid: false,
-      errors: ['Le payload de mise à jour doit contenir au moins un champ.'],
+      errors: [{ key: 'validation.updateRequiresField' }],
     });
 
     expect(validateCreateCoursePayload(null)).toEqual({
       valid: false,
-      errors: ['Corps de requête invalide.'],
+      errors: [{ key: 'validation.invalidBody' }],
     });
   });
 });

@@ -10,23 +10,29 @@ import { environment } from '../../../../environments/environment';
 import { resolveApiBaseUrl } from '../../../core/runtime/runtime-config';
 import { WebAuthService } from '../../../core/auth/web-auth.service';
 
+import {
+  KraakI18nService,
+  KraakTranslatePipe,
+} from '../../../../../../shared/i18n';
 const ROLE_LABELS: Record<string, string> = {
-  participant: 'Participant',
-  admin: 'Administrateur',
-  trainer: 'Formateur',
+  participant: 'web.admin.users.list.roles.participant',
+  admin: 'web.admin.users.list.roles.admin',
+  trainer: 'web.admin.users.list.roles.trainer',
 };
 
 @Component({
   selector: 'kraak-admin-user-list-page',
   standalone: true,
-  imports: [RouterLink, ButtonDirective, Message],
+  imports: [RouterLink, ButtonDirective, Message, KraakTranslatePipe],
   templateUrl: './admin-user-list.page.html',
 })
 export default class AdminUserListPage implements OnInit {
   private readonly authService = inject(WebAuthService);
   private readonly messageService = inject(MessageService);
 
+  private readonly i18n = inject(KraakI18nService);
   private readonly usersClient = createApiClient({
+    getLocale: () => this.i18n.locale(),
     baseUrl: resolveApiBaseUrl(environment.apiBaseUrl),
     getAuthToken: () => this.authService.currentSession()?.accessToken ?? null,
   }).users;
@@ -45,7 +51,7 @@ export default class AdminUserListPage implements OnInit {
         u.firstName.toLowerCase().includes(query) ||
         u.lastName.toLowerCase().includes(query) ||
         u.email.toLowerCase().includes(query) ||
-        u.role.toLowerCase().includes(query),
+        this.getRoleLabel(u.role).toLowerCase().includes(query),
     );
   });
 
@@ -74,7 +80,7 @@ export default class AdminUserListPage implements OnInit {
         err,
       );
       this.errorMessage.set(
-        'Impossible de charger la liste des utilisateurs. Vérifiez la connexion et réessayez.',
+        this.i18n.translate('web.admin.users.list.feedback.loadFailure'),
       );
     } finally {
       this.loading.set(false);
@@ -82,7 +88,27 @@ export default class AdminUserListPage implements OnInit {
   }
 
   getRoleLabel(role: string): string {
-    return ROLE_LABELS[role] ?? role;
+    const key = ROLE_LABELS[role];
+
+    return key ? this.i18n.translate(key) : role;
+  }
+
+  protected getEditAriaLabel(user: {
+    firstName: string;
+    lastName: string;
+  }): string {
+    return this.i18n.translate('web.admin.users.list.actions.editAria', {
+      name: `${user.firstName} ${user.lastName}`.trim(),
+    });
+  }
+
+  protected getDeleteAriaLabel(user: {
+    firstName: string;
+    lastName: string;
+  }): string {
+    return this.i18n.translate('web.admin.users.list.actions.deleteAria', {
+      name: `${user.firstName} ${user.lastName}`.trim(),
+    });
   }
 
   openEdit(user: AppUserDto): void {
@@ -120,16 +146,24 @@ export default class AdminUserListPage implements OnInit {
         list.map((u) => (u.id === updated.id ? updated : u)),
       );
       this.closeEdit();
-      this.successMessage.set('Utilisateur mis à jour avec succès.');
+      this.successMessage.set(
+        this.i18n.translate('web.admin.users.list.feedback.updateSuccess'),
+      );
       this.messageService.add({
         key: 'app-feedback',
         severity: 'success',
-        summary: 'Mis à jour',
-        detail: 'Utilisateur mis à jour avec succès.',
+        summary: this.i18n.translate(
+          'web.admin.users.list.feedback.updateSummary',
+        ),
+        detail: this.i18n.translate(
+          'web.admin.users.list.feedback.updateSuccess',
+        ),
       });
     } catch (err) {
       console.error('[AdminUserListPage] Erreur lors de la mise à jour', err);
-      this.errorMessage.set("Impossible de mettre à jour l'utilisateur.");
+      this.errorMessage.set(
+        this.i18n.translate('web.admin.users.list.feedback.updateFailure'),
+      );
     } finally {
       this.submitting.set(false);
     }
@@ -153,16 +187,24 @@ export default class AdminUserListPage implements OnInit {
       await this.usersClient.remove(user.id);
       this.users.update((list) => list.filter((u) => u.id !== user.id));
       this.userToDelete.set(null);
-      this.successMessage.set('Utilisateur supprimé avec succès.');
+      this.successMessage.set(
+        this.i18n.translate('web.admin.users.list.feedback.deleteSuccess'),
+      );
       this.messageService.add({
         key: 'app-feedback',
         severity: 'success',
-        summary: 'Supprimé',
-        detail: 'Utilisateur supprimé avec succès.',
+        summary: this.i18n.translate(
+          'web.admin.users.list.feedback.deleteSummary',
+        ),
+        detail: this.i18n.translate(
+          'web.admin.users.list.feedback.deleteSuccess',
+        ),
       });
     } catch (err) {
       console.error('[AdminUserListPage] Erreur lors de la suppression', err);
-      this.errorMessage.set("Impossible de supprimer l'utilisateur.");
+      this.errorMessage.set(
+        this.i18n.translate('web.admin.users.list.feedback.deleteFailure'),
+      );
       this.userToDelete.set(null);
     } finally {
       this.submitting.set(false);

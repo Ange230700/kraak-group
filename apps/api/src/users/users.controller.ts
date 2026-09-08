@@ -108,7 +108,13 @@ export class UsersController {
     await requireAdminAccess(this.authService, authHeader);
 
     const validation = validateUpdateUserPayload(body);
-    if (!validation.valid) throw new BadRequestException(validation.error);
+    if (!validation.valid) {
+      throw new BadRequestException({
+        statusCode: 400,
+        message: validation.error,
+        error: 'Bad Request',
+      });
+    }
 
     return this.usersService.update(id, validation.data);
   }
@@ -174,7 +180,13 @@ export class UsersController {
     await requireAdminAccess(this.authService, authHeader);
 
     const validation = validateCreateUserPayload(body);
-    if (!validation.valid) throw new BadRequestException(validation.error);
+    if (!validation.valid) {
+      throw new BadRequestException({
+        statusCode: 400,
+        message: validation.error,
+        error: 'Bad Request',
+      });
+    }
 
     return this.usersService.invite(validation.data);
   }

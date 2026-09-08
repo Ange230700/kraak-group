@@ -14,38 +14,39 @@
       <p
         class="text-brand-cyan text-[11px] font-semibold tracking-[0.26em] uppercase sm:text-xs"
       >
-        Blog KRAAK
+        {{ 'web.blog.hero.eyebrow' | kraakTranslate }}
       </p>
       <h1
         class="text-brand-white mt-3 text-4xl leading-[1.08] font-black sm:mt-4 sm:text-5xl lg:text-6xl lg:leading-[1.04]"
       >
-        Actualités, repères et
-        <span class="text-brand-cyan">analyses</span> pour avancer avec clarté.
+        {{ 'web.blog.hero.titleLead' | kraakTranslate }}
+        <span class="text-brand-cyan">{{
+          'web.blog.hero.titleHighlight' | kraakTranslate
+        }}</span>
+        {{ 'web.blog.hero.titleTail' | kraakTranslate }}
       </h1>
       <p
         class="mt-6 max-w-2xl text-base leading-relaxed text-neutral-200 sm:mt-7 sm:text-lg lg:text-xl"
       >
-        Nous publions des articles courts et utiles pour aider les jeunes
-        professionnels, les porteurs de projets et les organisations à prendre
-        une prochaine décision plus lisible.
+        {{ 'web.blog.hero.description' | kraakTranslate }}
       </p>
       <div
         class="mt-8 flex flex-col items-stretch gap-3 sm:mt-9 sm:flex-row sm:items-center sm:gap-4"
       >
         <a
           pButton
-          routerLink="/contact"
-          label="Demander un accompagnement"
+          [routerLink]="'contact' | localizedPublicPath"
+          [label]="'web.blog.hero.primaryCta' | kraakTranslate"
           icon="pi pi-comments"
-          aria-label="Demander un accompagnement"
+          [attr.aria-label]="'web.blog.hero.primaryCta' | kraakTranslate"
           class="kr-button-primary w-full justify-center rounded-2xl px-8 py-4 text-xs font-black tracking-widest uppercase sm:w-auto"
         ></a>
         <a
           pButton
-          routerLink="/services"
-          label="Voir les services"
+          [routerLink]="'services' | localizedPublicPath"
+          [label]="'web.blog.hero.secondaryCta' | kraakTranslate"
           icon="pi pi-compass"
-          aria-label="Voir les services"
+          [attr.aria-label]="'web.blog.hero.secondaryCta' | kraakTranslate"
           class="kr-button-ghost border-brand-white/20 bg-brand-white/10 w-full justify-center rounded-2xl px-8 py-4 text-xs font-black tracking-widest uppercase backdrop-blur-md sm:w-auto"
         ></a>
       </div>
@@ -61,7 +62,7 @@
           <p
             class="text-brand-blue text-sm font-semibold tracking-[0.18em] uppercase"
           >
-            Article vedette
+            {{ 'web.blog.featured.eyebrow' | kraakTranslate }}
           </p>
           <h2 class="mt-3 text-3xl font-bold lg:text-4xl">
             {{ featuredArticle.title }}
@@ -78,12 +79,16 @@
 
           <a
             pButton
-            [routerLink]="['/blog', featuredArticle.slug]"
-            label="Lire l'article"
+            [routerLink]="
+              ('blog' | localizedPublicPath) + '/' + featuredArticle.slug
+            "
+            [label]="'web.blog.featured.readArticle' | kraakTranslate"
             icon="pi pi-arrow-right"
             class="kr-button-primary mt-8"
-            aria-label="Lire l'article vedette"
-            >Lire l'article</a
+            [attr.aria-label]="
+              'web.blog.featured.readArticleAria' | kraakTranslate
+            "
+            >{{ 'web.blog.card.readArticle' | kraakTranslate }}</a
           >
         </article>
 
@@ -94,20 +99,24 @@
             <p class="text-brand-navy text-2xl font-bold">
               {{ totalArticles }}
             </p>
-            <p class="mt-2 text-neutral-700">articles publiés disponibles</p>
+            <p class="mt-2 text-neutral-700">
+              {{ 'web.blog.featured.articlesAvailable' | kraakTranslate }}
+            </p>
           </article>
           <article
             class="rounded-card bg-brand-white border border-neutral-200 p-6 shadow-sm"
           >
             <p class="text-brand-navy text-2xl font-bold">{{ totalPages }}</p>
-            <p class="mt-2 text-neutral-700">pages de lecture</p>
+            <p class="mt-2 text-neutral-700">
+              {{ 'web.blog.featured.readingPages' | kraakTranslate }}
+            </p>
           </article>
         </aside>
       </div>
     } @else {
       <article class="rounded-card bg-neutral-50 p-8 text-center shadow-sm">
         <p class="text-brand-blue font-semibold">
-          Aucun article publié pour le moment.
+          {{ 'web.blog.featured.empty' | kraakTranslate }}
         </p>
       </article>
     }
@@ -120,14 +129,13 @@
       <p
         class="text-brand-blue text-sm font-semibold tracking-[0.18em] uppercase"
       >
-        Derniers articles
+        {{ 'web.blog.latest.eyebrow' | kraakTranslate }}
       </p>
       <h2 class="text-3xl font-bold lg:text-4xl">
-        Des lectures courtes pour mieux choisir votre prochain pas.
+        {{ 'web.blog.latest.title' | kraakTranslate }}
       </h2>
       <p class="text-brand-navy mx-auto max-w-3xl text-lg">
-        Chaque article reste orienté vers une action utile, sans surcharger le
-        lecteur avec un vocabulaire inutilement technique.
+        {{ 'web.blog.latest.description' | kraakTranslate }}
       </p>
     </div>
 
@@ -146,7 +154,10 @@
             <div class="flex items-center gap-3 text-sm text-neutral-600">
               <span>{{ article.publishedLabel }}</span>
               <span>•</span>
-              <span>{{ article.readingTimeMinutes }} min</span>
+              <span
+                >{{ article.readingTimeMinutes }}
+                {{ 'web.blog.card.readingTimeShort' | kraakTranslate }}</span
+              >
             </div>
             <h3 class="mt-4 text-2xl leading-tight font-bold">
               {{ article.title }}
@@ -155,10 +166,10 @@
               {{ article.summary }}
             </p>
             <a
-              [routerLink]="['/blog', article.slug]"
+              [routerLink]="('blog' | localizedPublicPath) + '/' + article.slug"
               class="text-brand-blue mt-6 inline-flex font-semibold"
             >
-              Lire l'article
+              {{ 'web.blog.card.readArticle' | kraakTranslate }}
             </a>
           </div>
         </article>
@@ -168,17 +179,17 @@
     @if (totalPages >= 1 && totalArticles > 0) {
       <nav
         class="mt-10 flex flex-wrap items-center justify-center gap-2"
-        aria-label="Pagination du blog"
+        [attr.aria-label]="'web.blog.pagination.aria' | kraakTranslate"
       >
         <button
           type="button"
           pButton
           class="kr-button-ghost"
-          label="Précédent"
+          [label]="'web.blog.pagination.previous' | kraakTranslate"
           (click)="goToPreviousPage()"
           [disabled]="currentPage === 1"
         >
-          Précédent
+          {{ 'web.blog.pagination.previous' | kraakTranslate }}
         </button>
 
         @for (pageNumber of pageNumbers; track pageNumber) {
@@ -192,7 +203,11 @@
                 ? 'kr-button-primary'
                 : 'kr-button-ghost'
             "
-            [attr.aria-label]="'Aller à la page ' + pageNumber"
+            [attr.aria-label]="
+              ('web.blog.pagination.pageAriaPrefix' | kraakTranslate) +
+              ' ' +
+              pageNumber
+            "
           >
             {{ pageNumber }}
           </button>
@@ -202,11 +217,11 @@
           type="button"
           pButton
           class="kr-button-ghost"
-          label="Suivant"
+          [label]="'web.blog.pagination.next' | kraakTranslate"
           (click)="goToNextPage()"
           [disabled]="currentPage === totalPages"
         >
-          Suivant
+          {{ 'web.blog.pagination.next' | kraakTranslate }}
         </button>
       </nav>
     }
@@ -214,9 +229,9 @@
 </section>
 
 <kraak-cta-banner
-  heading="Vous avez un besoin plus spécifique ?"
-  body="Chaque article peut devenir un point de départ pour clarifier un besoin, choisir un service ou lancer un premier échange avec l'équipe KRAAK."
-  ctaLabel="Nous contacter"
+  [heading]="'web.blog.cta.heading' | kraakTranslate"
+  [body]="'web.blog.cta.body' | kraakTranslate"
+  [ctaLabel]="'web.blog.cta.label' | kraakTranslate"
   ctaLink="/contact"
   ctaContext="blog_main_cta"
 />

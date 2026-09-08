@@ -21,6 +21,10 @@ import {
   resolveWebRedirectUrl,
 } from './auth-form.utils';
 
+import {
+  KraakI18nService,
+  KraakTranslatePipe,
+} from '../../../../../shared/i18n';
 interface PasswordResetFormModel {
   email: FormControl<string>;
 }
@@ -28,10 +32,18 @@ interface PasswordResetFormModel {
 @Component({
   selector: 'kraak-web-password-reset-page',
   standalone: true,
-  imports: [ReactiveFormsModule, RouterLink, ButtonDirective, Message],
+  imports: [
+    KraakTranslatePipe,
+    ReactiveFormsModule,
+    RouterLink,
+    ButtonDirective,
+    Message,
+  ],
   templateUrl: './password-reset.page.html',
 })
 export default class PasswordResetPage {
+  private readonly i18n = inject(KraakI18nService);
+
   private readonly authService = inject(WebAuthService);
   private readonly messageService = inject(MessageService);
 
@@ -68,7 +80,7 @@ export default class PasswordResetPage {
       this.messageService.add({
         key: 'app-feedback',
         severity: 'success',
-        summary: 'R\u00E9initialisation',
+        summary: this.i18n.translate('web.auth.forgotPassword.toastTitle'),
         detail: response.message,
         life: 6000,
       });
@@ -79,7 +91,7 @@ export default class PasswordResetPage {
       this.errorMessage.set(
         resolveAuthErrorMessage(
           error,
-          "Impossible d'envoyer l'email de réinitialisation.",
+          this.i18n.translate('web.auth.forgotPassword.genericError'),
         ),
       );
     } finally {

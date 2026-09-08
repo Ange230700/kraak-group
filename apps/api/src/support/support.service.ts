@@ -1,3 +1,5 @@
+import { ApiLocaleContext } from '../i18n/api-locale-context';
+import { apiMessage, translateApiMessage } from '../i18n/api-message';
 import {
   ForbiddenException,
   Injectable,
@@ -57,8 +59,9 @@ const allowedStatusTransitions: Record<
   closed: [],
 };
 
-const contactNotificationFailureMessage =
-  "Le formulaire est temporairement indisponible. Veuillez utiliser l'e-mail direct ou WhatsApp indiqué sur la page contact.";
+const contactNotificationFailureMessage = apiMessage(
+  'support.contactNotificationFailed',
+);
 
 @Injectable()
 export class SupportService {
@@ -67,6 +70,7 @@ export class SupportService {
   constructor(
     private readonly configService: ConfigService,
     private readonly supabaseService: SupabaseService,
+    private readonly localeContext: ApiLocaleContext,
   ) {}
 
   async submitContact(
@@ -91,9 +95,14 @@ export class SupportService {
 
     return {
       success: true,
-      message: emailSent
-        ? 'Votre message a bien été reçu. Nous vous répondrons dans les plus brefs délais.'
-        : 'Votre demande a bien été enregistrée. La notification e-mail est temporairement indisponible, mais le suivi interne reste ouvert.',
+      message: translateApiMessage(
+        this.localeContext.locale(),
+        apiMessage(
+          emailSent
+            ? 'support.contactReceived'
+            : 'support.contactReceivedWithEmailUnavailable',
+        ),
+      ),
       requestId: trackingRequest?.id,
       requestStatus: trackingRequest?.status,
     };
@@ -124,7 +133,7 @@ export class SupportService {
     if (error) {
       throw new InternalServerErrorException({
         success: false,
-        message: 'Impossible de charger les demandes de support.',
+        message: apiMessage('support.requestsLoadFailed'),
       });
     }
 
@@ -143,8 +152,7 @@ export class SupportService {
     if (sessionUser.role === 'participant') {
       throw new ForbiddenException({
         success: false,
-        message:
-          "Vous ne pouvez pas modifier le statut d'une demande de support.",
+        message: apiMessage('support.statusChangeForbidden'),
       });
     }
 
@@ -160,14 +168,14 @@ export class SupportService {
     if (readError) {
       throw new InternalServerErrorException({
         success: false,
-        message: 'Impossible de lire la demande de support.',
+        message: apiMessage('support.requestReadFailed'),
       });
     }
 
     if (!existing) {
       throw new NotFoundException({
         success: false,
-        message: 'Demande de support introuvable.',
+        message: apiMessage('support.requestNotFound'),
       });
     }
 
@@ -196,7 +204,7 @@ export class SupportService {
     if (updateError || !updated) {
       throw new InternalServerErrorException({
         success: false,
-        message: 'Impossible de mettre à jour le statut de la demande.',
+        message: apiMessage('support.statusUpdateFailed'),
       });
     }
 
@@ -232,14 +240,14 @@ export class SupportService {
     if (updateError) {
       throw new InternalServerErrorException({
         success: false,
-        message: 'Impossible de marquer la demande comme lue.',
+        message: apiMessage('support.markReadFailed'),
       });
     }
 
     if (!updated) {
       throw new NotFoundException({
         success: false,
-        message: 'Demande de support introuvable.',
+        message: apiMessage('support.requestNotFound'),
       });
     }
 
@@ -272,8 +280,7 @@ export class SupportService {
     if (error || !data) {
       throw new InternalServerErrorException({
         success: false,
-        message:
-          'Votre demande a été reçue mais son suivi est indisponible pour le moment.',
+        message: apiMessage('support.trackingUnavailable'),
       });
     }
 
@@ -290,7 +297,7 @@ export class SupportService {
     if (authError || !authData.user) {
       throw new UnauthorizedException({
         success: false,
-        message: 'La session est invalide ou expirée.',
+        message: apiMessage('auth.sessionInvalidOrExpired'),
       });
     }
 
@@ -304,7 +311,7 @@ export class SupportService {
     if (appUserError || !appUser) {
       throw new UnauthorizedException({
         success: false,
-        message: 'Impossible de résoudre le profil utilisateur courant.',
+        message: apiMessage('support.currentUserProfileResolveFailed'),
       });
     }
 
@@ -325,7 +332,7 @@ export class SupportService {
     if (error) {
       throw new InternalServerErrorException({
         success: false,
-        message: 'Impossible de résoudre le participant associé.',
+        message: apiMessage('support.participantResolveFailed'),
       });
     }
 
@@ -465,7 +472,10 @@ class BadTransitionException extends ForbiddenException {
   ) {
     super({
       success: false,
-      message: `Transition de statut invalide: ${fromStatus} -> ${toStatus}.`,
+      message: apiMessage('support.invalidStatusTransition', {
+        fromStatus,
+        toStatus,
+      }),
     });
   }
 }

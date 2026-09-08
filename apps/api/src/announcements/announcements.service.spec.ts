@@ -2215,7 +2215,7 @@ describe('AnnouncementsService', () => {
         service.listAnnouncements('bad-token'),
       ).rejects.toMatchObject({
         response: {
-          message: 'La session est invalide ou expirée.',
+          message: { key: 'auth.sessionInvalidOrExpired' },
         },
       });
     });

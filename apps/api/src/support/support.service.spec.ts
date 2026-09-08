@@ -7,10 +7,15 @@ import {
   NotFoundException,
   UnauthorizedException,
 } from '@nestjs/common';
+import { ApiLocaleContext } from '../i18n/api-locale-context';
 import { SupabaseService } from '../supabase/supabase.service';
 import { SupportService } from './support.service';
 
 const sendMock = jest.fn();
+
+const localeContext = {
+  locale: jest.fn(() => 'fr-CI'),
+};
 
 jest.mock('resend', () => ({
   Resend: jest.fn().mockImplementation(() => ({
@@ -85,6 +90,8 @@ describe('SupportService', () => {
     configService.get.mockReset();
     authGetUserMock.mockReset();
     fromMock.mockReset();
+    localeContext.locale.mockReset();
+    localeContext.locale.mockReturnValue('fr-CI');
 
     const module: TestingModule = await Test.createTestingModule({
       providers: [
@@ -96,6 +103,10 @@ describe('SupportService', () => {
         {
           provide: SupabaseService,
           useValue: supabaseService,
+        },
+        {
+          provide: ApiLocaleContext,
+          useValue: localeContext,
         },
       ],
     }).compile();
@@ -687,9 +698,7 @@ describe('SupportService', () => {
     ).rejects.toMatchObject({
       response: {
         success: false,
-        errors: [
-          "Le formulaire est temporairement indisponible. Veuillez utiliser l'e-mail direct ou WhatsApp indiqué sur la page contact.",
-        ],
+        errors: [{ key: 'support.contactNotificationFailed' }],
       },
     });
 
@@ -1274,5 +1283,104 @@ describe('SupportService', () => {
     const userIdFilter = capturedEqCalls.find((c) => c.column === 'user_id');
     expect(userIdFilter).toBeDefined();
     expect(userIdFilter?.value).toBe('user-1');
+  });
+
+  it('Given en-GB and successful email delivery, When submitContact is called, Then the public acknowledgement is English', async () => {
+    localeContext.locale.mockReturnValue('en-GB');
+
+    configService.get.mockImplementation((key: string) => {
+      if (key === 'RESEND_API_KEY') return 're_test_key';
+      if (key === 'CONTACT_TO_EMAIL') return 'contact@kraak.org';
+      if (key === 'CONTACT_FROM_EMAIL') return 'noreply@kraak.org';
+      return undefined;
+    });
+
+    sendMock.mockResolvedValue({
+      data: { id: 'email_123' },
+      error: null,
+    });
+
+    const result = await service.submitContact({
+      name: 'Alice Dupont',
+      email: 'alice@exemple.com',
+      subject: 'Renseignements',
+      message: 'Bonjour, je voudrais en savoir plus sur vos programmes.',
+      category: 'training',
+    });
+
+    expect(result.message).toBe(
+      'Your message has been received. We will respond as soon as possible.',
+    );
+  });
+
+  it('Given en-GB and an authenticated tracked request without email delivery, When submitContact is called, Then the fallback acknowledgement is English', async () => {
+    localeContext.locale.mockReturnValue('en-GB');
+    configService.get.mockReturnValue(undefined);
+
+    authGetUserMock.mockResolvedValue({
+      data: { user: { id: 'user-1' } },
+      error: null,
+    });
+
+    fromMock.mockImplementation((table: string) => {
+      if (table === 'app_user') {
+        return createQueryChain({
+          data: { id: 'user-1', role: 'participant' },
+          error: null,
+        });
+      }
+
+      if (table === 'participant') {
+        return createQueryChain({
+          data: { id: 'participant-1' },
+          error: null,
+        });
+      }
+
+      if (table === 'support_request') {
+        return {
+          insert: jest.fn(() => ({
+            select: jest.fn(() => ({
+              maybeSingle: jest.fn().mockResolvedValue({
+                data: {
+                  id: 'req-1',
+                  user_id: 'user-1',
+                  participant_id: 'participant-1',
+                  subject: 'Sujet test',
+                  message: 'Message test détaillé',
+                  status: 'open',
+                  category: 'technical',
+                  assigned_to_user_id: null,
+                  created_at: '2026-04-29T10:00:00.000Z',
+                  updated_at: '2026-04-29T10:00:00.000Z',
+                },
+                error: null,
+              }),
+            })),
+          })),
+        };
+      }
+
+      throw new Error(`Unexpected table: ${table}`);
+    });
+
+    const result = await service.submitContact(
+      {
+        name: 'Alice Dupont',
+        email: 'alice@exemple.com',
+        subject: 'Sujet test',
+        message: 'Message test détaillé',
+        category: 'technical',
+      },
+      'access-token',
+    );
+
+    expect(result).toMatchObject({
+      success: true,
+      message:
+        'Your request has been recorded. Email notification is temporarily unavailable, but internal tracking remains open.',
+      requestId: 'req-1',
+      requestStatus: 'open',
+    });
   });
 });

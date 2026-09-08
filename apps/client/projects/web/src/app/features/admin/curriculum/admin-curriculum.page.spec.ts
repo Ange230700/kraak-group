@@ -1,3 +1,4 @@
+import { ApplicationInitStatus } from '@angular/core';
 import { signal } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
@@ -5,6 +6,11 @@ import type { CourseDto, ProgramCourseDto, ProgramDto } from '@kraak/contracts';
 import { vi } from 'vitest';
 
 import { WebAuthService } from '../../../core/auth/web-auth.service';
+import {
+  KraakI18nService,
+  provideKraakI18n,
+} from '../../../../../../shared/i18n';
+
 import AdminCurriculumPage from './admin-curriculum.page';
 
 const program: ProgramDto = {
@@ -63,13 +69,16 @@ const authMock = {
 
 describe('AdminCurriculumPage', () => {
   beforeEach(async () => {
+    globalThis.window.localStorage.setItem('kraak:locale', 'fr-CI');
     await TestBed.configureTestingModule({
       imports: [AdminCurriculumPage],
       providers: [
+        provideKraakI18n(),
         provideRouter([]),
         { provide: WebAuthService, useValue: authMock },
       ],
     }).compileComponents();
+    await TestBed.inject(ApplicationInitStatus).donePromise;
   });
 
   it('Given curriculum data, When the page loads, Then the first program and its courses are rendered', async () => {
@@ -276,6 +285,52 @@ describe('AdminCurriculumPage', () => {
     expect(component['placementsReady']()).toBe(true);
   });
 
+  it('Given an attachment request in flight, When another program is selected before it resolves, Then the stale placement cannot enter the new program state', async () => {
+    const fixture = TestBed.createComponent(AdminCurriculumPage);
+    const component = fixture.componentInstance;
+
+    let resolveCreate!: (value: ProgramCourseDto) => void;
+
+    const create = vi.fn(
+      () =>
+        new Promise<ProgramCourseDto>((resolve) => {
+          resolveCreate = resolve;
+        }),
+    );
+
+    component['programs'].set([program, secondProgram]);
+    component['courses'].set([course]);
+    component['selectedProgramId'].set(program.id);
+    component['placements'].set([]);
+    component['placementsReady'].set(true);
+
+    component.programCoursesClient = {
+      list: vi.fn().mockResolvedValue([]),
+      create,
+      remove: vi.fn(),
+    };
+
+    component.placementForm.setValue({
+      courseId: course.id,
+      sortOrder: 0,
+      isRequired: true,
+    });
+
+    const attachment = component.attachCourse();
+
+    await vi.waitFor(() => {
+      expect(create).toHaveBeenCalledTimes(1);
+    });
+
+    await component.selectProgram(secondProgram.id);
+
+    resolveCreate(placement);
+    await attachment;
+
+    expect(component['selectedProgramId']()).toBe(secondProgram.id);
+    expect(component['placements']()).toEqual([]);
+  });
+
   it('Given sparse placement ordering, When the placement form resets, Then the next order follows the highest existing value', () => {
     const fixture = TestBed.createComponent(AdminCurriculumPage);
     const component = fixture.componentInstance;
@@ -292,5 +347,65 @@ describe('AdminCurriculumPage', () => {
     component['resetPlacementForm']();
 
     expect(component.placementForm.controls.sortOrder.value).toBe(6);
+  });
+
+  it('Given English locale, When Curriculum renders, Then the admin chrome is translated', async () => {
+    const i18n = TestBed.inject(KraakI18nService);
+    await i18n.setLocale('en-GB');
+
+    const fixture = TestBed.createComponent(AdminCurriculumPage);
+    const component = fixture.componentInstance;
+
+    component['loadInitialData'] = vi.fn().mockResolvedValue(undefined);
+    component['loading'].set(false);
+    component['programs'].set([]);
+    component['courses'].set([]);
+
+    fixture.detectChanges();
+
+    const host = fixture.nativeElement as HTMLElement;
+    const content = host.textContent ?? '';
+
+    expect(content).toContain('Curriculum');
+    expect(content).toContain(
+      'Manage the learning catalogue and compose the courses for each programme without duplicating their content.',
+    );
+    expect(content).toContain('Dashboard');
+    expect(content).toContain('New course');
+
+    expect(content).toContain('Programmes');
+    expect(content).toContain('Choose a programme');
+    expect(content).toContain('No programmes available.');
+
+    expect(content).toContain('Catalogue');
+    expect(content).toContain('Courses');
+    expect(content).toContain('No courses in the catalogue.');
+
+    expect(content).toContain('Composition');
+    expect(content).toContain('Create or select a programme first.');
+
+    expect(component['getPublicationStatusLabel']('draft')).toBe('Draft');
+    expect(component['getPublicationStatusLabel']('published')).toBe(
+      'Published',
+    );
+    expect(component['getPublicationStatusLabel']('archived')).toBe('Archived');
+
+    expect(component['getProgramVisibilityLabel']('private')).toBe('Private');
+    expect(component['getProgramVisibilityLabel']('participants')).toBe(
+      'Participants',
+    );
+    expect(component['getProgramVisibilityLabel']('public')).toBe('Public');
+
+    expect(
+      component['getEditCourseAriaLabel']({
+        title: 'Leadership fundamentals',
+      }),
+    ).toBe('Edit Leadership fundamentals');
+
+    expect(
+      component['getArchiveCourseAriaLabel']({
+        title: 'Leadership fundamentals',
+      }),
+    ).toBe('Archive Leadership fundamentals');
   });
 });

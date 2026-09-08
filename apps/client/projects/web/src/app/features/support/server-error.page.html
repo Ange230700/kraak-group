@@ -16,7 +16,7 @@
       <p
         class="text-brand-blue text-sm font-semibold tracking-[0.2em] uppercase"
       >
-        Incident technique
+        {{ 'web.status.serverError.eyebrow' | kraakTranslate }}
       </p>
       <h1
         class="text-brand-navy mt-5 text-5xl font-semibold sm:text-6xl lg:text-7xl"
@@ -24,32 +24,37 @@
         500
       </h1>
       <p class="text-brand-navy mx-auto mt-6 max-w-2xl text-lg leading-8">
-        Une erreur interne empêche momentanément l'affichage de cette page.
-        Merci de réessayer dans un instant.
+        {{ 'web.status.serverError.description' | kraakTranslate }}
       </p>
 
       <div class="mt-10 flex flex-col justify-center gap-3 sm:flex-row">
         <a
           pButton
           [routerLink]="'home' | localizedPublicPath"
-          label="Retour à l'accueil"
+          [label]="'web.status.common.homeLabel' | kraakTranslate"
           icon="pi pi-home"
           size="large"
           class="kr-button-primary"
-          aria-label="Retour à la page d'accueil"
+          [attr.aria-label]="'web.status.common.homeAria' | kraakTranslate"
         >
-          <span class="sr-only">Retour à la page d'accueil</span>
+          <span class="sr-only">
+            {{ 'web.status.common.homeAria' | kraakTranslate }}
+          </span>
         </a>
         <a
           pButton
           [routerLink]="'contact' | localizedPublicPath"
-          label="Signaler un problème"
+          [label]="'web.status.serverError.reportLabel' | kraakTranslate"
           icon="pi pi-exclamation-triangle"
           size="large"
           class="kr-button-ghost"
-          aria-label="Signaler un problème à KRAAK"
+          [attr.aria-label]="
+            'web.status.serverError.reportAria' | kraakTranslate
+          "
         >
-          <span class="sr-only">Signaler un problème à KRAAK</span>
+          <span class="sr-only">
+            {{ 'web.status.serverError.reportAria' | kraakTranslate }}
+          </span>
         </a>
       </div>
     </div>

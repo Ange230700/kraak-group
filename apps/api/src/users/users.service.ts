@@ -15,6 +15,7 @@ import type {
 } from '@kraak/contracts';
 import { SupabaseService } from '../supabase/supabase.service';
 
+import { apiMessage } from '../i18n/api-message';
 type AppUserRow = {
   id: string;
   email: string;
@@ -79,9 +80,11 @@ export class UsersService {
         'Erreur lors de la récupération des utilisateurs',
         error,
       );
-      throw new InternalServerErrorException(
-        'Impossible de récupérer la liste des utilisateurs',
-      );
+      throw new InternalServerErrorException({
+        statusCode: HttpStatus.INTERNAL_SERVER_ERROR,
+        message: apiMessage('users.listLoadFailed'),
+        error: 'Internal Server Error',
+      });
     }
 
     return (data as AppUserRow[]).map(mapRowToDto);
@@ -101,19 +104,29 @@ export class UsersService {
       error &&
       notFoundSupabaseErrorCodes.has(this.readSupabaseErrorCode(error) ?? '')
     ) {
-      throw new NotFoundException(`Utilisateur introuvable : ${id}`);
+      throw new NotFoundException({
+        statusCode: 404,
+        message: apiMessage('users.notFound', { id }),
+        error: 'Not Found',
+      });
     }
     if (error) {
       this.logger.error(
         `Erreur lors de la récupération de l'utilisateur ${id}`,
         error,
       );
-      throw new InternalServerErrorException(
-        "Impossible de récupérer l'utilisateur",
-      );
+      throw new InternalServerErrorException({
+        statusCode: HttpStatus.INTERNAL_SERVER_ERROR,
+        message: apiMessage('users.loadFailed'),
+        error: 'Internal Server Error',
+      });
     }
     if (!data) {
-      throw new NotFoundException(`Utilisateur introuvable : ${id}`);
+      throw new NotFoundException({
+        statusCode: 404,
+        message: apiMessage('users.notFound', { id }),
+        error: 'Not Found',
+      });
     }
 
     return mapRowToDto(data as AppUserRow);
@@ -148,9 +161,11 @@ export class UsersService {
         `Erreur lors de la mise à jour de l'utilisateur ${id}`,
         error,
       );
-      throw new InternalServerErrorException(
-        "Impossible de mettre à jour l'utilisateur",
-      );
+      throw new InternalServerErrorException({
+        statusCode: HttpStatus.INTERNAL_SERVER_ERROR,
+        message: apiMessage('users.updateFailed'),
+        error: 'Internal Server Error',
+      });
     }
 
     return mapRowToDto(data as AppUserRow);
@@ -166,7 +181,11 @@ export class UsersService {
       .single();
 
     if (existing.error || !existing.data) {
-      throw new NotFoundException(`Utilisateur introuvable : ${id}`);
+      throw new NotFoundException({
+        statusCode: 404,
+        message: apiMessage('users.notFound', { id }),
+        error: 'Not Found',
+      });
     }
 
     const { error } = await client.from(APP_USER_TABLE).delete().eq('id', id);
@@ -176,9 +195,11 @@ export class UsersService {
         `Erreur lors de la suppression de l'utilisateur ${id}`,
         error,
       );
-      throw new InternalServerErrorException(
-        "Impossible de supprimer l'utilisateur",
-      );
+      throw new InternalServerErrorException({
+        statusCode: HttpStatus.INTERNAL_SERVER_ERROR,
+        message: apiMessage('users.deleteFailed'),
+        error: 'Internal Server Error',
+      });
     }
   }
 
@@ -212,14 +233,19 @@ export class UsersService {
 
       if (isInviteRateLimited) {
         throw new HttpException(
-          "Trop d'invitations ont été envoyées récemment. Réessayez dans quelques minutes.",
+          {
+            statusCode: HttpStatus.TOO_MANY_REQUESTS,
+            message: apiMessage('users.inviteRateLimited'),
+          },
           HttpStatus.TOO_MANY_REQUESTS,
         );
       }
 
-      throw new InternalServerErrorException(
-        "Impossible d'envoyer l'invitation",
-      );
+      throw new InternalServerErrorException({
+        statusCode: HttpStatus.INTERNAL_SERVER_ERROR,
+        message: apiMessage('users.inviteSendFailed'),
+        error: 'Internal Server Error',
+      });
     }
 
     const userId = authData.user.id;
@@ -251,9 +277,11 @@ export class UsersService {
         'Erreur lors de la création du profil utilisateur',
         upsertResult.error,
       );
-      throw new InternalServerErrorException(
-        'Impossible de créer le profil utilisateur',
-      );
+      throw new InternalServerErrorException({
+        statusCode: HttpStatus.INTERNAL_SERVER_ERROR,
+        message: apiMessage('users.profileCreateFailed'),
+        error: 'Internal Server Error',
+      });
     }
 
     return mapRowToDto(upsertResult.data as AppUserRow);

@@ -8,20 +8,26 @@
       <p
         class="text-sm font-semibold tracking-[0.24em] text-white/56 uppercase"
       >
-        Accueil participant
+        {{ 'web.participant.dashboard.hero.eyebrow' | kraakTranslate }}
       </p>
 
       <h1
         id="participant-dashboard-title"
         class="mt-4 text-3xl leading-tight font-semibold text-white sm:text-4xl lg:text-5xl"
       >
-        Bonjour {{ currentProfile()?.appUser?.firstName || 'Participant' }},
-        <span class="text-white/64">voici votre vue d'ensemble.</span>
+        {{ 'web.participant.dashboard.hero.hello' | kraakTranslate }}
+        {{
+          currentProfile()?.appUser?.firstName ||
+            ('web.participant.dashboard.hero.participantFallback'
+              | kraakTranslate)
+        }},
+        <span class="text-white/64">{{
+          'web.participant.dashboard.hero.overviewSuffix' | kraakTranslate
+        }}</span>
       </h1>
 
       <p class="mt-5 max-w-2xl text-base leading-7 text-white/64 sm:text-lg">
-        Retrouvez en un coup d'œil vos programmes, vos prochaines sessions et
-        les dernières informations utiles à votre parcours KRAAK.
+        {{ 'web.participant.dashboard.hero.intro' | kraakTranslate }}
       </p>
     </div>
 
@@ -39,16 +45,15 @@
       <p
         class="mt-5 text-xs font-semibold tracking-[0.2em] text-cyan-100/80 uppercase"
       >
-        Point d'attention
+        {{ 'web.participant.dashboard.attention.eyebrow' | kraakTranslate }}
       </p>
 
       <h2 id="dashboard-attention-title" class="mt-2 text-xl font-semibold">
-        Rester aligné sur la prochaine étape
+        {{ 'web.participant.dashboard.attention.title' | kraakTranslate }}
       </h2>
 
       <p class="mt-3 text-sm leading-6 text-white/64">
-        Votre espace rassemble les éléments prioritaires de votre parcours pour
-        vous aider à avancer sans perdre le fil.
+        {{ 'web.participant.dashboard.attention.detail' | kraakTranslate }}
       </p>
     </aside>
   </section>
@@ -67,13 +72,13 @@
         <p
           class="text-sm font-semibold tracking-[0.2em] text-slate-400 uppercase"
         >
-          Mon dashboard
+          {{ 'web.participant.dashboard.summary.eyebrow' | kraakTranslate }}
         </p>
         <h2
           id="dashboard-synthesis-title"
           class="mt-2 text-2xl font-semibold text-slate-950"
         >
-          Synthèse utile
+          {{ 'web.participant.dashboard.summary.title' | kraakTranslate }}
         </h2>
       </div>
 
@@ -87,7 +92,9 @@
     @if (loading()) {
       <div
         class="mt-6 grid gap-4 sm:grid-cols-3"
-        aria-label="Chargement de la synthèse"
+        [attr.aria-label]="
+          'web.participant.dashboard.summary.loadingAria' | kraakTranslate
+        "
         aria-busy="true"
       >
         @for (placeholder of [1, 2, 3]; track placeholder) {
@@ -110,7 +117,9 @@
     } @else if (errorMessage()) {
       <p-message
         severity="warn"
-        text="La synthèse n'a pas pu être chargée pour le moment."
+        [text]="
+          'web.participant.dashboard.summary.unavailable' | kraakTranslate
+        "
         [closable]="false"
         styleClass="mt-6 w-full"
       ></p-message>
@@ -152,14 +161,14 @@
           <p
             class="mt-5 text-xs font-semibold tracking-[0.18em] text-cyan-100 uppercase"
           >
-            Prochaine étape
+            {{ 'web.participant.dashboard.nextStep.eyebrow' | kraakTranslate }}
           </p>
 
           <h3
             id="dashboard-next-step-title"
             class="mt-2 text-lg font-semibold text-white"
           >
-            Prochaine session
+            {{ 'web.participant.dashboard.nextStep.title' | kraakTranslate }}
           </h3>
 
           <p class="mt-3 text-sm leading-6 text-white/68">
@@ -184,14 +193,14 @@
         <p
           class="text-sm font-semibold tracking-[0.2em] text-slate-400 uppercase"
         >
-          Votre parcours
+          {{ 'web.participant.dashboard.overview.eyebrow' | kraakTranslate }}
         </p>
 
         <h2
           id="dashboard-overview-title"
           class="mt-2 text-2xl font-semibold text-slate-950"
         >
-          Votre vue d'ensemble personnalisée
+          {{ 'web.participant.dashboard.overview.title' | kraakTranslate }}
         </h2>
       </div>
 
@@ -200,7 +209,7 @@
           class="text-sm font-medium tracking-[0.14em] text-slate-400 uppercase"
           aria-live="polite"
         >
-          Chargement&hellip;
+          {{ 'web.participant.dashboard.overview.loading' | kraakTranslate }}
         </output>
       }
     </div>
@@ -219,13 +228,15 @@
           class="btn btn-primary"
           (click)="reloadDashboard()"
         >
-          Réessayer
+          {{ 'web.participant.dashboard.overview.retry' | kraakTranslate }}
         </button>
       </div>
     } @else if (loading()) {
       <div
         class="mt-8 grid gap-6 lg:grid-cols-3"
-        aria-label="Chargement de votre vue d'ensemble"
+        [attr.aria-label]="
+          'web.participant.dashboard.overview.loadingAria' | kraakTranslate
+        "
         aria-busy="true"
       >
         @for (placeholder of [1, 2, 3]; track placeholder) {
@@ -272,7 +283,7 @@
         </span>
 
         <p class="mt-4 text-sm leading-6 text-slate-600">
-          Aucun contenu n'est disponible pour l'instant sur votre espace.
+          {{ 'web.participant.dashboard.overview.empty' | kraakTranslate }}
         </p>
       </div>
     } @else {
@@ -292,20 +303,24 @@
               <p
                 class="text-brand-blue text-xs font-semibold tracking-[0.18em] uppercase"
               >
-                Programmes actifs
+                {{
+                  'web.participant.dashboard.programs.eyebrow' | kraakTranslate
+                }}
               </p>
               <h3
                 id="dashboard-programs-title"
                 class="mt-1 text-lg font-semibold text-slate-950"
               >
-                Vos parcours en cours
+                {{
+                  'web.participant.dashboard.programs.title' | kraakTranslate
+                }}
               </h3>
             </div>
           </div>
 
           @if (programs().length === 0) {
             <p class="mt-5 text-sm leading-6 text-slate-500">
-              Aucun programme actif actuellement.
+              {{ 'web.participant.dashboard.programs.empty' | kraakTranslate }}
             </p>
           } @else {
             <ul class="mt-6">
@@ -356,20 +371,24 @@
               <p
                 class="text-brand-blue text-xs font-semibold tracking-[0.18em] uppercase"
               >
-                Prochaines sessions
+                {{
+                  'web.participant.dashboard.sessions.eyebrow' | kraakTranslate
+                }}
               </p>
               <h3
                 id="dashboard-sessions-title"
                 class="mt-1 text-lg font-semibold text-slate-950"
               >
-                Les rappels à ne pas manquer
+                {{
+                  'web.participant.dashboard.sessions.title' | kraakTranslate
+                }}
               </h3>
             </div>
           </div>
 
           @if (upcomingSessions().length === 0) {
             <p class="mt-5 text-sm leading-6 text-slate-500">
-              Aucune session planifiée pour le moment.
+              {{ 'web.participant.dashboard.sessions.empty' | kraakTranslate }}
             </p>
           } @else {
             <ul class="mt-6">
@@ -417,20 +436,28 @@
               <p
                 class="text-brand-blue text-xs font-semibold tracking-[0.18em] uppercase"
               >
-                Annonces récentes
+                {{
+                  'web.participant.dashboard.announcements.eyebrow'
+                    | kraakTranslate
+                }}
               </p>
               <h3
                 id="dashboard-announcements-title"
                 class="mt-1 text-lg font-semibold text-slate-950"
               >
-                Ce qu'il faut suivre
+                {{
+                  'web.participant.dashboard.announcements.title'
+                    | kraakTranslate
+                }}
               </h3>
             </div>
           </div>
 
           @if (recentAnnouncements().length === 0) {
             <p class="mt-5 text-sm leading-6 text-slate-500">
-              Aucune annonce récente pour l'instant.
+              {{
+                'web.participant.dashboard.announcements.empty' | kraakTranslate
+              }}
             </p>
           } @else {
             <ul class="mt-6">
@@ -468,15 +495,15 @@
     aria-labelledby="dashboard-quicklinks-title"
   >
     <p class="text-sm font-semibold tracking-[0.2em] text-white/52 uppercase">
-      Accès rapides
+      {{ 'web.participant.dashboard.quickLinks.eyebrow' | kraakTranslate }}
     </p>
 
     <h2 id="dashboard-quicklinks-title" class="mt-2 text-2xl font-semibold">
-      Des sorties utiles depuis votre espace
+      {{ 'web.participant.dashboard.quickLinks.title' | kraakTranslate }}
     </h2>
 
     <div class="mt-6 grid gap-3 sm:grid-cols-2">
-      @for (quickLink of quickLinks; track quickLink.href) {
+      @for (quickLink of quickLinks(); track quickLink.href) {
         <a
           [routerLink]="quickLink.href"
           class="motion-hover-lift motion-press group flex items-center justify-between gap-5 rounded-2xl border border-white/12 bg-white/8 p-4 text-white no-underline shadow-[0_2px_5px_rgba(255,255,255,0.04)_inset] transition hover:bg-white/14 focus-visible:ring-2 focus-visible:ring-cyan-200 focus-visible:outline-none"

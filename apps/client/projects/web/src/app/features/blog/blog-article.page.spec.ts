@@ -1,3 +1,4 @@
+import { ApplicationInitStatus } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import {
   ActivatedRoute,
@@ -7,6 +8,8 @@ import {
 } from '@angular/router';
 import { BehaviorSubject, of } from 'rxjs';
 import { vi } from 'vitest';
+
+import { KraakI18nService, provideKraakI18n } from '../../../../../shared/i18n';
 
 import { GsapAnimationsService } from '../../core/animations/gsap-animations.service';
 import { SeoService } from '../../seo/seo.service';
@@ -48,6 +51,8 @@ describe('BlogArticlePage', () => {
   });
 
   beforeEach(async () => {
+    globalThis.window.localStorage.setItem('kraak:locale', 'fr-CI');
+
     seoServiceMock.applyPageSeo.mockReset();
     blogPublicServiceMock.listPublishedArticles.mockClear();
     blogPublicServiceMock.getPublishedArticleBySlug.mockClear();
@@ -61,6 +66,7 @@ describe('BlogArticlePage', () => {
       imports: [BlogArticlePage],
       providers: [
         provideRouter([]),
+        provideKraakI18n(),
         {
           provide: SeoService,
           useValue: seoServiceMock,
@@ -86,6 +92,9 @@ describe('BlogArticlePage', () => {
         },
       ],
     }).compileComponents();
+
+    await TestBed.inject(ApplicationInitStatus).donePromise;
+    await TestBed.inject(KraakI18nService).setLocale('fr-CI');
   });
 
   it('Given the article page component When it is created Then the instance exists', () => {
@@ -113,7 +122,7 @@ describe('BlogArticlePage', () => {
 
     expect(seoServiceMock.applyPageSeo).toHaveBeenCalledWith(
       expect.objectContaining({
-        path: 'blog/clarifier-son-projet-avant-de-candidater',
+        path: '/fr/blog/clarifier-son-projet-avant-de-candidater',
         title: 'Clarifier son projet avant de candidater | KRAAK Consulting',
       }),
     );
@@ -177,7 +186,7 @@ describe('BlogArticlePage', () => {
     ).toBe('preparer-un-dossier-immigration-sans-perdre-le-fil');
     expect(seoServiceMock.applyPageSeo).toHaveBeenCalledWith(
       expect.objectContaining({
-        path: 'blog/preparer-un-dossier-immigration-sans-perdre-le-fil',
+        path: '/fr/blog/preparer-un-dossier-immigration-sans-perdre-le-fil',
       }),
     );
   });
@@ -194,7 +203,7 @@ describe('BlogArticlePage', () => {
 
     expect(seoServiceMock.applyPageSeo).toHaveBeenCalledWith(
       expect.objectContaining({
-        path: 'blog/slug-introuvable',
+        path: '/fr/blog/slug-introuvable',
         title: 'Article introuvable | KRAAK Consulting',
       }),
     );
@@ -222,5 +231,24 @@ describe('BlogArticlePage', () => {
     expect(content).toContain('Cet article n’est pas disponible.');
     expect(content).toContain('Retour au blog');
     expect(content).toContain('Nous contacter');
+  });
+  it('Given the English locale When an article renders Then article-page chrome is localized', async () => {
+    await TestBed.inject(KraakI18nService).setLocale('en-GB');
+
+    const fixture = TestBed.createComponent(BlogArticlePage);
+    fixture.detectChanges();
+
+    const content = (fixture.nativeElement as HTMLElement).textContent ?? '';
+
+    expect(content).toContain('Back to blog');
+    expect(content).toContain('Article content');
+    expect(content).toContain('Key takeaways');
+    expect(content).toContain('Author');
+    expect(content).toContain('Category and tags');
+    expect(content).toContain('Related articles');
+    expect(content).toContain('Want to go further?');
+
+    expect(content).not.toContain("Contenu de l'article");
+    expect(content).not.toContain('À retenir');
   });
 });

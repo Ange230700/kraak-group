@@ -1,9 +1,14 @@
+import { ApplicationInitStatus } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
 import type { AppUserDto } from '@kraak/contracts';
 import { MessageService } from 'primeng/api';
 import { vi } from 'vitest';
 import AdminUserListPage from './admin-user-list.page';
+import {
+  KraakI18nService,
+  provideKraakI18n,
+} from '../../../../../../shared/i18n';
 
 interface UsersClientMock {
   list: ReturnType<typeof vi.fn>;
@@ -26,10 +31,12 @@ const baseUser: AppUserDto = {
 
 describe('AdminUserListPage', () => {
   beforeEach(async () => {
+    globalThis.window.localStorage.setItem('kraak:locale', 'fr-CI');
     await TestBed.configureTestingModule({
       imports: [AdminUserListPage],
-      providers: [provideRouter([]), MessageService],
+      providers: [provideKraakI18n(), provideRouter([]), MessageService],
     }).compileComponents();
+    await TestBed.inject(ApplicationInitStatus).donePromise;
   });
 
   it('Given the page is created, When initialized, Then component instance exists', () => {
@@ -465,5 +472,70 @@ describe('AdminUserListPage', () => {
     expect(dialog?.textContent ?? '').toContain(
       'Erreur lors de la modification',
     );
+  });
+
+  it('Given English locale, When the page renders, Then it renders Admin User List chrome in English', async () => {
+    const i18n = TestBed.inject(KraakI18nService);
+    await i18n.setLocale('en-GB');
+
+    const fixture = TestBed.createComponent(AdminUserListPage);
+    const comp = fixture.componentInstance;
+
+    comp.loadUsers = vi.fn().mockResolvedValue(undefined);
+
+    comp['loading'].set(false);
+    comp['users'].set([
+      {
+        ...baseUser,
+        role: 'trainer',
+        isActive: false,
+      },
+    ]);
+
+    fixture.detectChanges();
+
+    const host = fixture.nativeElement as HTMLElement;
+    const textContent = host.textContent ?? '';
+
+    expect(textContent).toContain('Users');
+    expect(textContent).toContain('New user');
+
+    expect(textContent).toContain('Name');
+    expect(textContent).toContain('Email');
+    expect(textContent).toContain('Role');
+    expect(textContent).toContain('Status');
+    expect(textContent).toContain('Actions');
+
+    expect(textContent).toContain('Trainer');
+    expect(textContent).toContain('Inactive');
+
+    expect(textContent).toContain('Edit');
+    expect(textContent).toContain('Delete');
+
+    const searchInput = host.querySelector(
+      'input[aria-label="Search for a user"]',
+    ) as HTMLInputElement | null;
+
+    expect(searchInput).toBeTruthy();
+    expect(searchInput?.placeholder).toBe('Search by name, email or role…');
+    expect(searchInput?.getAttribute('aria-label')).toBe('Search for a user');
+
+    expect(comp.getRoleLabel('participant')).toBe('Participant');
+    expect(comp.getRoleLabel('trainer')).toBe('Trainer');
+    expect(comp.getRoleLabel('admin')).toBe('Administrator');
+
+    expect(
+      comp['getEditAriaLabel']({
+        firstName: 'Alice',
+        lastName: 'Martin',
+      }),
+    ).toBe('Edit Alice Martin');
+
+    expect(
+      comp['getDeleteAriaLabel']({
+        firstName: 'Alice',
+        lastName: 'Martin',
+      }),
+    ).toBe('Delete Alice Martin');
   });
 });

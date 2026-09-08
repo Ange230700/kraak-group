@@ -1,3 +1,4 @@
+import { apiMessage, type ApiMessageValue } from '../i18n/api-message';
 import {
   assignOptionalTrimmedString,
   assignRequiredTrimmedString,
@@ -69,7 +70,7 @@ function assignNullableIcon(
 
 function assignOptionalSortOrder<T extends { sortOrder?: number }>(
   body: Record<string, unknown>,
-  errors: string[],
+  errors: ApiMessageValue[],
   updates: T,
 ): void {
   if (!('sortOrder' in body)) {
@@ -79,7 +80,7 @@ function assignOptionalSortOrder<T extends { sortOrder?: number }>(
   const value = body['sortOrder'];
 
   if (!Number.isInteger(value)) {
-    errors.push('Le champ sortOrder doit être un entier.');
+    errors.push(apiMessage('validation.integerField', { field: 'sortOrder' }));
     return;
   }
 
@@ -92,11 +93,11 @@ export function validateCreateServicePayload(
   if (!isObjectPayload(body)) {
     return {
       valid: false,
-      errors: ['Corps de requête invalide.'],
+      errors: [apiMessage('validation.invalidBody')],
     };
   }
 
-  const errors: string[] = [];
+  const errors: ApiMessageValue[] = [];
   const data: Partial<CreateServiceDto> = {};
 
   assignRequiredTrimmedString(body, 'title', errors, data);
@@ -120,11 +121,11 @@ export function validateUpdateServicePayload(
   if (!isObjectPayload(body)) {
     return {
       valid: false,
-      errors: ['Corps de requête invalide.'],
+      errors: [apiMessage('validation.invalidBody')],
     };
   }
 
-  const errors: string[] = [];
+  const errors: ApiMessageValue[] = [];
   const data: UpdateServiceDto = {};
 
   assignOptionalTrimmedString(body, 'title', errors, data);
@@ -135,7 +136,7 @@ export function validateUpdateServicePayload(
   if (Object.keys(data).length === 0 && errors.length === 0) {
     return {
       valid: false,
-      errors: ['Le payload de mise à jour doit contenir au moins un champ.'],
+      errors: [apiMessage('validation.updateRequiresField')],
     };
   }
 
@@ -155,11 +156,11 @@ export function validateCreateServiceDetailPayload(
   if (!isObjectPayload(body)) {
     return {
       valid: false,
-      errors: ['Corps de requête invalide.'],
+      errors: [apiMessage('validation.invalidBody')],
     };
   }
 
-  const errors: string[] = [];
+  const errors: ApiMessageValue[] = [];
   const data: Partial<CreateServiceDetailDto> = {};
 
   assignRequiredTrimmedString(body, 'title', errors, data);
@@ -182,11 +183,11 @@ export function validateUpdateServiceDetailPayload(
   if (!isObjectPayload(body)) {
     return {
       valid: false,
-      errors: ['Corps de requête invalide.'],
+      errors: [apiMessage('validation.invalidBody')],
     };
   }
 
-  const errors: string[] = [];
+  const errors: ApiMessageValue[] = [];
   const data: UpdateServiceDetailDto = {};
 
   assignOptionalTrimmedString(body, 'title', errors, data);
@@ -196,7 +197,7 @@ export function validateUpdateServiceDetailPayload(
   if (Object.keys(data).length === 0 && errors.length === 0) {
     return {
       valid: false,
-      errors: ['Le payload de mise à jour doit contenir au moins un champ.'],
+      errors: [apiMessage('validation.updateRequiresField')],
     };
   }
 

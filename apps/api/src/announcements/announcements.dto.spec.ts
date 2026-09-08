@@ -9,7 +9,7 @@ describe('Announcements DTO validation', () => {
 
     expect(result).toEqual({
       valid: false,
-      errors: ['Corps de requête invalide.'],
+      errors: [{ key: 'validation.invalidBody' }],
     });
   });
 
@@ -68,8 +68,14 @@ describe('Announcements DTO validation', () => {
     expect(result).toEqual({
       valid: false,
       errors: [
-        'Le champ programId est requis lorsque audienceType vaut program.',
-        'Le champ cohortId doit être absent lorsque audienceType vaut program.',
+        {
+          key: 'announcements.scopeFieldRequiredForAudience',
+          params: { field: 'programId', audienceType: 'program' },
+        },
+        {
+          key: 'announcements.scopeFieldForbiddenForAudience',
+          params: { field: 'cohortId', audienceType: 'program' },
+        },
       ],
     });
   });
@@ -86,8 +92,20 @@ describe('Announcements DTO validation', () => {
     expect(result).toEqual({
       valid: false,
       errors: [
-        'Le champ programId doit être absent lorsque audienceType vaut all_participants.',
-        'Le champ cohortId doit être absent lorsque audienceType vaut all_participants.',
+        {
+          key: 'announcements.scopeFieldForbiddenForAudience',
+          params: {
+            field: 'programId',
+            audienceType: 'all_participants',
+          },
+        },
+        {
+          key: 'announcements.scopeFieldForbiddenForAudience',
+          params: {
+            field: 'cohortId',
+            audienceType: 'all_participants',
+          },
+        },
       ],
     });
   });
@@ -104,8 +122,8 @@ describe('Announcements DTO validation', () => {
     expect(result).toEqual({
       valid: false,
       errors: [
-        'Le champ priority est invalide.',
-        'Le champ status est invalide.',
+        { key: 'validation.invalidField', params: { field: 'priority' } },
+        { key: 'validation.invalidField', params: { field: 'status' } },
       ],
     });
   });
@@ -120,9 +138,15 @@ describe('Announcements DTO validation', () => {
     expect(result).toEqual({
       valid: false,
       errors: [
-        'Le champ publishedAt est invalide.',
-        'Le champ programId est requis lorsque audienceType vaut cohort.',
-        'Le champ cohortId est requis lorsque audienceType vaut cohort.',
+        { key: 'validation.invalidField', params: { field: 'publishedAt' } },
+        {
+          key: 'announcements.scopeFieldRequiredForAudience',
+          params: { field: 'programId', audienceType: 'cohort' },
+        },
+        {
+          key: 'announcements.scopeFieldRequiredForAudience',
+          params: { field: 'cohortId', audienceType: 'cohort' },
+        },
       ],
     });
   });
@@ -132,7 +156,7 @@ describe('Announcements DTO validation', () => {
 
     expect(result).toEqual({
       valid: false,
-      errors: ['Le payload de mise à jour doit contenir au moins un champ.'],
+      errors: [{ key: 'validation.updateRequiresField' }],
     });
   });
 
@@ -160,7 +184,7 @@ describe('Announcements DTO validation', () => {
 
     expect(result).toEqual({
       valid: false,
-      errors: ['Corps de requête invalide.'],
+      errors: [{ key: 'validation.invalidBody' }],
     });
   });
 
@@ -171,9 +195,7 @@ describe('Announcements DTO validation', () => {
 
     expect(result).toEqual({
       valid: false,
-      errors: [
-        'Le champ audienceType est requis lorsque programId ou cohortId sont fournis.',
-      ],
+      errors: [{ key: 'announcements.audienceRequiredWhenScoped' }],
     });
   });
 });

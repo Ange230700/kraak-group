@@ -326,6 +326,7 @@
       }
     },
     "services": {
+      "trainingCentreAria": "KRAAK Training Centre offerings",
       "hero": {
         "eyebrow": "KRAAK Services",
         "titlePrefix": "Clear",
@@ -636,6 +637,1413 @@
         "description": "Let us explore how KRAAK can contribute to your journey or organisation.",
         "cta": "Contact us"
       }
+    },
+    "auth": {
+      "common": {
+        "participantArea": "Participant area",
+        "email": "Email address",
+        "invalidEmail": "Enter a valid email address.",
+        "password": "Password",
+        "passwordMinLength": "Your password must contain at least 8 characters.",
+        "passwordPlaceholder": "Minimum 8 characters",
+        "backToSignIn": "Back to sign in"
+      },
+      "signIn": {
+        "hero": {
+          "title": "Access your programmes, announcements and progress.",
+          "sessions": "View your upcoming sessions and key milestones in one place.",
+          "updates": "Receive real-time updates from the KRAAK team through your dashboard.",
+          "security": "Your access and information are protected according to our security standards."
+        },
+        "title": "Sign in",
+        "subtitle": "Sign in to access your dashboard, programmes and announcements.",
+        "submit": "Sign in",
+        "submitting": "Signing in...",
+        "createAccount": "Create an account",
+        "forgotPassword": "Forgot password",
+        "toastTitle": "Sign in",
+        "toastSuccess": "Signed in successfully. Redirecting to your dashboard."
+      },
+      "signUp": {
+        "hero": {
+          "title": "Join KRAAK and start your support journey.",
+          "programs": "Access your training, consulting and support programmes in one place.",
+          "community": "Benefit from personalised support and an engaged community focused on your goals.",
+          "security": "Your personal data are protected according to our security standards."
+        },
+        "title": "Create an account",
+        "subtitle": "Create your KRAAK space to follow your programmes and upcoming sessions.",
+        "firstName": "First name",
+        "lastName": "Last name",
+        "nameRequired": "Enter your first and last name.",
+        "submit": "Create my account",
+        "submitting": "Creating account...",
+        "alreadyAccount": "Already have an account?",
+        "signIn": "Sign in",
+        "toastTitle": "Registration",
+        "genericError": "Unable to create the account at the moment.",
+        "passwordMinLength": "The password must contain at least 8 characters."
+      },
+      "forgotPassword": {
+        "title": "Reset my password",
+        "subtitle": "Enter your email to receive a password reset link.",
+        "submit": "Send email",
+        "submitting": "Sending...",
+        "toastTitle": "Password reset",
+        "genericError": "Unable to send the password reset email."
+      },
+      "resetPassword": {
+        "title": "Choose a new password",
+        "subtitle": "Set a new secure password to complete your account recovery.",
+        "loading": "Checking the reset link...",
+        "tokenRequired": "The reset token is required.",
+        "passwordLength": "The password must contain between 8 and 128 characters.",
+        "configurationMissing": "Supabase configuration is missing and the password reset cannot be completed.",
+        "success": "Your password has been updated. You can now sign in.",
+        "updateFallback": "Unable to update the password.",
+        "newPassword": "New password",
+        "confirmPassword": "Confirm password",
+        "confirmPlaceholder": "Repeat the password",
+        "confirmRequired": "Password confirmation is required.",
+        "submit": "Update password",
+        "submitting": "Updating...",
+        "invalidLink": "The reset link is invalid or has expired. Request a new link.",
+        "prepareError": "Unable to prepare the password reset.",
+        "passwordMismatch": "The two passwords must match.",
+        "toastTitle": "Password updated",
+        "genericError": "Unable to update your password."
+      }
+    },
+    "participant": {
+      "shell": {
+        "brandAria": "KRAAK Consulting participant area",
+        "participantArea": "Participant area",
+        "logout": "Sign out",
+        "navigationAria": "Participant area navigation",
+        "dashboard": "Dashboard",
+        "programs": "Programmes",
+        "support": "Support"
+      },
+      "dashboard": {
+        "hero": {
+          "eyebrow": "Participant home",
+          "hello": "Hello",
+          "participantFallback": "Participant",
+          "overviewSuffix": "here is your overview.",
+          "intro": "See at a glance your programmes, upcoming sessions and the latest useful information for your KRAAK journey."
+        },
+        "attention": {
+          "eyebrow": "Focus point",
+          "title": "Stay aligned with the next step",
+          "detail": "Your space brings together the priority elements of your journey so you can keep moving forward without losing track."
+        },
+        "summary": {
+          "eyebrow": "My dashboard",
+          "title": "Useful summary",
+          "loadingAria": "Loading summary",
+          "unavailable": "The summary could not be loaded at the moment.",
+          "indicators": {
+            "programs": {
+              "label": "Active programmes",
+              "detail": "Current or recently activated journeys"
+            },
+            "sessions": {
+              "label": "Upcoming sessions",
+              "detail": "Reminders for your next appointments"
+            },
+            "announcements": {
+              "label": "Recent announcements",
+              "detail": "Recent information published by KRAAK"
+            }
+          },
+          "totalSingular": "1 key item available today.",
+          "totalPluralSuffix": "key items available today."
+        },
+        "nextStep": {
+          "eyebrow": "Next step",
+          "title": "Next session",
+          "noSession": "No session is currently scheduled."
+        },
+        "overview": {
+          "eyebrow": "Your journey",
+          "title": "Your personalised overview",
+          "loading": "Loading…",
+          "retry": "Try again",
+          "loadingAria": "Loading your overview",
+          "empty": "No content is currently available in your space."
+        },
+        "programs": {
+          "eyebrow": "Active programmes",
+          "title": "Your current journeys",
+          "empty": "No active programme at the moment."
+        },
+        "sessions": {
+          "eyebrow": "Upcoming sessions",
+          "title": "Reminders not to miss",
+          "empty": "No session is currently scheduled."
+        },
+        "announcements": {
+          "eyebrow": "Recent announcements",
+          "title": "What to keep track of",
+          "empty": "No recent announcement at the moment."
+        },
+        "quickLinks": {
+          "eyebrow": "Quick access",
+          "title": "Useful links from your space",
+          "programs": {
+            "label": "View programmes",
+            "detail": "Find your enrolled journeys and track your progress."
+          },
+          "contact": {
+            "label": "Contact the team",
+            "detail": "Ask a question or flag a support need."
+          }
+        },
+        "toast": {
+          "title": "Dashboard",
+          "reloadSuccess": "The data has been reloaded successfully."
+        }
+      },
+      "programList": {
+        "header": {
+          "eyebrow": "Programmes",
+          "title": "Your journeys",
+          "intro": "Explore the programmes you are enrolled in and track your progress session by session."
+        },
+        "count": {
+          "singular": "journey",
+          "plural": "journeys"
+        },
+        "error": {
+          "title": "Unable to load your programmes",
+          "retry": "Try again",
+          "fallback": "Error while loading programmes."
+        },
+        "loadingAria": "Loading your programmes",
+        "empty": {
+          "title": "No programme available",
+          "detail": "No programme is currently available to you. New journeys will appear here as soon as they are activated.",
+          "backToDashboard": "Back to dashboard"
+        },
+        "programsAria": "Your programmes",
+        "status": {
+          "enrollment": {
+            "pending": "Pending",
+            "active": "Active",
+            "completed": "Completed",
+            "cancelled": "Cancelled"
+          },
+          "progress": {
+            "notStarted": "Not started",
+            "inProgress": "In progress",
+            "completed": "Completed"
+          }
+        },
+        "card": {
+          "progress": "Progress",
+          "progressAria": "Progress for {{title}}",
+          "sessionsCompleted": "sessions completed",
+          "cohort": "Cohort",
+          "start": "Start",
+          "open": "Open programme"
+        }
+      },
+      "programDetail": {
+        "common": {
+          "allPrograms": "All programmes",
+          "loadingAria": "Loading programme",
+          "resourcesAnnouncementsAria": "Programme resources and announcements"
+        },
+        "error": {
+          "title": "Unable to load this programme",
+          "retry": "Try again",
+          "fallback": "Error while loading the programme."
+        },
+        "date": {
+          "upcoming": "Upcoming"
+        },
+        "status": {
+          "enrollment": {
+            "pending": "Pending",
+            "active": "Active",
+            "completed": "Completed",
+            "cancelled": "Cancelled"
+          },
+          "progress": {
+            "notStarted": "Not started",
+            "inProgress": "In progress",
+            "completed": "Completed"
+          },
+          "session": {
+            "scheduled": "Scheduled",
+            "live": "Live",
+            "completed": "Completed",
+            "cancelled": "Cancelled"
+          },
+          "location": {
+            "online": "Online",
+            "onsite": "On site",
+            "hybrid": "Hybrid"
+          },
+          "resourceType": {
+            "link": "Link",
+            "file": "File",
+            "video": "Video",
+            "document": "Document"
+          },
+          "resourceTheme": {
+            "training": "Training",
+            "projectManagement": "Project management",
+            "immigration": "Immigration",
+            "career": "Career"
+          }
+        },
+        "hero": {
+          "progress": "Progress",
+          "sessionsCompleted": "sessions completed"
+        },
+        "about": {
+          "eyebrow": "About",
+          "title": "Your journey"
+        },
+        "landmarks": {
+          "eyebrow": "Key details",
+          "code": "Code",
+          "start": "Start",
+          "end": "End",
+          "capacity": "Capacity",
+          "participants": "participants",
+          "individualTitle": "Individual journey",
+          "noCohort": "No cohort is associated with this programme."
+        },
+        "curriculum": {
+          "eyebrow": "Training",
+          "title": "Learning content",
+          "intro": "Explore the courses, modules, chapters and lessons that make up this programme.",
+          "count": {
+            "courseSingular": "course",
+            "coursePlural": "courses",
+            "moduleSingular": "module",
+            "modulePlural": "modules",
+            "chapterSingular": "chapter",
+            "chapterPlural": "chapters",
+            "lessonSingular": "lesson",
+            "lessonPlural": "lessons"
+          },
+          "courseRequired": "Required",
+          "lessonRequired": "Required",
+          "chapterLabel": "Chapter {{index}}",
+          "empty": {
+            "lessons": "No published lessons in this chapter.",
+            "chapters": "No published chapters in this module.",
+            "modules": "No published modules in this course.",
+            "curriculum": "No learning content has been published yet."
+          }
+        },
+        "sessions": {
+          "eyebrow": "Journey",
+          "title": "Sessions",
+          "count": {
+            "singular": "session",
+            "plural": "sessions"
+          },
+          "open": "Open session",
+          "empty": "No sessions are scheduled yet."
+        },
+        "resources": {
+          "eyebrow": "Library",
+          "title": "Resources",
+          "openAria": "Open {{title}}",
+          "empty": "No resources are available yet."
+        },
+        "announcements": {
+          "eyebrow": "News",
+          "title": "Announcements",
+          "publishedOn": "Published on {{date}}",
+          "empty": "There are no announcements for this programme yet."
+        },
+        "notFound": {
+          "title": "Programme not found",
+          "detail": "This programme could not be resolved from your participant area.",
+          "back": "Back to programmes"
+        }
+      },
+      "sessionDetail": {
+        "common": {
+          "backToProgram": "Back to programme",
+          "loadingAria": "Loading session"
+        },
+        "error": {
+          "title": "Unable to load this session",
+          "retry": "Try again",
+          "fallback": "Error while loading the session."
+        },
+        "status": {
+          "session": {
+            "scheduled": "Scheduled",
+            "live": "Live",
+            "completed": "Completed",
+            "cancelled": "Cancelled"
+          },
+          "location": {
+            "online": "Online",
+            "onsite": "On site",
+            "hybrid": "Hybrid"
+          }
+        },
+        "hero": {
+          "program": "Session · {{title}}"
+        },
+        "info": {
+          "eyebrow": "Appointment",
+          "title": "Session information",
+          "start": "Start",
+          "end": "End",
+          "format": "Format",
+          "location": "Location",
+          "unspecified": "Not specified",
+          "onlineTitle": "Online session",
+          "onlineDetail": "Open the meeting link in a new tab.",
+          "join": "Join session"
+        },
+        "progress": {
+          "eyebrow": "Progress",
+          "title": "Your progress",
+          "completed": "Session marked as completed.",
+          "incomplete": "Session not completed.",
+          "markIncomplete": "Mark as not completed",
+          "markComplete": "Mark as completed",
+          "updateFallback": "Unable to update your progress.",
+          "global": "Overall progress",
+          "sessionsCompleted": "sessions completed"
+        },
+        "notFound": {
+          "title": "Session not found",
+          "detail": "The session could not be found in this programme."
+        }
+      }
+    },
+    "admin": {
+      "dashboard": {
+        "hero": {
+          "eyebrow": "Administration",
+          "title": "Admin dashboard for programmes and content.",
+          "description": "This dashboard brings together editorial priorities, programme families and the next actions to revisit to keep the site consistent and credible.",
+          "openBlog": "Open public blog",
+          "reviewPrograms": "Review programmes"
+        },
+        "snapshots": {
+          "published": {
+            "label": "Published articles",
+            "description": "Editorial content ready for the public blog."
+          },
+          "featured": {
+            "label": "Featured articles",
+            "description": "Content to highlight in campaigns and on the blog page."
+          },
+          "lastUpdated": {
+            "label": "Last updated",
+            "description": "Latest editorial content available in the library."
+          }
+        },
+        "programs": {
+          "eyebrow": "Programmes",
+          "title": "The three service families to keep aligned.",
+          "training": {
+            "label": "Training",
+            "status": "High priority",
+            "description": "Structure useful learning pathways, keep formats concise and track upcoming cohorts.",
+            "metric": "3 active formats"
+          },
+          "projectManagement": {
+            "label": "Project management",
+            "status": "Needs consolidation",
+            "description": "Keep deliverables, milestones and scoping needs visible in a single view.",
+            "metric": "2 programmes to track"
+          },
+          "immigration": {
+            "label": "Immigration consulting",
+            "status": "Stable oversight",
+            "description": "Track cases, evidence and follow-up stages without losing overall project consistency.",
+            "metric": "1 priority pathway"
+          }
+        },
+        "content": {
+          "eyebrow": "Content",
+          "title": "What can be published or reworked quickly."
+        },
+        "actions": {
+          "eyebrow": "Quick actions",
+          "curriculum": {
+            "label": "Manage curriculum",
+            "description": "Build programmes from reusable learning courses."
+          },
+          "blog": {
+            "label": "View public blog",
+            "description": "Review the public rendering of editorial content."
+          },
+          "programs": {
+            "label": "Review programmes",
+            "description": "Check guidance copy and calls to action."
+          },
+          "contact": {
+            "label": "Follow up on contacts",
+            "description": "Track incoming requests and conversion points."
+          }
+        }
+      },
+      "users": {
+        "create": {
+          "header": {
+            "eyebrow": "Administration",
+            "title": "New user",
+            "description": "Invite a new member to join the KRAAK platform.",
+            "backToList": "Back to list"
+          },
+          "navigation": {
+            "aria": "Creation steps"
+          },
+          "steps": {
+            "basicInformation": "Basic information",
+            "businessInformation": "Professional info",
+            "locationInformation": "Location",
+            "authorization": "Permissions",
+            "accountStatus": "Account status"
+          },
+          "actions": {
+            "cancel": "Cancel",
+            "submit": "Send invitation"
+          },
+          "validation": {
+            "incompleteSteps": "Please complete all required steps before submitting.",
+            "invitationRequired": "Sending the invitation is required to create a user."
+          },
+          "feedback": {
+            "successSummary": "Invitation sent",
+            "successDetail": "The invitation was sent to {{email}}.",
+            "failure": "Unable to send the invitation. Check the data and try again."
+          },
+          "basicInformation": {
+            "step": "Step 1 of 5",
+            "title": "Basic information",
+            "description": "Enter the new user's identity and main contact details.",
+            "firstName": {
+              "label": "First name",
+              "placeholder": "E.g. Alice"
+            },
+            "lastName": {
+              "label": "Last name",
+              "placeholder": "E.g. Martin"
+            },
+            "email": {
+              "label": "Email address",
+              "placeholder": "E.g. alice@example.com",
+              "help": "An invitation will be sent to this address."
+            },
+            "phone": {
+              "label": "Phone",
+              "placeholder": "E.g. +243 81 234 5678"
+            },
+            "actions": {
+              "next": "Next"
+            }
+          },
+          "businessInformation": {
+            "step": "Step 2 of 5",
+            "title": "Professional information",
+            "description": "Define the user's role and position within the organisation.",
+            "role": {
+              "label": "Role",
+              "placeholder": "Select a role…"
+            },
+            "roles": {
+              "participant": "Participant",
+              "trainer": "Trainer",
+              "admin": "Administrator"
+            },
+            "position": {
+              "label": "Position / Job title",
+              "placeholder": "E.g. Project manager"
+            },
+            "department": {
+              "label": "Department / Team",
+              "placeholder": "E.g. Training"
+            },
+            "actions": {
+              "previous": "Previous",
+              "next": "Next"
+            }
+          },
+          "locationInformation": {
+            "step": "Step 3 of 5",
+            "title": "Location",
+            "description": "Enter the user's address and geographical location.",
+            "country": {
+              "label": "Country",
+              "placeholder": "E.g. Democratic Republic of the Congo"
+            },
+            "city": {
+              "label": "City",
+              "placeholder": "E.g. Kinshasa"
+            },
+            "postalCode": {
+              "label": "Postal code",
+              "placeholder": "E.g. 00243"
+            },
+            "addressLine1": {
+              "label": "Address line 1",
+              "placeholder": "E.g. 12 Avenue de la Paix"
+            },
+            "addressLine2": {
+              "label": "Address line 2",
+              "placeholder": "Apartment, building…"
+            },
+            "actions": {
+              "previous": "Previous",
+              "next": "Next"
+            }
+          },
+          "authorization": {
+            "step": "Step 4 of 5",
+            "title": "Permissions & preferences",
+            "description": "Specify the preferred contact channel and any notes useful for managing this account.",
+            "channel": {
+              "label": "Preferred contact channel",
+              "placeholder": "Select a channel…"
+            },
+            "channels": {
+              "email": "Email",
+              "phone": "Phone",
+              "whatsapp": "WhatsApp"
+            },
+            "notes": {
+              "label": "Internal notes",
+              "placeholder": "Additional information for the team…",
+              "help": "These notes are visible only to administrators."
+            },
+            "actions": {
+              "previous": "Previous",
+              "next": "Next"
+            }
+          },
+          "accountStatus": {
+            "step": "Step 5 of 5",
+            "title": "Account status",
+            "description": "Configure the initial account status and invitation delivery.",
+            "active": {
+              "label": "Active account",
+              "help": "When enabled, the user can sign in after accepting the invitation."
+            },
+            "invitation": {
+              "label": "Send an invitation by email",
+              "help": "An invitation email will be sent to the address entered in step 1."
+            },
+            "summary": {
+              "eyebrow": "Summary",
+              "fullName": "Full name",
+              "email": "Email",
+              "role": "Role"
+            },
+            "actions": {
+              "previous": "Previous"
+            }
+          }
+        },
+        "routes": {
+          "list": "Users — Admin | KRAAK Consulting",
+          "create": "Create a user — Admin | KRAAK Consulting",
+          "basicInformation": "Basic information — Admin | KRAAK Consulting",
+          "businessInformation": "Professional information — Admin | KRAAK Consulting",
+          "locationInformation": "Location — Admin | KRAAK Consulting",
+          "authorization": "Permissions — Admin | KRAAK Consulting",
+          "accountStatus": "Account status — Admin | KRAAK Consulting"
+        },
+        "list": {
+          "header": {
+            "eyebrow": "Administration",
+            "title": "Users",
+            "description": "Manage platform member accounts and roles.",
+            "newUser": "New user"
+          },
+          "search": {
+            "placeholder": "Search by name, email or role…",
+            "aria": "Search for a user"
+          },
+          "loading": {
+            "aria": "Loading"
+          },
+          "empty": {
+            "filtered": "No users match your search.",
+            "none": "No users have been registered yet."
+          },
+          "table": {
+            "aria": "User list",
+            "columns": {
+              "name": "Name",
+              "email": "Email",
+              "role": "Role",
+              "status": "Status",
+              "actions": "Actions"
+            }
+          },
+          "roles": {
+            "participant": "Participant",
+            "trainer": "Trainer",
+            "admin": "Administrator"
+          },
+          "status": {
+            "active": "Active",
+            "inactive": "Inactive"
+          },
+          "actions": {
+            "edit": "Edit",
+            "delete": "Delete",
+            "cancel": "Cancel",
+            "save": "Save",
+            "editAria": "Edit {{name}}",
+            "deleteAria": "Delete {{name}}"
+          },
+          "editDialog": {
+            "title": "Edit user",
+            "closeAria": "Close dialog",
+            "fields": {
+              "firstName": "First name",
+              "lastName": "Last name",
+              "email": "Email",
+              "role": "Role",
+              "active": "Active account"
+            }
+          },
+          "deleteDialog": {
+            "aria": "Confirm deletion",
+            "title": "Delete user",
+            "prefix": "Are you sure you want to delete",
+            "suffix": "? This action cannot be undone."
+          },
+          "feedback": {
+            "loadFailure": "Unable to load the user list. Check your connection and try again.",
+            "updateSuccess": "User updated successfully.",
+            "updateSummary": "Updated",
+            "updateFailure": "Unable to update the user.",
+            "deleteSuccess": "User deleted successfully.",
+            "deleteSummary": "Deleted",
+            "deleteFailure": "Unable to delete the user."
+          }
+        }
+      },
+      "programmes": {
+        "header": {
+          "eyebrow": "Administration",
+          "title": "Programmes",
+          "description": "Manage KRAAK programmes: creation, editing and publication status.",
+          "backDashboard": "Dashboard",
+          "backDashboardAria": "Back to dashboard",
+          "new": "New programme",
+          "newAria": "Create a new programme"
+        },
+        "form": {
+          "title": {
+            "create": "New programme",
+            "edit": "Edit programme"
+          },
+          "fields": {
+            "slug": {
+              "label": "Slug",
+              "placeholder": "e.g. leadership-training",
+              "validation": "The slug is required and may contain only lowercase letters, numbers and hyphens."
+            },
+            "title": {
+              "label": "Title",
+              "placeholder": "Programme title",
+              "validation": "The title is required."
+            },
+            "summary": {
+              "label": "Summary",
+              "placeholder": "Short summary shown in the list",
+              "validation": "The summary is required."
+            },
+            "description": {
+              "label": "Description",
+              "placeholder": "Full programme description",
+              "validation": "The description is required."
+            },
+            "status": {
+              "label": "Status"
+            },
+            "visibility": {
+              "label": "Visibility"
+            }
+          },
+          "actions": {
+            "saveChanges": "Save changes",
+            "create": "Create programme",
+            "cancel": "Cancel",
+            "cancelAria": "Cancel and close the form"
+          }
+        },
+        "loading": {
+          "message": "Loading programmes…"
+        },
+        "empty": {
+          "message": "No programmes yet.",
+          "createFirst": "Create the first programme",
+          "createFirstAria": "Create the first programme"
+        },
+        "table": {
+          "columns": {
+            "title": "Title",
+            "slug": "Slug",
+            "status": "Status",
+            "visibility": "Visibility",
+            "actions": "Actions"
+          }
+        },
+        "statuses": {
+          "draft": "Draft",
+          "published": "Published",
+          "archived": "Archived"
+        },
+        "visibilities": {
+          "public": "Public",
+          "private": "Private"
+        },
+        "actions": {
+          "edit": "Edit",
+          "delete": "Delete",
+          "editAria": "Edit programme {{title}}",
+          "deleteAria": "Delete programme {{title}}"
+        },
+        "feedback": {
+          "loadFailure": "Unable to load programmes. Check your connection and try again.",
+          "createSuccess": "Programme “{{title}}” created successfully.",
+          "updateSuccess": "Programme “{{title}}” updated successfully.",
+          "saveFailure": "An error occurred while saving. Check the fields and try again.",
+          "deleteConfirm": "Delete programme “{{title}}”? This action cannot be undone.",
+          "deleteSuccess": "Programme “{{title}}” deleted.",
+          "deleteFailure": "Unable to delete this programme. Try again."
+        }
+      },
+      "ressources": {
+        "header": {
+          "eyebrow": "Administration",
+          "title": "Resources",
+          "description": "Manage KRAAK resources: creation, editing, type and publication status.",
+          "backDashboard": "Dashboard",
+          "backDashboardAria": "Back to dashboard",
+          "new": "New resource",
+          "newAria": "Create a new resource"
+        },
+        "form": {
+          "title": {
+            "create": "New resource",
+            "edit": "Edit resource"
+          },
+          "fields": {
+            "title": {
+              "label": "Title",
+              "placeholder": "Resource title",
+              "validation": "The title is required."
+            },
+            "description": {
+              "label": "Description",
+              "placeholder": "Resource description (optional)"
+            },
+            "type": {
+              "label": "Type"
+            },
+            "theme": {
+              "label": "Theme"
+            },
+            "audience": {
+              "label": "Audience"
+            },
+            "status": {
+              "label": "Status"
+            },
+            "url": {
+              "label": "URL",
+              "placeholder": "https://... (optional)"
+            }
+          },
+          "actions": {
+            "saveChanges": "Save changes",
+            "create": "Create resource",
+            "cancel": "Cancel",
+            "cancelAria": "Cancel and close the form"
+          }
+        },
+        "loading": {
+          "message": "Loading resources…"
+        },
+        "empty": {
+          "message": "No resources yet.",
+          "createFirst": "Create the first resource",
+          "createFirstAria": "Create the first resource"
+        },
+        "table": {
+          "columns": {
+            "title": "Title",
+            "type": "Type",
+            "theme": "Theme",
+            "status": "Status",
+            "actions": "Actions"
+          }
+        },
+        "statuses": {
+          "draft": "Draft",
+          "published": "Published",
+          "archived": "Archived"
+        },
+        "types": {
+          "link": "Link",
+          "file": "File",
+          "video": "Video",
+          "document": "Document"
+        },
+        "themes": {
+          "training": "Training",
+          "project_management": "Project management",
+          "immigration": "Immigration",
+          "career": "Career"
+        },
+        "audiences": {
+          "all": "All",
+          "young_professionals_students": "Young professionals and students",
+          "organizations": "Organizations",
+          "international_candidates": "International candidates"
+        },
+        "actions": {
+          "edit": "Edit",
+          "delete": "Delete",
+          "editAria": "Edit resource {{title}}",
+          "deleteAria": "Delete resource {{title}}"
+        },
+        "feedback": {
+          "loadFailure": "Unable to load resources. Check your connection and try again.",
+          "createSuccess": "Resource “{{title}}” created successfully.",
+          "updateSuccess": "Resource “{{title}}” updated successfully.",
+          "saveFailure": "An error occurred while saving. Check the fields and try again.",
+          "deleteConfirm": "Delete resource “{{title}}”? This action cannot be undone.",
+          "deleteSuccess": "Resource “{{title}}” deleted.",
+          "deleteFailure": "Unable to delete this resource. Try again."
+        }
+      },
+      "curriculum": {
+        "statuses": {
+          "draft": "Draft",
+          "published": "Published",
+          "archived": "Archived"
+        },
+        "visibilities": {
+          "private": "Private",
+          "participants": "Participants",
+          "public": "Public"
+        },
+        "actions": {
+          "editCourseAria": "Edit {{title}}",
+          "archiveCourseAria": "Archive {{title}}"
+        },
+        "feedback": {
+          "loadFailure": "Unable to load the curriculum. Check your connection and try again.",
+          "loadPlacementsFailure": "Unable to load the courses associated with this programme.",
+          "createCourseSuccess": "Course “{{title}}” created successfully.",
+          "updateCourseSuccess": "Course “{{title}}” updated.",
+          "saveCourseFailure": "Unable to save this course. Check the fields and try again.",
+          "archiveCourseConfirm": "Archive course “{{title}}”? It will no longer be offered to participants.",
+          "archiveCourseSuccess": "Course “{{title}}” archived.",
+          "archiveCourseFailure": "Unable to archive this course. Try again.",
+          "addCourseSuccess": "Course “{{title}}” added to the programme.",
+          "addCourseFallbackSuccess": "Course added to the programme.",
+          "addCourseFailure": "Unable to add this course to the programme. Check that it is not already associated.",
+          "removeCourseConfirm": "Remove “{{title}}” from the programme?",
+          "removeCourseFallbackConfirm": "Remove this course from the programme?",
+          "removeCourseSuccess": "Course “{{title}}” removed from the programme.",
+          "removeCourseFallbackSuccess": "Course removed from the programme.",
+          "removeCourseFailure": "Unable to remove this course from the programme."
+        },
+        "header": {
+          "eyebrow": "Administration · LMS",
+          "title": "Curriculum",
+          "description": "Manage the learning catalogue and compose the courses for each programme without duplicating their content.",
+          "backDashboard": "Dashboard",
+          "newCourse": "New course"
+        },
+        "catalog": {
+          "title": "Catalogue",
+          "form": {
+            "title": {
+              "create": "New course",
+              "edit": "Edit course"
+            },
+            "fields": {
+              "slug": {
+                "label": "Slug",
+                "placeholder": "leadership-fundamentals"
+              },
+              "title": {
+                "label": "Title",
+                "placeholder": "Leadership fundamentals"
+              },
+              "summary": {
+                "label": "Summary"
+              },
+              "description": {
+                "label": "Description"
+              },
+              "status": {
+                "label": "Status"
+              }
+            },
+            "actions": {
+              "save": "Save",
+              "create": "Create course",
+              "cancel": "Cancel"
+            }
+          },
+          "loading": "Loading curriculum…"
+        },
+        "programs": {
+          "title": "Programmes",
+          "choose": "Choose a programme",
+          "empty": "No programmes available."
+        },
+        "courses": {
+          "title": "Courses",
+          "empty": "No courses in the catalogue."
+        },
+        "composition": {
+          "title": "Composition",
+          "description": "Add reusable courses and define their order within this programme.",
+          "selectedProgramFallback": "Programme courses",
+          "fields": {
+            "course": {
+              "label": "Course",
+              "placeholder": "Select"
+            },
+            "order": {
+              "label": "Order"
+            },
+            "required": {
+              "label": "Required"
+            }
+          },
+          "actions": {
+            "add": "Add",
+            "remove": "Remove"
+          },
+          "loading": "Loading programme courses…",
+          "empty": "No courses associated with this programme.",
+          "noProgram": "Create or select a programme first.",
+          "orderValue": "Order {{order}}"
+        }
+      },
+      "routes": {
+        "dashboard": "Admin dashboard | KRAAK Consulting",
+        "programmes": "Programmes — Admin | KRAAK Consulting",
+        "curriculum": "Curriculum — Admin | KRAAK Consulting",
+        "ressources": "Resources — Admin | KRAAK Consulting",
+        "users": "Users — Admin | KRAAK Consulting"
+      }
+    },
+    "status": {
+      "common": {
+        "homeLabel": "Back to home",
+        "homeAria": "Return to the home page",
+        "contactLabel": "Contact us",
+        "contactAria": "Contact KRAAK"
+      },
+      "unauthorized": {
+        "eyebrow": "Authentication required",
+        "description": "This resource is reserved for signed-in users. Sign in to continue your journey.",
+        "signInLabel": "Sign in",
+        "signInAria": "Go to the sign-in page",
+        "helpLabel": "Ask for help",
+        "helpAria": "Contact KRAAK"
+      },
+      "forbidden": {
+        "eyebrow": "Access denied",
+        "description": "You do not have the required permissions to view this page. Contact our team if you believe this is an error."
+      },
+      "notFound": {
+        "eyebrow": "Page not found",
+        "title": "Oops.",
+        "description": "The page you're looking for doesn't exist, has moved, or is no longer available. We'll point you toward a useful next step.",
+        "helpLabel": "Browse help",
+        "helpAria": "Browse the KRAAK FAQ",
+        "cardHomeTitle": "Start again from home",
+        "cardHomeDescription": "Find the main entry points based on your profile and your goal.",
+        "cardHelpTitle": "Browse help",
+        "cardHelpDescription": "FAQs, advice and guidance: find answers to frequently asked questions.",
+        "cardOrientationTitle": "Ask for guidance",
+        "cardOrientationDescription": "If you're unsure, we'll help you identify the right next step."
+      },
+      "serverError": {
+        "eyebrow": "Technical issue",
+        "description": "An internal error is temporarily preventing this page from displaying. Please try again shortly.",
+        "reportLabel": "Report a problem",
+        "reportAria": "Report a problem to KRAAK"
+      }
+    },
+    "shared": {
+      "impactStats": {
+        "eyebrow": "Indicative preview",
+        "heading": "Impact figures in preview",
+        "skills": "Skills activated toward concrete opportunities",
+        "pathways": "Structured pathways launched with targeted support",
+        "participants": "Participants guided toward employment, projects or mobility"
+      },
+      "homePreview": {
+        "testimonials": {
+          "eyebrow": "Testimonials",
+          "heading": "They were not just looking for a solution. They wanted a result.",
+          "description": "This space is reserved for client testimonials currently being validated."
+        }
+      },
+      "testimonials": {
+        "previewLabel": "Testimonial format preview",
+        "previousAria": "View previous testimonial",
+        "carouselAria": "Testimonials carousel",
+        "nextAria": "View next testimonial",
+        "fallback": {
+          "aicha": {
+            "job": "Young professional",
+            "comment": "Thanks to KRAAK, I clarified my mobility goal and identified concrete steps to strengthen my profile before beginning the process."
+          },
+          "moussa": {
+            "job": "Entrepreneur",
+            "comment": "The project support helped us turn a vague idea into a structured roadmap, with clear priorities and realistic actions."
+          },
+          "clarisse": {
+            "job": "HR Manager",
+            "comment": "The corporate format is focused, practical and grounded in real-world needs. It genuinely helps teams work on cohesion, leadership and skills development."
+          }
+        }
+      },
+      "teamGrid": {
+        "previewLabel": "KRAAK team preview",
+        "heading": "The KRAAK team",
+        "description": "While the official team list is being finalized, here is a preview of the team-member presentation format.",
+        "roles": {
+          "softwareDeveloper": "Software developer",
+          "softwareTester": "Software tester",
+          "teamLead": "Team lead",
+          "marketingSpecialist": "Marketing specialist",
+          "uiUxDesigner": "UI/UX designer",
+          "productManager": "Product manager"
+        }
+      },
+      "faqAccordion": {
+        "heading": "Frequently asked questions",
+        "description": "Find quick answers to the most common questions about our programs, support options and response times.",
+        "backgroundAlt": "Background image for the frequently asked questions section"
+      }
+    },
+    "legal": {
+      "common": {
+        "contactCta": "Contact us"
+      },
+      "legalNotice": {
+        "title": "Legal notice",
+        "updated": "Last updated: May 2026. This page sets out the legal information applicable to KRAAK Consulting's public website.",
+        "editor": {
+          "heading": "Website publisher",
+          "body": "KRAAK Consulting is an organisation currently undergoing registration. Additional legal information, including its legal form, registration number and official administrative address, will be published once finalized.",
+          "contactPrefix": "Public contact details:",
+          "contactAnd": "and"
+        },
+        "publication": {
+          "heading": "Publication responsibility",
+          "body": "Publication responsibility is assumed by KRAAK Consulting. For any request relating to the website, published content or personal data, use the public contact details provided above."
+        },
+        "hosting": {
+          "heading": "Hosting",
+          "webPrefix": "The website and API are hosted by Render Services, Inc., 525 Brannan Street, Suite 300, San Francisco, CA 94107, United States (",
+          "databasePrefix": "Database, authentication and storage: Supabase Inc. ("
+        },
+        "intellectualProperty": {
+          "heading": "Intellectual property",
+          "body": "The text, visuals, logos, graphic elements, user journeys and page structures published on this website belong to KRAAK Consulting or are used with appropriate authorization. Any substantial reproduction, adaptation or reuse without prior written authorization is prohibited."
+        },
+        "liability": {
+          "heading": "Information and liability",
+          "body": "KRAAK Consulting endeavours to publish accurate, understandable and up-to-date information. The website content is intended for information, guidance and initial contact purposes: it does not constitute a guarantee of a visa, admission, funding, employment or an administrative outcome, nor does it constitute individualized legal advice."
+        },
+        "personalData": {
+          "heading": "Personal data and cookies",
+          "prefix": "The processing of personal data, retention of contact requests and any use of audience-measurement cookies are described in our",
+          "linkLabel": "privacy policy"
+        },
+        "cta": {
+          "heading": "Have questions? We are here to help.",
+          "body": "Contact our team with any question relating to the website, your data or our services."
+        }
+      },
+      "privacyPolicy": {
+        "title": "Privacy policy",
+        "updated": "Last updated: May 2026. This policy explains how KRAAK Consulting protects personal data submitted through its public website, forms, email, WhatsApp or telephone communications, and lightweight audience-measurement tools.",
+        "controller": {
+          "heading": "Data controller",
+          "prefix": "The data controller is KRAAK Consulting, an organisation currently undergoing registration. For any request relating to your data, contact KRAAK Consulting at",
+          "orPhone": "or by phone at"
+        },
+        "collected": {
+          "heading": "Data we collect",
+          "intro": "We collect only the information necessary to understand and process your request:",
+          "items": {
+            "identity": "First name, last name or organisation name if you provide them",
+            "contact": "Email address and telephone number provided voluntarily",
+            "request": "Subject, category, context and content of your request",
+            "guidance": "Information useful for the guidance requested, without a complete sensitive file",
+            "technical": "Limited technical data related to security or audience measurement"
+          }
+        },
+        "purposes": {
+          "heading": "Purposes and legal bases",
+          "body": "Your data is used to respond to your requests, provide appropriate guidance, arrange a discussion where necessary, secure the website and improve the clarity of the public user journey. The legal bases relied upon are your consent when you contact us voluntarily, KRAAK Consulting's legitimate interest in processing and following up requests and, where necessary, steps taken before entering into a contract or compliance with a legal obligation."
+        },
+        "contactConsent": {
+          "heading": "Consent when contacting us",
+          "body": "When you submit a form, send an email or WhatsApp message, or call KRAAK Consulting, you consent to KRAAK Consulting using the information provided to assess your request, respond to you and provide reasonable follow-up. You may withdraw this consent or request that follow-up stop at any time using the contact details provided on this page."
+        },
+        "sharing": {
+          "heading": "Data sharing",
+          "body": "KRAAK Consulting does not sell your personal data. It is not disclosed to third parties for commercial purposes. It may only be shared with technical service providers necessary for operation of the website, contact tools, hosting, security or audience measurement, or where disclosure is required by law."
+        },
+        "retention": {
+          "heading": "Retention period",
+          "body": "Data from forms, emails, calls and contact messages is retained for 3 years from the last meaningful interaction, unless a valid deletion request applies, a legal obligation requires otherwise, or evidence relating to an ongoing exchange needs to be retained."
+        },
+        "rights": {
+          "heading": "Your rights",
+          "intro": "Depending on the applicable law, you may request:",
+          "items": {
+            "access": "Access to your data",
+            "rectification": "Correction of inaccurate information",
+            "erasure": "Erasure of data that no longer needs to be retained",
+            "restriction": "Restriction of or objection to certain processing activities",
+            "portability": "Portability of data you have provided",
+            "withdrawal": "Withdrawal of your consent for the relevant processing activities"
+          },
+          "contactPrefix": "To exercise these rights, write to",
+          "complaint": "You may also lodge a complaint with the competent supervisory authority if you believe your rights have not been respected."
+        },
+        "analytics": {
+          "heading": "Cookies and audience measurement",
+          "prefix": "The website intentionally places no advertising cookies. Google Analytics 4 may be enabled only when a",
+          "suffix": "identifier is configured for the relevant environment; otherwise, no Google Analytics script is loaded. When audience measurement is active, it is used to produce aggregated statistics about public-site navigation, with IP anonymization configured on the website. You can limit or block cookies and measurement identifiers through your browser settings."
+        },
+        "hosting": {
+          "heading": "Hosting and technical transfers",
+          "body": "The website and API are hosted by Render Services, Inc. The database, authentication and storage are provided by Supabase Inc. These providers may process technical data necessary for hosting, security and service availability. Where transfers outside your country of residence are necessary, KRAAK Consulting relies on the contractual and technical safeguards offered by its providers."
+        },
+        "sensitive": {
+          "heading": "Limits on sensitive requests",
+          "body": "The public website is not intended for submitting complete administrative applications, identity documents, financial supporting documents or sensitive data. If an in-depth review becomes necessary, KRAAK Consulting will indicate the appropriate channel and the information strictly necessary to provide."
+        },
+        "cta": {
+          "heading": "Have questions about your data?",
+          "body": "Contact us to exercise your rights or obtain information about how your data is processed."
+        }
+      }
+    },
+
+    "faq": {
+      "hero": {
+        "title": "Useful answers to help you move forward with greater clarity.",
+        "description": "Find answers to the most common questions about our services, programs, support arrangements and response times. If your needs are specific, we will guide you directly.",
+        "advisorLabel": "Talk to a KRAAK advisor",
+        "advisorAria": "Talk to a KRAAK advisor",
+        "servicesLabel": "View our services",
+        "servicesAria": "View KRAAK services",
+        "cards": {
+          "orientation": {
+            "title": "Quick guidance",
+            "description": "Clarify your needs before investing time or energy in the wrong direction."
+          },
+          "international": {
+            "title": "International outlook",
+            "description": "Programs, projects and mobility: we structure realistic, progressive pathways."
+          },
+          "practical": {
+            "title": "Practical answers",
+            "description": "We prioritize concise, actionable answers connected to your next useful step."
+          }
+        }
+      },
+      "closing": {
+        "eyebrow": "Specific need",
+        "title": "Can't find the answer you need?",
+        "description": "Tell us about your situation. We will help you identify the right entry point based on your needs, profile and objectives.",
+        "contactLabel": "Contact us",
+        "contactAria": "Contact KRAAK",
+        "programsLabel": "Explore programs",
+        "programsAria": "Explore KRAAK programs"
+      },
+      "items": {
+        "accompanimentChoice": {
+          "question": "How do I choose the right KRAAK support option?",
+          "answer": "We start with your objective, your level of readiness and your main constraint. From there, we guide you toward the right entry point: a service, program, consultation or tailored support."
+        },
+        "gettingStarted": {
+          "question": "How do I get started with KRAAK?",
+          "answerBeforeEmail": "You can submit a request through the contact form, write to",
+          "answerAfterEmail": "or start an initial conversation on WhatsApp. To speed up the guidance process, include your objective, country, timeline and the type of support you are looking for."
+        },
+        "remoteSupport": {
+          "question": "Is KRAAK support available remotely?",
+          "answer": "Yes. Guidance discussions and some support services can be delivered remotely. The exact format - remote, hybrid or in person - is confirmed before starting, depending on the service, audience and project constraints."
+        },
+        "audiences": {
+          "question": "Do you work only with individuals?",
+          "answer": "No. KRAAK also supports teams, organizations, associations, institutions and businesses with training, guidance, project structuring, recruitment and team-cohesion needs."
+        },
+        "responseTime": {
+          "question": "How long does it take to receive a response after contacting you?",
+          "answer": "Every request submitted through the form or by email receives an initial response within 48 business hours. This first response confirms the appropriate direction, requests useful additional information if needed, or proposes an appointment."
+        },
+        "internationalMobility": {
+          "question": "Can you help with an immigration or international mobility project?",
+          "answer": "Yes. KRAAK supports the clarification, preparation and guidance of study, work, travel and international business-opportunity projects according to the profile and intended destination."
+        },
+        "guarantees": {
+          "question": "Does KRAAK guarantee a visa, job or admission?",
+          "answer": "No. KRAAK supports the preparation, structuring and guidance of these processes, but final decisions are made by the relevant institutions, employers, schools, authorities or organizations."
+        },
+        "earlyStage": {
+          "question": "Do I need a fully developed project before contacting you?",
+          "answer": "No. You can contact us from the idea stage. Our role also includes helping you clarify the next useful step before a project is fully formalized."
+        },
+        "contactData": {
+          "question": "How is my contact information used?",
+          "answer": "Information submitted through the form is used only to process your contact and information request. It is neither sold nor shared with third parties for commercial purposes and is retained for 3 years from the last interaction, then deleted."
+        }
+      }
+    },
+    "resources": {
+      "hero": {
+        "eyebrow": "KRAAK resources",
+        "title": "Guidance resources to clarify your next step",
+        "description": "This page is not a news hub or a content library. It is designed to quickly guide you toward the right KRAAK entry point for your needs.",
+        "imageAlt": "Participants in a training workshop strengthening their skills",
+        "orientationLabel": "Guidance · Training · Project · Mobility"
+      },
+      "guide": {
+        "imageAlt": "Guidance conversation between two people to clarify the next step",
+        "eyebrow": "Entry point",
+        "title": "A simple reference point before taking action",
+        "description": "A simple triage guide to distinguish between training, project, international mobility or business needs before taking action.",
+        "whatItIs": {
+          "title": "What this page is",
+          "description": "A simple triage guide to distinguish between training, project, international mobility or business needs before taking action."
+        },
+        "whatItIsNot": {
+          "title": "What it is not",
+          "description": "It is not a blog, media outlet or public library of articles, downloads or announcements. High-volume editorial content belongs to a separate initiative."
+        }
+      },
+      "entryPoints": {
+        "eyebrow": "Four entry points",
+        "title": "Identify the type of need before choosing support",
+        "description": "Every situation begins with a different need. These four reference points help you quickly identify the right place to start.",
+        "training": {
+          "title": "Training",
+          "description": "Identify the skills to strengthen and the right format to move forward: languages, leadership, soft skills or employability."
+        },
+        "project": {
+          "title": "Project",
+          "description": "Move from an idea to an initial working framework: objectives, priorities, resources, partners and follow-up."
+        },
+        "mobility": {
+          "title": "International mobility",
+          "description": "Prepare questions related to study, work, relocation and integration before moving to more targeted guidance."
+        },
+        "business": {
+          "title": "Business",
+          "description": "Frame a team need: training, cohesion, conflict management, leadership, recruitment or internal culture."
+        }
+      },
+      "questions": {
+        "eyebrow": "Before choosing",
+        "title": "Three questions to guide your decision",
+        "description": "Clarifying the destination, the main obstacle and the first useful step helps avoid choosing support that does not fit.",
+        "destination": {
+          "title": "Where do you want to go?",
+          "description": "Employment, project, mobility, leadership or team performance."
+        },
+        "blocker": {
+          "title": "What is holding you back?",
+          "description": "Skills, structure, information, documentation, network or moving into action."
+        },
+        "firstStep": {
+          "title": "What is the first useful step?",
+          "description": "A consultation, program, training course or tailored support."
+        }
+      },
+      "cta": {
+        "heading": "Need clear guidance?",
+        "body": "Tell us your objective and we will help you choose the right entry point without sending you through a vague catalogue.",
+        "label": "Ask for guidance"
+      }
+    },
+    "blog": {
+      "hero": {
+        "eyebrow": "KRAAK Blog",
+        "titleLead": "News, insights and",
+        "titleHighlight": "analysis",
+        "titleTail": "to move forward with clarity.",
+        "description": "We publish short, practical articles to help young professionals, project leaders and organizations make their next decision with greater clarity.",
+        "primaryCta": "Request support",
+        "secondaryCta": "View services"
+      },
+      "featured": {
+        "eyebrow": "Featured article",
+        "readArticle": "Read article",
+        "readArticleAria": "Read featured article",
+        "articlesAvailable": "published articles available",
+        "readingPages": "pages of articles",
+        "empty": "No published articles available yet."
+      },
+      "latest": {
+        "eyebrow": "Latest articles",
+        "title": "Short reads to help you choose your next step.",
+        "description": "Each article remains focused on a useful action without overwhelming the reader with unnecessarily technical language."
+      },
+      "card": {
+        "readingTimeShort": "min",
+        "readArticle": "Read article"
+      },
+      "pagination": {
+        "aria": "Blog pagination",
+        "previous": "Previous",
+        "next": "Next",
+        "pageAriaPrefix": "Go to page"
+      },
+      "cta": {
+        "heading": "Have a more specific need?",
+        "body": "Each article can be a starting point for clarifying a need, choosing a service or beginning a conversation with the KRAAK team.",
+        "label": "Contact us"
+      }
+    },
+    "blogArticle": {
+      "backToBlog": "Back to blog",
+      "readingTimeSuffix": "min read",
+      "contentHeading": "Article content",
+      "takeawaysHeading": "Key takeaways",
+      "authorHeading": "Author",
+      "categoryTagsHeading": "Category and tags",
+      "relatedHeading": "Related articles",
+      "readArticle": "Read article",
+      "cta": {
+        "heading": "Want to go further?",
+        "body": "The article may have clarified your next step. If you need a more precise framework, we can help you formalize it.",
+        "label": "Talk to KRAAK"
+      },
+      "missing": {
+        "eyebrow": "Article not found",
+        "title": "This article is not available.",
+        "description": "The requested content was not found in the KRAAK editorial library.",
+        "contact": "Contact us"
+      }
     }
   },
   "primeng": {
@@ -645,6 +2053,461 @@
     "emptyMessage": "No results",
     "aria": {
       "close": "Close"
+    }
+  },
+  "mobile": {
+    "programs": {
+      "list": {
+        "header": {
+          "eyebrow": "Programmes",
+          "title": "Your learning paths",
+          "description": "Explore the programmes you're enrolled in."
+        },
+        "actions": {
+          "retry": "Try again",
+          "backHome": "Back to home",
+          "viewDetail": "View details"
+        },
+        "loading": {
+          "aria": "Loading",
+          "text": "Loading your programmes..."
+        },
+        "empty": {
+          "text": "No programmes are currently available to you."
+        },
+        "labels": {
+          "status": "Status"
+        },
+        "statuses": {
+          "pending": "Pending",
+          "active": "Active",
+          "completed": "Completed",
+          "cancelled": "Cancelled"
+        },
+        "progress": {
+          "summary": "Progress: {{rate}}% ({{completed}}/{{total}} sessions)"
+        },
+        "cohort": {
+          "name": "Cohort: {{name}}",
+          "start": "Start:"
+        },
+        "feedback": {
+          "loadFailure": "Unable to load programmes."
+        }
+      },
+      "detail": {
+        "header": {
+          "eyebrow": "Programme details"
+        },
+        "page": {
+          "defaultTitle": "Programme"
+        },
+        "actions": {
+          "retry": "Try again",
+          "viewSessionDetails": "View details",
+          "access": "Open",
+          "backToList": "Back to list"
+        },
+        "loading": {
+          "aria": "Loading",
+          "text": "Loading programme details..."
+        },
+        "sections": {
+          "program": "Programme",
+          "cohort": "Cohort",
+          "sessions": "Sessions ({{count}})",
+          "resources": "Resources ({{count}})",
+          "announcements": "Announcements ({{count}})"
+        },
+        "labels": {
+          "createdAt": "Created",
+          "enrollmentStatus": "Enrollment status",
+          "progress": "Progress",
+          "name": "Name",
+          "code": "Code",
+          "start": "Start",
+          "end": "End",
+          "capacity": "Capacity",
+          "type": "Type",
+          "published": "Published"
+        },
+        "statuses": {
+          "pending": "Pending",
+          "active": "Active",
+          "completed": "Completed",
+          "cancelled": "Cancelled"
+        },
+        "locationTypes": {
+          "online": "Online",
+          "onsite": "On site",
+          "hybrid": "Hybrid"
+        },
+        "resourceTypes": {
+          "link": "Link",
+          "file": "File",
+          "video": "Video",
+          "document": "Document"
+        },
+        "progress": {
+          "summary": "{{rate}}% ({{completed}}/{{total}} sessions)"
+        },
+        "capacity": {
+          "one": "{{count}} participant",
+          "many": "{{count}} participants"
+        },
+        "empty": {
+          "sessions": "No sessions are currently scheduled.",
+          "resources": "No resources are currently available."
+        },
+        "feedback": {
+          "loadFailure": "Unable to load programme details."
+        }
+      },
+      "session": {
+        "header": {
+          "eyebrow": "Session details"
+        },
+        "page": {
+          "defaultTitle": "Session"
+        },
+        "actions": {
+          "retry": "Try again",
+          "join": "Join session",
+          "markIncomplete": "Mark as not completed",
+          "markComplete": "Mark as completed",
+          "backToProgram": "Back to programme",
+          "backToPrograms": "Back to programmes"
+        },
+        "loading": {
+          "aria": "Loading",
+          "text": "Loading session..."
+        },
+        "sections": {
+          "session": "Session",
+          "information": "Information",
+          "progress": "Progress"
+        },
+        "labels": {
+          "start": "Start",
+          "end": "End",
+          "status": "Status",
+          "locationType": "Location type",
+          "location": "Location",
+          "meetingLink": "Meeting link"
+        },
+        "statuses": {
+          "scheduled": "Scheduled",
+          "live": "Live",
+          "completed": "Completed",
+          "cancelled": "Cancelled"
+        },
+        "locationTypes": {
+          "online": "Online",
+          "onsite": "On site",
+          "hybrid": "Hybrid"
+        },
+        "progress": {
+          "completed": "Session marked as completed.",
+          "incomplete": "Session not completed."
+        },
+        "notFound": {
+          "text": "The session could not be found."
+        },
+        "feedback": {
+          "loadFailure": "Unable to load the session.",
+          "progressUpdateFailure": "Unable to update your progress."
+        }
+      }
+    },
+    "auth": {
+      "signIn": {
+        "header": {
+          "eyebrow": "Access",
+          "title": "Sign in",
+          "description": "Access your programmes, announcements and support channel in one place."
+        },
+        "fields": {
+          "email": "Email address",
+          "password": "Password"
+        },
+        "placeholders": {
+          "password": "Minimum 8 characters"
+        },
+        "validation": {
+          "email": "Enter a valid email address.",
+          "password": "Your password must contain at least 8 characters."
+        },
+        "actions": {
+          "submitting": "Signing in...",
+          "submit": "Sign in",
+          "createAccount": "Create an account",
+          "forgotPassword": "Forgot password"
+        }
+      },
+      "signUp": {
+        "header": {
+          "eyebrow": "Account",
+          "title": "Create an account",
+          "description": "Prepare your participant access with your basic information, then confirm your email."
+        },
+        "fields": {
+          "firstName": "First name",
+          "lastName": "Last name",
+          "email": "Email address",
+          "password": "Password",
+          "phone": "Phone"
+        },
+        "placeholders": {
+          "password": "Minimum 8 characters"
+        },
+        "helpers": {
+          "phone": "Optional. Add it if you would like us to contact you more easily."
+        },
+        "validation": {
+          "form": "Check your information before continuing."
+        },
+        "actions": {
+          "submitting": "Creating account...",
+          "submit": "Create an account",
+          "signIn": "Sign in"
+        },
+        "feedback": {
+          "submitFailure": "Unable to create your account at the moment."
+        }
+      },
+      "passwordReset": {
+        "header": {
+          "eyebrow": "Security",
+          "title": "Reset your password",
+          "description": "Enter your email address to receive a secure recovery link."
+        },
+        "fields": {
+          "email": "Email address"
+        },
+        "validation": {
+          "email": "Enter a valid email address to continue."
+        },
+        "actions": {
+          "submitting": "Sending...",
+          "submit": "Reset password",
+          "backToSignIn": "Back to sign in"
+        },
+        "feedback": {
+          "submitFailure": "Unable to send the password reset email at the moment."
+        }
+      }
+    },
+    "support": {
+      "overview": {
+        "header": {
+          "eyebrow": "Help",
+          "title": "Support",
+          "description": "Find useful contact points whenever you need assistance."
+        },
+        "intro": {
+          "help": "Need help? Contact our team."
+        },
+        "actions": {
+          "newRequest": "Start a request"
+        },
+        "tracking": {
+          "title": "Your requests",
+          "loading": "Loading request statuses...",
+          "empty": "No support requests have been recorded yet.",
+          "status": "Status",
+          "updatedAt": "Updated"
+        },
+        "statuses": {
+          "open": "Open",
+          "in_progress": "In progress",
+          "resolved": "Resolved",
+          "closed": "Closed"
+        },
+        "feedback": {
+          "loadFailure": "Unable to load your support requests at the moment."
+        }
+      },
+      "request": {
+        "header": {
+          "eyebrow": "Support",
+          "title": "New request",
+          "description": "Describe what you need and our team will respond as soon as possible."
+        },
+        "fields": {
+          "name": "Full name",
+          "email": "Email address",
+          "category": "Category",
+          "subject": "Subject",
+          "message": "Message"
+        },
+        "placeholders": {
+          "subject": "Summarise your request in a few words",
+          "message": "Describe your request in detail…"
+        },
+        "validation": {
+          "name": "Name is required (2 to 80 characters).",
+          "email": "Enter a valid email address.",
+          "subject": "Subject is required (3 to 120 characters).",
+          "message": "Message is required (10 to 2,000 characters)."
+        },
+        "actions": {
+          "submitting": "Sending...",
+          "submit": "Send request"
+        },
+        "categories": {
+          "technical": "Technical issue",
+          "program": "Programme question",
+          "session": "Session question",
+          "billing": "Billing",
+          "other": "Other"
+        },
+        "feedback": {
+          "invalidForm": "The information entered is invalid. Please check the form.",
+          "submitFailure": "An error occurred. Please try again later."
+        }
+      }
+    },
+    "resources": {
+      "list": {
+        "header": {
+          "eyebrow": "References",
+          "title": "Resources",
+          "description": "Search and filter useful content based on your needs."
+        },
+        "filters": {
+          "search": "Search",
+          "theme": "Theme",
+          "allThemes": "All themes",
+          "audience": "Audience",
+          "allAudiences": "All audiences"
+        },
+        "placeholders": {
+          "search": "Title, description, type..."
+        },
+        "actions": {
+          "retry": "Retry",
+          "viewDetail": "View details"
+        },
+        "loading": {
+          "aria": "Loading",
+          "text": "Loading resources..."
+        },
+        "empty": "No resources match your criteria.",
+        "themes": {
+          "training": "Training",
+          "project_management": "Project management",
+          "immigration": "Immigration",
+          "career": "Career"
+        },
+        "audiences": {
+          "all": "All",
+          "young_professionals_students": "Young professionals and students",
+          "organizations": "Organizations",
+          "international_candidates": "International candidates"
+        },
+        "types": {
+          "link": "Link",
+          "file": "File",
+          "video": "Video",
+          "document": "Document"
+        },
+        "feedback": {
+          "loadFailure": "Error while loading resources."
+        }
+      },
+      "detail": {
+        "header": {
+          "eyebrow": "Resource",
+          "title": "Resource details",
+          "description": "View the content and quickly access its associated link or file."
+        },
+        "actions": {
+          "retry": "Retry",
+          "openLink": "Open link"
+        },
+        "loading": {
+          "aria": "Loading",
+          "text": "Loading resource..."
+        },
+        "labels": {
+          "type": "Type",
+          "file": "File"
+        },
+        "types": {
+          "link": "Link",
+          "file": "File",
+          "video": "Video",
+          "document": "Document"
+        },
+        "feedback": {
+          "missingId": "Resource identifier is missing.",
+          "loadFailure": "Error while loading resource details."
+        }
+      },
+      "feedback": {
+        "apiError": "API error ({{status}})"
+      }
+    },
+    "navigation": {
+      "home": "Home",
+      "programs": "Programs",
+      "announcements": "Announcements",
+      "support": "Support"
+    },
+    "dashboard": {
+      "content": {
+        "title": "My dashboard",
+        "loadingAriaLabel": "Loading",
+        "retry": "Retry",
+        "loading": "Loading your dashboard...",
+        "empty": "No content is currently available in your space.",
+        "programs": {
+          "title": "Active programs",
+          "empty": "There are no active programs at the moment."
+        },
+        "sessions": {
+          "title": "Upcoming sessions",
+          "empty": "There are no sessions scheduled at the moment."
+        },
+        "announcements": {
+          "title": "Recent announcements",
+          "viewAll": "View all",
+          "empty": "There are no recent announcements at the moment."
+        }
+      },
+      "header": {
+        "logoAlt": "KRAAK Consulting logo",
+        "title": "Your KRAAK space"
+      },
+      "hero": {
+        "symbolAlt": "KRAAK Consulting symbol",
+        "mobileLabel": "KRAAK mobile",
+        "mobileDescription": "A simple entry point to your programs, announcements and resources.",
+        "title": "Welcome to KRAAK.",
+        "description": "Quickly find useful information, opportunities to follow and ways to stay connected with our team."
+      },
+      "actions": {
+        "explorePrograms": "Explore programs",
+        "contactSupport": "Contact support",
+        "viewResources": "View useful resources"
+      },
+      "highlights": {
+        "programs": {
+          "tag": "Programs",
+          "title": "Move forward with a clear framework.",
+          "description": "Find your active learning paths, their next steps and the useful details."
+        },
+        "announcements": {
+          "tag": "Announcements",
+          "title": "Stay aligned with important updates.",
+          "description": "Keep an eye on key information that needs to be shared quickly."
+        },
+        "support": {
+          "tag": "Support",
+          "title": "Ask for help without leaving your journey.",
+          "description": "Access the right points of contact when you need support."
+        }
+      }
     }
   }
 }

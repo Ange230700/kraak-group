@@ -13,13 +13,25 @@ import { Button } from 'primeng/button';
 import { Message } from 'primeng/message';
 import { WebAuthService } from '../../core/auth/web-auth.service';
 
+import {
+  KraakI18nService,
+  KraakTranslatePipe,
+} from '../../../../../shared/i18n';
 @Component({
   selector: 'kraak-web-sign-in-page',
   standalone: true,
-  imports: [ReactiveFormsModule, RouterLink, Button, Message],
+  imports: [
+    KraakTranslatePipe,
+    ReactiveFormsModule,
+    RouterLink,
+    Button,
+    Message,
+  ],
   templateUrl: './sign-in.page.html',
 })
 export default class SignInPage {
+  private readonly i18n = inject(KraakI18nService);
+
   private readonly authService = inject(WebAuthService);
   private readonly messageService = inject(MessageService);
   private readonly router = inject(Router);
@@ -55,8 +67,8 @@ export default class SignInPage {
         this.messageService.add({
           key: 'app-feedback',
           severity: 'success',
-          summary: 'Connexion',
-          detail: 'Connexion réussie. Redirection vers votre dashboard.',
+          summary: this.i18n.translate('web.auth.signIn.toastTitle'),
+          detail: this.i18n.translate('web.auth.signIn.toastSuccess'),
           life: 4500,
         });
       },

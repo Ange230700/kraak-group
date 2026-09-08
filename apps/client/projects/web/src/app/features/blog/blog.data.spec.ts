@@ -1,6 +1,7 @@
 import type { ArticleDto } from '@kraak/contracts';
 import {
   blogArticles,
+  englishBlogArticles,
   buildBlogArticleSeo,
   buildMissingBlogArticleSeo,
   findBlogArticleBySlug,
@@ -11,9 +12,26 @@ import {
 } from './blog.data';
 
 describe('blog.data', () => {
-  it('Given fallback blog articles, When requested, Then the static fallback list is returned', () => {
+  it('Given fallback blog articles, When requested by locale, Then the matching editorial dataset is returned', () => {
     expect(getFallbackBlogArticles()).toBe(blogArticles);
-    expect(getFallbackBlogArticles().length).toBeGreaterThan(0);
+    expect(getFallbackBlogArticles('fr-CI')).toBe(blogArticles);
+    expect(getFallbackBlogArticles('en-GB')).toBe(englishBlogArticles);
+
+    expect(englishBlogArticles).toHaveLength(blogArticles.length);
+    expect(englishBlogArticles.map((article) => article.id)).toEqual(
+      blogArticles.map((article) => article.id),
+    );
+    expect(englishBlogArticles.map((article) => article.slug)).toEqual(
+      blogArticles.map((article) => article.slug),
+    );
+    expect(englishBlogArticles.map((article) => article.relatedSlugs)).toEqual(
+      blogArticles.map((article) => article.relatedSlugs),
+    );
+
+    expect(englishBlogArticles[0]?.title).toBe(
+      'Clarify your project before applying',
+    );
+    expect(englishBlogArticles[0]?.publishedLabel).toBe('12 May 2026');
   });
 
   it('Given a public article sharing an existing slug, When mapped, Then fallback metadata is reused', () => {
@@ -174,10 +192,11 @@ describe('blog.data', () => {
     });
     const missingSeo = buildMissingBlogArticleSeo('inconnu');
 
-    expect(articleSeo.path).toBe(`blog/${blogArticles[0].slug}`);
+    expect(articleSeo.path).toBe(`/fr/blog/${blogArticles[0].slug}`);
+    expect(articleSeo.canonicalPath).toBe(`/fr/blog/${blogArticles[0].slug}`);
     expect(articleSeo.title).toContain(blogArticles[0].title);
     expect(articleSeo.description).toBe(blogArticles[0].summary);
-    expect(missingSeo.path).toBe('blog/inconnu');
+    expect(missingSeo.path).toBe('/fr/blog/inconnu');
     expect(missingSeo.title).toContain('Article introuvable');
   });
 

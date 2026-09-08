@@ -65,6 +65,7 @@ describe('ContactPage', () => {
     }).compileComponents();
 
     await TestBed.inject(ApplicationInitStatus).donePromise;
+    await TestBed.inject(KraakI18nService).setLocale('fr-CI');
 
     httpTestingController = TestBed.inject(HttpTestingController);
     consoleErrorSpy = vi.spyOn(console, 'error').mockImplementation(() => {

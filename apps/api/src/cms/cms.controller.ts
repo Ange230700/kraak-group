@@ -32,6 +32,7 @@ import {
   validateUpdateTestimonialPayload,
 } from './cms.dto';
 import { CmsService } from './cms.service';
+import { apiMessage } from '../i18n/api-message';
 
 @ApiTags('CMS')
 @Controller()
@@ -71,7 +72,7 @@ export class CmsController {
     if (!validated.valid) {
       throw new BadRequestException({
         success: false,
-        message: 'Payload invalide.',
+        message: apiMessage('validation.invalidPayload'),
         errors: validated.errors,
       });
     }
@@ -94,7 +95,7 @@ export class CmsController {
     if (!validated.valid) {
       throw new BadRequestException({
         success: false,
-        message: 'Payload invalide.',
+        message: apiMessage('validation.invalidPayload'),
         errors: validated.errors,
       });
     }
@@ -138,7 +139,7 @@ export class CmsController {
     if (!validated.valid) {
       throw new BadRequestException({
         success: false,
-        message: 'Payload invalide.',
+        message: apiMessage('validation.invalidPayload'),
         errors: validated.errors,
       });
     }
@@ -161,7 +162,7 @@ export class CmsController {
     if (!validated.valid) {
       throw new BadRequestException({
         success: false,
-        message: 'Payload invalide.',
+        message: apiMessage('validation.invalidPayload'),
         errors: validated.errors,
       });
     }
@@ -205,7 +206,7 @@ export class CmsController {
     if (!validated.valid) {
       throw new BadRequestException({
         success: false,
-        message: 'Payload invalide.',
+        message: apiMessage('validation.invalidPayload'),
         errors: validated.errors,
       });
     }
@@ -228,7 +229,7 @@ export class CmsController {
     if (!validated.valid) {
       throw new BadRequestException({
         success: false,
-        message: 'Payload invalide.',
+        message: apiMessage('validation.invalidPayload'),
         errors: validated.errors,
       });
     }
@@ -272,7 +273,7 @@ export class CmsController {
     if (!validated.valid) {
       throw new BadRequestException({
         success: false,
-        message: 'Payload invalide.',
+        message: apiMessage('validation.invalidPayload'),
         errors: validated.errors,
       });
     }
@@ -295,7 +296,7 @@ export class CmsController {
     if (!validated.valid) {
       throw new BadRequestException({
         success: false,
-        message: 'Payload invalide.',
+        message: apiMessage('validation.invalidPayload'),
         errors: validated.errors,
       });
     }

@@ -4,7 +4,7 @@
     class="hover:text-brand-blue inline-flex items-center gap-2 text-sm font-semibold text-slate-500 transition"
   >
     <i class="pi pi-arrow-left text-xs" aria-hidden="true"></i>
-    Tous les programmes
+    {{ 'web.participant.programDetail.common.allPrograms' | kraakTranslate }}
   </a>
 
   @if (errorMessage()) {
@@ -20,7 +20,7 @@
       </span>
 
       <h1 class="mt-5 text-2xl font-semibold text-slate-950">
-        Impossible de charger ce programme
+        {{ 'web.participant.programDetail.error.title' | kraakTranslate }}
       </h1>
 
       <p class="mt-2 max-w-xl text-sm leading-6 text-slate-600">
@@ -32,11 +32,16 @@
         class="kr-button-primary mt-6"
         (click)="reloadProgram()"
       >
-        Réessayer
+        {{ 'web.participant.programDetail.error.retry' | kraakTranslate }}
       </button>
     </section>
   } @else if (loading()) {
-    <section aria-label="Chargement du programme" aria-busy="true">
+    <section
+      [attr.aria-label]="
+        'web.participant.programDetail.common.loadingAria' | kraakTranslate
+      "
+      aria-busy="true"
+    >
       <div
         class="relative min-h-80 overflow-hidden rounded-[2rem] bg-[linear-gradient(135deg,#122b4a_0%,#1c4e86_50%,#1673ae_100%)] p-6 shadow-[0_2px_5px_rgba(18,55,105,0.08),0_30px_70px_-40px_rgba(18,43,74,0.5)] sm:p-8 lg:min-h-[25rem] lg:p-12"
         aria-hidden="true"
@@ -198,7 +203,9 @@
               <p
                 class="text-[11px] font-semibold tracking-[0.14em] text-white/56 uppercase"
               >
-                Progression
+                {{
+                  'web.participant.programDetail.hero.progress' | kraakTranslate
+                }}
               </p>
               <p class="mt-2 text-4xl font-semibold">
                 {{ detail.progress.completionRate }}%
@@ -230,7 +237,10 @@
             {{ detail.progress.completedSessions }}/{{
               detail.progress.totalSessions
             }}
-            sessions terminées
+            {{
+              'web.participant.programDetail.hero.sessionsCompleted'
+                | kraakTranslate
+            }}
           </p>
         </div>
       </div>
@@ -248,10 +258,10 @@
         <p
           class="text-brand-blue text-xs font-semibold tracking-[0.18em] uppercase"
         >
-          À propos
+          {{ 'web.participant.programDetail.about.eyebrow' | kraakTranslate }}
         </p>
         <h2 class="mt-3 text-2xl font-semibold text-slate-950">
-          Votre parcours
+          {{ 'web.participant.programDetail.about.title' | kraakTranslate }}
         </h2>
         <p class="mt-4 text-sm leading-7 whitespace-pre-line text-slate-600">
           {{ detail.program.description }}
@@ -264,7 +274,9 @@
         <p
           class="text-xs font-semibold tracking-[0.18em] text-cyan-200/72 uppercase"
         >
-          Repères
+          {{
+            'web.participant.programDetail.landmarks.eyebrow' | kraakTranslate
+          }}
         </p>
 
         @if (detail.cohort) {
@@ -276,7 +288,10 @@
             @if (detail.cohort.code) {
               <div>
                 <dt class="text-xs font-semibold text-white/44 uppercase">
-                  Code
+                  {{
+                    'web.participant.programDetail.landmarks.code'
+                      | kraakTranslate
+                  }}
                 </dt>
                 <dd class="mt-1 text-white/82">{{ detail.cohort.code }}</dd>
               </div>
@@ -284,7 +299,10 @@
 
             <div>
               <dt class="text-xs font-semibold text-white/44 uppercase">
-                Début
+                {{
+                  'web.participant.programDetail.landmarks.start'
+                    | kraakTranslate
+                }}
               </dt>
               <dd class="mt-1 text-white/82">
                 {{ formatDate(detail.cohort.startDate) }}
@@ -294,7 +312,10 @@
             @if (detail.cohort.endDate) {
               <div>
                 <dt class="text-xs font-semibold text-white/44 uppercase">
-                  Fin
+                  {{
+                    'web.participant.programDetail.landmarks.end'
+                      | kraakTranslate
+                  }}
                 </dt>
                 <dd class="mt-1 text-white/82">
                   {{ formatDate(detail.cohort.endDate) }}
@@ -305,18 +326,33 @@
             @if (detail.cohort.capacity) {
               <div>
                 <dt class="text-xs font-semibold text-white/44 uppercase">
-                  Capacité
+                  {{
+                    'web.participant.programDetail.landmarks.capacity'
+                      | kraakTranslate
+                  }}
                 </dt>
                 <dd class="mt-1 text-white/82">
-                  {{ detail.cohort.capacity }} participants
+                  {{ detail.cohort.capacity }}
+                  {{
+                    'web.participant.programDetail.landmarks.participants'
+                      | kraakTranslate
+                  }}
                 </dd>
               </div>
             }
           </dl>
         } @else {
-          <h2 class="mt-3 text-xl font-semibold">Parcours individuel</h2>
+          <h2 class="mt-3 text-xl font-semibold">
+            {{
+              'web.participant.programDetail.landmarks.individualTitle'
+                | kraakTranslate
+            }}
+          </h2>
           <p class="mt-3 text-sm leading-6 text-white/60">
-            Aucune cohorte n'est associée à ce programme.
+            {{
+              'web.participant.programDetail.landmarks.noCohort'
+                | kraakTranslate
+            }}
           </p>
         }
       </aside>
@@ -335,23 +371,34 @@
           <p
             class="text-brand-blue text-xs font-semibold tracking-[0.18em] uppercase"
           >
-            Formation
+            {{
+              'web.participant.programDetail.curriculum.eyebrow'
+                | kraakTranslate
+            }}
           </p>
           <h2
             id="program-curriculum-title"
             class="mt-2 text-2xl font-semibold text-slate-950 sm:text-3xl"
           >
-            Contenu pédagogique
+            {{
+              'web.participant.programDetail.curriculum.title' | kraakTranslate
+            }}
           </h2>
           <p class="mt-3 max-w-2xl text-sm leading-6 text-slate-600">
-            Explorez les cours, modules, chapitres et leçons qui composent ce
-            programme.
+            {{
+              'web.participant.programDetail.curriculum.intro' | kraakTranslate
+            }}
           </p>
         </div>
 
         <span class="text-sm font-semibold text-slate-500">
           {{ detail.curriculum.courses.length }}
-          {{ detail.curriculum.courses.length === 1 ? 'cours' : 'cours' }}
+          {{
+            (detail.curriculum.courses.length === 1
+              ? 'web.participant.programDetail.curriculum.count.courseSingular'
+              : 'web.participant.programDetail.curriculum.count.coursePlural'
+            ) | kraakTranslate
+          }}
         </span>
       </div>
 
@@ -385,7 +432,10 @@
                       <span
                         class="bg-brand-cyan/15 text-brand-navy inline-flex rounded-full px-2.5 py-1 text-[11px] font-semibold"
                       >
-                        Obligatoire
+                        {{
+                          'web.participant.programDetail.curriculum.courseRequired'
+                            | kraakTranslate
+                        }}
                       </span>
                     }
                   </div>
@@ -399,7 +449,12 @@
                   class="justify-self-start rounded-full bg-slate-100 px-3 py-1.5 text-xs font-semibold text-slate-500 sm:justify-self-end"
                 >
                   {{ courseItem.modules.length }}
-                  {{ courseItem.modules.length === 1 ? 'module' : 'modules' }}
+                  {{
+                    (courseItem.modules.length === 1
+                      ? 'web.participant.programDetail.curriculum.count.moduleSingular'
+                      : 'web.participant.programDetail.curriculum.count.modulePlural'
+                    ) | kraakTranslate
+                  }}
                 </span>
               </header>
 
@@ -439,9 +494,10 @@
                         >
                           {{ moduleItem.chapters.length }}
                           {{
-                            moduleItem.chapters.length === 1
-                              ? 'chapitre'
-                              : 'chapitres'
+                            (moduleItem.chapters.length === 1
+                              ? 'web.participant.programDetail.curriculum.count.chapterSingular'
+                              : 'web.participant.programDetail.curriculum.count.chapterPlural'
+                            ) | kraakTranslate
                           }}
                         </span>
                       </div>
@@ -463,7 +519,11 @@
                                   <p
                                     class="text-brand-blue text-[11px] font-semibold tracking-[0.12em] uppercase"
                                   >
-                                    Chapitre {{ chapterIndex + 1 }}
+                                    {{
+                                      'web.participant.programDetail.curriculum.chapterLabel'
+                                        | kraakTranslate
+                                          : { index: chapterIndex + 1 }
+                                    }}
                                   </p>
                                   <h5
                                     class="mt-1.5 font-semibold text-slate-900"
@@ -482,9 +542,10 @@
                                 >
                                   {{ chapterItem.lessons.length }}
                                   {{
-                                    chapterItem.lessons.length === 1
-                                      ? 'leçon'
-                                      : 'leçons'
+                                    (chapterItem.lessons.length === 1
+                                      ? 'web.participant.programDetail.curriculum.count.lessonSingular'
+                                      : 'web.participant.programDetail.curriculum.count.lessonPlural'
+                                    ) | kraakTranslate
                                   }}
                                 </span>
                               </div>
@@ -523,7 +584,10 @@
                                         <span
                                           class="hidden text-[11px] font-semibold text-slate-400 sm:inline"
                                         >
-                                          Requise
+                                          {{
+                                            'web.participant.programDetail.curriculum.lessonRequired'
+                                              | kraakTranslate
+                                          }}
                                         </span>
                                       }
                                     </li>
@@ -531,7 +595,10 @@
                                 </ol>
                               } @else {
                                 <p class="mt-4 text-sm text-slate-500">
-                                  Aucune leçon publiée dans ce chapitre.
+                                  {{
+                                    'web.participant.programDetail.curriculum.empty.lessons'
+                                      | kraakTranslate
+                                  }}
                                 </p>
                               }
                             </div>
@@ -539,7 +606,10 @@
                         </div>
                       } @else {
                         <p class="mt-5 text-sm text-slate-500">
-                          Aucun chapitre publié dans ce module.
+                          {{
+                            'web.participant.programDetail.curriculum.empty.chapters'
+                              | kraakTranslate
+                          }}
                         </p>
                       }
                     </section>
@@ -547,7 +617,10 @@
                 </div>
               } @else {
                 <p class="px-6 py-7 text-sm text-slate-500 sm:px-8">
-                  Aucun module publié dans ce cours.
+                  {{
+                    'web.participant.programDetail.curriculum.empty.modules'
+                      | kraakTranslate
+                  }}
                 </p>
               }
             </article>
@@ -558,7 +631,10 @@
           class="mt-6 rounded-3xl border border-dashed border-slate-200 bg-white/60 px-6 py-8"
         >
           <p class="text-sm leading-6 text-slate-600">
-            Aucun contenu pédagogique publié pour le moment.
+            {{
+              'web.participant.programDetail.curriculum.empty.curriculum'
+                | kraakTranslate
+            }}
           </p>
         </div>
       }
@@ -577,19 +653,28 @@
           <p
             class="text-brand-blue text-xs font-semibold tracking-[0.18em] uppercase"
           >
-            Parcours
+            {{
+              'web.participant.programDetail.sessions.eyebrow' | kraakTranslate
+            }}
           </p>
           <h2
             id="program-sessions-title"
             class="mt-2 text-2xl font-semibold text-slate-950 sm:text-3xl"
           >
-            Sessions
+            {{
+              'web.participant.programDetail.sessions.title' | kraakTranslate
+            }}
           </h2>
         </div>
 
         <span class="text-sm font-semibold text-slate-500">
           {{ detail.sessions.length }}
-          {{ detail.sessions.length === 1 ? 'session' : 'sessions' }}
+          {{
+            (detail.sessions.length === 1
+              ? 'web.participant.programDetail.sessions.count.singular'
+              : 'web.participant.programDetail.sessions.count.plural'
+            ) | kraakTranslate
+          }}
         </span>
       </div>
 
@@ -653,7 +738,9 @@
                 ]"
                 class="text-brand-blue inline-flex w-fit items-center gap-2 text-sm font-semibold transition hover:gap-3 sm:col-start-2 lg:col-start-auto"
               >
-                Ouvrir la session
+                {{
+                  'web.participant.programDetail.sessions.open' | kraakTranslate
+                }}
                 <i class="pi pi-arrow-right text-xs" aria-hidden="true"></i>
               </a>
             </article>
@@ -664,7 +751,9 @@
           class="mt-6 rounded-3xl border border-dashed border-slate-200 bg-white/60 px-6 py-8"
         >
           <p class="text-sm leading-6 text-slate-600">
-            Aucune session programmée pour le moment.
+            {{
+              'web.participant.programDetail.sessions.empty' | kraakTranslate
+            }}
           </p>
         </div>
       }
@@ -675,7 +764,10 @@
       [revealDelayMs]="150"
       [revealDelayMobileMs]="75"
       class="grid gap-8 lg:grid-cols-2"
-      aria-label="Ressources et annonces du programme"
+      [attr.aria-label]="
+        'web.participant.programDetail.common.resourcesAnnouncementsAria'
+          | kraakTranslate
+      "
     >
       <article
         class="rounded-[2rem] bg-white p-6 shadow-[0_1px_1px_rgba(0,0,0,0.06),0_-1px_1px_rgba(0,0,0,0.06)_inset,0_12px_30px_-18px_rgba(18,43,74,0.16)] sm:p-8"
@@ -685,10 +777,15 @@
             <p
               class="text-brand-blue text-xs font-semibold tracking-[0.18em] uppercase"
             >
-              Bibliothèque
+              {{
+                'web.participant.programDetail.resources.eyebrow'
+                  | kraakTranslate
+              }}
             </p>
             <h2 class="mt-2 text-2xl font-semibold text-slate-950">
-              Ressources
+              {{
+                'web.participant.programDetail.resources.title' | kraakTranslate
+              }}
             </h2>
           </div>
           <span class="text-sm font-semibold text-slate-400">
@@ -757,7 +854,10 @@
                     target="_blank"
                     rel="noopener noreferrer"
                     class="motion-hover-lift motion-press hover:bg-brand-blue focus-visible:ring-brand-blue flex h-10 w-10 shrink-0 items-center justify-center justify-self-start rounded-full bg-slate-950 text-white transition focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none sm:justify-self-end"
-                    [attr.aria-label]="'Ouvrir ' + resource.title"
+                    [attr.aria-label]="
+                      'web.participant.programDetail.resources.openAria'
+                        | kraakTranslate: { title: resource.title }
+                    "
                   >
                     <i
                       class="pi pi-arrow-up-right text-xs"
@@ -770,7 +870,9 @@
           </div>
         } @else {
           <p class="mt-6 text-sm leading-6 text-slate-600">
-            Aucune ressource disponible pour le moment.
+            {{
+              'web.participant.programDetail.resources.empty' | kraakTranslate
+            }}
           </p>
         }
       </article>
@@ -783,9 +885,17 @@
             <p
               class="text-brand-blue text-xs font-semibold tracking-[0.18em] uppercase"
             >
-              Actualités
+              {{
+                'web.participant.programDetail.announcements.eyebrow'
+                  | kraakTranslate
+              }}
             </p>
-            <h2 class="mt-2 text-2xl font-semibold text-slate-950">Annonces</h2>
+            <h2 class="mt-2 text-2xl font-semibold text-slate-950">
+              {{
+                'web.participant.programDetail.announcements.title'
+                  | kraakTranslate
+              }}
+            </h2>
           </div>
           <span class="text-sm font-semibold text-slate-400">
             {{ detail.announcements.length }}
@@ -800,14 +910,21 @@
                   {{ announcement.title }}
                 </p>
                 <p class="mt-2 text-xs font-medium text-slate-500">
-                  Publiée le {{ formatDate(announcement.publishedAt) }}
+                  {{
+                    'web.participant.programDetail.announcements.publishedOn'
+                      | kraakTranslate
+                        : { date: formatDate(announcement.publishedAt) }
+                  }}
                 </p>
               </div>
             }
           </div>
         } @else {
           <p class="mt-6 text-sm leading-6 text-slate-600">
-            Aucune annonce liée à ce programme pour le moment.
+            {{
+              'web.participant.programDetail.announcements.empty'
+                | kraakTranslate
+            }}
           </p>
         }
       </article>
@@ -824,13 +941,13 @@
       </span>
 
       <h1 class="mt-5 text-2xl font-semibold text-slate-950">
-        Programme introuvable
+        {{ 'web.participant.programDetail.notFound.title' | kraakTranslate }}
       </h1>
       <p class="mx-auto mt-3 max-w-lg text-sm leading-6 text-slate-600">
-        Ce programme n'a pas pu être résolu depuis votre espace participant.
+        {{ 'web.participant.programDetail.notFound.detail' | kraakTranslate }}
       </p>
       <a routerLink="/participant/programmes" class="kr-button-primary mt-6">
-        Retour aux programmes
+        {{ 'web.participant.programDetail.notFound.back' | kraakTranslate }}
       </a>
     </section>
   }

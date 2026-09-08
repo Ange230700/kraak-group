@@ -1,3 +1,4 @@
+import { ApplicationInitStatus } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
 import { MessageService } from 'primeng/api';
@@ -7,6 +8,7 @@ import { WebAuthService } from '../../core/auth/web-auth.service';
 import PasswordResetPage from './password-reset.page';
 import { resolveWebRedirectUrl } from './auth-form.utils';
 
+import { KraakI18nService, provideKraakI18n } from '../../../../../shared/i18n';
 describe('Web PasswordResetPage', () => {
   const authService = {
     requestPasswordReset: vi.fn(),
@@ -15,6 +17,7 @@ describe('Web PasswordResetPage', () => {
   let messageServiceAddSpy: ReturnType<typeof vi.spyOn>;
 
   beforeEach(async () => {
+    globalThis.window.localStorage.setItem('kraak:locale', 'fr-CI');
     authService.requestPasswordReset.mockReset();
     authService.requestPasswordReset.mockResolvedValue({
       success: true,
@@ -25,11 +28,15 @@ describe('Web PasswordResetPage', () => {
     await TestBed.configureTestingModule({
       imports: [PasswordResetPage],
       providers: [
+        provideKraakI18n(),
         provideRouter([]),
         { provide: WebAuthService, useValue: authService },
         MessageService,
       ],
     }).compileComponents();
+
+    await TestBed.inject(ApplicationInitStatus).donePromise;
+    await TestBed.inject(KraakI18nService).setLocale('fr-CI');
 
     messageService = TestBed.inject(MessageService);
     messageServiceAddSpy = vi.spyOn(messageService, 'add');

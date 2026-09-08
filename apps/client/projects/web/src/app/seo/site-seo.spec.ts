@@ -33,6 +33,7 @@ describe('site-seo', () => {
       'inscription',
       'mot-de-passe-oublie',
       'auth/reset',
+      'blog',
     ]);
   });
 
@@ -50,6 +51,8 @@ describe('site-seo', () => {
       '/en/programs',
       '/fr/ressources',
       '/en/resources',
+      '/fr/blog',
+      '/en/blog',
       '/fr/contact',
       '/en/contact',
       '/fr/mentions-legales',
@@ -90,6 +93,39 @@ describe('site-seo', () => {
     expect(servicesPage?.openGraphLocale).toBe('en_GB');
     expect(servicesPage?.robots).toBe('noindex, nofollow');
     expect(servicesPage?.temporary).toBe(true);
+  });
+
+  it('Given localized English status pages, when SEO is resolved, then reviewed English metadata is used while status routes remain temporary and noindex', () => {
+    const expectations = [
+      {
+        path: '/en/401',
+        title: 'Authentication required | KRAAK Consulting',
+      },
+      {
+        path: '/en/403',
+        title: 'Access denied | KRAAK Consulting',
+      },
+      {
+        path: '/en/404',
+        title: 'Page not found | KRAAK Consulting',
+      },
+      {
+        path: '/en/500',
+        title: 'Technical issue | KRAAK Consulting',
+      },
+    ] as const;
+
+    for (const expectation of expectations) {
+      const page = findLocalizedSeoPageByPath(expectation.path);
+
+      expect(page).toBeDefined();
+      expect(page?.title).toBe(expectation.title);
+      expect(page?.htmlLang).toBe('en-GB');
+      expect(page?.openGraphLocale).toBe('en_GB');
+      expect(page?.robots).toBe('noindex, nofollow');
+      expect(page?.temporary).toBe(true);
+      expect(page?.openGraph?.title).toBe(expectation.title);
+    }
   });
 
   it('Given the approved English homepage, When SEO is resolved, Then reviewed metadata and reciprocal locale links are indexable', () => {

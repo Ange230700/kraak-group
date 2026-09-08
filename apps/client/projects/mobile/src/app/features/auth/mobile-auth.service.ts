@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import {
   clearAuthBundle,
   createApiClient,
@@ -21,6 +21,7 @@ import type {
 } from '@kraak/contracts';
 import { environment } from '../../../environments/environment';
 
+import { KraakI18nService } from '../../../../../shared/i18n';
 export const MOBILE_AUTH_CALLBACK_URL = 'kraak://auth/callback';
 export const MOBILE_AUTH_RESET_URL = 'kraak://auth/reset';
 export const MOBILE_AUTH_STORAGE_KEY = 'kraak.mobile.session';
@@ -31,9 +32,11 @@ export const MOBILE_AUTH_STORAGE_KEY = 'kraak.mobile.session';
 export class MobileAuthService {
   private readonly restoredBundle = this.readStoredBundle();
   private readonly authState = createAuthSessionState(this.restoredBundle);
+  private readonly i18n = inject(KraakI18nService);
   private _client: ReturnType<typeof createApiClient> | null = null;
   private get client(): ReturnType<typeof createApiClient> {
     this._client ??= createApiClient({
+      getLocale: () => this.i18n.locale(),
       baseUrl: environment.apiBaseUrl,
       getAuthToken: () => this.currentSession()?.accessToken ?? null,
     });

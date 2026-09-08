@@ -1,3 +1,5 @@
+import { apiMessage, type ApiMessageValue } from '../i18n/api-message';
+
 export function readTrimmedString(value: unknown): string {
   return typeof value === 'string' ? value.trim() : '';
 }
@@ -73,9 +75,9 @@ export function isValidEmail(email: string): boolean {
   return true;
 }
 
-export function validateEmail(email: string, errors: string[]): void {
+export function validateEmail(email: string, errors: ApiMessageValue[]): void {
   if (!email || !isValidEmail(email)) {
-    errors.push("L'adresse e-mail est invalide.");
+    errors.push(apiMessage('validation.invalidEmail'));
   }
 }
 
@@ -85,18 +87,26 @@ export function assignRequiredTrimmedString<
 >(
   body: Record<string, unknown>,
   field: K,
-  errors: string[],
+  errors: ApiMessageValue[],
   updates: Partial<T>,
 ): void {
   if (!(field in body)) {
-    errors.push(`Le champ ${String(field)} est requis.`);
+    errors.push(
+      apiMessage('validation.requiredField', {
+        field: String(field),
+      }),
+    );
     return;
   }
 
   const value = readTrimmedString(body[field as string]);
 
   if (!value) {
-    errors.push(`Le champ ${String(field)} est requis.`);
+    errors.push(
+      apiMessage('validation.requiredField', {
+        field: String(field),
+      }),
+    );
     return;
   }
 
@@ -106,7 +116,12 @@ export function assignRequiredTrimmedString<
 export function assignOptionalTrimmedString<
   T extends object,
   K extends keyof T,
->(body: Record<string, unknown>, field: K, errors: string[], updates: T): void {
+>(
+  body: Record<string, unknown>,
+  field: K,
+  errors: ApiMessageValue[],
+  updates: T,
+): void {
   if (!(field in body)) {
     return;
   }
@@ -114,7 +129,11 @@ export function assignOptionalTrimmedString<
   const value = readTrimmedString(body[field as string]);
 
   if (!value) {
-    errors.push(`Le champ ${String(field)} est requis.`);
+    errors.push(
+      apiMessage('validation.requiredField', {
+        field: String(field),
+      }),
+    );
     return;
   }
 

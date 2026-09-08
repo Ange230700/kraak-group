@@ -42,6 +42,7 @@ import {
   updateArticleBodySchema,
 } from './articles.swagger';
 import { ArticlesService } from './articles.service';
+import { apiMessage } from '../i18n/api-message';
 
 const apiErrorSchema = {
   type: 'object',
@@ -208,7 +209,7 @@ export class ArticlesController {
     if (!validated.valid) {
       throw new BadRequestException({
         success: false,
-        message: 'Payload invalide.',
+        message: apiMessage('validation.invalidPayload'),
         errors: validated.errors,
       });
     }
@@ -249,7 +250,7 @@ export class ArticlesController {
     if (!validated.valid) {
       throw new BadRequestException({
         success: false,
-        message: 'Payload invalide.',
+        message: apiMessage('validation.invalidPayload'),
         errors: validated.errors,
       });
     }
@@ -347,7 +348,7 @@ export class ArticlesController {
     if (this.isCoverFile(file) === false) {
       throw new BadRequestException({
         success: false,
-        message: 'Le fichier image est requis.',
+        message: apiMessage('articles.coverImageRequired'),
       });
     }
 
@@ -368,7 +369,7 @@ export class ArticlesController {
 
       throw new InternalServerErrorException({
         success: false,
-        message: "Impossible d'envoyer l'image de couverture.",
+        message: apiMessage('articles.coverImageUploadFailed'),
       });
     }
   }
@@ -422,7 +423,7 @@ export class ArticlesController {
     if (!validated.valid) {
       throw new BadRequestException({
         success: false,
-        message: 'Payload invalide.',
+        message: apiMessage('validation.invalidPayload'),
         errors: validated.errors,
       });
     }
@@ -460,7 +461,7 @@ export class ArticlesController {
     if (!validated.valid) {
       throw new BadRequestException({
         success: false,
-        message: 'Payload invalide.',
+        message: apiMessage('validation.invalidPayload'),
         errors: validated.errors,
       });
     }
@@ -541,7 +542,7 @@ export class ArticlesController {
     if (!validated.valid) {
       throw new BadRequestException({
         success: false,
-        message: 'Payload invalide.',
+        message: apiMessage('validation.invalidPayload'),
         errors: validated.errors,
       });
     }
@@ -576,7 +577,7 @@ export class ArticlesController {
     if (!validated.valid) {
       throw new BadRequestException({
         success: false,
-        message: 'Payload invalide.',
+        message: apiMessage('validation.invalidPayload'),
         errors: validated.errors,
       });
     }

@@ -42,6 +42,7 @@ import {
   validateUpdateProgramCoursePayload,
 } from './curriculum.dto';
 import { CurriculumService } from './curriculum.service';
+import { apiMessage } from '../i18n/api-message';
 
 @ApiTags('Curriculum')
 @ApiBearerAuth('access-token')
@@ -372,7 +373,7 @@ export class CurriculumController {
     if (!result.valid) {
       throw new BadRequestException({
         success: false,
-        message: 'Payload invalide.',
+        message: apiMessage('validation.invalidPayload'),
         errors: result.errors,
       });
     }

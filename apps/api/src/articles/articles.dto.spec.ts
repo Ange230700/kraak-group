@@ -58,14 +58,20 @@ describe('Articles DTO validation', () => {
     expect(result).toEqual({
       valid: false,
       errors: [
-        'Le champ slug est requis.',
-        'Le champ title est requis.',
-        'Le champ excerpt est requis.',
-        'Le champ content est requis.',
-        'Le champ authorId est requis.',
-        'Le champ status est invalide.',
-        'Le champ categoryIds doit contenir au moins une valeur.',
-        'Le champ tagIds doit contenir au moins une valeur.',
+        { key: 'validation.requiredField', params: { field: 'slug' } },
+        { key: 'validation.requiredField', params: { field: 'title' } },
+        { key: 'validation.requiredField', params: { field: 'excerpt' } },
+        { key: 'validation.requiredField', params: { field: 'content' } },
+        { key: 'validation.requiredField', params: { field: 'authorId' } },
+        { key: 'validation.invalidField', params: { field: 'status' } },
+        {
+          key: 'validation.nonEmptyArrayField',
+          params: { field: 'categoryIds' },
+        },
+        {
+          key: 'validation.nonEmptyArrayField',
+          params: { field: 'tagIds' },
+        },
       ],
     });
   });
@@ -92,19 +98,19 @@ describe('Articles DTO validation', () => {
 
     expect(result).toEqual({
       valid: false,
-      errors: ['Au moins un champ doit être fourni pour la mise à jour.'],
+      errors: [{ key: 'validation.updateRequiresField' }],
     });
   });
 
   it('Given un corps invalide, When la validation création ou mise à jour est appelée, Then une erreur de corps invalide est renvoyée', () => {
     expect(validateCreateArticlePayload(null)).toEqual({
       valid: false,
-      errors: ['Corps de requête invalide.'],
+      errors: [{ key: 'validation.invalidBody' }],
     });
 
     expect(validateUpdateArticlePayload('invalid')).toEqual({
       valid: false,
-      errors: ['Corps de requête invalide.'],
+      errors: [{ key: 'validation.invalidBody' }],
     });
   });
 
@@ -119,10 +125,16 @@ describe('Articles DTO validation', () => {
     expect(result).toEqual({
       valid: false,
       errors: [
-        'Le champ slug est requis.',
-        'Le champ status est invalide.',
-        'Le champ categoryIds doit contenir au moins une valeur.',
-        'Le champ tagIds doit contenir au moins une valeur.',
+        { key: 'validation.requiredField', params: { field: 'slug' } },
+        { key: 'validation.invalidField', params: { field: 'status' } },
+        {
+          key: 'validation.nonEmptyArrayField',
+          params: { field: 'categoryIds' },
+        },
+        {
+          key: 'validation.nonEmptyArrayField',
+          params: { field: 'tagIds' },
+        },
       ],
     });
   });
@@ -155,8 +167,8 @@ describe('Articles DTO validation', () => {
     expect(result).toEqual({
       valid: false,
       errors: [
-        'Le champ coverImageUrl est invalide.',
-        'Le champ publishedAt est invalide.',
+        { key: 'validation.invalidField', params: { field: 'coverImageUrl' } },
+        { key: 'validation.invalidField', params: { field: 'publishedAt' } },
       ],
     });
   });
@@ -214,8 +226,8 @@ describe('Articles DTO validation', () => {
     expect(result).toEqual({
       valid: false,
       errors: [
-        'Le champ coverImageUrl est invalide.',
-        'Le champ publishedAt est invalide.',
+        { key: 'validation.invalidField', params: { field: 'coverImageUrl' } },
+        { key: 'validation.invalidField', params: { field: 'publishedAt' } },
       ],
     });
   });
@@ -245,7 +257,10 @@ describe('Articles DTO validation', () => {
 
     expect(result).toEqual({
       valid: false,
-      errors: ['Le champ slug est requis.', 'Le champ label est requis.'],
+      errors: [
+        { key: 'validation.requiredField', params: { field: 'slug' } },
+        { key: 'validation.requiredField', params: { field: 'label' } },
+      ],
     });
   });
 
@@ -254,19 +269,19 @@ describe('Articles DTO validation', () => {
 
     expect(result).toEqual({
       valid: false,
-      errors: ['Au moins un champ doit être fourni pour la mise à jour.'],
+      errors: [{ key: 'validation.updateRequiresField' }],
     });
   });
 
   it('Given un corps non objet pour categorie et tag, When validateCreateCategoryPayload et validateUpdateCategoryPayload sont appelés, Then une erreur corps invalide est renvoyée', () => {
     expect(validateCreateCategoryPayload(null)).toEqual({
       valid: false,
-      errors: ['Corps de requête invalide.'],
+      errors: [{ key: 'validation.invalidBody' }],
     });
 
     expect(validateUpdateCategoryPayload(null)).toEqual({
       valid: false,
-      errors: ['Corps de requête invalide.'],
+      errors: [{ key: 'validation.invalidBody' }],
     });
   });
 
@@ -278,7 +293,7 @@ describe('Articles DTO validation', () => {
 
     expect(result).toEqual({
       valid: false,
-      errors: ['Le champ label est requis.'],
+      errors: [{ key: 'validation.requiredField', params: { field: 'label' } }],
     });
   });
 
@@ -319,7 +334,7 @@ describe('Articles DTO validation', () => {
 
     expect(result).toEqual({
       valid: false,
-      errors: ['Le champ description n’est pas autorisé pour un tag.'],
+      errors: [{ key: 'articles.tagDescriptionForbidden' }],
     });
   });
 
@@ -330,7 +345,7 @@ describe('Articles DTO validation', () => {
 
     expect(result).toEqual({
       valid: false,
-      errors: ['Le champ description n’est pas autorisé pour un tag.'],
+      errors: [{ key: 'articles.tagDescriptionForbidden' }],
     });
   });
 });

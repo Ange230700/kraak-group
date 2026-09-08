@@ -28,6 +28,7 @@ import type {
 } from '@kraak/contracts';
 import { AuthService } from '../auth/auth.service';
 import { extractAccessToken } from '../auth/auth.dto';
+import { apiMessage } from '../i18n/api-message';
 import { requireAdminAccess } from '../shared/admin-access.utils';
 import {
   validateCreateProgramPayload,
@@ -418,7 +419,7 @@ export class ProgramsController {
     if (!validated.valid) {
       throw new BadRequestException({
         success: false,
-        message: 'Payload invalide.',
+        message: apiMessage('validation.invalidPayload'),
         errors: validated.errors,
       });
     }
@@ -452,7 +453,7 @@ export class ProgramsController {
     if (!validated.valid) {
       throw new BadRequestException({
         success: false,
-        message: 'Payload invalide.',
+        message: apiMessage('validation.invalidPayload'),
         errors: validated.errors,
       });
     }
@@ -529,7 +530,7 @@ export class ProgramsController {
     if (!validated.valid) {
       throw new BadRequestException({
         success: false,
-        message: 'Payload invalide.',
+        message: apiMessage('validation.invalidPayload'),
         errors: validated.errors,
       });
     }
@@ -558,7 +559,7 @@ export class ProgramsController {
     if (!validated.valid) {
       throw new BadRequestException({
         success: false,
-        message: 'Payload invalide.',
+        message: apiMessage('validation.invalidPayload'),
         errors: validated.errors,
       });
     }
@@ -705,7 +706,8 @@ export class ProgramsController {
     if (!payload.valid) {
       throw new BadRequestException({
         success: false,
-        message: payload.errors.join(' '),
+        message: apiMessage('validation.invalidPayload'),
+        errors: payload.errors,
       });
     }
 

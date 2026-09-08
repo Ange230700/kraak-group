@@ -326,7 +326,12 @@ describe('ArticlesController', () => {
   it('Given un fichier manquant, When uploadCoverImage est appelé, Then une BadRequestException est renvoyée', async () => {
     await expect(
       controller.uploadCoverImage(undefined, 'Bearer access-token'),
-    ).rejects.toBeInstanceOf(BadRequestException);
+    ).rejects.toMatchObject({
+      response: {
+        success: false,
+        message: { key: 'articles.coverImageRequired' },
+      },
+    });
   });
 
   it('Given une erreur non HttpException du service upload, When uploadCoverImage est appelé, Then une InternalServerErrorException est renvoyée', async () => {

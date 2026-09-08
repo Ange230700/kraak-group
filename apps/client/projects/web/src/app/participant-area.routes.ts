@@ -1,104 +1,120 @@
 // apps\client\projects\web\src\app\participant-area.routes.ts
 
-import { type CanMatchFn, Routes } from '@angular/router';
+import { inject } from '@angular/core';
+import { type CanMatchFn, type ResolveFn, Routes } from '@angular/router';
+import { resolveSupportedLocale } from '@kraak/domain';
 
 import {
   participantRoleGuard,
   participantRoleChildGuard,
 } from './core/auth/auth.guard';
 import { isParticipantAreaEnabled } from './core/runtime/runtime-config';
+import { KraakI18nService } from '../../../shared/i18n';
 import { type SeoPageDefinition } from './seo/site-seo';
 
 export const participantAreaCanMatch: CanMatchFn = () =>
   isParticipantAreaEnabled();
 
 const AUTH_ROBOTS_DIRECTIVE = 'noindex, nofollow';
+const PARTICIPANT_SHARE_IMAGE =
+  '/assets/site-visuals/photos/home-hero-workshop.jpg';
 
-const authOpenGraph = {
-  title: 'Accès participant | KRAAK Consulting',
-  description:
-    'Accédez à votre espace participant KRAAK pour gérer votre session en toute sécurité.',
-  imagePath: '/assets/site-visuals/photos/home-hero-workshop.jpg',
-  imageAlt:
-    "Photo d'un atelier KRAAK Consulting avec des participants en session de travail.",
-};
+interface ParticipantSeoOptions {
+  readonly path: string;
+  readonly titleKey: string;
+  readonly descriptionKey: string;
+}
 
-const signInSeo: SeoPageDefinition = {
-  path: 'connexion',
-  title: 'Connexion | KRAAK',
-  description:
-    'Connectez-vous à votre espace KRAAK pour reprendre votre parcours participant.',
-  robots: AUTH_ROBOTS_DIRECTIVE,
-  openGraph: authOpenGraph,
-  sitemap: {
-    changeFrequency: 'never',
-    priority: 0.1,
-  },
-};
+const translatedTitle =
+  (key: string): ResolveFn<string> =>
+  () => {
+    const i18n = inject(KraakI18nService);
+    return `${i18n.translate(key)} | KRAAK`;
+  };
 
-const signUpSeo: SeoPageDefinition = {
-  path: 'inscription',
-  title: 'Inscription | KRAAK',
-  description:
-    'Créez votre accès participant KRAAK pour suivre vos prochaines étapes.',
-  robots: AUTH_ROBOTS_DIRECTIVE,
-  openGraph: authOpenGraph,
-  sitemap: {
-    changeFrequency: 'never',
-    priority: 0.1,
-  },
-};
+const participantSeo =
+  ({
+    path,
+    titleKey,
+    descriptionKey,
+  }: ParticipantSeoOptions): ResolveFn<SeoPageDefinition> =>
+  () => {
+    const i18n = inject(KraakI18nService);
+    const locale = resolveSupportedLocale(i18n.locale());
+    const title = `${i18n.translate(titleKey)} | KRAAK`;
+    const description = i18n.translate(descriptionKey);
 
-const passwordResetSeo: SeoPageDefinition = {
-  path: 'mot-de-passe-oublie',
-  title: 'Mot de passe oublié | KRAAK',
-  description:
-    'Demandez un lien de réinitialisation pour sécuriser votre accès participant.',
-  robots: AUTH_ROBOTS_DIRECTIVE,
-  openGraph: authOpenGraph,
-  sitemap: {
-    changeFrequency: 'never',
-    priority: 0.1,
-  },
-};
-
-const participantDashboardSeo: SeoPageDefinition = {
-  path: 'participant/dashboard',
-  title: 'Espace participant | KRAAK',
-  description:
-    'Consultez votre tableau de bord participant KRAAK et poursuivez votre progression.',
-  robots: AUTH_ROBOTS_DIRECTIVE,
-  openGraph: authOpenGraph,
-  sitemap: {
-    changeFrequency: 'never',
-    priority: 0.1,
-  },
-};
+    return {
+      path,
+      title,
+      description,
+      robots: AUTH_ROBOTS_DIRECTIVE,
+      locale,
+      htmlLang: locale,
+      openGraphLocale: locale.replace('-', '_'),
+      openGraph: {
+        title,
+        description,
+        imagePath: PARTICIPANT_SHARE_IMAGE,
+        imageAlt: `${i18n.translate(
+          'web.auth.common.participantArea',
+        )} | KRAAK Consulting`,
+      },
+      sitemap: {
+        changeFrequency: 'never',
+        priority: 0.1,
+      },
+    };
+  };
 
 export const participantAreaRoutes: Routes = [
   {
     path: 'connexion',
-    title: 'Connexion | KRAAK',
-    data: { seo: signInSeo },
+    title: translatedTitle('web.auth.signIn.title'),
+    resolve: {
+      seo: participantSeo({
+        path: 'connexion',
+        titleKey: 'web.auth.signIn.title',
+        descriptionKey: 'web.auth.signIn.subtitle',
+      }),
+    },
     loadComponent: () => import('./features/auth/sign-in.page'),
   },
   {
     path: 'inscription',
-    title: 'Inscription | KRAAK',
-    data: { seo: signUpSeo },
+    title: translatedTitle('web.auth.signUp.title'),
+    resolve: {
+      seo: participantSeo({
+        path: 'inscription',
+        titleKey: 'web.auth.signUp.title',
+        descriptionKey: 'web.auth.signUp.subtitle',
+      }),
+    },
     loadComponent: () => import('./features/auth/sign-up.page'),
   },
   {
     path: 'mot-de-passe-oublie',
-    title: 'Mot de passe oublié | KRAAK',
-    data: { seo: passwordResetSeo },
+    title: translatedTitle('web.auth.signIn.forgotPassword'),
+    resolve: {
+      seo: participantSeo({
+        path: 'mot-de-passe-oublie',
+        titleKey: 'web.auth.signIn.forgotPassword',
+        descriptionKey: 'web.auth.forgotPassword.subtitle',
+      }),
+    },
     loadComponent: () => import('./features/auth/password-reset.page'),
   },
   {
     path: 'participant',
     data: {
-      seo: participantDashboardSeo,
       appShell: 'participant',
+    },
+    resolve: {
+      seo: participantSeo({
+        path: 'participant/dashboard',
+        titleKey: 'web.auth.common.participantArea',
+        descriptionKey: 'web.participant.dashboard.hero.intro',
+      }),
     },
     canActivate: [participantRoleGuard],
     canActivateChild: [participantRoleChildGuard],

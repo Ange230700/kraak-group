@@ -1,5 +1,6 @@
 // apps\client\projects\web\src\app\features\auth\auth-reset.page.spec.ts
 
+import { ApplicationInitStatus } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
 import { MessageService } from 'primeng/api';
@@ -7,6 +8,7 @@ import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { WebAuthService } from '../../core/auth/web-auth.service';
 import AuthResetPage from './auth-reset.page';
 
+import { KraakI18nService, provideKraakI18n } from '../../../../../shared/i18n';
 const flushPromises = async (): Promise<void> => {
   await Promise.resolve();
   await Promise.resolve();
@@ -19,6 +21,7 @@ describe('Web AuthResetPage', () => {
   };
 
   beforeEach(async () => {
+    globalThis.window.localStorage.setItem('kraak:locale', 'fr-CI');
     authService.resolveRecoveryAccessTokenFromUrl.mockReset();
     authService.completePasswordRecovery.mockReset();
 
@@ -33,11 +36,15 @@ describe('Web AuthResetPage', () => {
     await TestBed.configureTestingModule({
       imports: [AuthResetPage],
       providers: [
+        provideKraakI18n(),
         provideRouter([]),
         { provide: WebAuthService, useValue: authService },
         MessageService,
       ],
     }).compileComponents();
+
+    await TestBed.inject(ApplicationInitStatus).donePromise;
+    await TestBed.inject(KraakI18nService).setLocale('fr-CI');
   });
 
   it('Given a valid recovery token, when ngOnInit is called, then recovery token is available for the form', async () => {
@@ -287,5 +294,17 @@ describe('Web AuthResetPage', () => {
     expect(getSubmitButton().getAttribute('aria-label')).toBe(
       'Mise à jour en cours...',
     );
+  });
+  it('Given English locale and token loading in progress, when rendered, then the loading message is localized', async () => {
+    await TestBed.inject(KraakI18nService).setLocale('en-GB');
+
+    const fixture = TestBed.createComponent(AuthResetPage);
+    fixture.componentInstance.tokenReady.set(false);
+    fixture.detectChanges();
+
+    const text = (fixture.nativeElement as HTMLElement).textContent ?? '';
+
+    expect(text).toContain('Checking the reset link...');
+    expect(text).not.toContain('Vérification du lien de réinitialisation...');
   });
 });

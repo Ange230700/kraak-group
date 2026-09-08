@@ -8,16 +8,18 @@
       <p
         class="text-brand-blue mb-1 text-xs font-semibold tracking-[0.3em] uppercase"
       >
-        Administration
+        {{ 'web.admin.users.create.header.eyebrow' | kraakTranslate }}
       </p>
-      <h1 class="text-brand-navy text-2xl font-bold">Nouvel utilisateur</h1>
+      <h1 class="text-brand-navy text-2xl font-bold">
+        {{ 'web.admin.users.create.header.title' | kraakTranslate }}
+      </h1>
       <p class="mt-1 text-sm text-neutral-600">
-        Invitez un nouveau membre à rejoindre la plateforme KRAAK.
+        {{ 'web.admin.users.create.header.description' | kraakTranslate }}
       </p>
     </div>
     <button pButton class="kr-button-ghost" type="button" (click)="cancel()">
       <i class="pi pi-arrow-left mr-2"></i>
-      Retour à la liste
+      {{ 'web.admin.users.create.header.backToList' | kraakTranslate }}
     </button>
   </div>
 </section>
@@ -37,7 +39,9 @@
       <aside class="hidden w-64 shrink-0 lg:block">
         <nav
           class="bg-brand-white rounded-card shadow-card flex flex-col gap-1 p-4"
-          aria-label="Étapes de création"
+          [attr.aria-label]="
+            'web.admin.users.create.navigation.aria' | kraakTranslate
+          "
         >
           @for (step of steps; track step.path; let i = $index) {
             <a
@@ -52,7 +56,7 @@
               "
             >
               <i [class]="'pi ' + step.icon + ' text-base'"></i>
-              <span>{{ step.label }}</span>
+              <span>{{ step.labelKey | kraakTranslate }}</span>
             </a>
           }
         </nav>
@@ -60,7 +64,12 @@
 
       <!-- Navigation mobile (onglets défilants) -->
       <div class="-mx-4 overflow-x-auto px-4 pb-2 lg:hidden">
-        <nav class="flex min-w-max gap-1" aria-label="Étapes de création">
+        <nav
+          class="flex min-w-max gap-1"
+          [attr.aria-label]="
+            'web.admin.users.create.navigation.aria' | kraakTranslate
+          "
+        >
           @for (step of steps; track step.path; let i = $index) {
             <a
               [routerLink]="getStepRouterLink(step)"
@@ -74,7 +83,7 @@
               "
             >
               <i [class]="'pi ' + step.icon"></i>
-              {{ step.label }}
+              {{ step.labelKey | kraakTranslate }}
             </a>
           }
         </nav>
@@ -95,7 +104,7 @@
             (click)="cancel()"
             [disabled]="submitting()"
           >
-            Annuler
+            {{ 'web.admin.users.create.actions.cancel' | kraakTranslate }}
           </button>
 
           <button
@@ -112,7 +121,7 @@
             @if (submitting()) {
               <i class="pi pi-spin pi-spinner mr-2"></i>
             }
-            Envoyer l'invitation
+            {{ 'web.admin.users.create.actions.submit' | kraakTranslate }}
           </button>
         </div>
       </div>

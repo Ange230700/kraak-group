@@ -1,14 +1,20 @@
+import { ApplicationInitStatus } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { Router, provideRouter } from '@angular/router';
 import { vi } from 'vitest';
 import BasicInformationPage from './basic-information.page';
+import {
+  KraakI18nService,
+  provideKraakI18n,
+} from '../../../../../../../shared/i18n';
 import { UserFormStateService } from '../user-form-state.service';
 
 describe('BasicInformationPage', () => {
   beforeEach(async () => {
+    globalThis.window.localStorage.setItem('kraak:locale', 'fr-CI');
     await TestBed.configureTestingModule({
       imports: [BasicInformationPage],
-      providers: [provideRouter([]), UserFormStateService],
+      providers: [provideKraakI18n(), provideRouter([]), UserFormStateService],
     }).compileComponents();
   });
 
@@ -127,5 +133,33 @@ describe('BasicInformationPage', () => {
     expect(formState.state().lastName).toBe('Nkosi');
     expect(formState.state().email).toBe('lina@example.com');
     expect(formState.state().phone).toBe('+243810000000');
+  });
+
+  it('Given English locale, When the step renders, Then it renders Basic Information chrome in English', async () => {
+    const i18n = TestBed.inject(KraakI18nService);
+    await TestBed.inject(ApplicationInitStatus).donePromise;
+    await i18n.setLocale('en-GB');
+
+    const fixture = TestBed.createComponent(BasicInformationPage);
+    fixture.detectChanges();
+
+    const host = fixture.nativeElement as HTMLElement;
+    const text = host.textContent ?? '';
+
+    expect(text).toContain('Step 1 of 5');
+    expect(text).toContain('Basic information');
+    expect(text).toContain('First name');
+    expect(text).toContain('Last name');
+    expect(text).toContain('Email address');
+    expect(text).toContain('Phone');
+    expect(text).toContain('Next');
+
+    expect(
+      (host.querySelector('#firstName') as HTMLInputElement).placeholder,
+    ).toBe('E.g. Alice');
+
+    expect((host.querySelector('#phone') as HTMLInputElement).placeholder).toBe(
+      'E.g. +243 81 234 5678',
+    );
   });
 });

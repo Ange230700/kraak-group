@@ -9,13 +9,20 @@ import {
   createSignInForm,
   submitSignInForm,
 } from '@kraak/api-client';
+import { KraakTranslatePipe } from '../../../../../shared/i18n';
 import { PageShellComponent } from '../../shared/page-shell/page-shell.component';
 import { MobileAuthService } from './mobile-auth.service';
 
 @Component({
   selector: 'kraak-sign-in-page',
   standalone: true,
-  imports: [PageShellComponent, ReactiveFormsModule, RouterLink, IonButton],
+  imports: [
+    PageShellComponent,
+    ReactiveFormsModule,
+    RouterLink,
+    IonButton,
+    KraakTranslatePipe,
+  ],
   templateUrl: './sign-in.page.html',
 })
 export default class SignInPage {

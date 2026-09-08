@@ -13,18 +13,24 @@ import { WebAuthService } from '../../../core/auth/web-auth.service';
 import { resolveApiBaseUrl } from '../../../core/runtime/runtime-config';
 import { RevealOnScrollDirective } from '../../../shared/motion/reveal-on-scroll.directive';
 
+import {
+  KraakI18nService,
+  KraakTranslatePipe,
+} from '../../../../../../shared/i18n';
 @Component({
   selector: 'kraak-web-participant-program-detail',
   standalone: true,
-  imports: [RouterLink, RevealOnScrollDirective],
+  imports: [RouterLink, RevealOnScrollDirective, KraakTranslatePipe],
   templateUrl: './program-detail.page.html',
 })
 export default class ProgramDetailPage implements OnInit {
+  private readonly i18n = inject(KraakI18nService);
   private readonly authService = inject(WebAuthService);
   private readonly route = inject(ActivatedRoute);
 
   protected programsClient: Pick<ApiClient['participantPrograms'], 'getById'> =
     createApiClient({
+      getLocale: () => this.i18n.locale(),
       baseUrl: resolveApiBaseUrl(environment.apiBaseUrl),
       getAuthToken: () =>
         this.authService.currentSession()?.accessToken ?? null,
@@ -60,13 +66,21 @@ export default class ProgramDetailPage implements OnInit {
   ): string {
     switch (status) {
       case 'pending':
-        return 'En attente';
+        return this.i18n.translate(
+          'web.participant.programDetail.status.enrollment.pending',
+        );
       case 'active':
-        return 'Actif';
+        return this.i18n.translate(
+          'web.participant.programDetail.status.enrollment.active',
+        );
       case 'completed':
-        return 'Terminé';
+        return this.i18n.translate(
+          'web.participant.programDetail.status.enrollment.completed',
+        );
       case 'cancelled':
-        return 'Annulé';
+        return this.i18n.translate(
+          'web.participant.programDetail.status.enrollment.cancelled',
+        );
     }
   }
 
@@ -75,11 +89,17 @@ export default class ProgramDetailPage implements OnInit {
   ): string {
     switch (status) {
       case 'not_started':
-        return 'Non commencé';
+        return this.i18n.translate(
+          'web.participant.programDetail.status.progress.notStarted',
+        );
       case 'in_progress':
-        return 'En cours';
+        return this.i18n.translate(
+          'web.participant.programDetail.status.progress.inProgress',
+        );
       case 'completed':
-        return 'Terminé';
+        return this.i18n.translate(
+          'web.participant.programDetail.status.progress.completed',
+        );
     }
   }
 
@@ -88,13 +108,21 @@ export default class ProgramDetailPage implements OnInit {
   ): string {
     switch (status) {
       case 'scheduled':
-        return 'Planifiée';
+        return this.i18n.translate(
+          'web.participant.programDetail.status.session.scheduled',
+        );
       case 'live':
-        return 'En direct';
+        return this.i18n.translate(
+          'web.participant.programDetail.status.session.live',
+        );
       case 'completed':
-        return 'Terminée';
+        return this.i18n.translate(
+          'web.participant.programDetail.status.session.completed',
+        );
       case 'cancelled':
-        return 'Annulée';
+        return this.i18n.translate(
+          'web.participant.programDetail.status.session.cancelled',
+        );
     }
   }
 
@@ -103,11 +131,17 @@ export default class ProgramDetailPage implements OnInit {
   ): string {
     switch (type) {
       case 'online':
-        return 'En ligne';
+        return this.i18n.translate(
+          'web.participant.programDetail.status.location.online',
+        );
       case 'onsite':
-        return 'Sur site';
+        return this.i18n.translate(
+          'web.participant.programDetail.status.location.onsite',
+        );
       case 'hybrid':
-        return 'Hybride';
+        return this.i18n.translate(
+          'web.participant.programDetail.status.location.hybrid',
+        );
     }
   }
 
@@ -116,13 +150,21 @@ export default class ProgramDetailPage implements OnInit {
   ): string {
     switch (type) {
       case 'link':
-        return 'Lien';
+        return this.i18n.translate(
+          'web.participant.programDetail.status.resourceType.link',
+        );
       case 'file':
-        return 'Fichier';
+        return this.i18n.translate(
+          'web.participant.programDetail.status.resourceType.file',
+        );
       case 'video':
-        return 'Vidéo';
+        return this.i18n.translate(
+          'web.participant.programDetail.status.resourceType.video',
+        );
       case 'document':
-        return 'Document';
+        return this.i18n.translate(
+          'web.participant.programDetail.status.resourceType.document',
+        );
     }
   }
 
@@ -131,19 +173,27 @@ export default class ProgramDetailPage implements OnInit {
   ): string {
     switch (theme) {
       case 'training':
-        return 'Formation';
+        return this.i18n.translate(
+          'web.participant.programDetail.status.resourceTheme.training',
+        );
       case 'project_management':
-        return 'Gestion de projet';
+        return this.i18n.translate(
+          'web.participant.programDetail.status.resourceTheme.projectManagement',
+        );
       case 'immigration':
-        return 'Immigration';
+        return this.i18n.translate(
+          'web.participant.programDetail.status.resourceTheme.immigration',
+        );
       case 'career':
-        return 'Carrière';
+        return this.i18n.translate(
+          'web.participant.programDetail.status.resourceTheme.career',
+        );
     }
   }
 
   protected formatDate(rawDate: string | null): string {
     if (!rawDate) {
-      return 'À venir';
+      return this.i18n.translate('web.participant.programDetail.date.upcoming');
     }
 
     const parsedDate = new Date(rawDate);
@@ -151,7 +201,7 @@ export default class ProgramDetailPage implements OnInit {
       return rawDate;
     }
 
-    return new Intl.DateTimeFormat('fr-FR', {
+    return new Intl.DateTimeFormat(this.i18n.locale(), {
       day: '2-digit',
       month: 'short',
       year: 'numeric',
@@ -164,7 +214,7 @@ export default class ProgramDetailPage implements OnInit {
       return rawDate;
     }
 
-    return new Intl.DateTimeFormat('fr-FR', {
+    return new Intl.DateTimeFormat(this.i18n.locale(), {
       day: '2-digit',
       month: 'short',
       year: 'numeric',
@@ -192,7 +242,7 @@ export default class ProgramDetailPage implements OnInit {
       this.errorMessage.set(
         resolveAuthErrorMessage(
           error,
-          'Erreur lors du chargement du programme.',
+          this.i18n.translate('web.participant.programDetail.error.fallback'),
         ),
       );
     } finally {

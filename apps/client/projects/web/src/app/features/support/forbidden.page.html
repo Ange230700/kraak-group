@@ -16,7 +16,7 @@
       <p
         class="text-brand-blue text-sm font-semibold tracking-[0.2em] uppercase"
       >
-        Accès refusé
+        {{ 'web.status.forbidden.eyebrow' | kraakTranslate }}
       </p>
       <h1
         class="text-brand-navy mt-5 text-5xl font-semibold sm:text-6xl lg:text-7xl"
@@ -24,32 +24,35 @@
         403
       </h1>
       <p class="text-brand-navy mx-auto mt-6 max-w-2xl text-lg leading-8">
-        Vous n'avez pas les droits nécessaires pour consulter cette page.
-        Contactez notre équipe si vous pensez qu'il s'agit d'une erreur.
+        {{ 'web.status.forbidden.description' | kraakTranslate }}
       </p>
 
       <div class="mt-10 flex flex-col justify-center gap-3 sm:flex-row">
         <a
           pButton
           [routerLink]="'home' | localizedPublicPath"
-          label="Retour à l'accueil"
+          [label]="'web.status.common.homeLabel' | kraakTranslate"
           icon="pi pi-home"
           size="large"
           class="kr-button-primary"
-          aria-label="Retour à la page d'accueil"
+          [attr.aria-label]="'web.status.common.homeAria' | kraakTranslate"
         >
-          <span class="sr-only">Retour à la page d'accueil</span>
+          <span class="sr-only">
+            {{ 'web.status.common.homeAria' | kraakTranslate }}
+          </span>
         </a>
         <a
           pButton
           [routerLink]="'contact' | localizedPublicPath"
-          label="Nous contacter"
+          [label]="'web.status.common.contactLabel' | kraakTranslate"
           icon="pi pi-envelope"
           size="large"
           class="kr-button-ghost"
-          aria-label="Contacter KRAAK"
+          [attr.aria-label]="'web.status.common.contactAria' | kraakTranslate"
         >
-          <span class="sr-only">Contacter KRAAK</span>
+          <span class="sr-only">
+            {{ 'web.status.common.contactAria' | kraakTranslate }}
+          </span>
         </a>
       </div>
     </div>

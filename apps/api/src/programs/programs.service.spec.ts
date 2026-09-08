@@ -1867,6 +1867,74 @@ describe('ProgramsService', () => {
     ]);
   });
 
+  // Given une erreur sur la pagination des sessions cohort
+  // When listPrograms est appelé
+  // Then l'erreur publique de chargement de progression est renvoyée
+  it('Given une erreur sur la pagination des sessions cohort, When listPrograms est appelé, Then programs.progressLoadFailed est renvoyé', async () => {
+    const participantQuery = createSingleRowQuery({
+      data: { id: 'participant-1' },
+      error: null,
+    });
+
+    const enrollmentQuery = createListQuery({
+      data: [
+        {
+          id: 'enrollment-1',
+          status: 'active',
+          completed_at: null,
+          program_id: 'program-1',
+          cohort_id: 'cohort-1',
+          progress_completed_session_ids: [],
+          progress_updated_at: null,
+          program: {
+            id: 'program-1',
+            slug: 'leadership-essentials',
+            title: 'Leadership Essentials',
+            summary: 'Bases du leadership.',
+            description: 'Parcours complet.',
+            status: 'published',
+            visibility: 'participants',
+            created_at: '2026-04-01T00:00:00.000Z',
+            updated_at: '2026-04-01T00:00:00.000Z',
+          },
+          cohort: {
+            id: 'cohort-1',
+            program_id: 'program-1',
+            name: 'Cohorte Avril',
+            code: 'APR-26',
+            status: 'active',
+            start_date: '2026-04-10',
+            end_date: null,
+            capacity: 25,
+            created_at: '2026-04-01T00:00:00.000Z',
+            updated_at: '2026-04-01T00:00:00.000Z',
+          },
+        },
+      ],
+      error: null,
+    });
+
+    const sessionsByCohortQuery = createListQuery({
+      data: null,
+      error: { message: 'session range error' },
+    });
+
+    adminClient.from.mockImplementation((tableName: string) => {
+      if (tableName === 'participant') return participantQuery;
+      if (tableName === 'enrollment') return enrollmentQuery;
+      if (tableName === 'session') return sessionsByCohortQuery;
+
+      throw new Error(`Unexpected table ${tableName}`);
+    });
+
+    await expect(service.listPrograms('access-token')).rejects.toMatchObject({
+      response: {
+        success: false,
+        message: { key: 'programs.progressLoadFailed' },
+      },
+    });
+  });
+
   // Given une erreur DB sur le participant dans resolveParticipantId
   // When listPrograms est appelé
   // Then une InternalServerErrorException est renvoyée
@@ -1959,7 +2027,12 @@ describe('ProgramsService', () => {
 
     await expect(
       service.getProgramDetail('access-token', 'program-1'),
-    ).rejects.toBeInstanceOf(InternalServerErrorException);
+    ).rejects.toMatchObject({
+      response: {
+        success: false,
+        message: { key: 'programs.detailLoadFailed' },
+      },
+    });
   });
 
   // Given un schéma staging sans colonnes de progression enrollment
@@ -2680,7 +2753,12 @@ describe('ProgramsService', () => {
         sessionId: 'session-1',
         completed: true,
       }),
-    ).rejects.toBeInstanceOf(InternalServerErrorException);
+    ).rejects.toMatchObject({
+      response: {
+        success: false,
+        message: { key: 'programs.progressUpdateFailed' },
+      },
+    });
   });
 
   // Given une erreur de mise à jour DB dans markSessionProgress

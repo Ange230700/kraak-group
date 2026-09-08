@@ -35,6 +35,7 @@ async function compile(): Promise<void> {
   }).compileComponents();
 
   await TestBed.inject(ApplicationInitStatus).donePromise;
+  await TestBed.inject(KraakI18nService).setLocale('fr-CI');
 }
 
 describe('ParticipantNavCtaLink', () => {

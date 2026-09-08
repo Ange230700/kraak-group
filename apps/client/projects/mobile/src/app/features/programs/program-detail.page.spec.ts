@@ -1,3 +1,4 @@
+import { ApplicationInitStatus } from '@angular/core';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { ActivatedRoute, provideRouter } from '@angular/router';
@@ -9,6 +10,7 @@ import type {
   SessionDto,
 } from '@kraak/contracts';
 import { MobileProgramsService } from './mobile-programs.service';
+import { KraakI18nService, provideKraakI18n } from '../../../../../shared/i18n';
 import ProgramDetailPage from './program-detail.page';
 
 const TEST_PROGRAM_RESOURCE_URL = 'https://example.com/guide.pdf';
@@ -62,9 +64,12 @@ describe('Mobile ProgramDetailPage', () => {
     sessions: [],
     resources: [],
     announcements: [],
+    curriculum: { courses: [] },
   };
 
   beforeEach(async () => {
+    globalThis.window.localStorage.setItem('kraak:locale', 'fr-CI');
+
     service = {
       getProgramDetail: vi.fn(),
     };
@@ -86,11 +91,14 @@ describe('Mobile ProgramDetailPage', () => {
       imports: [ProgramDetailPage],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
       providers: [
+        provideKraakI18n(),
         provideRouter([]),
         { provide: MobileProgramsService, useValue: service },
         { provide: ActivatedRoute, useValue: activatedRoute },
       ],
     }).compileComponents();
+
+    await TestBed.inject(ApplicationInitStatus).donePromise;
   });
 
   it('should create', () => {
@@ -322,5 +330,39 @@ describe('Mobile ProgramDetailPage', () => {
 
       expect(title).toBe('Programme');
     });
+  });
+
+  it('Given English is selected, when programme detail is rendered, then page chrome and enum labels are translated while business content stays unchanged', async () => {
+    service.getProgramDetail.mockResolvedValue(mockProgramDetail);
+
+    const i18n = TestBed.inject(KraakI18nService);
+    await i18n.setLocale('en-GB');
+
+    const fixture = TestBed.createComponent(ProgramDetailPage);
+
+    fixture.detectChanges();
+    await fixture.whenStable();
+    fixture.detectChanges();
+
+    const text = (fixture.nativeElement.textContent ?? '').replace(/\s+/g, ' ');
+
+    expect(text).toContain('Programme details');
+    expect(text).toContain('Programme');
+    expect(text).toContain('Enrollment status:');
+    expect(text).toContain('Active');
+    expect(text).toContain('Progress:');
+    expect(text).toContain('Cohort');
+    expect(text).toContain('Name:');
+
+    // Dynamic business content remains source-language data
+    // until Layer 6 introduces multilingual DTO fields.
+    expect(text).toContain('Programme test');
+    expect(text).toContain('Un programme de test');
+
+    const component = fixture.componentInstance;
+
+    expect(component['getLocationTypeLabel']('online')).toBe('Online');
+
+    expect(component['getResourceTypeLabel']('video')).toBe('Video');
   });
 });

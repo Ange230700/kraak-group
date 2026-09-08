@@ -1,3 +1,4 @@
+import { apiMessage } from '../i18n/api-message';
 import {
   InternalServerErrorException,
   Injectable,
@@ -88,7 +89,7 @@ export class AnnouncementsService {
     if (error || !data) {
       throw new InternalServerErrorException({
         success: false,
-        message: 'Impossible de créer l’annonce.',
+        message: apiMessage('announcements.createFailed'),
       });
     }
 
@@ -146,7 +147,7 @@ export class AnnouncementsService {
     if (error || !data) {
       throw new NotFoundException({
         success: false,
-        message: 'Annonce introuvable.',
+        message: apiMessage('announcements.notFound'),
       });
     }
 
@@ -165,7 +166,7 @@ export class AnnouncementsService {
     if (error || !data) {
       throw new NotFoundException({
         success: false,
-        message: 'Annonce introuvable.',
+        message: apiMessage('announcements.notFound'),
       });
     }
   }
@@ -227,7 +228,7 @@ export class AnnouncementsService {
     if (!participantId) {
       throw new UnauthorizedException({
         success: false,
-        message: 'La session est invalide ou expirée.',
+        message: apiMessage('auth.sessionInvalidOrExpired'),
       });
     }
 
@@ -356,7 +357,11 @@ export class AnnouncementsService {
       await this.readPublishedAnnouncementById(id);
 
     if (announcementError || !announcementData) {
-      throw new NotFoundException('Announcement not found or not published');
+      throw new NotFoundException({
+        statusCode: 404,
+        message: apiMessage('announcements.notFoundOrNotPublished'),
+        error: 'Not Found',
+      });
     }
 
     const announcement = announcementData;
@@ -374,7 +379,11 @@ export class AnnouncementsService {
     );
 
     if (!isVisible) {
-      throw new NotFoundException('Announcement not found or not accessible');
+      throw new NotFoundException({
+        statusCode: 404,
+        message: apiMessage('announcements.notFoundOrNotAccessible'),
+        error: 'Not Found',
+      });
     }
 
     return this.mapAnnouncement(announcement);

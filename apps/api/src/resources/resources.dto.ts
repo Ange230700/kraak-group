@@ -1,3 +1,4 @@
+import { apiMessage, type ApiMessageValue } from '../i18n/api-message';
 import type { CreateResourceDto, UpdateResourceDto } from '@kraak/contracts';
 import {
   assignRequiredTrimmedString,
@@ -38,7 +39,7 @@ function assignNullableString(
 function assignNullableDateTime(
   body: Record<string, unknown>,
   field: keyof CreateResourceDto,
-  errors: string[],
+  errors: ApiMessageValue[],
   updates: Partial<CreateResourceDto>,
 ): void {
   if (!(field in body)) {
@@ -53,7 +54,9 @@ function assignNullableDateTime(
 
   const normalized = readNullableDateTime(value);
   if (normalized === null && readTrimmedString(value)) {
-    errors.push(`Le champ ${field} est invalide.`);
+    errors.push(
+      apiMessage('validation.invalidField', { field: String(field) }),
+    );
     return;
   }
 
@@ -64,7 +67,7 @@ function assignEnumField<T extends string>(
   body: Record<string, unknown>,
   field: keyof CreateResourceDto,
   values: Set<T>,
-  errors: string[],
+  errors: ApiMessageValue[],
   updates: Partial<CreateResourceDto>,
 ): void {
   if (!(field in body)) {
@@ -74,7 +77,9 @@ function assignEnumField<T extends string>(
   const value = readTrimmedString(body[field]);
 
   if (!values.has(value as T)) {
-    errors.push(`Le champ ${field} est invalide.`);
+    errors.push(
+      apiMessage('validation.invalidField', { field: String(field) }),
+    );
     return;
   }
 
@@ -83,7 +88,7 @@ function assignEnumField<T extends string>(
 
 function assignOptionalTitle(
   body: Record<string, unknown>,
-  errors: string[],
+  errors: ApiMessageValue[],
   updates: UpdateResourceDto,
 ): void {
   if (!('title' in body)) {
@@ -92,7 +97,7 @@ function assignOptionalTitle(
 
   const title = readTrimmedString(body.title);
   if (title.length === 0) {
-    errors.push('Le champ title est requis.');
+    errors.push(apiMessage('validation.requiredField', { field: 'title' }));
     return;
   }
 
@@ -101,7 +106,7 @@ function assignOptionalTitle(
 
 function assignSharedResourceFields(
   body: Record<string, unknown>,
-  errors: string[],
+  errors: ApiMessageValue[],
   updates: Partial<CreateResourceDto>,
 ): void {
   assignNullableString(body, 'description', updates);
@@ -122,11 +127,11 @@ export function validateCreateResourcePayload(
   if (!isObjectPayload(body)) {
     return {
       valid: false,
-      errors: ['Corps de requête invalide.'],
+      errors: [apiMessage('validation.invalidBody')],
     };
   }
 
-  const errors: string[] = [];
+  const errors: ApiMessageValue[] = [];
   const data: Partial<CreateResourceDto> = {};
 
   assignRequiredTrimmedString(body, 'title', errors, data);
@@ -148,11 +153,11 @@ export function validateUpdateResourcePayload(
   if (!isObjectPayload(body)) {
     return {
       valid: false,
-      errors: ['Corps de requête invalide.'],
+      errors: [apiMessage('validation.invalidBody')],
     };
   }
 
-  const errors: string[] = [];
+  const errors: ApiMessageValue[] = [];
   const data: UpdateResourceDto = {};
 
   assignOptionalTitle(body, errors, data);
@@ -161,7 +166,7 @@ export function validateUpdateResourcePayload(
   if (Object.keys(data).length === 0 && errors.length === 0) {
     return {
       valid: false,
-      errors: ['Le payload de mise à jour doit contenir au moins un champ.'],
+      errors: [apiMessage('validation.updateRequiresField')],
     };
   }
 

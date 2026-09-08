@@ -13,13 +13,18 @@ import { WebAuthService } from '../../../core/auth/web-auth.service';
 import { resolveApiBaseUrl } from '../../../core/runtime/runtime-config';
 import { RevealOnScrollDirective } from '../../../shared/motion/reveal-on-scroll.directive';
 
+import {
+  KraakI18nService,
+  KraakTranslatePipe,
+} from '../../../../../../shared/i18n';
 @Component({
   selector: 'kraak-web-participant-session-detail',
   standalone: true,
-  imports: [RouterLink, RevealOnScrollDirective],
+  imports: [RouterLink, RevealOnScrollDirective, KraakTranslatePipe],
   templateUrl: './session-detail.page.html',
 })
 export default class SessionDetailPage implements OnInit {
+  private readonly i18n = inject(KraakI18nService);
   private readonly authService = inject(WebAuthService);
   private readonly route = inject(ActivatedRoute);
 
@@ -27,6 +32,7 @@ export default class SessionDetailPage implements OnInit {
     ApiClient['participantPrograms'],
     'getById' | 'markSessionProgress'
   > = createApiClient({
+    getLocale: () => this.i18n.locale(),
     baseUrl: resolveApiBaseUrl(environment.apiBaseUrl),
     getAuthToken: () => this.authService.currentSession()?.accessToken ?? null,
   }).participantPrograms;
@@ -114,7 +120,9 @@ export default class SessionDetailPage implements OnInit {
       this.markErrorMessage.set(
         resolveAuthErrorMessage(
           error,
-          'Impossible de mettre à jour votre progression.',
+          this.i18n.translate(
+            'web.participant.sessionDetail.progress.updateFallback',
+          ),
         ),
       );
     } finally {
@@ -125,24 +133,38 @@ export default class SessionDetailPage implements OnInit {
   protected sessionStatusLabel(status: SessionDto['status']): string {
     switch (status) {
       case 'scheduled':
-        return 'Planifiée';
+        return this.i18n.translate(
+          'web.participant.sessionDetail.status.session.scheduled',
+        );
       case 'live':
-        return 'En direct';
+        return this.i18n.translate(
+          'web.participant.sessionDetail.status.session.live',
+        );
       case 'completed':
-        return 'Terminée';
+        return this.i18n.translate(
+          'web.participant.sessionDetail.status.session.completed',
+        );
       case 'cancelled':
-        return 'Annulée';
+        return this.i18n.translate(
+          'web.participant.sessionDetail.status.session.cancelled',
+        );
     }
   }
 
   protected locationTypeLabel(type: SessionDto['locationType']): string {
     switch (type) {
       case 'online':
-        return 'En ligne';
+        return this.i18n.translate(
+          'web.participant.sessionDetail.status.location.online',
+        );
       case 'onsite':
-        return 'Sur site';
+        return this.i18n.translate(
+          'web.participant.sessionDetail.status.location.onsite',
+        );
       case 'hybrid':
-        return 'Hybride';
+        return this.i18n.translate(
+          'web.participant.sessionDetail.status.location.hybrid',
+        );
     }
   }
 
@@ -153,7 +175,7 @@ export default class SessionDetailPage implements OnInit {
       return rawDate;
     }
 
-    return new Intl.DateTimeFormat('fr-FR', {
+    return new Intl.DateTimeFormat(this.i18n.locale(), {
       day: '2-digit',
       month: 'short',
       year: 'numeric',
@@ -177,7 +199,7 @@ export default class SessionDetailPage implements OnInit {
       this.errorMessage.set(
         resolveAuthErrorMessage(
           error,
-          'Erreur lors du chargement de la session.',
+          this.i18n.translate('web.participant.sessionDetail.error.fallback'),
         ),
       );
     } finally {

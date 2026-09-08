@@ -1,3 +1,4 @@
+import { ApplicationInitStatus } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { vi } from 'vitest';
 
@@ -9,11 +10,17 @@ function buildTestAvatarUrl(fileName: string): string {
   return `${TEST_AVATAR_BASE_URL}/${fileName}`;
 }
 
+import { KraakI18nService, provideKraakI18n } from '../../../../../shared/i18n';
+
 describe('Testimonials', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
+      providers: [provideKraakI18n()],
       imports: [Testimonials],
     }).compileComponents();
+
+    await TestBed.inject(ApplicationInitStatus).donePromise;
+    await TestBed.inject(KraakI18nService).setLocale('fr-CI');
   });
 
   it('Given aucun item et placeholder actif, When le composant est rendu, Then la prévisualisation de stack est affichée', () => {
@@ -25,6 +32,31 @@ describe('Testimonials', () => {
     const text = (fixture.nativeElement as HTMLElement).textContent ?? '';
     expect(text).toContain('Prévisualisation du format témoignages');
     expect(text).toContain('Aïcha K.');
+    expect(text).toContain('Jeune professionnelle');
+    expect(text).toContain(
+      "Grâce à KRAAK, j'ai clarifié mon objectif de mobilité",
+    );
+  });
+
+  it('Given the English locale and preview fallback testimonials, When rendered, Then fallback copy is localized', async () => {
+    await TestBed.inject(KraakI18nService).setLocale('en-GB');
+
+    const fixture = TestBed.createComponent(Testimonials);
+    fixture.componentRef.setInput('items', []);
+    fixture.componentRef.setInput('placeholder', true);
+    fixture.detectChanges();
+
+    const text = (fixture.nativeElement as HTMLElement).textContent ?? '';
+
+    expect(text).toContain('Testimonial format preview');
+    expect(text).toContain('Aïcha K.');
+    expect(text).toContain('Young professional');
+    expect(text).toContain('Thanks to KRAAK, I clarified my mobility goal');
+
+    expect(text).not.toContain('Jeune professionnelle');
+    expect(text).not.toContain(
+      "Grâce à KRAAK, j'ai clarifié mon objectif de mobilité",
+    );
   });
 
   it('Given aucun item et placeholder désactivé, When le composant est rendu, Then rien n est affiché', () => {

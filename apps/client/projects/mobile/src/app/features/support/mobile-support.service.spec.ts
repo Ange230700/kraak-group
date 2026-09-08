@@ -2,6 +2,7 @@
 
 import { TestBed } from '@angular/core/testing';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+import { provideKraakI18n } from '../../../../../shared/i18n';
 import type { ContactFormDto } from '@kraak/contracts';
 import { MobileAuthService } from '../../features/auth/mobile-auth.service';
 import { MobileSupportService } from './mobile-support.service';
@@ -21,6 +22,7 @@ describe('MobileSupportService', () => {
 
     TestBed.configureTestingModule({
       providers: [
+        provideKraakI18n(),
         MobileSupportService,
         { provide: MobileAuthService, useValue: authServiceMock },
       ],

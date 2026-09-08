@@ -31,6 +31,7 @@ import {
   validateUpdateServicePayload,
 } from './services.dto';
 import { ServicesService } from './services.service';
+import { apiMessage } from '../i18n/api-message';
 
 const apiErrorSchema = {
   type: 'object',
@@ -189,7 +190,7 @@ export class ServicesController {
     if (!validated.valid) {
       throw new BadRequestException({
         success: false,
-        message: 'Payload invalide.',
+        message: apiMessage('validation.invalidPayload'),
         errors: validated.errors,
       });
     }
@@ -218,7 +219,7 @@ export class ServicesController {
     if (!validated.valid) {
       throw new BadRequestException({
         success: false,
-        message: 'Payload invalide.',
+        message: apiMessage('validation.invalidPayload'),
         errors: validated.errors,
       });
     }
@@ -280,7 +281,7 @@ export class ServicesController {
     if (!validated.valid) {
       throw new BadRequestException({
         success: false,
-        message: 'Payload invalide.',
+        message: apiMessage('validation.invalidPayload'),
         errors: validated.errors,
       });
     }
@@ -310,7 +311,7 @@ export class ServicesController {
     if (!validated.valid) {
       throw new BadRequestException({
         success: false,
-        message: 'Payload invalide.',
+        message: apiMessage('validation.invalidPayload'),
         errors: validated.errors,
       });
     }

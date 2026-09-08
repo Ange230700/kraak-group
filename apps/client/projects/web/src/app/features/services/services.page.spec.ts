@@ -39,6 +39,8 @@ describe('ServicesPage', () => {
   let analyticsService: Pick<AnalyticsService, 'trackEvent'>;
 
   beforeEach(async () => {
+    globalThis.window.localStorage.setItem('kraak:locale', 'fr-CI');
+
     analyticsService = {
       trackEvent: vi.fn(),
     };
@@ -60,6 +62,7 @@ describe('ServicesPage', () => {
     }).compileComponents();
 
     await TestBed.inject(ApplicationInitStatus).donePromise;
+    await TestBed.inject(KraakI18nService).setLocale('fr-CI');
   });
 
   it('Given the services page When the component is created Then the instance exists', () => {
@@ -274,5 +277,36 @@ describe('ServicesPage', () => {
     expect(content).toContain(
       'Comment choisir le service le plus adapté à mon objectif ?',
     );
+  });
+  it('Given French and English locales, When the Training Centre offers render, Then the accessibility label follows the active locale', async () => {
+    const i18n = TestBed.inject(KraakI18nService);
+
+    await i18n.setLocale('fr-CI');
+
+    const frenchFixture = TestBed.createComponent(ServicesPage);
+    frenchFixture.detectChanges();
+
+    expect(
+      (frenchFixture.nativeElement as HTMLElement).querySelector(
+        '[aria-label="Offres du KRAAK Training Centre"]',
+      ),
+    ).not.toBeNull();
+
+    await i18n.setLocale('en-GB');
+
+    const englishFixture = TestBed.createComponent(ServicesPage);
+    englishFixture.detectChanges();
+
+    expect(
+      (englishFixture.nativeElement as HTMLElement).querySelector(
+        '[aria-label="KRAAK Training Centre offerings"]',
+      ),
+    ).not.toBeNull();
+
+    expect(
+      (englishFixture.nativeElement as HTMLElement).querySelector(
+        '[aria-label="Offres du KRAAK Training Centre"]',
+      ),
+    ).toBeNull();
   });
 });

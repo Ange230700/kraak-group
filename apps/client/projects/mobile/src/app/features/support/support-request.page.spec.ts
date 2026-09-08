@@ -1,10 +1,11 @@
 // apps\client\projects\mobile\src\app\features\support\support-request.page.spec.ts
 
-import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { ApplicationInitStatus, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { provideRouter, Router } from '@angular/router';
 import { ApiError } from '@kraak/api-client';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { KraakI18nService, provideKraakI18n } from '../../../../../shared/i18n';
 import { MobileSupportService } from './mobile-support.service';
 import SupportRequestPage from './support-request.page';
 
@@ -18,6 +19,8 @@ describe('Mobile SupportRequestPage', () => {
   let consoleErrorSpy: ReturnType<typeof vi.spyOn>;
 
   beforeEach(async () => {
+    globalThis.window.localStorage.setItem('kraak:locale', 'fr-CI');
+
     supportService.submitContactForm.mockReset();
     supportService.submitContactForm.mockResolvedValue({
       success: true,
@@ -29,9 +32,12 @@ describe('Mobile SupportRequestPage', () => {
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
       providers: [
         provideRouter([]),
+        provideKraakI18n(),
         { provide: MobileSupportService, useValue: supportService },
       ],
     }).compileComponents();
+
+    await TestBed.inject(ApplicationInitStatus).donePromise;
 
     router = TestBed.inject(Router);
     navigateByUrlSpy = vi
@@ -456,5 +462,26 @@ describe('Mobile SupportRequestPage', () => {
       'Une erreur est survenue. Veuillez réessayer ultérieurement.',
     );
     expect(navigateByUrlSpy).not.toHaveBeenCalled();
+  });
+
+  it('Given English is selected, when support request renders, then the request form chrome is translated', async () => {
+    const i18n = TestBed.inject(KraakI18nService);
+    await i18n.setLocale('en-GB');
+
+    const fixture = TestBed.createComponent(SupportRequestPage);
+
+    fixture.detectChanges();
+    await fixture.whenStable();
+    fixture.detectChanges();
+
+    const text = (fixture.nativeElement.textContent ?? '').replace(/\s+/g, ' ');
+
+    expect(text).toContain('New request');
+    expect(text).toContain('Full name');
+    expect(text).toContain('Email address');
+    expect(text).toContain('Category');
+    expect(text).toContain('Subject');
+    expect(text).toContain('Message');
+    expect(text).toContain('Send request');
   });
 });

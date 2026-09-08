@@ -2,15 +2,59 @@ import { PLATFORM_ID } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { environment } from '../../../environments/environment';
+import { KraakI18nService } from '../../../../../shared/i18n';
 import { WebAuthService, WEB_AUTH_STORAGE_KEY } from './web-auth.service';
 
 describe('WebAuthService', () => {
   const fetchMock = vi.fn();
 
+  let activeLocale = 'fr-CI';
+
+  const recoveryMessagesByLocale: Record<string, Record<string, string>> = {
+    'fr-CI': {
+      'web.auth.resetPassword.tokenRequired':
+        'Le jeton de réinitialisation est requis.',
+      'web.auth.resetPassword.passwordLength':
+        'Le mot de passe doit contenir entre 8 et 128 caractères.',
+      'web.auth.resetPassword.configurationMissing':
+        'Configuration Supabase manquante pour finaliser la réinitialisation.',
+      'web.auth.resetPassword.success':
+        'Votre mot de passe a été mis à jour. Vous pouvez maintenant vous connecter.',
+      'web.auth.resetPassword.updateFallback':
+        'Impossible de mettre à jour le mot de passe.',
+    },
+    'en-GB': {
+      'web.auth.resetPassword.tokenRequired': 'The reset token is required.',
+      'web.auth.resetPassword.passwordLength':
+        'The password must contain between 8 and 128 characters.',
+      'web.auth.resetPassword.configurationMissing':
+        'Supabase configuration is missing and the password reset cannot be completed.',
+      'web.auth.resetPassword.success':
+        'Your password has been updated. You can now sign in.',
+      'web.auth.resetPassword.updateFallback': 'Unable to update the password.',
+    },
+  };
+
+  const i18nStub = {
+    locale: () => activeLocale,
+    translate: (key: string): string =>
+      recoveryMessagesByLocale[activeLocale]?.[key] ?? key,
+  };
+
   beforeEach(() => {
+    activeLocale = 'fr-CI';
     localStorage.clear();
     fetchMock.mockReset();
     vi.stubGlobal('fetch', fetchMock);
+
+    TestBed.configureTestingModule({
+      providers: [
+        {
+          provide: KraakI18nService,
+          useValue: i18nStub,
+        },
+      ],
+    });
   });
 
   afterEach(() => {
@@ -1169,5 +1213,71 @@ describe('WebAuthService', () => {
 
       expect(service.currentRole()).toBeNull();
     });
+  });
+  it('Given English locale, when password recovery uses client-owned messages, then validation success and fallback copy are English', async () => {
+    activeLocale = 'en-GB';
+    const service = TestBed.inject(WebAuthService);
+
+    await expect(
+      service.completePasswordRecovery({
+        accessToken: '   ',
+        newPassword: 'SecurePassword123!',
+      }),
+    ).rejects.toThrow('The reset token is required.');
+
+    await expect(
+      service.completePasswordRecovery({
+        accessToken: 'access-token',
+        newPassword: 'short',
+      }),
+    ).rejects.toThrow(
+      'The password must contain between 8 and 128 characters.',
+    );
+
+    const originalSupabaseUrl = environment.supabaseUrl;
+
+    environment.supabaseUrl = '';
+
+    try {
+      await expect(
+        service.completePasswordRecovery({
+          accessToken: 'access-token',
+          newPassword: 'SecurePassword123!',
+        }),
+      ).rejects.toThrow(
+        'Supabase configuration is missing and the password reset cannot be completed.',
+      );
+    } finally {
+      environment.supabaseUrl = originalSupabaseUrl;
+    }
+
+    fetchMock.mockResolvedValueOnce({
+      ok: true,
+      status: 200,
+      json: async () => ({}),
+    } satisfies Partial<Response>);
+
+    const success = await service.completePasswordRecovery({
+      accessToken: 'access-token',
+      newPassword: 'SecurePassword123!',
+    });
+
+    expect(success).toEqual({
+      success: true,
+      message: 'Your password has been updated. You can now sign in.',
+    });
+
+    fetchMock.mockResolvedValueOnce({
+      ok: false,
+      status: 500,
+      json: async () => ({}),
+    } satisfies Partial<Response>);
+
+    await expect(
+      service.completePasswordRecovery({
+        accessToken: 'access-token',
+        newPassword: 'SecurePassword123!',
+      }),
+    ).rejects.toThrow('Unable to update the password.');
   });
 });

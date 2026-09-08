@@ -1,7 +1,8 @@
-import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { ApplicationInitStatus, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
 import { ApiError } from '@kraak/api-client';
+import { KraakI18nService, provideKraakI18n } from '../../../../../shared/i18n';
 import { MobileAuthService } from '../auth/mobile-auth.service';
 import HomePage from './home.page';
 import { describe, it, beforeEach, expect, vi } from 'vitest';
@@ -27,6 +28,7 @@ describe('Mobile HomePage', () => {
   };
 
   beforeEach(async () => {
+    globalThis.window.localStorage.setItem('kraak:locale', 'fr-CI');
     vi.restoreAllMocks();
     mobileAuthServiceMock.currentSession.mockReset();
     mobileAuthServiceMock.currentSession.mockReturnValue({
@@ -37,10 +39,14 @@ describe('Mobile HomePage', () => {
       imports: [HomePage],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
       providers: [
+        provideKraakI18n(),
         provideRouter([]),
         { provide: MobileAuthService, useValue: mobileAuthServiceMock },
       ],
     }).compileComponents();
+
+    await TestBed.inject(ApplicationInitStatus).donePromise;
+    await TestBed.inject(KraakI18nService).setLocale('fr-CI');
   });
 
   it('Given a valid mobile session, when dashboard aggregate is loaded through the real API client, then Authorization header uses the current session token', async () => {

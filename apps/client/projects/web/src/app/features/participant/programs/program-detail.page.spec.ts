@@ -1,3 +1,4 @@
+import { ApplicationInitStatus } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { ActivatedRoute, provideRouter } from '@angular/router';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
@@ -5,6 +6,10 @@ import type { ParticipantProgramDetailDto } from '@kraak/contracts';
 
 import { WebAuthService } from '../../../core/auth/web-auth.service';
 import ProgramDetailPage from './program-detail.page';
+import {
+  KraakI18nService,
+  provideKraakI18n,
+} from '../../../../../../shared/i18n';
 
 describe('Web Participant ProgramDetailPage', () => {
   let activatedRoute: {
@@ -182,6 +187,7 @@ describe('Web Participant ProgramDetailPage', () => {
   };
 
   beforeEach(async () => {
+    globalThis.window.localStorage.setItem('kraak:locale', 'fr-CI');
     activatedRoute = {
       snapshot: {
         paramMap: {
@@ -193,6 +199,7 @@ describe('Web Participant ProgramDetailPage', () => {
     await TestBed.configureTestingModule({
       imports: [ProgramDetailPage],
       providers: [
+        provideKraakI18n(),
         provideRouter([]),
         {
           provide: WebAuthService,
@@ -203,6 +210,9 @@ describe('Web Participant ProgramDetailPage', () => {
         { provide: ActivatedRoute, useValue: activatedRoute },
       ],
     }).compileComponents();
+
+    await TestBed.inject(ApplicationInitStatus).donePromise;
+    await TestBed.inject(KraakI18nService).setLocale('fr-CI');
   });
 
   function configureClient(
@@ -333,6 +343,64 @@ describe('Web Participant ProgramDetailPage', () => {
     expect(getById).not.toHaveBeenCalled();
     expect(fixture.nativeElement.textContent).toContain(
       'Programme introuvable',
+    );
+  });
+
+  it('Given English locale, When rich programme detail loads, Then it renders the complete programme detail chrome in English', async () => {
+    const i18n = TestBed.inject(KraakI18nService);
+    await TestBed.inject(ApplicationInitStatus).donePromise;
+    await i18n.setLocale('en-GB');
+
+    const fixture = await render(Promise.resolve(detail));
+    const element = fixture.nativeElement as HTMLElement;
+    const text = element.textContent ?? '';
+
+    expect(text).toContain('All programmes');
+
+    expect(text).toContain('Active');
+    expect(text).toContain('In progress');
+    expect(text).toContain('Progress');
+    expect(text).toContain('sessions completed');
+
+    expect(text).toContain('About');
+    expect(text).toContain('Your journey');
+    expect(text).toContain('Key details');
+    expect(text).toContain('Start');
+    expect(text).toContain('End');
+    expect(text).toContain('Capacity');
+
+    expect(text).toContain('Learning content');
+    expect(text).toContain('Required');
+    expect(text).toContain('Chapter 1');
+
+    expect(text).toContain('Journey');
+    expect(text).toContain('Sessions');
+    expect(text).toContain('Scheduled');
+    expect(text).toContain('Online');
+    expect(text).toContain('Open session');
+
+    expect(text).toContain('Library');
+    expect(text).toContain('Resources');
+    expect(text).toContain('Document');
+
+    expect(text).toContain('News');
+    expect(text).toContain('Announcements');
+    expect(text).toContain('Published on');
+
+    const externalResource = element.querySelector(
+      'a[href="https://example.com/guide.pdf"]',
+    );
+
+    expect(externalResource?.getAttribute('aria-label')).toBe(
+      'Open Guide de formation',
+    );
+
+    expect(i18n.translate('web.participant.programDetail.notFound.title')).toBe(
+      'Programme not found',
+    );
+
+    expect(i18n.translate('web.participant.programDetail.error.retry')).toBe(
+      'Try again',
     );
   });
 });

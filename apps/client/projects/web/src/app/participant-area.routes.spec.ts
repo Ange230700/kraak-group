@@ -1,7 +1,16 @@
 // apps\client\projects\web\src\app\participant-area.routes.spec.ts
 
-import type { Route } from '@angular/router';
+import { TestBed } from '@angular/core/testing';
+import type {
+  ActivatedRouteSnapshot,
+  ResolveFn,
+  Route,
+  RouterStateSnapshot,
+} from '@angular/router';
 import { describe, expect, it } from 'vitest';
+
+import { KraakI18nService } from '../../../shared/i18n';
+import type { SeoPageDefinition } from './seo/site-seo';
 
 import * as runtimeConfig from './core/runtime/runtime-config';
 import {
@@ -95,5 +104,48 @@ describe('participant-area.routes', () => {
 
     const module = await sessionRoute?.loadComponent?.();
     expect(module).toBeDefined();
+  });
+
+  it('Given une locale anglaise, When le SEO de connexion est résolu, Then les métadonnées restent anglaises', () => {
+    const translations: Record<string, string> = {
+      'web.auth.signIn.title': 'Sign in',
+      'web.auth.signIn.subtitle':
+        'Sign in to access your dashboard, programmes and announcements.',
+      'web.auth.common.participantArea': 'Participant area',
+    };
+
+    TestBed.configureTestingModule({
+      providers: [
+        {
+          provide: KraakI18nService,
+          useValue: {
+            locale: () => 'en-GB',
+            translate: (key: string) => translations[key] ?? key,
+          },
+        },
+      ],
+    });
+
+    const signInRoute = participantAreaRoutes.find(
+      (route) => route.path === 'connexion',
+    );
+    const resolver = signInRoute?.resolve?.['seo'] as
+      | ResolveFn<SeoPageDefinition>
+      | undefined;
+
+    expect(resolver).toBeTypeOf('function');
+
+    const seo = TestBed.runInInjectionContext(() =>
+      resolver!({} as ActivatedRouteSnapshot, {} as RouterStateSnapshot),
+    ) as SeoPageDefinition;
+
+    expect(seo).toMatchObject({
+      title: 'Sign in | KRAAK',
+      description:
+        'Sign in to access your dashboard, programmes and announcements.',
+      locale: 'en-GB',
+      htmlLang: 'en-GB',
+      openGraphLocale: 'en_GB',
+    });
   });
 });

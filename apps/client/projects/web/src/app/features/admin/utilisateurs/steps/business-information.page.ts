@@ -6,17 +6,27 @@ import { ButtonDirective } from 'primeng/button';
 import type { UserRoleValue } from '@kraak/contracts';
 
 import { UserFormStateService } from '../user-form-state.service';
+import { KraakTranslatePipe } from '../../../../../../../shared/i18n';
 
-const ROLES: { value: UserRoleValue; label: string }[] = [
-  { value: 'participant', label: 'Participant' },
-  { value: 'trainer', label: 'Formateur' },
-  { value: 'admin', label: 'Administrateur' },
+const ROLES: { value: UserRoleValue; labelKey: string }[] = [
+  {
+    value: 'participant',
+    labelKey: 'web.admin.users.create.businessInformation.roles.participant',
+  },
+  {
+    value: 'trainer',
+    labelKey: 'web.admin.users.create.businessInformation.roles.trainer',
+  },
+  {
+    value: 'admin',
+    labelKey: 'web.admin.users.create.businessInformation.roles.admin',
+  },
 ];
 
 @Component({
   selector: 'kraak-business-information-step-page',
   standalone: true,
-  imports: [FormsModule, InputTextModule, ButtonDirective],
+  imports: [FormsModule, InputTextModule, ButtonDirective, KraakTranslatePipe],
   templateUrl: './business-information.page.html',
 })
 export default class BusinessInformationPage implements OnInit {

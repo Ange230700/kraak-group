@@ -1,9 +1,16 @@
-import { computed, inject, Injectable, type Signal } from '@angular/core';
+import {
+  computed,
+  inject,
+  Injectable,
+  signal,
+  type Signal,
+} from '@angular/core';
 import {
   FALLBACK_LOCALE,
   SOURCE_LOCALE,
   SUPPORTED_LOCALES,
   type SupportedLocale,
+  normalizeLocaleCandidate,
   resolveSupportedLocale,
 } from '@kraak/domain';
 import {
@@ -14,17 +21,90 @@ import {
   type Translation,
   type TranslationObject,
 } from '@ngx-translate/core';
-import { firstValueFrom, of, throwError, type Observable } from 'rxjs';
+import { firstValueFrom, from, type Observable } from 'rxjs';
 
 import {
   KRAAK_TRANSLATION_CATALOGS,
+  type KraakTranslationCatalog,
   type KraakTranslationCatalogs,
   isRecord,
+  loadKraakTranslationCatalog,
   readKraakCatalogValue,
   resolveKraakTranslationCatalog,
 } from './kraak-i18n.catalogs';
 
 export type TranslationKey = string;
+
+const KRAAK_LOCALE_STORAGE_KEY = 'kraak:locale';
+
+function readStoredLocalePreference(): SupportedLocale | undefined {
+  if (typeof globalThis.window === 'undefined') {
+    return undefined;
+  }
+
+  try {
+    return normalizeLocaleCandidate(
+      globalThis.window.localStorage.getItem(KRAAK_LOCALE_STORAGE_KEY),
+    );
+  } catch {
+    return undefined;
+  }
+}
+
+function readBrowserLocalePreference(): SupportedLocale | undefined {
+  if (
+    typeof globalThis.window === 'undefined' ||
+    typeof globalThis.navigator === 'undefined'
+  ) {
+    return undefined;
+  }
+
+  const candidates = [
+    ...(globalThis.navigator.languages ?? []),
+    globalThis.navigator.language,
+  ];
+
+  for (const candidate of candidates) {
+    const locale = normalizeLocaleCandidate(candidate);
+
+    if (locale) {
+      return locale;
+    }
+  }
+
+  return undefined;
+}
+
+function resolveInitialLocale(): SupportedLocale {
+  return (
+    readStoredLocalePreference() ??
+    readBrowserLocalePreference() ??
+    SOURCE_LOCALE
+  );
+}
+
+function persistLocalePreference(locale: SupportedLocale): void {
+  if (typeof globalThis.window === 'undefined') {
+    return;
+  }
+
+  try {
+    globalThis.window.localStorage.setItem(KRAAK_LOCALE_STORAGE_KEY, locale);
+  } catch {
+    // Storage can be unavailable in SSR-like, privacy, or restricted contexts.
+  }
+}
+
+function synchronizeDocumentLocale(locale: SupportedLocale): void {
+  if (
+    typeof globalThis.document === 'undefined' ||
+    !globalThis.document.documentElement
+  ) {
+    return;
+  }
+
+  globalThis.document.documentElement.lang = locale;
+}
 
 export interface KraakI18n {
   readonly locale: Signal<SupportedLocale>;
@@ -43,12 +123,12 @@ export class KraakStaticTranslateLoader extends TranslateLoader {
   }
 
   override getTranslation(lang: string): Observable<TranslationObject> {
-    try {
-      return of(resolveKraakTranslationCatalog(this.catalogs, lang));
-    } catch (error) {
-      console.warn('client.i18n.catalog-load-failed', { lang, error });
-      return throwError(() => error);
-    }
+    return from(
+      loadKraakTranslationCatalog(this.catalogs, lang).catch((error) => {
+        console.warn('client.i18n.catalog-load-failed', { lang, error });
+        throw error;
+      }),
+    );
   }
 }
 
@@ -64,12 +144,17 @@ export class KraakMissingTranslationHandler extends MissingTranslationHandler {
 export class KraakI18nService implements KraakI18n {
   private readonly translateService = inject(TranslateService);
   private readonly catalogs = inject(KRAAK_TRANSLATION_CATALOGS);
+  private readonly loadedCatalogs: Partial<
+    Record<SupportedLocale, KraakTranslationCatalog>
+  > = {};
   private readonly registeredLocales = new Set<SupportedLocale>();
-  private readonly pendingLocaleSelections = new Map<
+  private readonly pendingCatalogLoads = new Map<
     SupportedLocale,
     Promise<void>
   >();
-  private initialized = false;
+  private readonly initialized = signal(false);
+  private initializationPromise: Promise<void> | undefined;
+  private localeSelectionSequence = 0;
 
   readonly locale = computed<SupportedLocale>(() =>
     resolveSupportedLocale(
@@ -79,31 +164,53 @@ export class KraakI18nService implements KraakI18n {
 
   readonly ready = computed(
     () =>
+      this.initialized() &&
       !this.translateService.isLoading() &&
       this.translateService.getCurrentLang() !== null,
   );
 
-  constructor() {
-    this.registerCatalog(FALLBACK_LOCALE);
-  }
-
   async initialize(): Promise<void> {
-    if (this.initialized) {
+    if (this.initialized()) {
       return;
     }
 
+    if (this.initializationPromise) {
+      return this.initializationPromise;
+    }
+
+    const initialization = this.initializeOnce().finally(() => {
+      this.initializationPromise = undefined;
+    });
+
+    this.initializationPromise = initialization;
+
+    return initialization;
+  }
+
+  private async initializeOnce(): Promise<void> {
     this.translateService.addLangs([...SUPPORTED_LOCALES]);
+
+    await this.registerCatalog(FALLBACK_LOCALE);
+
     await firstValueFrom(
       this.translateService.setFallbackLang(FALLBACK_LOCALE),
     );
-    await this.selectLocale(SOURCE_LOCALE);
-    this.initialized = true;
+
+    await this.selectLocale(resolveInitialLocale());
+
+    synchronizeDocumentLocale(this.locale());
+
+    this.initialized.set(true);
   }
 
-  setLocale(
+  async setLocale(
     localeCandidate: SupportedLocale | string | null | undefined,
   ): Promise<void> {
-    return this.selectLocale(resolveSupportedLocale(localeCandidate));
+    await this.selectLocale(resolveSupportedLocale(localeCandidate));
+
+    const effectiveLocale = this.locale();
+    persistLocalePreference(effectiveLocale);
+    synchronizeDocumentLocale(effectiveLocale);
   }
 
   translate(
@@ -119,10 +226,16 @@ export class KraakI18nService implements KraakI18n {
   primeNgTranslation(
     localeCandidate: string = this.locale(),
   ): Record<string, unknown> {
+    const availableCatalogs: KraakTranslationCatalogs = {
+      ...this.catalogs,
+      ...this.loadedCatalogs,
+    };
+
     const catalog = resolveKraakTranslationCatalog(
-      this.catalogs,
+      availableCatalogs,
       localeCandidate,
     );
+
     const value = readKraakCatalogValue(catalog, 'primeng');
 
     if (isRecord(value)) {
@@ -130,7 +243,7 @@ export class KraakI18nService implements KraakI18n {
     }
 
     const fallbackValue = readKraakCatalogValue(
-      resolveKraakTranslationCatalog(this.catalogs, FALLBACK_LOCALE),
+      resolveKraakTranslationCatalog(availableCatalogs, FALLBACK_LOCALE),
       'primeng',
     );
 
@@ -138,51 +251,58 @@ export class KraakI18nService implements KraakI18n {
   }
 
   private selectLocale(locale: SupportedLocale): Promise<void> {
-    const pendingSelection = this.pendingLocaleSelections.get(locale);
+    const selectionSequence = ++this.localeSelectionSequence;
 
-    if (pendingSelection) {
-      return pendingSelection;
-    }
-
-    const selection = this.selectLocaleOnce(locale).finally(() => {
-      this.pendingLocaleSelections.delete(locale);
-    });
-
-    this.pendingLocaleSelections.set(locale, selection);
-
-    return selection;
+    return this.selectLocaleOnce(locale, selectionSequence);
   }
 
-  private async selectLocaleOnce(locale: SupportedLocale): Promise<void> {
+  private async selectLocaleOnce(
+    locale: SupportedLocale,
+    selectionSequence: number,
+  ): Promise<void> {
     if (this.locale() === locale && this.ready()) {
       return;
     }
 
     try {
-      this.registerCatalog(locale);
+      await this.registerCatalog(locale);
+
+      if (selectionSequence !== this.localeSelectionSequence) {
+        return;
+      }
+
       await firstValueFrom(this.translateService.use(locale));
     } catch (error) {
+      if (selectionSequence !== this.localeSelectionSequence) {
+        return;
+      }
+
       console.warn('client.i18n.locale-switch-fallback', {
         locale,
         error,
       });
-      this.registerCatalog(FALLBACK_LOCALE);
+
+      await this.registerCatalog(FALLBACK_LOCALE);
+
+      if (selectionSequence !== this.localeSelectionSequence) {
+        return;
+      }
+
       await firstValueFrom(this.translateService.use(FALLBACK_LOCALE));
     }
   }
 
-  private registerCatalog(locale: SupportedLocale): void {
+  private async registerCatalog(locale: SupportedLocale): Promise<void> {
     if (this.registeredLocales.has(locale)) {
       return;
     }
 
-    const catalog = this.catalogs[locale];
+    const catalog = await loadKraakTranslationCatalog(this.catalogs, locale);
 
-    if (!catalog) {
-      throw new Error(`Missing ${locale} i18n catalog.`);
-    }
+    this.loadedCatalogs[locale] = catalog;
 
     this.translateService.setTranslation(locale, catalog, false);
+
     this.registeredLocales.add(locale);
   }
 }

@@ -29,6 +29,8 @@ class WebI18nHost {
   readonly i18n = inject(KraakI18nService);
 }
 
+const LOCALE_STORAGE_KEY = 'kraak:locale';
+
 async function waitForInitializers(): Promise<void> {
   await TestBed.inject(ApplicationInitStatus).donePromise;
 }
@@ -36,6 +38,12 @@ async function waitForInitializers(): Promise<void> {
 describe('Given the web runtime i18n adapter', () => {
   beforeEach(() => {
     TestBed.resetTestingModule();
+
+    try {
+      globalThis.window?.localStorage.setItem(LOCALE_STORAGE_KEY, 'fr-CI');
+    } catch {
+      // Tests covering restricted globals configure their own environment.
+    }
   });
 
   it('When the web app configuration is inspected, Then it declares the KRAAK i18n provider', () => {
@@ -62,6 +70,42 @@ describe('Given the web runtime i18n adapter', () => {
 
     expect(i18n.locale()).toBe('fr-CI');
     expect(i18n.ready()).toBe(true);
+  });
+
+  it('When a stored web locale exists, Then initialization restores it and synchronizes the document language', async () => {
+    globalThis.window.localStorage.setItem(LOCALE_STORAGE_KEY, 'en-GB');
+
+    TestBed.configureTestingModule({
+      providers: [provideRouter([]), provideKraakI18n()],
+    });
+    await waitForInitializers();
+
+    const i18n = TestBed.inject(KraakI18nService);
+
+    expect(i18n.locale()).toBe('en-GB');
+    expect(globalThis.document.documentElement.lang).toBe('en-GB');
+  });
+
+  it('When no web locale is stored, Then initialization uses the supported browser language', async () => {
+    globalThis.window.localStorage.removeItem(LOCALE_STORAGE_KEY);
+    vi.stubGlobal('navigator', {
+      language: 'en-US',
+      languages: ['en-US'],
+    });
+
+    try {
+      TestBed.configureTestingModule({
+        providers: [provideRouter([]), provideKraakI18n()],
+      });
+      await waitForInitializers();
+
+      const i18n = TestBed.inject(KraakI18nService);
+
+      expect(i18n.locale()).toBe('en-GB');
+      expect(globalThis.document.documentElement.lang).toBe('en-GB');
+    } finally {
+      vi.unstubAllGlobals();
+    }
   });
 
   it('When a translated host component renders, Then the French prototype value is visible', async () => {
@@ -95,6 +139,10 @@ describe('Given the web runtime i18n adapter', () => {
     expect(
       fixture.nativeElement.querySelector('#message')?.textContent,
     ).toContain('Hello Awa');
+    expect(globalThis.window.localStorage.getItem(LOCALE_STORAGE_KEY)).toBe(
+      'en-GB',
+    );
+    expect(globalThis.document.documentElement.lang).toBe('en-GB');
   });
 
   it('When a named interpolation is translated in TypeScript, Then the parameter value is inserted', async () => {

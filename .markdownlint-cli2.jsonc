@@ -20,6 +20,7 @@
     "!**/coverage/**",
     "!**/dist/**",
     "!**/test-results/**",
+    "!**/playwright-report/**",
     "!docs/archive/**",
     "!docs/generated/primeng/**",
     "!pr-*-export/**",

@@ -1,3 +1,4 @@
+import { ApplicationInitStatus } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { ActivatedRoute, provideRouter } from '@angular/router';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
@@ -5,6 +6,10 @@ import type { ParticipantProgramDetailDto } from '@kraak/contracts';
 
 import { WebAuthService } from '../../../core/auth/web-auth.service';
 import SessionDetailPage from './session-detail.page';
+import {
+  KraakI18nService,
+  provideKraakI18n,
+} from '../../../../../../shared/i18n';
 
 describe('Web Participant SessionDetailPage', () => {
   let activatedRoute: {
@@ -72,6 +77,7 @@ describe('Web Participant SessionDetailPage', () => {
   };
 
   beforeEach(async () => {
+    globalThis.window.localStorage.setItem('kraak:locale', 'fr-CI');
     activatedRoute = {
       snapshot: {
         paramMap: {
@@ -91,6 +97,7 @@ describe('Web Participant SessionDetailPage', () => {
     await TestBed.configureTestingModule({
       imports: [SessionDetailPage],
       providers: [
+        provideKraakI18n(),
         provideRouter([]),
         {
           provide: WebAuthService,
@@ -101,6 +108,9 @@ describe('Web Participant SessionDetailPage', () => {
         { provide: ActivatedRoute, useValue: activatedRoute },
       ],
     }).compileComponents();
+
+    await TestBed.inject(ApplicationInitStatus).donePromise;
+    await TestBed.inject(KraakI18nService).setLocale('fr-CI');
   });
 
   function configureClient(
@@ -275,5 +285,45 @@ describe('Web Participant SessionDetailPage', () => {
 
     expect(client.getById).not.toHaveBeenCalled();
     expect(fixture.nativeElement.textContent).toContain('Session introuvable');
+  });
+
+  it('Given English locale, When session detail loads, Then it renders Session Detail chrome in English', async () => {
+    const i18n = TestBed.inject(KraakI18nService);
+    await TestBed.inject(ApplicationInitStatus).donePromise;
+    await i18n.setLocale('en-GB');
+
+    const fixture = await render(Promise.resolve(detail));
+    const element = fixture.nativeElement as HTMLElement;
+    const text = element.textContent ?? '';
+
+    expect(text).toContain('Back to programme');
+    expect(text).toContain('Scheduled');
+    expect(text).toContain('Online');
+
+    expect(text).toContain('Appointment');
+    expect(text).toContain('Session information');
+    expect(text).toContain('Start');
+    expect(text).toContain('End');
+    expect(text).toContain('Format');
+    expect(text).toContain('Location');
+
+    expect(text).toContain('Online session');
+    expect(text).toContain('Open the meeting link in a new tab.');
+    expect(text).toContain('Join session');
+
+    expect(text).toContain('Progress');
+    expect(text).toContain('Your progress');
+    expect(text).toContain('Session not completed.');
+    expect(text).toContain('Mark as completed');
+    expect(text).toContain('Overall progress');
+    expect(text).toContain('sessions completed');
+
+    expect(i18n.translate('web.participant.sessionDetail.error.retry')).toBe(
+      'Try again',
+    );
+
+    expect(i18n.translate('web.participant.sessionDetail.notFound.title')).toBe(
+      'Session not found',
+    );
   });
 });

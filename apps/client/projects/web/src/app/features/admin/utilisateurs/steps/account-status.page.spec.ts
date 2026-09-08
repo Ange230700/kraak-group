@@ -1,15 +1,26 @@
+import { ApplicationInitStatus } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { Router, provideRouter } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { vi } from 'vitest';
 import AccountStatusPage from './account-status.page';
+import {
+  KraakI18nService,
+  provideKraakI18n,
+} from '../../../../../../../shared/i18n';
 import { UserFormStateService } from '../user-form-state.service';
 
 describe('AccountStatusPage', () => {
   beforeEach(async () => {
+    globalThis.window.localStorage.setItem('kraak:locale', 'fr-CI');
     await TestBed.configureTestingModule({
       imports: [AccountStatusPage],
-      providers: [provideRouter([]), MessageService, UserFormStateService],
+      providers: [
+        provideKraakI18n(),
+        provideRouter([]),
+        MessageService,
+        UserFormStateService,
+      ],
     }).compileComponents();
   });
 
@@ -88,5 +99,35 @@ describe('AccountStatusPage', () => {
     expect(
       (fixture.nativeElement as HTMLElement).textContent ?? '',
     ).not.toContain('Erreur de validation');
+  });
+
+  it('Given English locale, When the step renders, Then it renders Account Status chrome in English', async () => {
+    const formState = TestBed.inject(UserFormStateService);
+    formState.patch({
+      firstName: 'Alice',
+      lastName: 'Martin',
+      email: 'alice@example.com',
+      role: 'trainer',
+    });
+
+    const i18n = TestBed.inject(KraakI18nService);
+    await TestBed.inject(ApplicationInitStatus).donePromise;
+    await i18n.setLocale('en-GB');
+
+    const fixture = TestBed.createComponent(AccountStatusPage);
+    fixture.detectChanges();
+
+    const text = (fixture.nativeElement as HTMLElement).textContent ?? '';
+
+    expect(text).toContain('Step 5 of 5');
+    expect(text).toContain('Account status');
+    expect(text).toContain('Active account');
+    expect(text).toContain('Send an invitation by email');
+    expect(text).toContain('Summary');
+    expect(text).toContain('Full name');
+    expect(text).toContain('Email');
+    expect(text).toContain('Role');
+    expect(text).toContain('Trainer');
+    expect(text).toContain('Previous');
   });
 });

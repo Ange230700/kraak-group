@@ -272,9 +272,12 @@ describe('ResourcesService', () => {
 
       mockSupabaseService.getClient.mockReturnValue(mockClient);
 
-      await expect(service.listAllResources()).rejects.toThrow(
-        'Failed to fetch resources.',
-      );
+      await expect(service.listAllResources()).rejects.toMatchObject({
+        response: {
+          success: false,
+          message: { key: 'resources.loadFailed' },
+        },
+      });
     });
 
     it('Given null data and null count, When listAllResources is called, Then it returns an empty payload with total 0', async () => {
@@ -522,7 +525,12 @@ describe('ResourcesService', () => {
           status: 'draft',
           publishedAt: null,
         }),
-      ).rejects.toThrow('Failed to create resource');
+      ).rejects.toMatchObject({
+        response: {
+          success: false,
+          message: { key: 'resources.createFailed' },
+        },
+      });
 
       await expect(
         service.updateResource('missing', { title: 'x' }),

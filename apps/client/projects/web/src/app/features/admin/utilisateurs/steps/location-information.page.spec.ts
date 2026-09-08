@@ -1,14 +1,20 @@
+import { ApplicationInitStatus } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { Router, provideRouter } from '@angular/router';
 import { vi } from 'vitest';
 import LocationInformationPage from './location-information.page';
+import {
+  KraakI18nService,
+  provideKraakI18n,
+} from '../../../../../../../shared/i18n';
 import { UserFormStateService } from '../user-form-state.service';
 
 describe('LocationInformationPage', () => {
   beforeEach(async () => {
+    globalThis.window.localStorage.setItem('kraak:locale', 'fr-CI');
     await TestBed.configureTestingModule({
       imports: [LocationInformationPage],
-      providers: [provideRouter([]), UserFormStateService],
+      providers: [provideKraakI18n(), provideRouter([]), UserFormStateService],
     }).compileComponents();
   });
 
@@ -118,5 +124,35 @@ describe('LocationInformationPage', () => {
     expect(formState.state().postalCode).toBe('00001');
     expect(formState.state().addressLine1).toBe('10 Avenue Kasa-Vubu');
     expect(formState.state().addressLine2).toBe('Bloc A');
+  });
+
+  it('Given English locale, When the step renders, Then it renders Location chrome in English', async () => {
+    const i18n = TestBed.inject(KraakI18nService);
+    await TestBed.inject(ApplicationInitStatus).donePromise;
+    await i18n.setLocale('en-GB');
+
+    const fixture = TestBed.createComponent(LocationInformationPage);
+    fixture.detectChanges();
+
+    const host = fixture.nativeElement as HTMLElement;
+    const text = host.textContent ?? '';
+
+    expect(text).toContain('Step 3 of 5');
+    expect(text).toContain('Location');
+    expect(text).toContain('Country');
+    expect(text).toContain('City');
+    expect(text).toContain('Postal code');
+    expect(text).toContain('Address line 1');
+    expect(text).toContain('Address line 2');
+    expect(text).toContain('Previous');
+    expect(text).toContain('Next');
+
+    expect(
+      (host.querySelector('#country') as HTMLInputElement).placeholder,
+    ).toBe('E.g. Democratic Republic of the Congo');
+
+    expect(
+      (host.querySelector('#addressLine2') as HTMLInputElement).placeholder,
+    ).toBe('Apartment, building…');
   });
 });

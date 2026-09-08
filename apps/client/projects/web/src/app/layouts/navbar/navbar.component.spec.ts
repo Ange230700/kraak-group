@@ -50,6 +50,7 @@ describe('Navbar', () => {
     }).compileComponents();
 
     await TestBed.inject(ApplicationInitStatus).donePromise;
+    await TestBed.inject(KraakI18nService).setLocale('fr-CI');
   });
 
   it('Given la navbar est créée, When Angular initialise le composant, Then la configuration de base existe', () => {

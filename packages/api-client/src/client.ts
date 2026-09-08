@@ -74,6 +74,7 @@ import type {
 export interface ApiClientConfig {
   baseUrl: string;
   getAuthToken?: () => string | null | Promise<string | null>;
+  getLocale?: () => string | null | Promise<string | null>;
   defaultHeaders?: Record<string, string>;
 }
 
@@ -298,9 +299,12 @@ async function buildHeaders(
   config: ApiClientConfig,
   options?: RequestOptions,
 ): Promise<Record<string, string>> {
+  const locale = config.getLocale ? await config.getLocale() : null;
+
   const headers: Record<string, string> = {
     'Content-Type': 'application/json',
     Accept: 'application/json',
+    ...(locale ? { 'Accept-Language': locale } : {}),
     ...config.defaultHeaders,
     ...options?.headers,
   };

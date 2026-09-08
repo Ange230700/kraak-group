@@ -1,3 +1,4 @@
+import { apiMessage, type ApiMessageValue } from '../i18n/api-message';
 import {
   assignOptionalTrimmedString,
   assignRequiredTrimmedString,
@@ -38,7 +39,7 @@ function assignEnumField<T extends string>(
   body: Record<string, unknown>,
   field: keyof CreateAnnouncementDto,
   values: Set<T>,
-  errors: string[],
+  errors: ApiMessageValue[],
   updates: Partial<CreateAnnouncementDto> | UpdateAnnouncementDto,
 ): void {
   if (!(field in body)) {
@@ -48,7 +49,9 @@ function assignEnumField<T extends string>(
   const value = readTrimmedString(body[field]);
 
   if (!values.has(value as T)) {
-    errors.push(`Le champ ${field} est invalide.`);
+    errors.push(
+      apiMessage('validation.invalidField', { field: String(field) }),
+    );
     return;
   }
 
@@ -69,7 +72,7 @@ function assignNullableStringField(
 
 function assignNullableDateTimeField(
   body: Record<string, unknown>,
-  errors: string[],
+  errors: ApiMessageValue[],
   updates: Partial<CreateAnnouncementDto> | UpdateAnnouncementDto,
 ): void {
   if (!('publishedAt' in body)) {
@@ -86,7 +89,9 @@ function assignNullableDateTimeField(
   const normalized = readNullableDateTime(value);
 
   if (normalized === null && readTrimmedString(value)) {
-    errors.push('Le champ publishedAt est invalide.');
+    errors.push(
+      apiMessage('validation.invalidField', { field: 'publishedAt' }),
+    );
     return;
   }
 
@@ -99,7 +104,7 @@ function validateAudienceScope(
     programId?: string | null;
     cohortId?: string | null;
   },
-  errors: string[],
+  errors: ApiMessageValue[],
 ): void {
   if (!data.audienceType) {
     return;
@@ -127,17 +132,23 @@ function validateAllParticipantsAudienceScope(
     programId?: string | null;
     cohortId?: string | null;
   },
-  errors: string[],
+  errors: ApiMessageValue[],
 ): void {
   if (hasProvidedScopeId(data.programId)) {
     errors.push(
-      'Le champ programId doit être absent lorsque audienceType vaut all_participants.',
+      apiMessage('announcements.scopeFieldForbiddenForAudience', {
+        field: 'programId',
+        audienceType: 'all_participants',
+      }),
     );
   }
 
   if (hasProvidedScopeId(data.cohortId)) {
     errors.push(
-      'Le champ cohortId doit être absent lorsque audienceType vaut all_participants.',
+      apiMessage('announcements.scopeFieldForbiddenForAudience', {
+        field: 'cohortId',
+        audienceType: 'all_participants',
+      }),
     );
   }
 }
@@ -147,17 +158,23 @@ function validateProgramAudienceScope(
     programId?: string | null;
     cohortId?: string | null;
   },
-  errors: string[],
+  errors: ApiMessageValue[],
 ): void {
   if (!data.programId) {
     errors.push(
-      'Le champ programId est requis lorsque audienceType vaut program.',
+      apiMessage('announcements.scopeFieldRequiredForAudience', {
+        field: 'programId',
+        audienceType: 'program',
+      }),
     );
   }
 
   if (hasProvidedScopeId(data.cohortId)) {
     errors.push(
-      'Le champ cohortId doit être absent lorsque audienceType vaut program.',
+      apiMessage('announcements.scopeFieldForbiddenForAudience', {
+        field: 'cohortId',
+        audienceType: 'program',
+      }),
     );
   }
 }
@@ -167,17 +184,23 @@ function validateCohortAudienceScope(
     programId?: string | null;
     cohortId?: string | null;
   },
-  errors: string[],
+  errors: ApiMessageValue[],
 ): void {
   if (!data.programId) {
     errors.push(
-      'Le champ programId est requis lorsque audienceType vaut cohort.',
+      apiMessage('announcements.scopeFieldRequiredForAudience', {
+        field: 'programId',
+        audienceType: 'cohort',
+      }),
     );
   }
 
   if (!data.cohortId) {
     errors.push(
-      'Le champ cohortId est requis lorsque audienceType vaut cohort.',
+      apiMessage('announcements.scopeFieldRequiredForAudience', {
+        field: 'cohortId',
+        audienceType: 'cohort',
+      }),
     );
   }
 }
@@ -188,11 +211,11 @@ export function validateCreateAnnouncementPayload(
   if (!isObjectPayload(body)) {
     return {
       valid: false,
-      errors: ['Corps de requête invalide.'],
+      errors: [apiMessage('validation.invalidBody')],
     };
   }
 
-  const errors: string[] = [];
+  const errors: ApiMessageValue[] = [];
   const data: Partial<CreateAnnouncementDto> = {};
 
   assignRequiredTrimmedString(body, 'title', errors, data);
@@ -221,11 +244,11 @@ export function validateUpdateAnnouncementPayload(
   if (!isObjectPayload(body)) {
     return {
       valid: false,
-      errors: ['Corps de requête invalide.'],
+      errors: [apiMessage('validation.invalidBody')],
     };
   }
 
-  const errors: string[] = [];
+  const errors: ApiMessageValue[] = [];
   const data: UpdateAnnouncementDto = {};
 
   assignOptionalTrimmedString(body, 'title', errors, data);
@@ -243,9 +266,7 @@ export function validateUpdateAnnouncementPayload(
     data.cohortId !== undefined;
 
   if (hasAudienceScopeField && !data.audienceType) {
-    errors.push(
-      'Le champ audienceType est requis lorsque programId ou cohortId sont fournis.',
-    );
+    errors.push(apiMessage('announcements.audienceRequiredWhenScoped'));
   }
 
   if (data.audienceType) {
@@ -255,7 +276,7 @@ export function validateUpdateAnnouncementPayload(
   if (Object.keys(data).length === 0 && errors.length === 0) {
     return {
       valid: false,
-      errors: ['Le payload de mise à jour doit contenir au moins un champ.'],
+      errors: [apiMessage('validation.updateRequiresField')],
     };
   }
 

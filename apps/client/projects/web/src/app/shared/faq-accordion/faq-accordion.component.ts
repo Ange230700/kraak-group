@@ -1,4 +1,5 @@
 import { Component, Input, ViewEncapsulation } from '@angular/core';
+import { KraakTranslatePipe } from '../../../../../shared/i18n';
 import {
   Accordion,
   AccordionContent,
@@ -15,7 +16,13 @@ export interface FaqItem {
 @Component({
   selector: 'kraak-faq-accordion',
   standalone: true,
-  imports: [Accordion, AccordionPanel, AccordionHeader, AccordionContent],
+  imports: [
+    Accordion,
+    AccordionPanel,
+    AccordionHeader,
+    AccordionContent,
+    KraakTranslatePipe,
+  ],
   templateUrl: './faq-accordion.component.html',
   styles: [
     `
@@ -39,10 +46,9 @@ export interface FaqItem {
 })
 export class FaqAccordion {
   @Input({ required: true }) items: readonly FaqItem[] = [];
-  @Input() heading = 'Questions fréquentes';
-  @Input() description =
-    "Retrouvez ici les réponses rapides aux questions les plus posées sur nos parcours, nos modalités d'accompagnement et nos délais de réponse.";
-  @Input() backgroundAlt = 'Arrière-plan de la section questions fréquentes';
+  @Input() heading: string | null = null;
+  @Input() description: string | null = null;
+  @Input() backgroundAlt: string | null = null;
 
   protected readonly backgroundImageUrl = FAQ_BACKGROUND_IMAGE_URL;
 }

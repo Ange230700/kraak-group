@@ -1,6 +1,9 @@
+import { ApplicationInitStatus } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ImpactStats } from './impact-stats.component';
+
+import { KraakI18nService, provideKraakI18n } from '../../../../../shared/i18n';
 
 describe('ImpactStats', () => {
   let component: ImpactStats;
@@ -8,8 +11,12 @@ describe('ImpactStats', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
+      providers: [provideKraakI18n()],
       imports: [ImpactStats],
     }).compileComponents();
+
+    await TestBed.inject(ApplicationInitStatus).donePromise;
+    await TestBed.inject(KraakI18nService).setLocale('fr-CI');
 
     fixture = TestBed.createComponent(ImpactStats);
     component = fixture.componentInstance;

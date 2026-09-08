@@ -50,12 +50,15 @@ describe('Resources DTO validation', () => {
     expect(result).toEqual({
       valid: false,
       errors: [
-        'Le champ title est requis.',
-        'Le champ resourceType est invalide.',
-        'Le champ resourceTheme est invalide.',
-        'Le champ resourceAudience est invalide.',
-        'Le champ status est invalide.',
-        'Le champ publishedAt est invalide.',
+        { key: 'validation.requiredField', params: { field: 'title' } },
+        { key: 'validation.invalidField', params: { field: 'resourceType' } },
+        { key: 'validation.invalidField', params: { field: 'resourceTheme' } },
+        {
+          key: 'validation.invalidField',
+          params: { field: 'resourceAudience' },
+        },
+        { key: 'validation.invalidField', params: { field: 'status' } },
+        { key: 'validation.invalidField', params: { field: 'publishedAt' } },
       ],
     });
   });
@@ -65,7 +68,7 @@ describe('Resources DTO validation', () => {
 
     expect(result).toEqual({
       valid: false,
-      errors: ['Corps de requête invalide.'],
+      errors: [{ key: 'validation.invalidBody' }],
     });
   });
 
@@ -107,7 +110,7 @@ describe('Resources DTO validation', () => {
 
     expect(result).toEqual({
       valid: false,
-      errors: ['Le payload de mise à jour doit contenir au moins un champ.'],
+      errors: [{ key: 'validation.updateRequiresField' }],
     });
   });
 
@@ -124,12 +127,15 @@ describe('Resources DTO validation', () => {
     expect(result).toEqual({
       valid: false,
       errors: [
-        'Le champ title est requis.',
-        'Le champ resourceType est invalide.',
-        'Le champ resourceTheme est invalide.',
-        'Le champ resourceAudience est invalide.',
-        'Le champ status est invalide.',
-        'Le champ publishedAt est invalide.',
+        { key: 'validation.requiredField', params: { field: 'title' } },
+        { key: 'validation.invalidField', params: { field: 'resourceType' } },
+        { key: 'validation.invalidField', params: { field: 'resourceTheme' } },
+        {
+          key: 'validation.invalidField',
+          params: { field: 'resourceAudience' },
+        },
+        { key: 'validation.invalidField', params: { field: 'status' } },
+        { key: 'validation.invalidField', params: { field: 'publishedAt' } },
       ],
     });
   });
@@ -139,7 +145,7 @@ describe('Resources DTO validation', () => {
 
     expect(result).toEqual({
       valid: false,
-      errors: ['Corps de requête invalide.'],
+      errors: [{ key: 'validation.invalidBody' }],
     });
   });
 });

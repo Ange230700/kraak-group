@@ -8,11 +8,13 @@
       <p
         class="text-brand-blue mb-1 text-xs font-semibold tracking-[0.3em] uppercase"
       >
-        Administration
+        {{ 'web.admin.users.list.header.eyebrow' | kraakTranslate }}
       </p>
-      <h1 class="text-brand-navy text-2xl font-bold">Utilisateurs</h1>
+      <h1 class="text-brand-navy text-2xl font-bold">
+        {{ 'web.admin.users.list.header.title' | kraakTranslate }}
+      </h1>
       <p class="mt-1 text-sm text-neutral-600">
-        Gérez les comptes et les rôles des membres de la plateforme.
+        {{ 'web.admin.users.list.header.description' | kraakTranslate }}
       </p>
     </div>
     <a
@@ -22,7 +24,7 @@
       type="button"
     >
       <i class="pi pi-user-plus mr-2"></i>
-      Nouvel utilisateur
+      {{ 'web.admin.users.list.header.newUser' | kraakTranslate }}
     </a>
   </div>
 </section>
@@ -52,11 +54,13 @@
       <i class="pi pi-search text-neutral-400"></i>
       <input
         type="text"
-        placeholder="Rechercher par nom, email ou rôle…"
+        [placeholder]="
+          'web.admin.users.list.search.placeholder' | kraakTranslate
+        "
         class="text-brand-navy flex-1 text-sm placeholder-neutral-400 outline-none"
         [value]="searchQuery()"
         (input)="searchQuery.set($any($event.target).value)"
-        aria-label="Rechercher un utilisateur"
+        [attr.aria-label]="'web.admin.users.list.search.aria' | kraakTranslate"
       />
     </div>
 
@@ -67,7 +71,9 @@
       >
         <i
           class="pi pi-spin pi-spinner text-brand-blue text-3xl"
-          aria-label="Chargement en cours"
+          [attr.aria-label]="
+            'web.admin.users.list.loading.aria' | kraakTranslate
+          "
         ></i>
       </div>
     } @else if (filteredUsers().length === 0) {
@@ -75,41 +81,50 @@
         <i class="pi pi-users mb-4 block text-5xl text-neutral-300"></i>
         <p class="text-sm text-neutral-600">
           @if (searchQuery()) {
-            Aucun utilisateur ne correspond à votre recherche.
+            {{ 'web.admin.users.list.empty.filtered' | kraakTranslate }}
           } @else {
-            Aucun utilisateur enregistré pour le moment.
+            {{ 'web.admin.users.list.empty.none' | kraakTranslate }}
           }
         </p>
       </div>
     } @else {
       <div class="bg-brand-white rounded-card shadow-card overflow-hidden">
-        <table class="w-full text-sm" aria-label="Liste des utilisateurs">
+        <table
+          class="w-full text-sm"
+          [attr.aria-label]="'web.admin.users.list.table.aria' | kraakTranslate"
+        >
           <thead class="border-b border-neutral-200 bg-neutral-50">
             <tr>
               <th
                 class="px-6 py-3 text-left text-xs font-semibold tracking-wider text-neutral-500 uppercase"
               >
-                Nom
+                {{ 'web.admin.users.list.table.columns.name' | kraakTranslate }}
               </th>
               <th
                 class="hidden px-6 py-3 text-left text-xs font-semibold tracking-wider text-neutral-500 uppercase sm:table-cell"
               >
-                Email
+                {{
+                  'web.admin.users.list.table.columns.email' | kraakTranslate
+                }}
               </th>
               <th
                 class="hidden px-6 py-3 text-left text-xs font-semibold tracking-wider text-neutral-500 uppercase md:table-cell"
               >
-                Rôle
+                {{ 'web.admin.users.list.table.columns.role' | kraakTranslate }}
               </th>
               <th
                 class="hidden px-6 py-3 text-left text-xs font-semibold tracking-wider text-neutral-500 uppercase lg:table-cell"
               >
-                Statut
+                {{
+                  'web.admin.users.list.table.columns.status' | kraakTranslate
+                }}
               </th>
               <th
                 class="px-6 py-3 text-right text-xs font-semibold tracking-wider text-neutral-500 uppercase"
               >
-                Actions
+                {{
+                  'web.admin.users.list.table.columns.actions' | kraakTranslate
+                }}
               </th>
             </tr>
           </thead>
@@ -150,13 +165,19 @@
                     <span
                       class="inline-flex items-center gap-1 text-xs font-medium text-green-700"
                     >
-                      <i class="pi pi-check-circle"></i> Actif
+                      <i class="pi pi-check-circle"></i>
+                      {{
+                        'web.admin.users.list.status.active' | kraakTranslate
+                      }}
                     </span>
                   } @else {
                     <span
                       class="inline-flex items-center gap-1 text-xs font-medium text-neutral-400"
                     >
-                      <i class="pi pi-ban"></i> Inactif
+                      <i class="pi pi-ban"></i>
+                      {{
+                        'web.admin.users.list.status.inactive' | kraakTranslate
+                      }}
                     </span>
                   }
                 </td>
@@ -167,24 +188,22 @@
                       class="kr-button-ghost px-3! py-1.5! text-xs"
                       type="button"
                       (click)="openEdit(user)"
-                      [attr.aria-label]="
-                        'Modifier ' + user.firstName + ' ' + user.lastName
-                      "
+                      [attr.aria-label]="getEditAriaLabel(user)"
                     >
                       <i class="pi pi-pencil mr-1"></i>
-                      Modifier
+                      {{ 'web.admin.users.list.actions.edit' | kraakTranslate }}
                     </button>
                     <button
                       pButton
                       class="kr-button-ghost border-red-200 px-3! py-1.5! text-xs text-red-600 hover:bg-red-50"
                       type="button"
                       (click)="requestDelete(user)"
-                      [attr.aria-label]="
-                        'Supprimer ' + user.firstName + ' ' + user.lastName
-                      "
+                      [attr.aria-label]="getDeleteAriaLabel(user)"
                     >
                       <i class="pi pi-trash mr-1"></i>
-                      Supprimer
+                      {{
+                        'web.admin.users.list.actions.delete' | kraakTranslate
+                      }}
                     </button>
                   </div>
                 </td>
@@ -203,20 +222,20 @@
     open
     class="fixed inset-0 z-50 flex items-center justify-center bg-black/40 px-4"
     aria-modal="true"
-    [attr.aria-label]="
-      'Modifier ' + editingUser()!.firstName + ' ' + editingUser()!.lastName
-    "
+    [attr.aria-label]="getEditAriaLabel(editingUser()!)"
   >
     <div class="bg-brand-white rounded-card shadow-card w-full max-w-lg p-8">
       <div class="mb-6 flex items-center justify-between">
         <h2 class="text-brand-navy text-xl font-bold">
-          Modifier l'utilisateur
+          {{ 'web.admin.users.list.editDialog.title' | kraakTranslate }}
         </h2>
         <button
           type="button"
           class="text-neutral-400 hover:text-neutral-600"
           (click)="closeEdit()"
-          aria-label="Fermer la fenêtre"
+          [attr.aria-label]="
+            'web.admin.users.list.editDialog.closeAria' | kraakTranslate
+          "
         >
           <i class="pi pi-times text-xl"></i>
         </button>
@@ -228,7 +247,10 @@
             <label
               class="text-xs font-medium text-neutral-600"
               for="edit-firstName"
-              >Prénom</label
+              >{{
+                'web.admin.users.list.editDialog.fields.firstName'
+                  | kraakTranslate
+              }}</label
             >
             <input
               id="edit-firstName"
@@ -242,7 +264,10 @@
             <label
               class="text-xs font-medium text-neutral-600"
               for="edit-lastName"
-              >Nom</label
+              >{{
+                'web.admin.users.list.editDialog.fields.lastName'
+                  | kraakTranslate
+              }}</label
             >
             <input
               id="edit-lastName"
@@ -255,8 +280,12 @@
         </div>
 
         <div class="flex flex-col gap-1">
-          <label class="text-xs font-medium text-neutral-600" for="edit-email"
-            >Email</label
+          <label
+            class="text-xs font-medium text-neutral-600"
+            for="edit-email"
+            >{{
+              'web.admin.users.list.editDialog.fields.email' | kraakTranslate
+            }}</label
           >
           <input
             id="edit-email"
@@ -268,9 +297,9 @@
         </div>
 
         <div class="flex flex-col gap-1">
-          <label class="text-xs font-medium text-neutral-600" for="edit-role"
-            >Rôle</label
-          >
+          <label class="text-xs font-medium text-neutral-600" for="edit-role">{{
+            'web.admin.users.list.editDialog.fields.role' | kraakTranslate
+          }}</label>
           <select
             id="edit-role"
             class="text-brand-navy focus:border-brand-blue rounded-lg border border-neutral-200 bg-white px-3 py-2 text-sm outline-none"
@@ -291,9 +320,9 @@
             [checked]="editForm()['isActive'] ?? true"
             (change)="updateEditField('isActive', $any($event.target).checked)"
           />
-          <label class="text-sm text-neutral-700" for="edit-isActive"
-            >Compte actif</label
-          >
+          <label class="text-sm text-neutral-700" for="edit-isActive">{{
+            'web.admin.users.list.editDialog.fields.active' | kraakTranslate
+          }}</label>
         </div>
       </div>
 
@@ -309,7 +338,7 @@
           (click)="closeEdit()"
           [disabled]="submitting()"
         >
-          Annuler
+          {{ 'web.admin.users.list.actions.cancel' | kraakTranslate }}
         </button>
         <button
           pButton
@@ -321,7 +350,7 @@
           @if (submitting()) {
             <i class="pi pi-spin pi-spinner mr-2"></i>
           }
-          Enregistrer
+          {{ 'web.admin.users.list.actions.save' | kraakTranslate }}
         </button>
       </div>
     </div>
@@ -334,7 +363,9 @@
     open
     class="fixed inset-0 z-50 flex items-center justify-center bg-black/40 px-4"
     aria-modal="true"
-    aria-label="Confirmer la suppression"
+    [attr.aria-label]="
+      'web.admin.users.list.deleteDialog.aria' | kraakTranslate
+    "
   >
     <div class="bg-brand-white rounded-card shadow-card w-full max-w-md p-8">
       <div class="flex flex-col items-center gap-4 text-center">
@@ -344,15 +375,15 @@
           <i class="pi pi-trash text-2xl text-red-600"></i>
         </div>
         <h2 class="text-brand-navy text-xl font-bold">
-          Supprimer l'utilisateur
+          {{ 'web.admin.users.list.deleteDialog.title' | kraakTranslate }}
         </h2>
         <p class="text-sm text-neutral-600">
-          Êtes-vous sûr(e) de vouloir supprimer
+          {{ 'web.admin.users.list.deleteDialog.prefix' | kraakTranslate }}
           <strong
             >{{ userToDelete()!.firstName }}
             {{ userToDelete()!.lastName }}</strong
           >
-          ? Cette action est irréversible.
+          {{ 'web.admin.users.list.deleteDialog.suffix' | kraakTranslate }}
         </p>
       </div>
 
@@ -364,7 +395,7 @@
           (click)="cancelDelete()"
           [disabled]="submitting()"
         >
-          Annuler
+          {{ 'web.admin.users.list.actions.cancel' | kraakTranslate }}
         </button>
         <button
           pButton
@@ -376,7 +407,7 @@
           @if (submitting()) {
             <i class="pi pi-spin pi-spinner mr-2"></i>
           }
-          Supprimer
+          {{ 'web.admin.users.list.actions.delete' | kraakTranslate }}
         </button>
       </div>
     </div>

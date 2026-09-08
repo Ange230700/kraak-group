@@ -4,17 +4,27 @@ import { Router } from '@angular/router';
 import { ButtonDirective } from 'primeng/button';
 
 import { UserFormStateService } from '../user-form-state.service';
+import { KraakTranslatePipe } from '../../../../../../../shared/i18n';
 
 const CONTACT_CHANNELS = [
-  { value: 'email', label: 'Email' },
-  { value: 'phone', label: 'Téléphone' },
-  { value: 'whatsapp', label: 'WhatsApp' },
+  {
+    value: 'email',
+    labelKey: 'web.admin.users.create.authorization.channels.email',
+  },
+  {
+    value: 'phone',
+    labelKey: 'web.admin.users.create.authorization.channels.phone',
+  },
+  {
+    value: 'whatsapp',
+    labelKey: 'web.admin.users.create.authorization.channels.whatsapp',
+  },
 ] as const;
 
 @Component({
   selector: 'kraak-authorization-step-page',
   standalone: true,
-  imports: [FormsModule, ButtonDirective],
+  imports: [FormsModule, ButtonDirective, KraakTranslatePipe],
   templateUrl: './authorization.page.html',
 })
 export default class AuthorizationPage implements OnInit {

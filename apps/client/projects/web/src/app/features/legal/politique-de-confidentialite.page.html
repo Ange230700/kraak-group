@@ -5,24 +5,19 @@
     <h1
       class="text-brand-navy mb-5 text-4xl leading-tight font-semibold tracking-tight sm:text-5xl"
     >
-      Politique de confidentialité
+      {{ 'web.legal.privacyPolicy.title' | kraakTranslate }}
     </h1>
 
     <p class="max-w-3xl text-lg leading-8 text-slate-600">
-      Dernière mise à jour : mai 2026. Cette politique explique comment KRAAK
-      Consulting protège les données personnelles transmises via son site
-      public, ses formulaires, ses échanges par e-mail, WhatsApp ou téléphone,
-      et ses outils légers de mesure d'audience.
+      {{ 'web.legal.privacyPolicy.updated' | kraakTranslate }}
     </p>
 
     <section class="mt-10 border-t border-slate-200/80 pt-8">
       <h2 class="text-brand-navy mb-3 text-xl font-semibold tracking-tight">
-        Responsable du traitement
+        {{ 'web.legal.privacyPolicy.controller.heading' | kraakTranslate }}
       </h2>
       <p class="leading-7 text-slate-600">
-        Le responsable du traitement est KRAAK Consulting, structure en cours
-        d'immatriculation. Pour toute demande relative à vos données, contactez
-        KRAAK Consulting à
+        {{ 'web.legal.privacyPolicy.controller.prefix' | kraakTranslate }}
         <a
           [href]="contactEmailHref"
           kraakPublicConversion="direct_email_click"
@@ -34,7 +29,7 @@
           class="text-brand-blue font-medium underline-offset-4 hover:underline"
           >{{ contactEmail }}</a
         >
-        ou au
+        {{ 'web.legal.privacyPolicy.controller.orPhone' | kraakTranslate }}
         <a
           [href]="contactPhoneHref"
           class="text-brand-blue font-medium underline-offset-4 hover:underline"
@@ -45,104 +40,118 @@
 
     <section class="mt-10 border-t border-slate-200/80 pt-8">
       <h2 class="text-brand-navy mb-3 text-xl font-semibold tracking-tight">
-        Données collectées
+        {{ 'web.legal.privacyPolicy.collected.heading' | kraakTranslate }}
       </h2>
       <p class="mb-3 leading-7 text-slate-600">
-        Nous collectons uniquement les informations nécessaires à la
-        compréhension et au traitement de votre demande :
+        {{ 'web.legal.privacyPolicy.collected.intro' | kraakTranslate }}
       </p>
       <ul
         class="marker:text-brand-blue list-disc space-y-2 pl-6 leading-7 text-slate-600"
       >
-        <li>Nom, prénom ou nom de l'organisation si vous les indiquez</li>
-        <li>Adresse e-mail et numéro de téléphone transmis volontairement</li>
-        <li>Objet, catégorie, contexte et contenu de la demande</li>
         <li>
-          Informations utiles à l'orientation demandée, sans dossier sensible
-          complet
+          {{
+            'web.legal.privacyPolicy.collected.items.identity' | kraakTranslate
+          }}
         </li>
         <li>
-          Données techniques limitées liées à la sécurité ou à la mesure
-          d'audience
+          {{
+            'web.legal.privacyPolicy.collected.items.contact' | kraakTranslate
+          }}
+        </li>
+        <li>
+          {{
+            'web.legal.privacyPolicy.collected.items.request' | kraakTranslate
+          }}
+        </li>
+        <li>
+          {{
+            'web.legal.privacyPolicy.collected.items.guidance' | kraakTranslate
+          }}
+        </li>
+        <li>
+          {{
+            'web.legal.privacyPolicy.collected.items.technical' | kraakTranslate
+          }}
         </li>
       </ul>
     </section>
 
     <section class="mt-10 border-t border-slate-200/80 pt-8">
       <h2 class="text-brand-navy mb-3 text-xl font-semibold tracking-tight">
-        Finalités et bases légales
+        {{ 'web.legal.privacyPolicy.purposes.heading' | kraakTranslate }}
       </h2>
       <p class="leading-7 text-slate-600">
-        Vos données sont utilisées pour répondre à vos demandes, proposer une
-        orientation adaptée, organiser un échange si nécessaire, sécuriser le
-        site et améliorer la clarté du parcours public. Les bases légales
-        mobilisées sont votre consentement lorsque vous nous contactez
-        volontairement, l'intérêt légitime de KRAAK Consulting à traiter et
-        suivre les demandes, et, si nécessaire, l'exécution de mesures
-        précontractuelles ou le respect d'une obligation légale.
+        {{ 'web.legal.privacyPolicy.purposes.body' | kraakTranslate }}
       </p>
     </section>
 
     <section class="mt-10 border-t border-slate-200/80 pt-8">
       <h2 class="text-brand-navy mb-3 text-xl font-semibold tracking-tight">
-        Consentement de contact
+        {{ 'web.legal.privacyPolicy.contactConsent.heading' | kraakTranslate }}
       </h2>
       <p class="leading-7 text-slate-600">
-        Lorsque vous envoyez un formulaire, un e-mail, un message WhatsApp ou
-        que vous appelez KRAAK Consulting, vous consentez à ce que KRAAK
-        Consulting utilise les informations transmises pour analyser votre
-        demande, vous répondre et assurer un suivi raisonnable. Vous pouvez
-        retirer ce consentement ou demander l'arrêt du suivi à tout moment via
-        les coordonnées indiquées sur cette page.
+        {{ 'web.legal.privacyPolicy.contactConsent.body' | kraakTranslate }}
       </p>
     </section>
 
     <section class="mt-10 border-t border-slate-200/80 pt-8">
       <h2 class="text-brand-navy mb-3 text-xl font-semibold tracking-tight">
-        Partage des données
+        {{ 'web.legal.privacyPolicy.sharing.heading' | kraakTranslate }}
       </h2>
       <p class="leading-7 text-slate-600">
-        KRAAK Consulting ne revend pas vos données personnelles. Elles ne sont
-        pas transmises à des tiers à des fins commerciales. Elles peuvent
-        uniquement être communiquées à des prestataires techniques nécessaires
-        au fonctionnement du site, aux outils de contact, à l'hébergement, à la
-        sécurité ou à la mesure d'audience, ou lorsqu'une obligation légale
-        l'impose.
+        {{ 'web.legal.privacyPolicy.sharing.body' | kraakTranslate }}
       </p>
     </section>
 
     <section class="mt-10 border-t border-slate-200/80 pt-8">
       <h2 class="text-brand-navy mb-3 text-xl font-semibold tracking-tight">
-        Durée de conservation
+        {{ 'web.legal.privacyPolicy.retention.heading' | kraakTranslate }}
       </h2>
       <p class="leading-7 text-slate-600">
-        Les données issues des formulaires, e-mails, appels et messages de
-        contact sont conservées pendant 3 ans à compter de la dernière
-        interaction utile, sauf demande de suppression recevable, obligation
-        légale contraire ou nécessité de conserver une preuve liée à un échange
-        en cours.
+        {{ 'web.legal.privacyPolicy.retention.body' | kraakTranslate }}
       </p>
     </section>
 
     <section class="mt-10 border-t border-slate-200/80 pt-8">
       <h2 class="text-brand-navy mb-3 text-xl font-semibold tracking-tight">
-        Vos droits
+        {{ 'web.legal.privacyPolicy.rights.heading' | kraakTranslate }}
       </h2>
       <p class="mb-3 leading-7 text-slate-600">
-        Selon le droit applicable, vous pouvez demander :
+        {{ 'web.legal.privacyPolicy.rights.intro' | kraakTranslate }}
       </p>
       <ul
         class="marker:text-brand-blue list-disc space-y-2 pl-6 leading-7 text-slate-600"
       >
-        <li>L'accès à vos données</li>
-        <li>La rectification d'une information inexacte</li>
-        <li>L'effacement de données qui n'ont plus à être conservées</li>
-        <li>La limitation ou l'opposition à certains traitements</li>
-        <li>La portabilité des données que vous avez fournies</li>
-        <li>Le retrait de votre consentement pour les traitements concernés</li>
+        <li>
+          {{ 'web.legal.privacyPolicy.rights.items.access' | kraakTranslate }}
+        </li>
+        <li>
+          {{
+            'web.legal.privacyPolicy.rights.items.rectification'
+              | kraakTranslate
+          }}
+        </li>
+        <li>
+          {{ 'web.legal.privacyPolicy.rights.items.erasure' | kraakTranslate }}
+        </li>
+        <li>
+          {{
+            'web.legal.privacyPolicy.rights.items.restriction' | kraakTranslate
+          }}
+        </li>
+        <li>
+          {{
+            'web.legal.privacyPolicy.rights.items.portability' | kraakTranslate
+          }}
+        </li>
+        <li>
+          {{
+            'web.legal.privacyPolicy.rights.items.withdrawal' | kraakTranslate
+          }}
+        </li>
       </ul>
       <p class="mt-3 leading-7 text-slate-600">
-        Pour exercer ces droits, écrivez à
+        {{ 'web.legal.privacyPolicy.rights.contactPrefix' | kraakTranslate }}
         <a
           [href]="contactEmailHref"
           kraakPublicConversion="direct_email_click"
@@ -153,65 +162,48 @@
           }"
           class="text-brand-blue font-medium underline-offset-4 hover:underline"
           >{{ contactEmail }}</a
-        >. Vous pouvez également introduire une réclamation auprès de l'autorité
-        de contrôle compétente si vous estimez que vos droits ne sont pas
-        respectés.
+        >.
+        {{ 'web.legal.privacyPolicy.rights.complaint' | kraakTranslate }}
       </p>
     </section>
 
     <section class="mt-10 border-t border-slate-200/80 pt-8">
       <h2 class="text-brand-navy mb-3 text-xl font-semibold tracking-tight">
-        Cookies et mesure d'audience
+        {{ 'web.legal.privacyPolicy.analytics.heading' | kraakTranslate }}
       </h2>
       <p class="leading-7 text-slate-600">
-        Le site ne dépose volontairement aucun cookie publicitaire. Google
-        Analytics 4 peut être activé uniquement lorsqu'un identifiant
+        {{ 'web.legal.privacyPolicy.analytics.prefix' | kraakTranslate }}
         <code class="rounded bg-slate-100 px-1 py-0.5 text-sm"
           >PUBLIC_GA4_ID</code
         >
-        est configuré pour l'environnement concerné ; sinon, aucun script Google
-        Analytics n'est chargé. Lorsque cette mesure d'audience est active, elle
-        sert à produire des statistiques agrégées sur la navigation publique,
-        avec anonymisation IP configurée côté site. Vous pouvez limiter ou
-        bloquer les cookies et identifiants de mesure depuis les paramètres de
-        votre navigateur.
+        {{ 'web.legal.privacyPolicy.analytics.suffix' | kraakTranslate }}
       </p>
     </section>
 
     <section class="mt-10 border-t border-slate-200/80 pt-8">
       <h2 class="text-brand-navy mb-3 text-xl font-semibold tracking-tight">
-        Hébergement et transferts techniques
+        {{ 'web.legal.privacyPolicy.hosting.heading' | kraakTranslate }}
       </h2>
       <p class="leading-7 text-slate-600">
-        Le site web et l'API sont hébergés par Render Services, Inc. La base de
-        données, l'authentification et le stockage sont fournis par Supabase
-        Inc. Ces prestataires peuvent traiter des données techniques nécessaires
-        à l'hébergement, à la sécurité et à la disponibilité du service. Lorsque
-        des transferts hors de votre pays de résidence sont nécessaires, KRAAK
-        Consulting s'appuie sur les garanties contractuelles et techniques
-        proposées par ses prestataires.
+        {{ 'web.legal.privacyPolicy.hosting.body' | kraakTranslate }}
       </p>
     </section>
 
     <section class="mt-10 border-t border-slate-200/80 pt-8">
       <h2 class="text-brand-navy mb-3 text-xl font-semibold tracking-tight">
-        Limites des demandes sensibles
+        {{ 'web.legal.privacyPolicy.sensitive.heading' | kraakTranslate }}
       </h2>
       <p class="leading-7 text-slate-600">
-        Le site public n'est pas destiné au dépôt de dossiers administratifs
-        complets, de documents d'identité, de justificatifs financiers ou de
-        données sensibles. Si une analyse approfondie devient nécessaire, KRAAK
-        Consulting vous indiquera le canal approprié et les informations
-        strictement utiles à transmettre.
+        {{ 'web.legal.privacyPolicy.sensitive.body' | kraakTranslate }}
       </p>
     </section>
   </article>
 </main>
 
 <kraak-cta-banner
-  heading="Vous avez des questions sur vos données ?"
-  body="Contactez-nous pour exercer vos droits ou obtenir des informations sur le traitement de vos données."
-  ctaLabel="Nous contacter"
+  [heading]="'web.legal.privacyPolicy.cta.heading' | kraakTranslate"
+  [body]="'web.legal.privacyPolicy.cta.body' | kraakTranslate"
+  [ctaLabel]="'web.legal.common.contactCta' | kraakTranslate"
   ctaLink="/contact"
   ctaContext="legal_privacy_cta"
 />

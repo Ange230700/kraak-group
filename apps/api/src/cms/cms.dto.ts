@@ -1,3 +1,4 @@
+import { apiMessage, type ApiMessageValue } from '../i18n/api-message';
 import type {
   CreatePartnerDto,
   CreateStatisticDto,
@@ -72,7 +73,7 @@ function readStatus(value: unknown): string | null {
 function assignOptionalRequiredStringField<T extends Record<string, unknown>>(
   body: Record<string, unknown>,
   field: string,
-  errors: string[],
+  errors: ApiMessageValue[],
   data: T,
 ): void {
   if (!(field in body)) {
@@ -86,7 +87,7 @@ function assignOptionalRequiredStringField<T extends Record<string, unknown>>(
     return;
   }
 
-  errors.push(`Le champ ${field} est requis.`);
+  errors.push(apiMessage('validation.requiredField', { field: String(field) }));
 }
 
 function assignOptionalNullableStringField<T extends Record<string, unknown>>(
@@ -106,7 +107,7 @@ function assignOptionalNonNegativeIntegerField<
 >(
   body: Record<string, unknown>,
   field: string,
-  errors: string[],
+  errors: ApiMessageValue[],
   data: T,
 ): void {
   if (!(field in body)) {
@@ -120,12 +121,14 @@ function assignOptionalNonNegativeIntegerField<
     return;
   }
 
-  errors.push(`Le champ ${field} doit être un entier positif ou nul.`);
+  errors.push(
+    apiMessage('validation.nonNegativeIntegerField', { field: String(field) }),
+  );
 }
 
 function assignOptionalStatusField<T extends Record<string, unknown>>(
   body: Record<string, unknown>,
-  errors: string[],
+  errors: ApiMessageValue[],
   data: T,
 ): void {
   if (!('status' in body)) {
@@ -139,13 +142,13 @@ function assignOptionalStatusField<T extends Record<string, unknown>>(
     return;
   }
 
-  errors.push('Le champ status est invalide.');
+  errors.push(apiMessage('validation.invalidField', { field: 'status' }));
 }
 
 function assignOptionalUrlField<T extends Record<string, unknown>>(
   body: Record<string, unknown>,
   field: string,
-  errors: string[],
+  errors: ApiMessageValue[],
   data: T,
   options?: { requiredWhenPresent?: boolean },
 ): void {
@@ -158,11 +161,17 @@ function assignOptionalUrlField<T extends Record<string, unknown>>(
 
   if (url.isInvalid || (requiresValue && url.value === null)) {
     if (requiresValue) {
-      errors.push(`Le champ ${field} est requis et doit être une URL valide.`);
+      errors.push(
+        apiMessage('validation.requiredValidUrlField', {
+          field: String(field),
+        }),
+      );
       return;
     }
 
-    errors.push(`Le champ ${field} est invalide.`);
+    errors.push(
+      apiMessage('validation.invalidField', { field: String(field) }),
+    );
     return;
   }
 
@@ -173,7 +182,7 @@ export function validateCreateStatisticPayload(
   body: unknown,
 ): ValidationResult<CreateStatisticDto> {
   if (!isObjectPayload(body)) {
-    return { valid: false, errors: ['Corps de requête invalide.'] };
+    return { valid: false, errors: [apiMessage('validation.invalidBody')] };
   }
 
   const label = readTrimmedString(body['label']);
@@ -182,22 +191,24 @@ export function validateCreateStatisticPayload(
   const sortOrder = readNonNegativeInteger(body['sortOrder']);
   const status = readStatus(body['status']);
 
-  const errors: string[] = [];
+  const errors: ApiMessageValue[] = [];
 
   if (!label) {
-    errors.push('Le champ label est requis.');
+    errors.push(apiMessage('validation.requiredField', { field: 'label' }));
   }
 
   if (!value) {
-    errors.push('Le champ value est requis.');
+    errors.push(apiMessage('validation.requiredField', { field: 'value' }));
   }
 
   if (sortOrder === null) {
-    errors.push('Le champ sortOrder doit être un entier positif ou nul.');
+    errors.push(
+      apiMessage('validation.nonNegativeIntegerField', { field: 'sortOrder' }),
+    );
   }
 
   if (!status) {
-    errors.push('Le champ status est invalide.');
+    errors.push(apiMessage('validation.invalidField', { field: 'status' }));
   }
 
   if (errors.length > 0) {
@@ -222,11 +233,11 @@ export function validateUpdateStatisticPayload(
   body: unknown,
 ): ValidationResult<UpdateStatisticDto> {
   if (!isObjectPayload(body)) {
-    return { valid: false, errors: ['Corps de requête invalide.'] };
+    return { valid: false, errors: [apiMessage('validation.invalidBody')] };
   }
 
   const data: UpdateStatisticDto = {};
-  const errors: string[] = [];
+  const errors: ApiMessageValue[] = [];
 
   assignOptionalRequiredStringField(body, 'label', errors, data);
   assignOptionalRequiredStringField(body, 'value', errors, data);
@@ -241,7 +252,7 @@ export function validateUpdateStatisticPayload(
   if (Object.keys(data).length === 0) {
     return {
       valid: false,
-      errors: ['Le payload de mise à jour doit contenir au moins un champ.'],
+      errors: [apiMessage('validation.updateRequiresField')],
     };
   }
 
@@ -252,7 +263,7 @@ export function validateCreatePartnerPayload(
   body: unknown,
 ): ValidationResult<CreatePartnerDto> {
   if (!isObjectPayload(body)) {
-    return { valid: false, errors: ['Corps de requête invalide.'] };
+    return { valid: false, errors: [apiMessage('validation.invalidBody')] };
   }
 
   const name = readTrimmedString(body['name']);
@@ -260,26 +271,30 @@ export function validateCreatePartnerPayload(
   const websiteUrlResult = readNullableUrl(body['websiteUrl']);
   const sortOrder = readNonNegativeInteger(body['sortOrder']);
   const status = readStatus(body['status']);
-  const errors: string[] = [];
+  const errors: ApiMessageValue[] = [];
 
   if (!name) {
-    errors.push('Le champ name est requis.');
+    errors.push(apiMessage('validation.requiredField', { field: 'name' }));
   }
 
   if (logoUrlResult.value === null || logoUrlResult.isInvalid) {
-    errors.push('Le champ logoUrl est requis et doit être une URL valide.');
+    errors.push(
+      apiMessage('validation.requiredValidUrlField', { field: 'logoUrl' }),
+    );
   }
 
   if (websiteUrlResult.isInvalid) {
-    errors.push('Le champ websiteUrl est invalide.');
+    errors.push(apiMessage('validation.invalidField', { field: 'websiteUrl' }));
   }
 
   if (sortOrder === null) {
-    errors.push('Le champ sortOrder doit être un entier positif ou nul.');
+    errors.push(
+      apiMessage('validation.nonNegativeIntegerField', { field: 'sortOrder' }),
+    );
   }
 
   if (!status) {
-    errors.push('Le champ status est invalide.');
+    errors.push(apiMessage('validation.invalidField', { field: 'status' }));
   }
 
   if (errors.length > 0) {
@@ -305,11 +320,11 @@ export function validateUpdatePartnerPayload(
   body: unknown,
 ): ValidationResult<UpdatePartnerDto> {
   if (!isObjectPayload(body)) {
-    return { valid: false, errors: ['Corps de requête invalide.'] };
+    return { valid: false, errors: [apiMessage('validation.invalidBody')] };
   }
 
   const data: UpdatePartnerDto = {};
-  const errors: string[] = [];
+  const errors: ApiMessageValue[] = [];
 
   assignOptionalRequiredStringField(body, 'name', errors, data);
   assignOptionalUrlField(body, 'logoUrl', errors, data, {
@@ -326,7 +341,7 @@ export function validateUpdatePartnerPayload(
   if (Object.keys(data).length === 0) {
     return {
       valid: false,
-      errors: ['Le payload de mise à jour doit contenir au moins un champ.'],
+      errors: [apiMessage('validation.updateRequiresField')],
     };
   }
 
@@ -337,7 +352,7 @@ export function validateCreateTestimonialPayload(
   body: unknown,
 ): ValidationResult<CreateTestimonialDto> {
   if (!isObjectPayload(body)) {
-    return { valid: false, errors: ['Corps de requête invalide.'] };
+    return { valid: false, errors: [apiMessage('validation.invalidBody')] };
   }
 
   const quote = readTrimmedString(body['quote']);
@@ -347,26 +362,30 @@ export function validateCreateTestimonialPayload(
   const avatarUrlResult = readNullableUrl(body['avatarUrl']);
   const sortOrder = readNonNegativeInteger(body['sortOrder']);
   const status = readStatus(body['status']);
-  const errors: string[] = [];
+  const errors: ApiMessageValue[] = [];
 
   if (!quote) {
-    errors.push('Le champ quote est requis.');
+    errors.push(apiMessage('validation.requiredField', { field: 'quote' }));
   }
 
   if (!authorName) {
-    errors.push('Le champ authorName est requis.');
+    errors.push(
+      apiMessage('validation.requiredField', { field: 'authorName' }),
+    );
   }
 
   if (avatarUrlResult.isInvalid) {
-    errors.push('Le champ avatarUrl est invalide.');
+    errors.push(apiMessage('validation.invalidField', { field: 'avatarUrl' }));
   }
 
   if (sortOrder === null) {
-    errors.push('Le champ sortOrder doit être un entier positif ou nul.');
+    errors.push(
+      apiMessage('validation.nonNegativeIntegerField', { field: 'sortOrder' }),
+    );
   }
 
   if (!status) {
-    errors.push('Le champ status est invalide.');
+    errors.push(apiMessage('validation.invalidField', { field: 'status' }));
   }
 
   if (errors.length > 0) {
@@ -393,11 +412,11 @@ export function validateUpdateTestimonialPayload(
   body: unknown,
 ): ValidationResult<UpdateTestimonialDto> {
   if (!isObjectPayload(body)) {
-    return { valid: false, errors: ['Corps de requête invalide.'] };
+    return { valid: false, errors: [apiMessage('validation.invalidBody')] };
   }
 
   const data: UpdateTestimonialDto = {};
-  const errors: string[] = [];
+  const errors: ApiMessageValue[] = [];
 
   assignOptionalRequiredStringField(body, 'quote', errors, data);
   assignOptionalRequiredStringField(body, 'authorName', errors, data);
@@ -414,7 +433,7 @@ export function validateUpdateTestimonialPayload(
   if (Object.keys(data).length === 0) {
     return {
       valid: false,
-      errors: ['Le payload de mise à jour doit contenir au moins un champ.'],
+      errors: [apiMessage('validation.updateRequiresField')],
     };
   }
 
@@ -425,7 +444,7 @@ export function validateCreateTeamMemberPayload(
   body: unknown,
 ): ValidationResult<CreateTeamMemberDto> {
   if (!isObjectPayload(body)) {
-    return { valid: false, errors: ['Corps de requête invalide.'] };
+    return { valid: false, errors: [apiMessage('validation.invalidBody')] };
   }
 
   const fullName = readTrimmedString(body['fullName']);
@@ -435,30 +454,34 @@ export function validateCreateTeamMemberPayload(
   const linkedinUrlResult = readNullableUrl(body['linkedinUrl']);
   const sortOrder = readNonNegativeInteger(body['sortOrder']);
   const status = readStatus(body['status']);
-  const errors: string[] = [];
+  const errors: ApiMessageValue[] = [];
 
   if (!fullName) {
-    errors.push('Le champ fullName est requis.');
+    errors.push(apiMessage('validation.requiredField', { field: 'fullName' }));
   }
 
   if (!role) {
-    errors.push('Le champ role est requis.');
+    errors.push(apiMessage('validation.requiredField', { field: 'role' }));
   }
 
   if (avatarUrlResult.isInvalid) {
-    errors.push('Le champ avatarUrl est invalide.');
+    errors.push(apiMessage('validation.invalidField', { field: 'avatarUrl' }));
   }
 
   if (linkedinUrlResult.isInvalid) {
-    errors.push('Le champ linkedinUrl est invalide.');
+    errors.push(
+      apiMessage('validation.invalidField', { field: 'linkedinUrl' }),
+    );
   }
 
   if (sortOrder === null) {
-    errors.push('Le champ sortOrder doit être un entier positif ou nul.');
+    errors.push(
+      apiMessage('validation.nonNegativeIntegerField', { field: 'sortOrder' }),
+    );
   }
 
   if (!status) {
-    errors.push('Le champ status est invalide.');
+    errors.push(apiMessage('validation.invalidField', { field: 'status' }));
   }
 
   if (errors.length > 0) {
@@ -485,11 +508,11 @@ export function validateUpdateTeamMemberPayload(
   body: unknown,
 ): ValidationResult<UpdateTeamMemberDto> {
   if (!isObjectPayload(body)) {
-    return { valid: false, errors: ['Corps de requête invalide.'] };
+    return { valid: false, errors: [apiMessage('validation.invalidBody')] };
   }
 
   const data: UpdateTeamMemberDto = {};
-  const errors: string[] = [];
+  const errors: ApiMessageValue[] = [];
 
   assignOptionalRequiredStringField(body, 'fullName', errors, data);
   assignOptionalRequiredStringField(body, 'role', errors, data);
@@ -506,7 +529,7 @@ export function validateUpdateTeamMemberPayload(
   if (Object.keys(data).length === 0) {
     return {
       valid: false,
-      errors: ['Le payload de mise à jour doit contenir au moins un champ.'],
+      errors: [apiMessage('validation.updateRequiresField')],
     };
   }
 

@@ -5,26 +5,22 @@
     <h1
       class="text-brand-navy mb-5 text-4xl leading-tight font-semibold tracking-tight sm:text-5xl"
     >
-      Mentions légales
+      {{ 'web.legal.legalNotice.title' | kraakTranslate }}
     </h1>
 
     <p class="max-w-3xl text-lg leading-8 text-slate-600">
-      Dernière mise à jour : mai 2026. Cette page présente les informations
-      légales applicables au site vitrine public de KRAAK Consulting.
+      {{ 'web.legal.legalNotice.updated' | kraakTranslate }}
     </p>
 
     <section class="mt-10 border-t border-slate-200/80 pt-8">
       <h2 class="text-brand-navy mb-3 text-xl font-semibold tracking-tight">
-        Éditeur du site
+        {{ 'web.legal.legalNotice.editor.heading' | kraakTranslate }}
       </h2>
       <p class="leading-7 text-slate-600">
-        KRAAK Consulting est une structure en cours d'immatriculation. Les
-        informations légales complémentaires, notamment la forme juridique, le
-        numéro d'immatriculation et l'adresse administrative de référence,
-        seront publiées dès leur finalisation.
+        {{ 'web.legal.legalNotice.editor.body' | kraakTranslate }}
       </p>
       <p class="mt-4 leading-7 text-slate-600">
-        Coordonnées publiques :
+        {{ 'web.legal.legalNotice.editor.contactPrefix' | kraakTranslate }}
         <a
           [href]="contactEmailHref"
           kraakPublicConversion="direct_email_click"
@@ -41,7 +37,7 @@
           class="text-brand-blue font-medium underline-offset-4 hover:underline"
           >{{ contactPhoneDisplay }}</a
         >
-        et
+        {{ 'web.legal.legalNotice.editor.contactAnd' | kraakTranslate }}
         <a
           [href]="whatsappContactHref"
           target="_blank"
@@ -60,29 +56,28 @@
 
     <section class="mt-10 border-t border-slate-200/80 pt-8">
       <h2 class="text-brand-navy mb-3 text-xl font-semibold tracking-tight">
-        Direction de publication
+        {{ 'web.legal.legalNotice.publication.heading' | kraakTranslate }}
       </h2>
       <p class="leading-7 text-slate-600">
-        La direction de publication est assurée par KRAAK Consulting. Pour toute
-        demande relative au site, aux contenus publiés ou aux données
-        personnelles, utilisez les coordonnées publiques indiquées ci-dessus.
+        {{ 'web.legal.legalNotice.publication.body' | kraakTranslate }}
       </p>
     </section>
 
     <section class="mt-10 border-t border-slate-200/80 pt-8">
       <h2 class="text-brand-navy mb-3 text-xl font-semibold tracking-tight">
-        Hébergement
+        {{ 'web.legal.legalNotice.hosting.heading' | kraakTranslate }}
       </h2>
       <p class="leading-7 text-slate-600">
-        Le site web et l'API sont hébergés par Render Services, Inc., 525
-        Brannan Street, Suite 300, San Francisco, CA 94107, États-Unis (<a
+        {{ 'web.legal.legalNotice.hosting.webPrefix' | kraakTranslate }}
+        <a
           href="https://render.com"
           target="_blank"
           rel="noopener noreferrer"
           class="text-brand-blue font-medium underline-offset-4 hover:underline"
           >render.com</a
         >).<br />
-        Base de données, authentification et stockage : Supabase Inc. (<a
+        {{ 'web.legal.legalNotice.hosting.databasePrefix' | kraakTranslate }}
+        <a
           href="https://supabase.com"
           target="_blank"
           rel="noopener noreferrer"
@@ -94,42 +89,36 @@
 
     <section class="mt-10 border-t border-slate-200/80 pt-8">
       <h2 class="text-brand-navy mb-3 text-xl font-semibold tracking-tight">
-        Propriété intellectuelle
+        {{
+          'web.legal.legalNotice.intellectualProperty.heading' | kraakTranslate
+        }}
       </h2>
       <p class="leading-7 text-slate-600">
-        Les textes, visuels, logos, éléments graphiques, parcours et structures
-        de page publiés sur ce site appartiennent à KRAAK Consulting ou sont
-        utilisés avec une autorisation adaptée. Toute reproduction, adaptation
-        ou réutilisation substantielle sans autorisation écrite préalable est
-        interdite.
+        {{ 'web.legal.legalNotice.intellectualProperty.body' | kraakTranslate }}
       </p>
     </section>
 
     <section class="mt-10 border-t border-slate-200/80 pt-8">
       <h2 class="text-brand-navy mb-3 text-xl font-semibold tracking-tight">
-        Informations et responsabilité
+        {{ 'web.legal.legalNotice.liability.heading' | kraakTranslate }}
       </h2>
       <p class="leading-7 text-slate-600">
-        KRAAK Consulting s'efforce de publier des informations exactes,
-        compréhensibles et à jour. Les contenus du site ont une vocation
-        d'information, d'orientation et de prise de contact : ils ne constituent
-        ni une garantie de visa, d'admission, de financement, d'emploi, de
-        résultat administratif, ni un avis juridique individualisé.
+        {{ 'web.legal.legalNotice.liability.body' | kraakTranslate }}
       </p>
     </section>
 
     <section class="mt-10 border-t border-slate-200/80 pt-8">
       <h2 class="text-brand-navy mb-3 text-xl font-semibold tracking-tight">
-        Données personnelles et cookies
+        {{ 'web.legal.legalNotice.personalData.heading' | kraakTranslate }}
       </h2>
       <p class="leading-7 text-slate-600">
-        Les traitements de données personnelles, la conservation des demandes de
-        contact et l'usage éventuel de cookies de mesure d'audience sont
-        détaillés dans notre
+        {{ 'web.legal.legalNotice.personalData.prefix' | kraakTranslate }}
         <a
           [routerLink]="'privacyPolicy' | localizedPublicPath"
           class="text-brand-blue font-medium underline-offset-4 hover:underline"
-          >politique de confidentialité</a
+          >{{
+            'web.legal.legalNotice.personalData.linkLabel' | kraakTranslate
+          }}</a
         >.
       </p>
     </section>
@@ -137,9 +126,9 @@
 </main>
 
 <kraak-cta-banner
-  heading="Vous avez des questions ? Nous sommes là."
-  body="Contactez notre équipe pour toute demande relative au site, à vos données ou à nos services."
-  ctaLabel="Nous contacter"
+  [heading]="'web.legal.legalNotice.cta.heading' | kraakTranslate"
+  [body]="'web.legal.legalNotice.cta.body' | kraakTranslate"
+  [ctaLabel]="'web.legal.common.contactCta' | kraakTranslate"
   ctaLink="/contact"
   ctaContext="legal_mentions_cta"
 />

@@ -1,5 +1,7 @@
 import type { SeoPageDefinition } from '../../seo/site-seo';
+import { buildLocalizedBlogArticlePath } from '../../routing/localized-public-routes';
 import type { ArticleDto } from '@kraak/contracts';
+import { resolveSupportedLocale, type SupportedLocale } from '@kraak/domain';
 
 export interface BlogSection {
   heading: string;
@@ -241,21 +243,230 @@ export const blogArticles: readonly BlogArticle[] = [
   },
 ] as const;
 
-const FALLBACK_AUTHOR: BlogAuthor = {
-  name: 'Équipe KRAAK',
-  role: 'Rédaction KRAAK',
-  bio: 'Contenu éditorial KRAAK orienté vers des décisions concrètes et actionnables.',
-  avatar: '/assets/site-visuals/photos/home-services-training.avif',
-};
+function requireFrenchFallbackArticle(id: string): BlogArticle {
+  const article = blogArticles.find((candidate) => candidate.id === id);
+
+  if (!article) {
+    throw new Error(`Missing French fallback Blog article "${id}".`);
+  }
+
+  return article;
+}
+
+export const englishBlogArticles: readonly BlogArticle[] = [
+  {
+    ...requireFrenchFallbackArticle('blog-1'),
+    title: 'Clarify your project before applying',
+    excerpt:
+      'Before sending out applications, you need to know what you are looking for, what you bring and what you can prove.',
+    content:
+      '<p>A clear project helps you choose the right format, prepare useful evidence and avoid scattered efforts.</p>',
+    author: {
+      ...requireFrenchFallbackArticle('blog-1').author,
+      role: 'KRAAK Adviser',
+      bio: 'She helps young professionals turn a vague intention into a clear and actionable path.',
+    },
+    categoryLabel: 'Employability',
+    tagLabels: ['Guidance', 'Applications', 'Leadership'],
+    publishedLabel: '12 May 2026',
+    summary:
+      'A simple framework to clarify your goal, select your evidence and move towards a stronger application.',
+    intro:
+      'The first mistake is not necessarily applying badly. It is often applying without first defining the target role, the available evidence and the type of support that would actually help.',
+    sections: [
+      {
+        heading: '1. Start with the expected outcome',
+        paragraphs: [
+          'Define the role, context and timeframe. A useful application responds to a specific objective and a realistic horizon.',
+          'Once the objective is stable, it becomes easier to choose the experiences, training and examples worth highlighting.',
+        ],
+        bullets: [
+          'What role or assignment are you targeting?',
+          'How soon do you want to move forward?',
+          'What constraints do you need to respect?',
+        ],
+      },
+      {
+        heading: '2. Separate evidence from intentions',
+        paragraphs: [
+          'A clear profile should distinguish what you want to do from what you can already demonstrate.',
+          'This distinction helps you structure a CV, portfolio or interview with greater precision.',
+        ],
+      },
+      {
+        heading: '3. Choose a useful next step',
+        paragraphs: [
+          'The right next step is not always another application. It may be a guidance session, a CV update or a targeted programme.',
+        ],
+      },
+    ],
+    takeawayPoints: [
+      'A clear objective simplifies every other decision.',
+      'Evidence should be selected before it is polished.',
+      'The next step should remain actionable and time-bound.',
+    ],
+  },
+  {
+    ...requireFrenchFallbackArticle('blog-2'),
+    title: 'Choose a useful training format',
+    excerpt:
+      'Training is useful only when it responds to a specific situation, a clear constraint and measurable progress.',
+    content:
+      '<p>The best format is not necessarily the longest. It is the one that helps you move forward methodically.</p>',
+    author: {
+      ...requireFrenchFallbackArticle('blog-2').author,
+      role: 'Programme Manager',
+      bio: 'He designs short, structured formats that help participants progress without getting lost in theory.',
+    },
+    categoryLabel: 'Training',
+    tagLabels: ['Training', 'Skills', 'Progress'],
+    publishedLabel: '20 May 2026',
+    summary:
+      'Three simple criteria for choosing a training format that fits your objective, level and schedule.',
+    intro:
+      'The right training format is not a catalogue. It is a calibrated response to a specific situation.',
+    sections: [
+      {
+        heading: '1. Check the actual need',
+        paragraphs: [
+          'Before choosing a format, clarify the problem to solve. Is it a lack of method, a need for practice or a need to develop your professional posture?',
+        ],
+      },
+      {
+        heading: '2. Choose the right level of intensity',
+        paragraphs: [
+          'An intensive workshop can unblock a specific issue. A longer programme can help establish lasting habits.',
+        ],
+      },
+      {
+        heading: '3. Decide how progress will be measured',
+        paragraphs: [
+          'If you cannot observe a difference after the chosen format, the objective or the format probably needs to be adjusted.',
+        ],
+      },
+    ],
+    takeawayPoints: [
+      'The need always comes before the format.',
+      'The level of intensity should match the urgency.',
+      'Progress should be observable.',
+    ],
+  },
+  {
+    ...requireFrenchFallbackArticle('blog-3'),
+    title:
+      'Prepare an immigration application without losing sight of the big picture',
+    excerpt:
+      'An application becomes weaker when its documents stop telling the same story. The priority is to maintain overall consistency.',
+    content:
+      '<p>The quality of an application does not depend on documents alone. It also depends on consistency between the narrative, the evidence and the timeline.</p>',
+    author: {
+      ...requireFrenchFallbackArticle('blog-3').author,
+      role: 'Mobility Adviser',
+      bio: 'She supports international profiles in the structured preparation of study and work mobility projects.',
+    },
+    categoryLabel: 'Immigration',
+    tagLabels: ['Immigration', 'Application', 'Preparation'],
+    publishedLabel: '24 May 2026',
+    summary:
+      'A short method for keeping your intention, supporting documents and timeline consistent.',
+    intro:
+      'The strongest application is not necessarily the longest. It is the one that remains consistent from beginning to end.',
+    sections: [
+      {
+        heading: '1. Build a clear thread',
+        paragraphs: [
+          'Before completing a form, describe the project you are presenting in one sentence. Use that sentence as a reference point for every supporting document.',
+        ],
+      },
+      {
+        heading: '2. Organise the evidence in the right order',
+        paragraphs: [
+          'A clear application aligns its evidence with the logic of the project: identity, education, experience, resources and timeline.',
+        ],
+      },
+      {
+        heading: '3. Keep a safety margin',
+        paragraphs: [
+          'Deadlines, translations and additional administrative requests require margin. Avoid working right up against the deadline.',
+        ],
+      },
+    ],
+    takeawayPoints: [
+      'A clear project makes supporting documents easier to organise.',
+      'The order of the evidence matters as much as its presence.',
+      'A safety margin reduces avoidable errors.',
+    ],
+  },
+];
+
+const BLOG_ARTICLES_BY_LOCALE = {
+  'fr-CI': blogArticles,
+  'en-GB': englishBlogArticles,
+} satisfies Record<SupportedLocale, readonly BlogArticle[]>;
+
+const FALLBACK_AUTHORS = {
+  'fr-CI': {
+    name: 'Équipe KRAAK',
+    role: 'Rédaction KRAAK',
+    bio: 'Contenu éditorial KRAAK orienté vers des décisions concrètes et actionnables.',
+    avatar: '/assets/site-visuals/photos/home-services-training.avif',
+  },
+  'en-GB': {
+    name: 'KRAAK Team',
+    role: 'KRAAK Editorial Team',
+    bio: 'KRAAK editorial content focused on concrete, actionable decisions.',
+    avatar: '/assets/site-visuals/photos/home-services-training.avif',
+  },
+} satisfies Record<SupportedLocale, BlogAuthor>;
 
 const FALLBACK_COVER_IMAGE_PATH =
   '/assets/site-visuals/photos/home-hero-workshop.avif';
 
-const frenchDateFormatter = new Intl.DateTimeFormat('fr-FR', {
-  day: 'numeric',
-  month: 'long',
-  year: 'numeric',
-});
+const BLOG_FALLBACK_COPY_BY_LOCALE = {
+  'fr-CI': {
+    categoryLabel: 'Actualités',
+    categorySlug: 'actualites',
+    publicationUpcoming: 'Publication à venir',
+    publicationRecent: 'Publication récente',
+    defaultIntro: 'Cet article est disponible dans le blog KRAAK.',
+    contentHeading: 'Contenu',
+    pendingContent: 'Le contenu de cet article sera bientôt enrichi.',
+    articleImageAltPrefix: "Illustration de l'article",
+    missingSeoTitle: 'Article introuvable | KRAAK Consulting',
+    missingSeoDescription:
+      'L’article demandé n’est pas disponible. Retournez au blog KRAAK pour poursuivre votre lecture.',
+    missingSeoImageAlt:
+      "Photo d'un atelier KRAAK Consulting avec des participants en session de travail.",
+  },
+  'en-GB': {
+    categoryLabel: 'News',
+    categorySlug: 'news',
+    publicationUpcoming: 'Coming soon',
+    publicationRecent: 'Recent publication',
+    defaultIntro: 'This article is available on the KRAAK blog.',
+    contentHeading: 'Content',
+    pendingContent: 'This article will be expanded soon.',
+    articleImageAltPrefix: 'Article illustration:',
+    missingSeoTitle: 'Article not found | KRAAK Consulting',
+    missingSeoDescription:
+      'The requested article is not available. Return to the KRAAK blog to continue reading.',
+    missingSeoImageAlt:
+      'Photo of a KRAAK Consulting workshop with participants in a work session.',
+  },
+} as const;
+
+const BLOG_DATE_FORMATTERS = {
+  'fr-CI': new Intl.DateTimeFormat('fr-FR', {
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
+  }),
+  'en-GB': new Intl.DateTimeFormat('en-GB', {
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
+  }),
+} satisfies Record<SupportedLocale, Intl.DateTimeFormat>;
 
 function isWhitespaceCharacter(char: string): boolean {
   return (
@@ -333,20 +544,30 @@ function estimateReadingTimeMinutes(content: string): number {
   return Math.max(1, Math.ceil(words / 200));
 }
 
-function formatPublishedLabel(publishedAt: string | null): string {
+function formatPublishedLabel(
+  publishedAt: string | null,
+  locale: SupportedLocale,
+): string {
+  const copy = BLOG_FALLBACK_COPY_BY_LOCALE[locale];
+
   if (!publishedAt) {
-    return 'Publication à venir';
+    return copy.publicationUpcoming;
   }
 
   const parsedDate = new Date(publishedAt);
+
   if (Number.isNaN(parsedDate.getTime())) {
-    return 'Publication récente';
+    return copy.publicationRecent;
   }
 
-  return frenchDateFormatter.format(parsedDate);
+  return BLOG_DATE_FORMATTERS[locale].format(parsedDate);
 }
 
-function buildIntroFromContent(content: string, fallback?: string): string {
+function buildIntroFromContent(
+  content: string,
+  locale: SupportedLocale,
+  fallback?: string,
+): string {
   if (fallback && fallback.trim().length > 0) {
     return fallback;
   }
@@ -354,7 +575,7 @@ function buildIntroFromContent(content: string, fallback?: string): string {
   const plainText = stripHtmlTags(content);
 
   if (plainText.length === 0) {
-    return 'Cet article est disponible dans le blog KRAAK.';
+    return BLOG_FALLBACK_COPY_BY_LOCALE[locale].defaultIntro;
   }
 
   return plainText.slice(0, 240);
@@ -362,6 +583,7 @@ function buildIntroFromContent(content: string, fallback?: string): string {
 
 function buildSectionsFromContent(
   content: string,
+  locale: SupportedLocale,
   fallback?: readonly BlogSection[],
 ): readonly BlogSection[] {
   if (fallback && fallback.length > 0) {
@@ -369,34 +591,43 @@ function buildSectionsFromContent(
   }
 
   const plainText = stripHtmlTags(content);
+  const copy = BLOG_FALLBACK_COPY_BY_LOCALE[locale];
 
   if (plainText.length === 0) {
     return [
       {
-        heading: 'Contenu',
-        paragraphs: ['Le contenu de cet article sera bientôt enrichi.'],
+        heading: copy.contentHeading,
+        paragraphs: [copy.pendingContent],
       },
     ];
   }
 
   return [
     {
-      heading: 'Contenu',
+      heading: copy.contentHeading,
       paragraphs: [plainText],
     },
   ];
 }
 
-export function getFallbackBlogArticles(): readonly BlogArticle[] {
-  return blogArticles;
+export function getFallbackBlogArticles(
+  localeCandidate?: SupportedLocale | string | null,
+): readonly BlogArticle[] {
+  const locale = resolveSupportedLocale(localeCandidate);
+
+  return BLOG_ARTICLES_BY_LOCALE[locale];
 }
 
 export function mapPublicArticleToBlogArticle(
   article: ArticleDto,
+  localeCandidate?: SupportedLocale | string | null,
 ): BlogArticle {
+  const locale = resolveSupportedLocale(localeCandidate);
+  const fallbackArticles = BLOG_ARTICLES_BY_LOCALE[locale];
   const fallback =
-    blogArticles.find((candidate) => candidate.slug === article.slug) ??
-    blogArticles.find((candidate) => candidate.id === article.id);
+    fallbackArticles.find((candidate) => candidate.slug === article.slug) ??
+    fallbackArticles.find((candidate) => candidate.id === article.id);
+  const copy = BLOG_FALLBACK_COPY_BY_LOCALE[locale];
 
   return {
     id: article.id,
@@ -414,18 +645,22 @@ export function mapPublicArticleToBlogArticle(
     tagIds: article.tagIds,
     createdAt: article.createdAt,
     updatedAt: article.updatedAt,
-    author: fallback?.author ?? FALLBACK_AUTHOR,
-    categoryLabel: fallback?.categoryLabel ?? 'Actualités',
-    categorySlug: fallback?.categorySlug ?? 'actualites',
+    author: fallback?.author ?? FALLBACK_AUTHORS[locale],
+    categoryLabel: fallback?.categoryLabel ?? copy.categoryLabel,
+    categorySlug: fallback?.categorySlug ?? copy.categorySlug,
     tagLabels: fallback?.tagLabels ?? [],
     coverImagePath: fallback?.coverImagePath ?? FALLBACK_COVER_IMAGE_PATH,
     readingTimeMinutes:
       fallback?.readingTimeMinutes ??
       estimateReadingTimeMinutes(article.content),
-    publishedLabel: formatPublishedLabel(article.publishedAt),
+    publishedLabel: formatPublishedLabel(article.publishedAt, locale),
     summary: article.excerpt,
-    intro: buildIntroFromContent(article.content, fallback?.intro),
-    sections: buildSectionsFromContent(article.content, fallback?.sections),
+    intro: buildIntroFromContent(article.content, locale, fallback?.intro),
+    sections: buildSectionsFromContent(
+      article.content,
+      locale,
+      fallback?.sections,
+    ),
     takeawayPoints: fallback?.takeawayPoints ?? [],
     relatedSlugs: fallback?.relatedSlugs ?? [],
     featured: fallback?.featured ?? false,
@@ -434,9 +669,10 @@ export function mapPublicArticleToBlogArticle(
 
 export function mapPublicArticlesToBlogArticles(
   articles: readonly ArticleDto[],
+  localeCandidate?: SupportedLocale | string | null,
 ): BlogArticle[] {
   return articles
-    .map((article) => mapPublicArticleToBlogArticle(article))
+    .map((article) => mapPublicArticleToBlogArticle(article, localeCandidate))
     .sort((left, right) => {
       const leftTime = left.publishedAt ? Date.parse(left.publishedAt) : 0;
       const rightTime = right.publishedAt ? Date.parse(right.publishedAt) : 0;
@@ -445,35 +681,24 @@ export function mapPublicArticlesToBlogArticles(
     });
 }
 
-export const blogListSeo: SeoPageDefinition = {
-  path: 'blog',
-  title: 'Blog | Actualités et analyses KRAAK Consulting',
-  description:
-    'Découvrez les articles KRAAK sur l’employabilité, la formation, la gestion de projet et la mobilité internationale.',
-  openGraph: {
-    title: 'Blog KRAAK Consulting',
-    description:
-      'Un espace éditorial public pour clarifier un projet, préparer une candidature et mieux choisir son prochain pas.',
-    imagePath: '/assets/site-visuals/photos/home-hero-workshop.jpg',
-    imageAlt:
-      "Photo d'un atelier KRAAK Consulting avec des participants en session de travail.",
-  },
-  sitemap: {
-    changeFrequency: 'weekly',
-    priority: 0.75,
-  },
-};
+export function buildBlogArticleSeo(
+  article: BlogArticle,
+  localeCandidate?: SupportedLocale | string | null,
+): SeoPageDefinition {
+  const locale = resolveSupportedLocale(localeCandidate);
+  const copy = BLOG_FALLBACK_COPY_BY_LOCALE[locale];
+  const path = buildLocalizedBlogArticlePath(article.slug, locale);
 
-export function buildBlogArticleSeo(article: BlogArticle): SeoPageDefinition {
   return {
-    path: `blog/${article.slug}`,
+    path,
+    canonicalPath: path,
     title: `${article.title} | KRAAK Consulting`,
     description: article.seoDescription ?? article.summary,
     openGraph: {
       title: article.seoTitle ?? article.title,
       description: article.seoDescription ?? article.summary,
       imagePath: article.coverImagePath,
-      imageAlt: `Illustration de l'article ${article.title}`,
+      imageAlt: `${copy.articleImageAltPrefix} ${article.title}`,
     },
     sitemap: {
       changeFrequency: 'monthly',
@@ -482,19 +707,24 @@ export function buildBlogArticleSeo(article: BlogArticle): SeoPageDefinition {
   };
 }
 
-export function buildMissingBlogArticleSeo(slug: string): SeoPageDefinition {
+export function buildMissingBlogArticleSeo(
+  slug: string,
+  localeCandidate?: SupportedLocale | string | null,
+): SeoPageDefinition {
+  const locale = resolveSupportedLocale(localeCandidate);
+  const copy = BLOG_FALLBACK_COPY_BY_LOCALE[locale];
+  const path = buildLocalizedBlogArticlePath(slug, locale);
+
   return {
-    path: `blog/${slug}`,
-    title: 'Article introuvable | KRAAK Consulting',
-    description:
-      'L’article demandé n’est pas disponible. Retournez au blog KRAAK pour poursuivre votre lecture.',
+    path,
+    canonicalPath: path,
+    title: copy.missingSeoTitle,
+    description: copy.missingSeoDescription,
     openGraph: {
-      title: 'Article introuvable | KRAAK Consulting',
-      description:
-        'L’article demandé n’est pas disponible. Retournez au blog KRAAK pour poursuivre votre lecture.',
+      title: copy.missingSeoTitle,
+      description: copy.missingSeoDescription,
       imagePath: '/assets/site-visuals/photos/home-hero-workshop.jpg',
-      imageAlt:
-        "Photo d'un atelier KRAAK Consulting avec des participants en session de travail.",
+      imageAlt: copy.missingSeoImageAlt,
     },
     sitemap: {
       changeFrequency: 'never',

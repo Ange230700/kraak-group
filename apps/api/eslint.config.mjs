@@ -34,6 +34,10 @@ export default defineConfig(
       'n/no-missing-import': 'off',
       'n/no-unpublished-import': 'off',
       'n/no-unsupported-features/es-syntax': 'off',
+      'n/no-unsupported-features/node-builtins': [
+        'error',
+        { version: '>=22.0.0' },
+      ],
       'sonarjs/no-duplicated-branches': 'error',
       'sonarjs/no-identical-conditions': 'error',
       'sonarjs/no-identical-expressions': 'error',

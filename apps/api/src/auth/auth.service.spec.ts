@@ -5,8 +5,13 @@ import {
   UnauthorizedException,
 } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
+import { ApiLocaleContext } from '../i18n/api-locale-context';
 import { SupabaseService } from '../supabase/supabase.service';
 import { AuthService } from './auth.service';
+
+const localeContext = {
+  locale: jest.fn(() => 'fr-CI'),
+};
 
 function createSingleRowQuery(result: { data: unknown; error: unknown }) {
   return {
@@ -81,6 +86,7 @@ describe('AuthService', () => {
 
   beforeEach(async () => {
     jest.clearAllMocks();
+    localeContext.locale.mockReturnValue('fr-CI');
     mockProfile();
 
     const module: TestingModule = await Test.createTestingModule({
@@ -89,6 +95,10 @@ describe('AuthService', () => {
         {
           provide: SupabaseService,
           useValue: supabaseService,
+        },
+        {
+          provide: ApiLocaleContext,
+          useValue: localeContext,
         },
       ],
     }).compile();
@@ -326,7 +336,7 @@ describe('AuthService', () => {
       }),
     ).rejects.toMatchObject({
       response: {
-        message: 'Impossible de créer le compte avec ces informations.',
+        message: { key: 'auth.signUpFailed' },
       },
     });
   });
@@ -349,7 +359,7 @@ describe('AuthService', () => {
       }),
     ).rejects.toMatchObject({
       response: {
-        message: 'Un compte existe déjà pour cette adresse email.',
+        message: { key: 'auth.signUpAccountExists' },
       },
     });
   });
@@ -372,7 +382,7 @@ describe('AuthService', () => {
       }),
     ).rejects.toMatchObject({
       response: {
-        message: 'Le mot de passe ne respecte pas les exigences minimales.',
+        message: { key: 'auth.signUpPasswordRequirements' },
       },
     });
   });
@@ -395,7 +405,7 @@ describe('AuthService', () => {
       }),
     ).rejects.toMatchObject({
       response: {
-        message: "L'adresse email fournie est invalide.",
+        message: { key: 'auth.signUpEmailInvalid' },
       },
     });
   });
@@ -418,8 +428,7 @@ describe('AuthService', () => {
       }),
     ).rejects.toMatchObject({
       response: {
-        message:
-          "Le service d'inscription est temporairement indisponible. Réessayez plus tard.",
+        message: { key: 'auth.signUpRateLimited' },
       },
     });
   });
@@ -964,7 +973,7 @@ describe('AuthService', () => {
       }),
     ).rejects.toMatchObject({
       response: {
-        message: 'Impossible de créer le compte avec ces informations.',
+        message: { key: 'auth.signUpFailed' },
       },
     });
   });
@@ -983,5 +992,83 @@ describe('AuthService', () => {
         password: 'motdepasse-securise',
       }),
     ).rejects.toBeInstanceOf(UnauthorizedException);
+  });
+
+  it('Given en-GB and signup requiring confirmation, When signUp is called, Then the public message is English', async () => {
+    localeContext.locale.mockReturnValue('en-GB');
+
+    authClient.auth.signUp.mockResolvedValue({
+      data: {
+        user: { id: 'user-1' },
+        session: null,
+      },
+      error: null,
+    });
+
+    const result = await service.signUp({
+      email: 'alice@example.com',
+      password: 'motdepasse-securise',
+      firstName: 'Alice',
+      lastName: 'Dupont',
+      phone: null,
+      preferredContactChannel: null,
+      redirectTo: 'kraak://auth/callback',
+    });
+
+    expect(result.message).toBe(
+      'Your account has been created. Check your email to confirm your access.',
+    );
+  });
+
+  it('Given en-GB and signup with an active session, When signUp is called, Then the public message is English', async () => {
+    localeContext.locale.mockReturnValue('en-GB');
+
+    authClient.auth.signUp.mockResolvedValue({
+      data: {
+        user: { id: 'user-1' },
+        session: {
+          access_token: 'access-token',
+          refresh_token: 'refresh-token',
+          expires_in: 3600,
+          expires_at: 1_776_172_800,
+          token_type: 'bearer',
+        },
+      },
+      error: null,
+    });
+
+    const result = await service.signUp({
+      email: 'alice@example.com',
+      password: 'motdepasse-securise',
+      firstName: 'Alice',
+      lastName: 'Dupont',
+      phone: null,
+      preferredContactChannel: null,
+      redirectTo: null,
+    });
+
+    expect(result.message).toBe(
+      'Your account is ready. You are now signed in.',
+    );
+  });
+
+  it('Given en-GB and a password reset request, When requestPasswordReset is called, Then the acknowledgement is English', async () => {
+    localeContext.locale.mockReturnValue('en-GB');
+
+    authClient.auth.resetPasswordForEmail.mockResolvedValue({
+      data: {},
+      error: null,
+    });
+
+    await expect(
+      service.requestPasswordReset({
+        email: 'alice@example.com',
+        redirectTo: 'kraak://auth/reset',
+      }),
+    ).resolves.toEqual({
+      success: true,
+      message:
+        'If this address exists, a password reset email has just been sent.',
+    });
   });
 });

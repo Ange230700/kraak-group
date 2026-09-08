@@ -1,8 +1,9 @@
-import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { ApplicationInitStatus, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { ActivatedRoute, provideRouter } from '@angular/router';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import type { ParticipantProgramDetailDto } from '@kraak/contracts';
+import { provideKraakI18n } from '../../../../../shared/i18n';
 import { MobileProgramsService } from './mobile-programs.service';
 import SessionDetailPage from './session-detail.page';
 
@@ -74,9 +75,12 @@ describe('Mobile SessionDetailPage', () => {
     },
     resources: [],
     announcements: [],
+    curriculum: { courses: [] },
   };
 
   beforeEach(async () => {
+    globalThis.window.localStorage.setItem('kraak:locale', 'fr-CI');
+
     service = {
       getProgramDetail: vi.fn(),
       markSessionProgress: vi.fn(),
@@ -103,10 +107,13 @@ describe('Mobile SessionDetailPage', () => {
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
       providers: [
         provideRouter([]),
+        provideKraakI18n(),
         { provide: MobileProgramsService, useValue: service },
         { provide: ActivatedRoute, useValue: activatedRoute },
       ],
     }).compileComponents();
+
+    await TestBed.inject(ApplicationInitStatus).donePromise;
   });
 
   it('should create', () => {
@@ -126,7 +133,7 @@ describe('Mobile SessionDetailPage', () => {
       const element = fixture.nativeElement as HTMLElement;
       expect(element.textContent).toContain('Session 1');
       expect(element.textContent).toContain('Description de la session');
-      expect(element.textContent).toContain('online');
+      expect(element.textContent).toContain('En ligne');
     });
 
     it('Given a detailed session with location label and completed progress, when session loads, then location and completed action are displayed', async () => {
@@ -419,5 +426,35 @@ describe('Mobile SessionDetailPage', () => {
       );
       expect(element.textContent).toContain('Retour au programme');
     });
+  });
+
+  it('Given English is selected, when session detail is rendered, then page chrome and enum labels are translated while business content stays unchanged', async () => {
+    service.getProgramDetail.mockResolvedValue(mockProgramDetail);
+
+    const i18n = TestBed.inject(
+      (await import('../../../../../shared/i18n')).KraakI18nService,
+    );
+
+    await i18n.setLocale('en-GB');
+
+    const fixture = TestBed.createComponent(SessionDetailPage);
+
+    fixture.detectChanges();
+    await fixture.whenStable();
+    fixture.detectChanges();
+
+    const text = (fixture.nativeElement.textContent ?? '').replace(/\s+/g, ' ');
+
+    expect(text).toContain('Session details');
+    expect(text).toContain('Information');
+    expect(text).toContain('Scheduled');
+    expect(text).toContain('Online');
+    expect(text).toContain('Progress');
+    expect(text).toContain('Session not completed.');
+    expect(text).toContain('Mark as completed');
+
+    // Dynamic business content stays unchanged until Layer 6.
+    expect(text).toContain('Session 1');
+    expect(text).toContain('Description de la session');
   });
 });

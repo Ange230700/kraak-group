@@ -313,7 +313,7 @@ describe('DashboardService', () => {
     await expect(service.getAggregate('access-token')).rejects.toMatchObject({
       response: {
         success: false,
-        message: 'Impossible de charger les annonces du dashboard.',
+        message: { key: 'dashboard.announcementsLoadFailed' },
       },
     });
   });
@@ -330,7 +330,7 @@ describe('DashboardService', () => {
     await expect(service.getAggregate('access-token')).rejects.toMatchObject({
       response: {
         success: false,
-        message: 'Impossible de charger le participant courant.',
+        message: { key: 'dashboard.currentParticipantLoadFailed' },
       },
     });
   });
@@ -347,7 +347,7 @@ describe('DashboardService', () => {
     await expect(service.getAggregate('access-token')).rejects.toMatchObject({
       response: {
         success: false,
-        message: 'Impossible de charger les programmes du dashboard.',
+        message: { key: 'dashboard.programsLoadFailed' },
       },
     });
   });
@@ -377,7 +377,7 @@ describe('DashboardService', () => {
     await expect(service.getAggregate('access-token')).rejects.toMatchObject({
       response: {
         success: false,
-        message: 'Impossible de charger les sessions à venir du dashboard.',
+        message: { key: 'dashboard.upcomingSessionsLoadFailed' },
       },
     });
   });

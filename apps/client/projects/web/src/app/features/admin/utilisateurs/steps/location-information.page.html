@@ -2,38 +2,50 @@
   <p
     class="text-brand-blue mb-1 text-xs font-semibold tracking-[0.3em] uppercase"
   >
-    Étape 3 sur 5
+    {{ 'web.admin.users.create.locationInformation.step' | kraakTranslate }}
   </p>
-  <h2 class="text-brand-navy mb-1 text-xl font-bold">Localisation</h2>
+  <h2 class="text-brand-navy mb-1 text-xl font-bold">
+    {{ 'web.admin.users.create.locationInformation.title' | kraakTranslate }}
+  </h2>
   <p class="mb-8 text-sm text-neutral-600">
-    Indiquez l'adresse et la localisation géographique de l'utilisateur.
+    {{
+      'web.admin.users.create.locationInformation.description' | kraakTranslate
+    }}
   </p>
 
   <div class="flex flex-col gap-5">
     <div class="grid grid-cols-1 gap-5 sm:grid-cols-2">
       <div class="flex flex-col gap-1.5">
-        <label class="text-xs font-medium text-neutral-600" for="country"
-          >Pays</label
-        >
+        <label class="text-xs font-medium text-neutral-600" for="country">{{
+          'web.admin.users.create.locationInformation.country.label'
+            | kraakTranslate
+        }}</label>
         <input
           id="country"
           type="text"
           class="text-brand-navy focus:border-brand-blue w-full rounded-lg border border-neutral-200 px-3 py-2 text-sm outline-none"
-          placeholder="Ex : République démocratique du Congo"
+          [placeholder]="
+            'web.admin.users.create.locationInformation.country.placeholder'
+              | kraakTranslate
+          "
           [(ngModel)]="country"
           (ngModelChange)="sync()"
         />
       </div>
 
       <div class="flex flex-col gap-1.5">
-        <label class="text-xs font-medium text-neutral-600" for="city"
-          >Ville</label
-        >
+        <label class="text-xs font-medium text-neutral-600" for="city">{{
+          'web.admin.users.create.locationInformation.city.label'
+            | kraakTranslate
+        }}</label>
         <input
           id="city"
           type="text"
           class="text-brand-navy focus:border-brand-blue w-full rounded-lg border border-neutral-200 px-3 py-2 text-sm outline-none"
-          placeholder="Ex : Kinshasa"
+          [placeholder]="
+            'web.admin.users.create.locationInformation.city.placeholder'
+              | kraakTranslate
+          "
           [(ngModel)]="city"
           (ngModelChange)="sync()"
         />
@@ -41,42 +53,54 @@
     </div>
 
     <div class="flex flex-col gap-1.5">
-      <label class="text-xs font-medium text-neutral-600" for="postalCode"
-        >Code postal</label
-      >
+      <label class="text-xs font-medium text-neutral-600" for="postalCode">{{
+        'web.admin.users.create.locationInformation.postalCode.label'
+          | kraakTranslate
+      }}</label>
       <input
         id="postalCode"
         type="text"
         class="text-brand-navy focus:border-brand-blue w-full rounded-lg border border-neutral-200 px-3 py-2 text-sm outline-none"
-        placeholder="Ex : 00243"
+        [placeholder]="
+          'web.admin.users.create.locationInformation.postalCode.placeholder'
+            | kraakTranslate
+        "
         [(ngModel)]="postalCode"
         (ngModelChange)="sync()"
       />
     </div>
 
     <div class="flex flex-col gap-1.5">
-      <label class="text-xs font-medium text-neutral-600" for="addressLine1"
-        >Adresse (ligne 1)</label
-      >
+      <label class="text-xs font-medium text-neutral-600" for="addressLine1">{{
+        'web.admin.users.create.locationInformation.addressLine1.label'
+          | kraakTranslate
+      }}</label>
       <input
         id="addressLine1"
         type="text"
         class="text-brand-navy focus:border-brand-blue w-full rounded-lg border border-neutral-200 px-3 py-2 text-sm outline-none"
-        placeholder="Ex : 12 Avenue de la Paix"
+        [placeholder]="
+          'web.admin.users.create.locationInformation.addressLine1.placeholder'
+            | kraakTranslate
+        "
         [(ngModel)]="addressLine1"
         (ngModelChange)="sync()"
       />
     </div>
 
     <div class="flex flex-col gap-1.5">
-      <label class="text-xs font-medium text-neutral-600" for="addressLine2"
-        >Adresse (ligne 2)</label
-      >
+      <label class="text-xs font-medium text-neutral-600" for="addressLine2">{{
+        'web.admin.users.create.locationInformation.addressLine2.label'
+          | kraakTranslate
+      }}</label>
       <input
         id="addressLine2"
         type="text"
         class="text-brand-navy focus:border-brand-blue w-full rounded-lg border border-neutral-200 px-3 py-2 text-sm outline-none"
-        placeholder="Appartement, bâtiment…"
+        [placeholder]="
+          'web.admin.users.create.locationInformation.addressLine2.placeholder'
+            | kraakTranslate
+        "
         [(ngModel)]="addressLine2"
         (ngModelChange)="sync()"
       />
@@ -86,10 +110,16 @@
   <div class="mt-10 flex justify-between">
     <button pButton class="kr-button-ghost" type="button" (click)="goPrev()">
       <i class="pi pi-arrow-left mr-2"></i>
-      Précédent
+      {{
+        'web.admin.users.create.locationInformation.actions.previous'
+          | kraakTranslate
+      }}
     </button>
     <button pButton class="kr-button-primary" type="button" (click)="goNext()">
-      Suivant
+      {{
+        'web.admin.users.create.locationInformation.actions.next'
+          | kraakTranslate
+      }}
       <i class="pi pi-arrow-right ml-2"></i>
     </button>
   </div>

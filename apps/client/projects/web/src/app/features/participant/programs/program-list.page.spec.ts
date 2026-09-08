@@ -1,3 +1,4 @@
+import { ApplicationInitStatus } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
@@ -5,6 +6,10 @@ import type { ParticipantProgramListItemDto } from '@kraak/contracts';
 
 import { WebAuthService } from '../../../core/auth/web-auth.service';
 import ProgramListPage from './program-list.page';
+import {
+  KraakI18nService,
+  provideKraakI18n,
+} from '../../../../../../shared/i18n';
 
 describe('Web Participant ProgramListPage', () => {
   const mockProgram: ParticipantProgramListItemDto = {
@@ -44,9 +49,11 @@ describe('Web Participant ProgramListPage', () => {
   };
 
   beforeEach(async () => {
+    globalThis.window.localStorage.setItem('kraak:locale', 'fr-CI');
     await TestBed.configureTestingModule({
       imports: [ProgramListPage],
       providers: [
+        provideKraakI18n(),
         provideRouter([]),
         {
           provide: WebAuthService,
@@ -56,6 +63,9 @@ describe('Web Participant ProgramListPage', () => {
         },
       ],
     }).compileComponents();
+
+    await TestBed.inject(ApplicationInitStatus).donePromise;
+    await TestBed.inject(KraakI18nService).setLocale('fr-CI');
   });
 
   function configureClient(
@@ -138,5 +148,29 @@ describe('Web Participant ProgramListPage', () => {
 
     expect(list).toHaveBeenCalledTimes(2);
     expect(fixture.nativeElement.textContent).toContain('Programme test');
+  });
+
+  it('Given English locale, when enrolled programmes render, then programme list chrome is translated', async () => {
+    const i18n = TestBed.inject(KraakI18nService);
+    await TestBed.inject(ApplicationInitStatus).donePromise;
+    await i18n.setLocale('en-GB');
+
+    const fixture = await render(Promise.resolve([mockProgram]));
+    const element = fixture.nativeElement as HTMLElement;
+    const text = element.textContent ?? '';
+
+    expect(text).toContain('Your journeys');
+    expect(text).toContain('Active');
+    expect(text).toContain('In progress');
+    expect(text).toContain('Progress');
+    expect(text).toContain('sessions completed');
+    expect(text).toContain('Cohort');
+    expect(text).toContain('Start');
+    expect(text).toContain('Open programme');
+
+    const progress = element.querySelector('[role="progressbar"]');
+    expect(progress?.getAttribute('aria-label')).toBe(
+      'Progress for Programme test',
+    );
   });
 });

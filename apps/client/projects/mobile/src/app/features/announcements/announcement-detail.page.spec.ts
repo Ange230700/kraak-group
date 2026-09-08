@@ -3,6 +3,7 @@ import { TestBed } from '@angular/core/testing';
 import { ActivatedRoute, convertToParamMap } from '@angular/router';
 import type { AnnouncementDto } from '@kraak/contracts';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { provideKraakI18n } from '../../../../../shared/i18n';
 import { MobileAuthService } from '../auth/mobile-auth.service';
 import AnnouncementDetailPage from './announcement-detail.page';
 
@@ -35,6 +36,7 @@ describe('Mobile AnnouncementDetailPage', () => {
       imports: [AnnouncementDetailPage],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
       providers: [
+        provideKraakI18n(),
         { provide: MobileAuthService, useValue: mobileAuthServiceMock },
         {
           provide: ActivatedRoute,
@@ -302,6 +304,7 @@ describe('Mobile AnnouncementDetailPage — no announcementId', () => {
       imports: [AnnouncementDetailPage],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
       providers: [
+        provideKraakI18n(),
         {
           provide: ActivatedRoute,
           useValue: {

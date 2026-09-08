@@ -17,15 +17,21 @@ export class KraakPrimeNgI18nBridge {
   private readonly primeNg = inject(PrimeNG);
 
   constructor() {
-    this.applyCurrentTranslations();
-
     effect(() => {
+      if (!this.i18n.ready()) {
+        return;
+      }
+
       this.i18n.locale();
       this.applyCurrentTranslations();
     });
   }
 
   applyCurrentTranslations(): void {
+    if (!this.i18n.ready()) {
+      return;
+    }
+
     this.primeNg.setTranslation(
       this.i18n.primeNgTranslation() as PrimeNgTranslation,
     );
@@ -35,8 +41,13 @@ export class KraakPrimeNgI18nBridge {
 export function provideKraakPrimeNgI18nBridge(): EnvironmentProviders {
   return makeEnvironmentProviders([
     KraakPrimeNgI18nBridge,
-    provideAppInitializer(() => {
-      inject(KraakPrimeNgI18nBridge);
+    provideAppInitializer(async () => {
+      const i18n = inject(KraakI18nService);
+      const bridge = inject(KraakPrimeNgI18nBridge);
+
+      await i18n.initialize();
+
+      bridge.applyCurrentTranslations();
     }),
   ]);
 }

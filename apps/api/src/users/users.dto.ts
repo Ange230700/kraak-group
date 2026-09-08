@@ -1,4 +1,5 @@
 import type { CreateAppUserDto, UpdateAppUserDto } from '@kraak/contracts';
+import { apiMessage, type ApiMessageValue } from '../i18n/api-message';
 import { isValidEmail } from '../shared/dto-validation.utils';
 
 export type { CreateAppUserDto, UpdateAppUserDto };
@@ -18,18 +19,18 @@ function normalizeOptionalText(value: unknown): string | null {
 
 function normalizeOptionalEmail(
   value: unknown,
-): { valid: true; value?: string } | { valid: false; error: string } {
+): { valid: true; value?: string } | { valid: false; error: ApiMessageValue } {
   if (value === undefined) {
     return { valid: true };
   }
 
   if (typeof value !== 'string' || !value.trim()) {
-    return { valid: false, error: "L'adresse email est invalide" };
+    return { valid: false, error: apiMessage('validation.invalidEmail') };
   }
 
   const normalized = value.trim();
   if (!isValidEmail(normalized)) {
-    return { valid: false, error: "L'adresse email n'est pas valide" };
+    return { valid: false, error: apiMessage('validation.invalidEmail') };
   }
 
   return { valid: true, value: normalized };
@@ -37,8 +38,8 @@ function normalizeOptionalEmail(
 
 function normalizeRequiredName(
   value: unknown,
-  requiredError: string,
-): { valid: true; value: string } | { valid: false; error: string } {
+  requiredError: ApiMessageValue,
+): { valid: true; value: string } | { valid: false; error: ApiMessageValue } {
   if (typeof value !== 'string' || !value.trim()) {
     return { valid: false, error: requiredError };
   }
@@ -48,8 +49,8 @@ function normalizeRequiredName(
 
 function normalizeOptionalName(
   value: unknown,
-  invalidError: string,
-): { valid: true; value?: string } | { valid: false; error: string } {
+  invalidError: ApiMessageValue,
+): { valid: true; value?: string } | { valid: false; error: ApiMessageValue } {
   if (value === undefined) {
     return { valid: true };
   }
@@ -63,7 +64,9 @@ function normalizeOptionalName(
 
 function normalizeOptionalRole(
   value: unknown,
-): { valid: true; value?: AllowedRole } | { valid: false; error: string } {
+):
+  | { valid: true; value?: AllowedRole }
+  | { valid: false; error: ApiMessageValue } {
   if (value === undefined) {
     return { valid: true };
   }
@@ -71,7 +74,9 @@ function normalizeOptionalRole(
   if (!isAllowedRole(value)) {
     return {
       valid: false,
-      error: `Le rôle doit être l'un des suivants : ${ALLOWED_ROLES.join(', ')}`,
+      error: apiMessage('users.roleInvalid', {
+        roles: ALLOWED_ROLES.join(', '),
+      }),
     };
   }
 
@@ -80,13 +85,13 @@ function normalizeOptionalRole(
 
 function normalizeOptionalIsActive(
   value: unknown,
-): { valid: true; value?: boolean } | { valid: false; error: string } {
+): { valid: true; value?: boolean } | { valid: false; error: ApiMessageValue } {
   if (value === undefined) {
     return { valid: true };
   }
 
   if (typeof value !== 'boolean') {
-    return { valid: false, error: 'Le statut actif doit être un booléen' };
+    return { valid: false, error: apiMessage('users.isActiveBoolean') };
   }
 
   return { valid: true, value };
@@ -94,9 +99,11 @@ function normalizeOptionalIsActive(
 
 export function validateCreateUserPayload(
   body: unknown,
-): { valid: true; data: CreateAppUserDto } | { valid: false; error: string } {
+):
+  | { valid: true; data: CreateAppUserDto }
+  | { valid: false; error: ApiMessageValue } {
   if (!body || typeof body !== 'object') {
-    return { valid: false, error: 'Corps de requête manquant ou invalide' };
+    return { valid: false, error: apiMessage('users.invalidBody') };
   }
 
   const payload = body as Record<string, unknown>;
@@ -106,14 +113,14 @@ export function validateCreateUserPayload(
     return {
       valid: false,
       error: emailValidation.valid
-        ? "L'adresse email est obligatoire"
+        ? apiMessage('users.emailRequired')
         : emailValidation.error,
     };
   }
 
   const firstNameValidation = normalizeRequiredName(
     payload['firstName'],
-    'Le prénom est obligatoire',
+    apiMessage('users.firstNameRequired'),
   );
   if (!firstNameValidation.valid) {
     return firstNameValidation;
@@ -121,7 +128,7 @@ export function validateCreateUserPayload(
 
   const lastNameValidation = normalizeRequiredName(
     payload['lastName'],
-    'Le nom de famille est obligatoire',
+    apiMessage('users.lastNameRequired'),
   );
   if (!lastNameValidation.valid) {
     return lastNameValidation;
@@ -132,7 +139,7 @@ export function validateCreateUserPayload(
     return {
       valid: false,
       error: roleValidation.valid
-        ? `Le rôle doit être l'un des suivants : ${ALLOWED_ROLES.join(', ')}`
+        ? apiMessage('users.roleInvalid', { roles: ALLOWED_ROLES.join(', ') })
         : roleValidation.error,
     };
   }
@@ -160,9 +167,11 @@ export function validateCreateUserPayload(
 
 export function validateUpdateUserPayload(
   body: unknown,
-): { valid: true; data: UpdateAppUserDto } | { valid: false; error: string } {
+):
+  | { valid: true; data: UpdateAppUserDto }
+  | { valid: false; error: ApiMessageValue } {
   if (!body || typeof body !== 'object') {
-    return { valid: false, error: 'Corps de requête manquant ou invalide' };
+    return { valid: false, error: apiMessage('users.invalidBody') };
   }
 
   const payload = body as Record<string, unknown>;
@@ -178,7 +187,7 @@ export function validateUpdateUserPayload(
 
   const firstNameValidation = normalizeOptionalName(
     payload['firstName'],
-    'Le prénom est invalide',
+    apiMessage('users.firstNameInvalid'),
   );
   if (!firstNameValidation.valid) {
     return firstNameValidation;
@@ -189,7 +198,7 @@ export function validateUpdateUserPayload(
 
   const lastNameValidation = normalizeOptionalName(
     payload['lastName'],
-    'Le nom de famille est invalide',
+    apiMessage('users.lastNameInvalid'),
   );
   if (!lastNameValidation.valid) {
     return lastNameValidation;

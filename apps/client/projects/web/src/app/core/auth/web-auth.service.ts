@@ -22,6 +22,7 @@ import type {
 import { environment } from '../../../environments/environment';
 import { resolveApiBaseUrl } from '../runtime/runtime-config';
 
+import { KraakI18nService } from '../../../../../shared/i18n';
 export const WEB_AUTH_STORAGE_KEY = 'kraak.web.session';
 
 export interface PasswordRecoveryCompletionRequest {
@@ -55,7 +56,9 @@ export class WebAuthService {
   private readonly platformId = inject(PLATFORM_ID);
   private readonly restoredBundle = this.readStoredBundle();
   private readonly authState = createAuthSessionState(this.restoredBundle);
+  private readonly i18n = inject(KraakI18nService);
   private readonly client = createApiClient({
+    getLocale: () => this.i18n.locale(),
     baseUrl: resolveApiBaseUrl(environment.apiBaseUrl),
     getAuthToken: () => this.currentSession()?.accessToken ?? null,
   });
@@ -122,12 +125,14 @@ export class WebAuthService {
     const newPassword = body.newPassword;
 
     if (!accessToken) {
-      throw new Error('Le jeton de réinitialisation est requis.');
+      throw new Error(
+        this.i18n.translate('web.auth.resetPassword.tokenRequired'),
+      );
     }
 
     if (newPassword.length < 8 || newPassword.length > 128) {
       throw new Error(
-        'Le mot de passe doit contenir entre 8 et 128 caractères.',
+        this.i18n.translate('web.auth.resetPassword.passwordLength'),
       );
     }
 
@@ -135,7 +140,7 @@ export class WebAuthService {
 
     if (!supabaseUrl) {
       throw new Error(
-        'Configuration Supabase manquante pour finaliser la réinitialisation.',
+        this.i18n.translate('web.auth.resetPassword.configurationMissing'),
       );
     }
 
@@ -160,8 +165,7 @@ export class WebAuthService {
 
     return {
       success: true,
-      message:
-        'Votre mot de passe a été mis à jour. Vous pouvez maintenant vous connecter.',
+      message: this.i18n.translate('web.auth.resetPassword.success'),
     };
   }
 
@@ -321,14 +325,14 @@ export class WebAuthService {
         data.error_description ||
         data.msg ||
         data.message ||
-        'Impossible de mettre à jour le mot de passe.'
+        this.i18n.translate('web.auth.resetPassword.updateFallback')
       );
     } catch (error) {
       console.warn(
         '[WebAuthService] Réponse erreur Supabase non JSON lors de la mise à jour du mot de passe.',
         error,
       );
-      return 'Impossible de mettre à jour le mot de passe.';
+      return this.i18n.translate('web.auth.resetPassword.updateFallback');
     }
   }
 }

@@ -341,9 +341,10 @@ describe('UsersService', () => {
         expect((caughtError as HttpException).getStatus()).toBe(
           HttpStatus.TOO_MANY_REQUESTS,
         );
-        expect((caughtError as HttpException).message).toBe(
-          "Trop d'invitations ont été envoyées récemment. Réessayez dans quelques minutes.",
-        );
+        expect((caughtError as HttpException).getResponse()).toMatchObject({
+          statusCode: HttpStatus.TOO_MANY_REQUESTS,
+          message: { key: 'users.inviteRateLimited' },
+        });
       });
 
       it('Given invite response without user, When invite is called, Then throws InternalServerErrorException', async () => {

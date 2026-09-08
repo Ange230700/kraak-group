@@ -1,3 +1,4 @@
+import { apiMessage, type ApiMessageValue } from '../i18n/api-message';
 import type {
   CreateProgramDto,
   MarkProgramSessionProgressRequestDto,
@@ -50,18 +51,22 @@ function assignOptionalString(
 function assignRequiredString(
   body: Record<string, unknown>,
   field: keyof CreateProgramDto,
-  errors: string[],
+  errors: ApiMessageValue[],
   updates: Partial<CreateProgramDto>,
 ): void {
   if (!(field in body)) {
-    errors.push(`Le champ ${field} est requis.`);
+    errors.push(
+      apiMessage('validation.requiredField', { field: String(field) }),
+    );
     return;
   }
 
   const value = readTrimmedString(body[field]);
 
   if (!value) {
-    errors.push(`Le champ ${field} est requis.`);
+    errors.push(
+      apiMessage('validation.requiredField', { field: String(field) }),
+    );
     return;
   }
 
@@ -70,7 +75,7 @@ function assignRequiredString(
 
 function assignStatus(
   body: Record<string, unknown>,
-  errors: string[],
+  errors: ApiMessageValue[],
   updates: Partial<CreateProgramDto> | UpdateProgramDto,
 ): void {
   if (!('status' in body)) {
@@ -80,7 +85,7 @@ function assignStatus(
   const status = readTrimmedString(body['status']);
 
   if (!publicationStatuses.has(status)) {
-    errors.push('Le champ status est invalide.');
+    errors.push(apiMessage('validation.invalidField', { field: 'status' }));
     return;
   }
 
@@ -89,7 +94,7 @@ function assignStatus(
 
 function assignVisibility(
   body: Record<string, unknown>,
-  errors: string[],
+  errors: ApiMessageValue[],
   updates: Partial<CreateProgramDto> | UpdateProgramDto,
 ): void {
   if (!('visibility' in body)) {
@@ -99,7 +104,7 @@ function assignVisibility(
   const visibility = readTrimmedString(body['visibility']);
 
   if (!programVisibilities.has(visibility)) {
-    errors.push('Le champ visibility est invalide.');
+    errors.push(apiMessage('validation.invalidField', { field: 'visibility' }));
     return;
   }
 
@@ -108,18 +113,18 @@ function assignVisibility(
 
 function assignFeatureRequiredTitle(
   body: Record<string, unknown>,
-  errors: string[],
+  errors: ApiMessageValue[],
   updates: Partial<CreateProgramFeatureDto>,
 ): void {
   if (!('title' in body)) {
-    errors.push('Le champ title est requis.');
+    errors.push(apiMessage('validation.requiredField', { field: 'title' }));
     return;
   }
 
   const title = readTrimmedString(body['title']);
 
   if (!title) {
-    errors.push('Le champ title est requis.');
+    errors.push(apiMessage('validation.requiredField', { field: 'title' }));
     return;
   }
 
@@ -128,7 +133,7 @@ function assignFeatureRequiredTitle(
 
 function assignFeatureOptionalTitle(
   body: Record<string, unknown>,
-  errors: string[],
+  errors: ApiMessageValue[],
   updates: UpdateProgramFeatureDto,
 ): void {
   if (!('title' in body)) {
@@ -138,7 +143,7 @@ function assignFeatureOptionalTitle(
   const title = readTrimmedString(body['title']);
 
   if (!title) {
-    errors.push('Le champ title est requis.');
+    errors.push(apiMessage('validation.requiredField', { field: 'title' }));
     return;
   }
 
@@ -147,7 +152,7 @@ function assignFeatureOptionalTitle(
 
 function assignFeatureSortOrder<T extends { sortOrder?: number }>(
   body: Record<string, unknown>,
-  errors: string[],
+  errors: ApiMessageValue[],
   updates: T,
 ): void {
   if (!('sortOrder' in body)) {
@@ -155,7 +160,7 @@ function assignFeatureSortOrder<T extends { sortOrder?: number }>(
   }
 
   if (!Number.isInteger(body['sortOrder'])) {
-    errors.push('Le champ sortOrder doit être un entier.');
+    errors.push(apiMessage('validation.integerField', { field: 'sortOrder' }));
     return;
   }
 
@@ -168,16 +173,16 @@ export function validateCreateProgramPayload(
   if (!isObjectPayload(body)) {
     return {
       valid: false,
-      errors: ['Corps de requête invalide.'],
+      errors: [apiMessage('validation.invalidBody')],
     };
   }
 
-  const errors: string[] = [];
+  const errors: ApiMessageValue[] = [];
   const data: Partial<CreateProgramDto> = {};
 
   assignRequiredString(body, 'slug', errors, data);
   if (typeof data.slug === 'string' && isValidSlug(data.slug) === false) {
-    errors.push('Le champ slug est invalide.');
+    errors.push(apiMessage('validation.invalidField', { field: 'slug' }));
   }
 
   assignRequiredString(body, 'title', errors, data);
@@ -202,19 +207,19 @@ export function validateUpdateProgramPayload(
   if (!isObjectPayload(body)) {
     return {
       valid: false,
-      errors: ['Corps de requête invalide.'],
+      errors: [apiMessage('validation.invalidBody')],
     };
   }
 
-  const errors: string[] = [];
+  const errors: ApiMessageValue[] = [];
   const data: UpdateProgramDto = {};
 
   if ('slug' in body) {
     const slug = readTrimmedString(body['slug']);
     if (!slug) {
-      errors.push('Le champ slug est requis.');
+      errors.push(apiMessage('validation.requiredField', { field: 'slug' }));
     } else if (isValidSlug(slug) === false) {
-      errors.push('Le champ slug est invalide.');
+      errors.push(apiMessage('validation.invalidField', { field: 'slug' }));
     } else {
       data.slug = slug;
     }
@@ -229,7 +234,7 @@ export function validateUpdateProgramPayload(
   if (Object.keys(data).length === 0 && errors.length === 0) {
     return {
       valid: false,
-      errors: ['Le payload de mise à jour doit contenir au moins un champ.'],
+      errors: [apiMessage('validation.updateRequiresField')],
     };
   }
 
@@ -249,11 +254,11 @@ export function validateCreateProgramFeaturePayload(
   if (!isObjectPayload(body)) {
     return {
       valid: false,
-      errors: ['Corps de requête invalide.'],
+      errors: [apiMessage('validation.invalidBody')],
     };
   }
 
-  const errors: string[] = [];
+  const errors: ApiMessageValue[] = [];
   const data: Partial<CreateProgramFeatureDto> = {};
 
   assignFeatureRequiredTitle(body, errors, data);
@@ -275,11 +280,11 @@ export function validateUpdateProgramFeaturePayload(
   if (!isObjectPayload(body)) {
     return {
       valid: false,
-      errors: ['Corps de requête invalide.'],
+      errors: [apiMessage('validation.invalidBody')],
     };
   }
 
-  const errors: string[] = [];
+  const errors: ApiMessageValue[] = [];
   const data: UpdateProgramFeatureDto = {};
 
   assignFeatureOptionalTitle(body, errors, data);
@@ -288,7 +293,7 @@ export function validateUpdateProgramFeaturePayload(
   if (Object.keys(data).length === 0 && errors.length === 0) {
     return {
       valid: false,
-      errors: ['Le payload de mise à jour doit contenir au moins un champ.'],
+      errors: [apiMessage('validation.updateRequiresField')],
     };
   }
 
@@ -308,20 +313,20 @@ export function validateMarkSessionProgressPayload(
   if (!isObjectPayload(body)) {
     return {
       valid: false,
-      errors: ['Corps de requête invalide.'],
+      errors: [apiMessage('validation.invalidBody')],
     };
   }
 
   const sessionId = readTrimmedString(body['sessionId']);
   const completedValue = body['completed'];
-  const errors: string[] = [];
+  const errors: ApiMessageValue[] = [];
 
   if (!sessionId) {
-    errors.push('Le champ sessionId est requis.');
+    errors.push(apiMessage('validation.requiredField', { field: 'sessionId' }));
   }
 
   if (typeof completedValue !== 'boolean') {
-    errors.push('Le champ completed doit être un booléen.');
+    errors.push(apiMessage('validation.booleanField', { field: 'completed' }));
   }
 
   if (errors.length > 0) {

@@ -26,6 +26,10 @@ import { environment } from '../../../../environments/environment';
 import { resolveApiBaseUrl } from '../../../core/runtime/runtime-config';
 import { WebAuthService } from '../../../core/auth/web-auth.service';
 
+import {
+  KraakI18nService,
+  KraakTranslatePipe,
+} from '../../../../../../shared/i18n';
 interface ResourceFormModel {
   title: FormControl<string>;
   description: FormControl<string>;
@@ -53,13 +57,21 @@ interface AdminResourcesClient {
 @Component({
   selector: 'kraak-admin-ressources-page',
   standalone: true,
-  imports: [ReactiveFormsModule, RouterLink, ButtonDirective, Message],
+  imports: [
+    ReactiveFormsModule,
+    RouterLink,
+    ButtonDirective,
+    Message,
+    KraakTranslatePipe,
+  ],
   templateUrl: './admin-ressources.page.html',
 })
 export default class AdminRessourcesPage implements OnInit {
   private readonly authService = inject(WebAuthService);
   private readonly messageService = inject(MessageService);
+  private readonly i18n = inject(KraakI18nService);
   resourcesClient: AdminResourcesClient = createApiClient({
+    getLocale: () => this.i18n.locale(),
     baseUrl: resolveApiBaseUrl(environment.apiBaseUrl),
     getAuthToken: () => this.authService.currentSession()?.accessToken ?? null,
   }).resources;
@@ -73,6 +85,46 @@ export default class AdminRessourcesPage implements OnInit {
   protected readonly submitting = signal(false);
 
   protected readonly isEditing = computed(() => this.editingId() !== null);
+
+  protected getPublicationStatusLabel(status: string): string {
+    const key = `web.admin.ressources.statuses.${status}`;
+    const translated = this.i18n.translate(key);
+
+    return translated === key ? status : translated;
+  }
+
+  protected getResourceTypeLabel(resourceType: string): string {
+    const key = `web.admin.ressources.types.${resourceType}`;
+    const translated = this.i18n.translate(key);
+
+    return translated === key ? resourceType : translated;
+  }
+
+  protected getResourceThemeLabel(resourceTheme: string): string {
+    const key = `web.admin.ressources.themes.${resourceTheme}`;
+    const translated = this.i18n.translate(key);
+
+    return translated === key ? resourceTheme : translated;
+  }
+
+  protected getResourceAudienceLabel(resourceAudience: string): string {
+    const key = `web.admin.ressources.audiences.${resourceAudience}`;
+    const translated = this.i18n.translate(key);
+
+    return translated === key ? resourceAudience : translated;
+  }
+
+  protected getEditAriaLabel(ressource: ResourceDto): string {
+    return this.i18n.translate('web.admin.ressources.actions.editAria', {
+      title: ressource.title,
+    });
+  }
+
+  protected getDeleteAriaLabel(ressource: ResourceDto): string {
+    return this.i18n.translate('web.admin.ressources.actions.deleteAria', {
+      title: ressource.title,
+    });
+  }
 
   readonly publicationStatuses = Object.values(PublicationStatus);
   readonly resourceTypes = Object.values(ResourceType);
@@ -120,7 +172,7 @@ export default class AdminRessourcesPage implements OnInit {
         err,
       );
       this.errorMessage.set(
-        'Impossible de charger les ressources. Vérifiez la connexion et réessayez.',
+        this.i18n.translate('web.admin.ressources.feedback.loadFailure'),
       );
     } finally {
       this.loading.set(false);
@@ -199,7 +251,9 @@ export default class AdminRessourcesPage implements OnInit {
         const created = await this.resourcesClient.create(body);
         this.ressources.update((list) => [...list, created]);
         this.successMessage.set(
-          `Ressource « ${created.title} » créée avec succès.`,
+          this.i18n.translate('web.admin.ressources.feedback.createSuccess', {
+            title: created.title,
+          }),
         );
       } else {
         const body: UpdateResourceDto = {
@@ -219,7 +273,9 @@ export default class AdminRessourcesPage implements OnInit {
           list.map((r) => (r.id === id ? updated : r)),
         );
         this.successMessage.set(
-          `Ressource « ${updated.title} » mise à jour avec succès.`,
+          this.i18n.translate('web.admin.ressources.feedback.updateSuccess', {
+            title: updated.title,
+          }),
         );
       }
       this.showForm.set(false);
@@ -231,7 +287,7 @@ export default class AdminRessourcesPage implements OnInit {
         err,
       );
       this.errorMessage.set(
-        'Une erreur est survenue lors de la sauvegarde. Vérifiez les champs et réessayez.',
+        this.i18n.translate('web.admin.ressources.feedback.saveFailure'),
       );
     } finally {
       this.submitting.set(false);
@@ -241,7 +297,9 @@ export default class AdminRessourcesPage implements OnInit {
   async deleteRessource(ressource: ResourceDto): Promise<void> {
     if (
       !confirm(
-        `Supprimer la ressource « ${ressource.title} » ? Cette action est irréversible.`,
+        this.i18n.translate('web.admin.ressources.feedback.deleteConfirm', {
+          title: ressource.title,
+        }),
       )
     ) {
       return;
@@ -255,14 +313,18 @@ export default class AdminRessourcesPage implements OnInit {
       this.ressources.update((list) =>
         list.filter((r) => r.id !== ressource.id),
       );
-      this.successMessage.set(`Ressource « ${ressource.title} » supprimée.`);
+      this.successMessage.set(
+        this.i18n.translate('web.admin.ressources.feedback.deleteSuccess', {
+          title: ressource.title,
+        }),
+      );
     } catch (err) {
       console.error(
         '[AdminRessourcesPage] Erreur lors de la suppression de la ressource',
         err,
       );
       this.errorMessage.set(
-        'Impossible de supprimer cette ressource. Réessayez.',
+        this.i18n.translate('web.admin.ressources.feedback.deleteFailure'),
       );
     }
   }

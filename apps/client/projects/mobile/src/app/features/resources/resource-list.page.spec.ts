@@ -1,8 +1,9 @@
-import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { ApplicationInitStatus, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
 import type { ResourceDto } from '@kraak/contracts';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { KraakI18nService, provideKraakI18n } from '../../../../../shared/i18n';
 import { MobileResourcesService } from './mobile-resources.service';
 import ResourceListPage from './resource-list.page';
 
@@ -47,6 +48,8 @@ describe('Mobile ResourceListPage', () => {
   ];
 
   beforeEach(async () => {
+    globalThis.window.localStorage.setItem('kraak:locale', 'fr-CI');
+
     service = {
       listResources: vi.fn(),
     };
@@ -56,9 +59,12 @@ describe('Mobile ResourceListPage', () => {
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
       providers: [
         provideRouter([]),
+        provideKraakI18n(),
         { provide: MobileResourcesService, useValue: service },
       ],
     }).compileComponents();
+
+    await TestBed.inject(ApplicationInitStatus).donePromise;
   });
 
   it('should create', () => {
@@ -381,5 +387,26 @@ describe('Mobile ResourceListPage', () => {
     expect(component.resources()).toEqual(newerResources);
     expect(component.errorMessage()).toBeNull();
     expect(component.loading()).toBe(false);
+  });
+
+  it('Given English is selected, when resource list renders, then the resource chrome is translated', async () => {
+    const i18n = TestBed.inject(KraakI18nService);
+    await i18n.setLocale('en-GB');
+
+    const fixture = TestBed.createComponent(ResourceListPage);
+
+    fixture.detectChanges();
+    await fixture.whenStable();
+    fixture.detectChanges();
+
+    const text = (fixture.nativeElement.textContent ?? '').replace(/\s+/g, ' ');
+
+    expect(text).toContain('References');
+    expect(text).toContain('Resources');
+    expect(text).toContain('Search');
+    expect(text).toContain('Theme');
+    expect(text).toContain('Audience');
+    expect(text).toContain('All themes');
+    expect(text).toContain('All audiences');
   });
 });

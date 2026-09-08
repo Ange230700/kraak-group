@@ -107,6 +107,45 @@ const statusSeoPages = Object.freeze([
   }),
 ] as const);
 
+const reviewedStatusSeoPagesByLocale: Partial<
+  Record<SupportedLocale, readonly SeoPageDefinition[]>
+> = {
+  'en-GB': Object.freeze([
+    buildStatusSeoPage({
+      path: '401',
+      title: 'Authentication required | KRAAK Consulting',
+      description:
+        'This resource requires authentication. Sign in to continue your KRAAK journey.',
+      imageAlt:
+        'Photo of a KRAAK Consulting workshop with participants in a work session.',
+    }),
+    buildStatusSeoPage({
+      path: '403',
+      title: 'Access denied | KRAAK Consulting',
+      description:
+        'This resource is protected. Contact KRAAK if you believe you have the required permissions.',
+      imageAlt:
+        'Photo of a KRAAK Consulting workshop with participants in a work session.',
+    }),
+    buildStatusSeoPage({
+      path: '404',
+      title: 'Page not found | KRAAK Consulting',
+      description:
+        'The requested page could not be found. Return to the KRAAK homepage, FAQ or contact form.',
+      imageAlt:
+        'Photo of a KRAAK Consulting workshop with participants in a work session.',
+    }),
+    buildStatusSeoPage({
+      path: '500',
+      title: 'Technical issue | KRAAK Consulting',
+      description:
+        'A technical error occurred. Try again shortly or contact KRAAK.',
+      imageAlt:
+        'Photo of a KRAAK Consulting workshop with participants in a work session.',
+    }),
+  ]),
+};
+
 export const localizedSeoPages = Object.freeze(
   localizedPublicRouteEntries.map((entry) => buildLocalizedSeoPage(entry)),
 );
@@ -225,7 +264,7 @@ function buildLocalizedSeoPage(
 
   if (entry.temporary) {
     return {
-      ...buildTemporaryEnglishSeo(sourceSeo),
+      ...findTemporarySeoPage(entry, sourceSeo),
       path: entry.path,
       robots: NOINDEX_ROBOTS_DIRECTIVE,
       locale: entry.locale,
@@ -279,6 +318,26 @@ function findReviewedSeoPage(
   return localizedSeo;
 }
 
+function findTemporarySeoPage(
+  entry: LocalizedPublicRouteEntry,
+  sourceSeo: SeoPageDefinition,
+): SeoPageDefinition {
+  if (entry.statusCode !== undefined) {
+    const localizedStatusSeo = reviewedStatusSeoPagesByLocale[
+      entry.locale
+    ]?.find(
+      (page) =>
+        normalizeRoutePath(page.path) === normalizeRoutePath(entry.seoPath),
+    );
+
+    if (localizedStatusSeo) {
+      return localizedStatusSeo;
+    }
+  }
+
+  return buildTemporaryEnglishSeo(sourceSeo);
+}
+
 function findRawSeoPageByPath(path: string): SeoPageDefinition | undefined {
   const normalizedPath = normalizeRoutePath(path);
 
@@ -291,10 +350,12 @@ function buildStatusSeoPage({
   path,
   title,
   description,
+  imageAlt = DEFAULT_SHARE_IMAGE_ALT,
 }: {
   readonly path: string;
   readonly title: string;
   readonly description: string;
+  readonly imageAlt?: string;
 }): SeoPageDefinition {
   return {
     path,
@@ -305,7 +366,7 @@ function buildStatusSeoPage({
       title,
       description,
       imagePath: DEFAULT_SHARE_IMAGE,
-      imageAlt: DEFAULT_SHARE_IMAGE_ALT,
+      imageAlt,
     },
     sitemap: {
       changeFrequency: DEFAULT_CHANGE_FREQUENCY,

@@ -1,14 +1,22 @@
+import { ApplicationInitStatus } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
 
 import FaqPage from './faq.page';
 
+import { KraakI18nService, provideKraakI18n } from '../../../../../shared/i18n';
+
 describe('FaqPage', () => {
   beforeEach(async () => {
+    globalThis.window.localStorage.setItem('kraak:locale', 'fr-CI');
+
     await TestBed.configureTestingModule({
       imports: [FaqPage],
-      providers: [provideRouter([])],
+      providers: [provideRouter([]), provideKraakI18n()],
     }).compileComponents();
+
+    await TestBed.inject(ApplicationInitStatus).donePromise;
+    await TestBed.inject(KraakI18nService).setLocale('fr-CI');
   });
 
   it('Given the support FAQ page When the component is created Then it should instantiate', () => {
@@ -70,6 +78,26 @@ describe('FaqPage', () => {
           answer: expect.stringContaining('décisions finales relèvent'),
         }),
       ]),
+    );
+  });
+  it('Given the English locale When the support FAQ page renders Then its page copy, questions and accordion defaults are localized', async () => {
+    await TestBed.inject(KraakI18nService).setLocale('en-GB');
+
+    const fixture = TestBed.createComponent(FaqPage);
+    fixture.detectChanges();
+
+    const content = (fixture.nativeElement as HTMLElement).textContent ?? '';
+
+    expect(content).toContain(
+      'Useful answers to help you move forward with greater clarity.',
+    );
+    expect(content).toContain(
+      'How do I choose the right KRAAK support option?',
+    );
+    expect(content).toContain('Frequently asked questions');
+    expect(content).toContain("Can't find the answer you need?");
+    expect(content).not.toContain(
+      'Comment choisir le bon accompagnement chez KRAAK ?',
     );
   });
 });

@@ -1,3 +1,4 @@
+import { apiMessage, type ApiMessageValue } from '../i18n/api-message';
 import type {
   CreateChapterDto,
   CreateChapterLessonDto,
@@ -25,18 +26,22 @@ const publicationStatuses = new Set(['draft', 'published', 'archived']);
 function assignRequiredText(
   body: Record<string, unknown>,
   field: string,
-  errors: string[],
+  errors: ApiMessageValue[],
   data: Record<string, unknown>,
 ): void {
   if (!(field in body)) {
-    errors.push(`Le champ ${field} est requis.`);
+    errors.push(
+      apiMessage('validation.requiredField', { field: String(field) }),
+    );
     return;
   }
 
   const value = readTrimmedString(body[field]);
 
   if (!value) {
-    errors.push(`Le champ ${field} est requis.`);
+    errors.push(
+      apiMessage('validation.requiredField', { field: String(field) }),
+    );
     return;
   }
 
@@ -46,7 +51,7 @@ function assignRequiredText(
 function assignOptionalText(
   body: Record<string, unknown>,
   field: string,
-  errors: string[],
+  errors: ApiMessageValue[],
   data: Record<string, unknown>,
 ): void {
   if (!(field in body)) {
@@ -56,7 +61,9 @@ function assignOptionalText(
   const value = readTrimmedString(body[field]);
 
   if (!value) {
-    errors.push(`Le champ ${field} est requis.`);
+    errors.push(
+      apiMessage('validation.requiredField', { field: String(field) }),
+    );
     return;
   }
 
@@ -65,44 +72,44 @@ function assignOptionalText(
 
 function assignRequiredSlug(
   body: Record<string, unknown>,
-  errors: string[],
+  errors: ApiMessageValue[],
   data: Record<string, unknown>,
 ): void {
   assignRequiredText(body, 'slug', errors, data);
 
   if (typeof data['slug'] === 'string' && !/^[a-z0-9-]+$/.test(data['slug'])) {
-    errors.push('Le champ slug est invalide.');
+    errors.push(apiMessage('validation.invalidField', { field: 'slug' }));
     delete data['slug'];
   }
 }
 
 function assignOptionalSlug(
   body: Record<string, unknown>,
-  errors: string[],
+  errors: ApiMessageValue[],
   data: Record<string, unknown>,
 ): void {
   assignOptionalText(body, 'slug', errors, data);
 
   if (typeof data['slug'] === 'string' && !/^[a-z0-9-]+$/.test(data['slug'])) {
-    errors.push('Le champ slug est invalide.');
+    errors.push(apiMessage('validation.invalidField', { field: 'slug' }));
     delete data['slug'];
   }
 }
 
 function assignRequiredStatus(
   body: Record<string, unknown>,
-  errors: string[],
+  errors: ApiMessageValue[],
   data: Record<string, unknown>,
 ): void {
   if (!('status' in body)) {
-    errors.push('Le champ status est requis.');
+    errors.push(apiMessage('validation.requiredField', { field: 'status' }));
     return;
   }
 
   const status = readTrimmedString(body['status']);
 
   if (!publicationStatuses.has(status)) {
-    errors.push('Le champ status est invalide.');
+    errors.push(apiMessage('validation.invalidField', { field: 'status' }));
     return;
   }
 
@@ -111,7 +118,7 @@ function assignRequiredStatus(
 
 function assignOptionalStatus(
   body: Record<string, unknown>,
-  errors: string[],
+  errors: ApiMessageValue[],
   data: Record<string, unknown>,
 ): void {
   if (!('status' in body)) {
@@ -121,7 +128,7 @@ function assignOptionalStatus(
   const status = readTrimmedString(body['status']);
 
   if (!publicationStatuses.has(status)) {
-    errors.push('Le champ status est invalide.');
+    errors.push(apiMessage('validation.invalidField', { field: 'status' }));
     return;
   }
 
@@ -131,18 +138,24 @@ function assignOptionalStatus(
 function assignRequiredNonNegativeInteger(
   body: Record<string, unknown>,
   field: string,
-  errors: string[],
+  errors: ApiMessageValue[],
   data: Record<string, unknown>,
 ): void {
   if (!(field in body)) {
-    errors.push(`Le champ ${field} est requis.`);
+    errors.push(
+      apiMessage('validation.requiredField', { field: String(field) }),
+    );
     return;
   }
 
   const value = body[field];
 
   if (!Number.isInteger(value) || (value as number) < 0) {
-    errors.push(`Le champ ${field} doit être un entier positif ou nul.`);
+    errors.push(
+      apiMessage('validation.nonNegativeIntegerField', {
+        field: String(field),
+      }),
+    );
     return;
   }
 
@@ -152,7 +165,7 @@ function assignRequiredNonNegativeInteger(
 function assignOptionalNonNegativeInteger(
   body: Record<string, unknown>,
   field: string,
-  errors: string[],
+  errors: ApiMessageValue[],
   data: Record<string, unknown>,
 ): void {
   if (!(field in body)) {
@@ -162,7 +175,11 @@ function assignOptionalNonNegativeInteger(
   const value = body[field];
 
   if (!Number.isInteger(value) || (value as number) < 0) {
-    errors.push(`Le champ ${field} doit être un entier positif ou nul.`);
+    errors.push(
+      apiMessage('validation.nonNegativeIntegerField', {
+        field: String(field),
+      }),
+    );
     return;
   }
 
@@ -172,16 +189,20 @@ function assignOptionalNonNegativeInteger(
 function assignRequiredBoolean(
   body: Record<string, unknown>,
   field: string,
-  errors: string[],
+  errors: ApiMessageValue[],
   data: Record<string, unknown>,
 ): void {
   if (!(field in body)) {
-    errors.push(`Le champ ${field} est requis.`);
+    errors.push(
+      apiMessage('validation.requiredField', { field: String(field) }),
+    );
     return;
   }
 
   if (typeof body[field] !== 'boolean') {
-    errors.push(`Le champ ${field} doit être un booléen.`);
+    errors.push(
+      apiMessage('validation.booleanField', { field: String(field) }),
+    );
     return;
   }
 
@@ -191,7 +212,7 @@ function assignRequiredBoolean(
 function assignOptionalBoolean(
   body: Record<string, unknown>,
   field: string,
-  errors: string[],
+  errors: ApiMessageValue[],
   data: Record<string, unknown>,
 ): void {
   if (!(field in body)) {
@@ -199,7 +220,9 @@ function assignOptionalBoolean(
   }
 
   if (typeof body[field] !== 'boolean') {
-    errors.push(`Le champ ${field} doit être un booléen.`);
+    errors.push(
+      apiMessage('validation.booleanField', { field: String(field) }),
+    );
     return;
   }
 
@@ -210,18 +233,18 @@ function finalizeCreate<T>(
   body: unknown,
   assign: (
     body: Record<string, unknown>,
-    errors: string[],
+    errors: ApiMessageValue[],
     data: Record<string, unknown>,
   ) => void,
 ): ValidationResult<T> {
   if (!isObjectPayload(body)) {
     return {
       valid: false,
-      errors: ['Corps de requête invalide.'],
+      errors: [apiMessage('validation.invalidBody')],
     };
   }
 
-  const errors: string[] = [];
+  const errors: ApiMessageValue[] = [];
   const data: Record<string, unknown> = {};
 
   assign(body, errors, data);
@@ -240,18 +263,18 @@ function finalizeUpdate<T>(
   body: unknown,
   assign: (
     body: Record<string, unknown>,
-    errors: string[],
+    errors: ApiMessageValue[],
     data: Record<string, unknown>,
   ) => void,
 ): ValidationResult<T> {
   if (!isObjectPayload(body)) {
     return {
       valid: false,
-      errors: ['Corps de requête invalide.'],
+      errors: [apiMessage('validation.invalidBody')],
     };
   }
 
-  const errors: string[] = [];
+  const errors: ApiMessageValue[] = [];
   const data: Record<string, unknown> = {};
 
   assign(body, errors, data);
@@ -259,7 +282,7 @@ function finalizeUpdate<T>(
   if (Object.keys(data).length === 0 && errors.length === 0) {
     return {
       valid: false,
-      errors: ['Le payload de mise à jour doit contenir au moins un champ.'],
+      errors: [apiMessage('validation.updateRequiresField')],
     };
   }
 
@@ -275,7 +298,7 @@ function finalizeUpdate<T>(
 
 function assignReusableCreate(
   body: Record<string, unknown>,
-  errors: string[],
+  errors: ApiMessageValue[],
   data: Record<string, unknown>,
 ): void {
   assignRequiredSlug(body, errors, data);
@@ -287,7 +310,7 @@ function assignReusableCreate(
 
 function assignReusableUpdate(
   body: Record<string, unknown>,
-  errors: string[],
+  errors: ApiMessageValue[],
   data: Record<string, unknown>,
 ): void {
   assignOptionalSlug(body, errors, data);
@@ -335,7 +358,7 @@ export function validateUpdateLessonPayload(
 
 function assignChapterCreate(
   body: Record<string, unknown>,
-  errors: string[],
+  errors: ApiMessageValue[],
   data: Record<string, unknown>,
 ): void {
   assignRequiredText(body, 'learningModuleId', errors, data);
@@ -348,7 +371,7 @@ function assignChapterCreate(
 
 function assignChapterUpdate(
   body: Record<string, unknown>,
-  errors: string[],
+  errors: ApiMessageValue[],
   data: Record<string, unknown>,
 ): void {
   assignOptionalText(body, 'learningModuleId', errors, data);

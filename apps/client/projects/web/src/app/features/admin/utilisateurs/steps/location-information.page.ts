@@ -5,11 +5,12 @@ import { InputTextModule } from 'primeng/inputtext';
 import { ButtonDirective } from 'primeng/button';
 
 import { UserFormStateService } from '../user-form-state.service';
+import { KraakTranslatePipe } from '../../../../../../../shared/i18n';
 
 @Component({
   selector: 'kraak-location-information-step-page',
   standalone: true,
-  imports: [FormsModule, InputTextModule, ButtonDirective],
+  imports: [FormsModule, InputTextModule, ButtonDirective, KraakTranslatePipe],
   templateUrl: './location-information.page.html',
 })
 export default class LocationInformationPage implements OnInit {

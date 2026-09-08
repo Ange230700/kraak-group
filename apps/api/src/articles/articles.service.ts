@@ -17,6 +17,7 @@ import type {
   UpdateCategoryDto,
   UpdateTagDto,
 } from '@kraak/contracts';
+import { apiMessage } from '../i18n/api-message';
 import { SupabaseService } from '../supabase/supabase.service';
 
 type UploadedCoverImage = {
@@ -114,7 +115,7 @@ export class ArticlesService {
     if (error) {
       throw new InternalServerErrorException({
         success: false,
-        message: 'Impossible de charger les articles publiés.',
+        message: apiMessage('articles.publishedLoadFailed'),
       });
     }
 
@@ -141,20 +142,20 @@ export class ArticlesService {
       ) {
         throw new NotFoundException({
           success: false,
-          message: 'Article introuvable.',
+          message: apiMessage('articles.notFound'),
         });
       }
 
       throw new InternalServerErrorException({
         success: false,
-        message: "Impossible de charger l'article demandé.",
+        message: apiMessage('articles.requestedLoadFailed'),
       });
     }
 
     if (!data) {
       throw new NotFoundException({
         success: false,
-        message: 'Article introuvable.',
+        message: apiMessage('articles.notFound'),
       });
     }
 
@@ -177,7 +178,7 @@ export class ArticlesService {
     if (error) {
       throw new InternalServerErrorException({
         success: false,
-        message: 'Impossible de charger les articles.',
+        message: apiMessage('articles.listLoadFailed'),
       });
     }
 
@@ -206,7 +207,7 @@ export class ArticlesService {
     if (error || !data) {
       throw new NotFoundException({
         success: false,
-        message: 'Article introuvable.',
+        message: apiMessage('articles.notFound'),
       });
     }
 
@@ -243,7 +244,7 @@ export class ArticlesService {
     if (error || !data) {
       throw new InternalServerErrorException({
         success: false,
-        message: "Impossible de créer l'article.",
+        message: apiMessage('articles.createFailed'),
       });
     }
 
@@ -303,13 +304,13 @@ export class ArticlesService {
     if (errorCode !== null && notFoundSupabaseErrorCodes.has(errorCode)) {
       throw new NotFoundException({
         success: false,
-        message: 'Article introuvable.',
+        message: apiMessage('articles.notFound'),
       });
     }
 
     throw new InternalServerErrorException({
       success: false,
-      message: "Impossible de mettre à jour l'article.",
+      message: apiMessage('articles.updateFailed'),
     });
   }
 
@@ -338,7 +339,7 @@ export class ArticlesService {
     if (!data) {
       throw new NotFoundException({
         success: false,
-        message: 'Article introuvable.',
+        message: apiMessage('articles.notFound'),
       });
     }
 
@@ -372,14 +373,14 @@ export class ArticlesService {
     if (existingError) {
       throw new InternalServerErrorException({
         success: false,
-        message: "Impossible de supprimer l'article.",
+        message: apiMessage('articles.deleteFailed'),
       });
     }
 
     if (!existing) {
       throw new NotFoundException({
         success: false,
-        message: 'Article introuvable.',
+        message: apiMessage('articles.notFound'),
       });
     }
 
@@ -394,7 +395,7 @@ export class ArticlesService {
     if (archiveError) {
       throw new InternalServerErrorException({
         success: false,
-        message: "Impossible d'archiver l'article.",
+        message: apiMessage('articles.archiveFailed'),
       });
     }
   }
@@ -423,20 +424,20 @@ export class ArticlesService {
       ) {
         throw new NotFoundException({
           success: false,
-          message: 'Article introuvable.',
+          message: apiMessage('articles.notFound'),
         });
       }
 
       throw new InternalServerErrorException({
         success: false,
-        message: "Impossible de publier l'article.",
+        message: apiMessage('articles.publishFailed'),
       });
     }
 
     if (!data) {
       throw new NotFoundException({
         success: false,
-        message: 'Article introuvable.',
+        message: apiMessage('articles.notFound'),
       });
     }
 
@@ -459,14 +460,14 @@ export class ArticlesService {
     if (file.mimetype.startsWith('image/') === false) {
       throw new BadRequestException({
         success: false,
-        message: 'Le fichier doit être une image.',
+        message: apiMessage('articles.coverImageTypeInvalid'),
       });
     }
 
     if (file.size > 5 * 1024 * 1024) {
       throw new BadRequestException({
         success: false,
-        message: "L'image de couverture dépasse la limite de 5MB.",
+        message: apiMessage('articles.coverImageTooLarge'),
       });
     }
 
@@ -484,7 +485,7 @@ export class ArticlesService {
     if (error) {
       throw new InternalServerErrorException({
         success: false,
-        message: "Impossible d'envoyer l'image de couverture.",
+        message: apiMessage('articles.coverImageUploadFailed'),
       });
     }
 
@@ -512,7 +513,7 @@ export class ArticlesService {
     if (error) {
       throw new InternalServerErrorException({
         success: false,
-        message: 'Impossible de charger les catégories.',
+        message: apiMessage('articles.categoriesLoadFailed'),
       });
     }
 
@@ -542,7 +543,7 @@ export class ArticlesService {
     if (error || !data) {
       throw new InternalServerErrorException({
         success: false,
-        message: 'Impossible de créer la catégorie.',
+        message: apiMessage('articles.categoryCreateFailed'),
       });
     }
 
@@ -575,20 +576,20 @@ export class ArticlesService {
       ) {
         throw new NotFoundException({
           success: false,
-          message: 'Catégorie introuvable.',
+          message: apiMessage('articles.categoryNotFound'),
         });
       }
 
       throw new InternalServerErrorException({
         success: false,
-        message: 'Impossible de mettre à jour la catégorie.',
+        message: apiMessage('articles.categoryUpdateFailed'),
       });
     }
 
     if (!data) {
       throw new NotFoundException({
         success: false,
-        message: 'Catégorie introuvable.',
+        message: apiMessage('articles.categoryNotFound'),
       });
     }
 
@@ -609,14 +610,14 @@ export class ArticlesService {
     if (existingError) {
       throw new InternalServerErrorException({
         success: false,
-        message: 'Impossible d’archiver la catégorie.',
+        message: apiMessage('articles.categoryArchiveFailed'),
       });
     }
 
     if (!existing) {
       throw new NotFoundException({
         success: false,
-        message: 'Catégorie introuvable.',
+        message: apiMessage('articles.categoryNotFound'),
       });
     }
 
@@ -629,7 +630,7 @@ export class ArticlesService {
     if (error) {
       throw new InternalServerErrorException({
         success: false,
-        message: 'Impossible d’archiver la catégorie.',
+        message: apiMessage('articles.categoryArchiveFailed'),
       });
     }
   }
@@ -648,7 +649,7 @@ export class ArticlesService {
     if (error) {
       throw new InternalServerErrorException({
         success: false,
-        message: 'Impossible de charger les tags.',
+        message: apiMessage('articles.tagsLoadFailed'),
       });
     }
 
@@ -672,7 +673,7 @@ export class ArticlesService {
     if (error || !data) {
       throw new InternalServerErrorException({
         success: false,
-        message: 'Impossible de créer le tag.',
+        message: apiMessage('articles.tagCreateFailed'),
       });
     }
 
@@ -704,20 +705,20 @@ export class ArticlesService {
       ) {
         throw new NotFoundException({
           success: false,
-          message: 'Tag introuvable.',
+          message: apiMessage('articles.tagNotFound'),
         });
       }
 
       throw new InternalServerErrorException({
         success: false,
-        message: 'Impossible de mettre à jour le tag.',
+        message: apiMessage('articles.tagUpdateFailed'),
       });
     }
 
     if (!data) {
       throw new NotFoundException({
         success: false,
-        message: 'Tag introuvable.',
+        message: apiMessage('articles.tagNotFound'),
       });
     }
 
@@ -738,14 +739,14 @@ export class ArticlesService {
     if (existingError) {
       throw new InternalServerErrorException({
         success: false,
-        message: 'Impossible d’archiver le tag.',
+        message: apiMessage('articles.tagArchiveFailed'),
       });
     }
 
     if (!existing) {
       throw new NotFoundException({
         success: false,
-        message: 'Tag introuvable.',
+        message: apiMessage('articles.tagNotFound'),
       });
     }
 
@@ -758,7 +759,7 @@ export class ArticlesService {
     if (error) {
       throw new InternalServerErrorException({
         success: false,
-        message: 'Impossible d’archiver le tag.',
+        message: apiMessage('articles.tagArchiveFailed'),
       });
     }
   }
@@ -770,7 +771,7 @@ export class ArticlesService {
     if (error || !data.user) {
       throw new UnauthorizedException({
         success: false,
-        message: 'Session invalide.',
+        message: apiMessage('auth.sessionInvalid'),
       });
     }
 
@@ -784,14 +785,14 @@ export class ArticlesService {
     if (appUserError || !appUser) {
       throw new ForbiddenException({
         success: false,
-        message: 'Accès admin requis.',
+        message: apiMessage('auth.adminRequired'),
       });
     }
 
     if ((appUser as AppUserRow).role !== 'admin') {
       throw new ForbiddenException({
         success: false,
-        message: 'Accès admin requis.',
+        message: apiMessage('auth.adminRequired'),
       });
     }
 
@@ -815,7 +816,7 @@ export class ArticlesService {
     if (deleteCategoryError) {
       throw new InternalServerErrorException({
         success: false,
-        message: "Impossible de mettre à jour les catégories de l'article.",
+        message: apiMessage('articles.articleCategoriesUpdateFailed'),
       });
     }
 
@@ -832,7 +833,7 @@ export class ArticlesService {
       if (insertCategoryError) {
         throw new InternalServerErrorException({
           success: false,
-          message: "Impossible de mettre à jour les catégories de l'article.",
+          message: apiMessage('articles.articleCategoriesUpdateFailed'),
         });
       }
     }
@@ -845,7 +846,7 @@ export class ArticlesService {
     if (deleteTagError) {
       throw new InternalServerErrorException({
         success: false,
-        message: "Impossible de mettre à jour les tags de l'article.",
+        message: apiMessage('articles.articleTagsUpdateFailed'),
       });
     }
 
@@ -862,7 +863,7 @@ export class ArticlesService {
       if (insertTagError) {
         throw new InternalServerErrorException({
           success: false,
-          message: "Impossible de mettre à jour les tags de l'article.",
+          message: apiMessage('articles.articleTagsUpdateFailed'),
         });
       }
     }
@@ -899,7 +900,7 @@ export class ArticlesService {
     if (categoryError || tagError) {
       throw new InternalServerErrorException({
         success: false,
-        message: 'Impossible de charger les relations article.',
+        message: apiMessage('articles.relationsLoadFailed'),
       });
     }
 
@@ -1005,8 +1006,7 @@ export class ArticlesService {
     ) {
       throw new BadRequestException({
         success: false,
-        message:
-          'Certaines catégories ou certains tags sont introuvables ou archivés.',
+        message: apiMessage('articles.categoriesOrTagsUnavailable'),
       });
     }
   }
@@ -1054,7 +1054,7 @@ export class ArticlesService {
     if (categoryError || tagError) {
       throw new InternalServerErrorException({
         success: false,
-        message: 'Impossible de valider les catégories et tags.',
+        message: apiMessage('articles.categoriesAndTagsValidationFailed'),
       });
     }
 

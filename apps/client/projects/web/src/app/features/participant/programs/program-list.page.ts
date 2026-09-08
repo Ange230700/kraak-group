@@ -13,17 +13,23 @@ import { WebAuthService } from '../../../core/auth/web-auth.service';
 import { resolveApiBaseUrl } from '../../../core/runtime/runtime-config';
 import { RevealOnScrollDirective } from '../../../shared/motion/reveal-on-scroll.directive';
 
+import {
+  KraakI18nService,
+  KraakTranslatePipe,
+} from '../../../../../../shared/i18n';
 @Component({
   selector: 'kraak-web-participant-program-list',
   standalone: true,
-  imports: [RouterLink, RevealOnScrollDirective],
+  imports: [RouterLink, RevealOnScrollDirective, KraakTranslatePipe],
   templateUrl: './program-list.page.html',
 })
 export default class ProgramListPage implements OnInit {
+  private readonly i18n = inject(KraakI18nService);
   private readonly authService = inject(WebAuthService);
 
   protected programsClient: Pick<ApiClient['participantPrograms'], 'list'> =
     createApiClient({
+      getLocale: () => this.i18n.locale(),
       baseUrl: resolveApiBaseUrl(environment.apiBaseUrl),
       getAuthToken: () =>
         this.authService.currentSession()?.accessToken ?? null,
@@ -46,13 +52,21 @@ export default class ProgramListPage implements OnInit {
   ): string {
     switch (status) {
       case 'pending':
-        return 'En attente';
+        return this.i18n.translate(
+          'web.participant.programList.status.enrollment.pending',
+        );
       case 'active':
-        return 'Actif';
+        return this.i18n.translate(
+          'web.participant.programList.status.enrollment.active',
+        );
       case 'completed':
-        return 'Terminé';
+        return this.i18n.translate(
+          'web.participant.programList.status.enrollment.completed',
+        );
       case 'cancelled':
-        return 'Annulé';
+        return this.i18n.translate(
+          'web.participant.programList.status.enrollment.cancelled',
+        );
     }
   }
 
@@ -61,11 +75,17 @@ export default class ProgramListPage implements OnInit {
   ): string {
     switch (status) {
       case 'not_started':
-        return 'Non commencé';
+        return this.i18n.translate(
+          'web.participant.programList.status.progress.notStarted',
+        );
       case 'in_progress':
-        return 'En cours';
+        return this.i18n.translate(
+          'web.participant.programList.status.progress.inProgress',
+        );
       case 'completed':
-        return 'Terminé';
+        return this.i18n.translate(
+          'web.participant.programList.status.progress.completed',
+        );
     }
   }
 
@@ -75,7 +95,7 @@ export default class ProgramListPage implements OnInit {
       return rawDate;
     }
 
-    return new Intl.DateTimeFormat('fr-FR', {
+    return new Intl.DateTimeFormat(this.i18n.locale(), {
       day: '2-digit',
       month: 'short',
       year: 'numeric',
@@ -97,7 +117,7 @@ export default class ProgramListPage implements OnInit {
       this.errorMessage.set(
         resolveAuthErrorMessage(
           error,
-          'Erreur lors du chargement des programmes.',
+          this.i18n.translate('web.participant.programList.error.fallback'),
         ),
       );
     } finally {

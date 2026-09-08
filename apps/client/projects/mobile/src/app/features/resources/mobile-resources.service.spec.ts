@@ -1,5 +1,7 @@
+import { ApplicationInitStatus } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+import { provideKraakI18n } from '../../../../../shared/i18n';
 import type { ResourceDto } from '@kraak/contracts';
 import { MobileAuthService } from '../auth/mobile-auth.service';
 import { MobileResourcesService } from './mobile-resources.service';
@@ -27,17 +29,22 @@ describe('MobileResourcesService', () => {
     updatedAt: new Date().toISOString(),
   };
 
-  beforeEach(() => {
+  beforeEach(async () => {
     authService = {
       currentSession: vi.fn(() => ({ accessToken: 'test-token' })),
     };
 
+    globalThis.window.localStorage.setItem('kraak:locale', 'fr-CI');
+
     TestBed.configureTestingModule({
       providers: [
+        provideKraakI18n(),
         MobileResourcesService,
         { provide: MobileAuthService, useValue: authService },
       ],
     });
+
+    await TestBed.inject(ApplicationInitStatus).donePromise;
 
     service = TestBed.inject(MobileResourcesService);
   });

@@ -98,12 +98,16 @@ describe('validateEmail', () => {
   it('Given un e-mail invalide, When validateEmail est appelé, Then une erreur est ajoutée', () => {
     const errors: string[] = [];
     validateEmail('invalid', errors);
-    expect(errors).toContain("L'adresse e-mail est invalide.");
+    expect(errors).toContainEqual({
+      key: 'validation.invalidEmail',
+    });
   });
 
   it('Given une chaîne vide, When validateEmail est appelé, Then une erreur est ajoutée', () => {
     const errors: string[] = [];
     validateEmail('', errors);
-    expect(errors).toContain("L'adresse e-mail est invalide.");
+    expect(errors).toContainEqual({
+      key: 'validation.invalidEmail',
+    });
   });
 });

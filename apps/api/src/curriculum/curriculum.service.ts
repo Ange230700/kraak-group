@@ -1,3 +1,4 @@
+import { apiMessage, type ApiMessageValue } from '../i18n/api-message';
 import {
   Injectable,
   InternalServerErrorException,
@@ -127,7 +128,7 @@ export class CurriculumService {
     if (error) {
       throw new InternalServerErrorException({
         success: false,
-        message: 'Impossible de charger les cours.',
+        message: apiMessage('curriculum.coursesLoadFailed'),
       });
     }
 
@@ -153,7 +154,7 @@ export class CurriculumService {
     if (error || !data) {
       throw new InternalServerErrorException({
         success: false,
-        message: 'Impossible de créer le cours.',
+        message: apiMessage('curriculum.courseCreateFailed'),
       });
     }
 
@@ -175,7 +176,7 @@ export class CurriculumService {
     if (error || !data) {
       throw new NotFoundException({
         success: false,
-        message: 'Cours introuvable.',
+        message: apiMessage('curriculum.courseNotFound'),
       });
     }
 
@@ -183,7 +184,11 @@ export class CurriculumService {
   }
 
   async archiveCourse(courseId: string): Promise<void> {
-    await this.archiveReusable('course', courseId, 'Cours introuvable.');
+    await this.archiveReusable(
+      'course',
+      courseId,
+      apiMessage('curriculum.courseNotFound'),
+    );
   }
 
   // -------------------------------------------------------------------------
@@ -200,7 +205,7 @@ export class CurriculumService {
     if (error) {
       throw new InternalServerErrorException({
         success: false,
-        message: 'Impossible de charger les modules.',
+        message: apiMessage('curriculum.modulesLoadFailed'),
       });
     }
 
@@ -228,7 +233,7 @@ export class CurriculumService {
     if (error || !data) {
       throw new InternalServerErrorException({
         success: false,
-        message: 'Impossible de créer le module.',
+        message: apiMessage('curriculum.moduleCreateFailed'),
       });
     }
 
@@ -250,7 +255,7 @@ export class CurriculumService {
     if (error || !data) {
       throw new NotFoundException({
         success: false,
-        message: 'Module introuvable.',
+        message: apiMessage('curriculum.moduleNotFound'),
       });
     }
 
@@ -261,7 +266,7 @@ export class CurriculumService {
     await this.archiveReusable(
       'learning_module',
       learningModuleId,
-      'Module introuvable.',
+      apiMessage('curriculum.moduleNotFound'),
     );
   }
 
@@ -285,7 +290,7 @@ export class CurriculumService {
     if (error) {
       throw new InternalServerErrorException({
         success: false,
-        message: 'Impossible de charger les chapitres.',
+        message: apiMessage('curriculum.chaptersLoadFailed'),
       });
     }
 
@@ -312,7 +317,7 @@ export class CurriculumService {
     if (error || !data) {
       throw new InternalServerErrorException({
         success: false,
-        message: 'Impossible de créer le chapitre.',
+        message: apiMessage('curriculum.chapterCreateFailed'),
       });
     }
 
@@ -355,7 +360,7 @@ export class CurriculumService {
     if (error || !data) {
       throw new NotFoundException({
         success: false,
-        message: 'Chapitre introuvable.',
+        message: apiMessage('curriculum.chapterNotFound'),
       });
     }
 
@@ -363,7 +368,11 @@ export class CurriculumService {
   }
 
   async archiveChapter(chapterId: string): Promise<void> {
-    await this.archiveReusable('chapter', chapterId, 'Chapitre introuvable.');
+    await this.archiveReusable(
+      'chapter',
+      chapterId,
+      apiMessage('curriculum.chapterNotFound'),
+    );
   }
 
   // -------------------------------------------------------------------------
@@ -380,7 +389,7 @@ export class CurriculumService {
     if (error) {
       throw new InternalServerErrorException({
         success: false,
-        message: 'Impossible de charger les leçons.',
+        message: apiMessage('curriculum.lessonsLoadFailed'),
       });
     }
 
@@ -406,7 +415,7 @@ export class CurriculumService {
     if (error || !data) {
       throw new InternalServerErrorException({
         success: false,
-        message: 'Impossible de créer la leçon.',
+        message: apiMessage('curriculum.lessonCreateFailed'),
       });
     }
 
@@ -428,7 +437,7 @@ export class CurriculumService {
     if (error || !data) {
       throw new NotFoundException({
         success: false,
-        message: 'Leçon introuvable.',
+        message: apiMessage('curriculum.lessonNotFound'),
       });
     }
 
@@ -436,7 +445,11 @@ export class CurriculumService {
   }
 
   async archiveLesson(lessonId: string): Promise<void> {
-    await this.archiveReusable('lesson', lessonId, 'Leçon introuvable.');
+    await this.archiveReusable(
+      'lesson',
+      lessonId,
+      apiMessage('curriculum.lessonNotFound'),
+    );
   }
 
   // -------------------------------------------------------------------------
@@ -459,7 +472,7 @@ export class CurriculumService {
     if (error) {
       throw new InternalServerErrorException({
         success: false,
-        message: 'Impossible de charger les cours du programme.',
+        message: apiMessage('curriculum.programCoursesLoadFailed'),
       });
     }
 
@@ -486,7 +499,7 @@ export class CurriculumService {
     if (error || !data) {
       throw new InternalServerErrorException({
         success: false,
-        message: 'Impossible d’ajouter le cours au programme.',
+        message: apiMessage('curriculum.programCourseAddFailed'),
       });
     }
 
@@ -513,7 +526,7 @@ export class CurriculumService {
     if (error || !data) {
       throw new NotFoundException({
         success: false,
-        message: 'Placement programme-cours introuvable.',
+        message: apiMessage('curriculum.programCoursePlacementNotFound'),
       });
     }
 
@@ -524,7 +537,7 @@ export class CurriculumService {
     await this.deletePlacement(
       'program_course',
       placementId,
-      'Placement programme-cours introuvable.',
+      apiMessage('curriculum.programCoursePlacementNotFound'),
     );
   }
 
@@ -548,7 +561,7 @@ export class CurriculumService {
     if (error) {
       throw new InternalServerErrorException({
         success: false,
-        message: 'Impossible de charger les modules du cours.',
+        message: apiMessage('curriculum.courseModulesLoadFailed'),
       });
     }
 
@@ -575,7 +588,7 @@ export class CurriculumService {
     if (error || !data) {
       throw new InternalServerErrorException({
         success: false,
-        message: 'Impossible d’ajouter le module au cours.',
+        message: apiMessage('curriculum.courseModuleAddFailed'),
       });
     }
 
@@ -602,7 +615,7 @@ export class CurriculumService {
     if (error || !data) {
       throw new NotFoundException({
         success: false,
-        message: 'Placement cours-module introuvable.',
+        message: apiMessage('curriculum.courseModulePlacementNotFound'),
       });
     }
 
@@ -613,7 +626,7 @@ export class CurriculumService {
     await this.deletePlacement(
       'course_module',
       placementId,
-      'Placement cours-module introuvable.',
+      apiMessage('curriculum.courseModulePlacementNotFound'),
     );
   }
 
@@ -637,7 +650,7 @@ export class CurriculumService {
     if (error) {
       throw new InternalServerErrorException({
         success: false,
-        message: 'Impossible de charger les leçons du chapitre.',
+        message: apiMessage('curriculum.chapterLessonsLoadFailed'),
       });
     }
 
@@ -664,7 +677,7 @@ export class CurriculumService {
     if (error || !data) {
       throw new InternalServerErrorException({
         success: false,
-        message: 'Impossible d’ajouter la leçon au chapitre.',
+        message: apiMessage('curriculum.chapterLessonAddFailed'),
       });
     }
 
@@ -691,7 +704,7 @@ export class CurriculumService {
     if (error || !data) {
       throw new NotFoundException({
         success: false,
-        message: 'Placement chapitre-leçon introuvable.',
+        message: apiMessage('curriculum.chapterLessonPlacementNotFound'),
       });
     }
 
@@ -702,7 +715,7 @@ export class CurriculumService {
     await this.deletePlacement(
       'chapter_lesson',
       placementId,
-      'Placement chapitre-leçon introuvable.',
+      apiMessage('curriculum.chapterLessonPlacementNotFound'),
     );
   }
 
@@ -941,7 +954,7 @@ export class CurriculumService {
   private throwCurriculumReadError(): never {
     throw new InternalServerErrorException({
       success: false,
-      message: 'Impossible de charger le curriculum du programme.',
+      message: apiMessage('curriculum.programCurriculumLoadFailed'),
     });
   }
 
@@ -975,7 +988,7 @@ export class CurriculumService {
   private async deletePlacement(
     table: 'program_course' | 'course_module' | 'chapter_lesson',
     id: string,
-    notFoundMessage: string,
+    notFoundMessage: ApiMessageValue,
   ): Promise<void> {
     const { data, error } = await this.supabaseService
       .getClient()
@@ -1020,7 +1033,7 @@ export class CurriculumService {
   private async archiveReusable(
     table: 'course' | 'learning_module' | 'chapter' | 'lesson',
     id: string,
-    notFoundMessage: string,
+    notFoundMessage: ApiMessageValue,
   ): Promise<void> {
     const { data, error } = await this.supabaseService
       .getClient()

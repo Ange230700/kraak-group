@@ -10,25 +10,25 @@ describe('mobile shell config', () => {
   it('Given the frozen MVP shell, when primary tabs are computed, then it keeps the four expected entries', () => {
     expect(MOBILE_PRIMARY_TABS).toEqual([
       {
-        label: 'Accueil',
+        label: 'mobile.navigation.home',
         tab: 'accueil',
         href: '/tabs/accueil',
         icon: 'home-outline',
       },
       {
-        label: 'Programmes',
+        label: 'mobile.navigation.programs',
         tab: 'programmes',
         href: '/tabs/programmes',
         icon: 'book-outline',
       },
       {
-        label: 'Annonces',
+        label: 'mobile.navigation.announcements',
         tab: 'annonces',
         href: '/tabs/annonces',
         icon: 'megaphone-outline',
       },
       {
-        label: 'Support',
+        label: 'mobile.navigation.support',
         tab: 'support',
         href: '/tabs/support',
         icon: 'help-circle-outline',

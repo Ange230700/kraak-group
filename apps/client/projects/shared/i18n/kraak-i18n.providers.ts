@@ -11,10 +11,7 @@ import {
   provideTranslateService,
 } from '@ngx-translate/core';
 
-import {
-  KRAAK_TRANSLATION_CATALOGS,
-  KRAAK_STATIC_TRANSLATION_CATALOGS,
-} from './kraak-i18n.catalogs';
+import { KRAAK_TRANSLATION_CATALOGS } from './kraak-i18n.catalogs';
 import {
   KraakI18nService,
   KraakMissingTranslationHandler,
@@ -29,10 +26,6 @@ export const KRAAK_I18N_PROVIDER_MARKER = new InjectionToken<boolean>(
 export function provideKraakI18n(): EnvironmentProviders {
   return makeEnvironmentProviders([
     { provide: KRAAK_I18N_PROVIDER_MARKER, useValue: true },
-    {
-      provide: KRAAK_TRANSLATION_CATALOGS,
-      useValue: KRAAK_STATIC_TRANSLATION_CATALOGS,
-    },
     provideTranslateService({
       fallbackLang: FALLBACK_LOCALE,
       lang: SOURCE_LOCALE,

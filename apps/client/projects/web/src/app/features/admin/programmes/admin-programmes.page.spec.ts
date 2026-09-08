@@ -3,8 +3,12 @@ import { provideRouter } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
-import { signal } from '@angular/core';
+import { ApplicationInitStatus, signal } from '@angular/core';
 import { WebAuthService } from '../../../core/auth/web-auth.service';
+import {
+  KraakI18nService,
+  provideKraakI18n,
+} from '../../../../../../shared/i18n';
 import AdminProgrammesPage from './admin-programmes.page';
 import type { ProgramDto } from '@kraak/contracts';
 
@@ -64,14 +68,17 @@ describe('AdminProgrammesPage', () => {
   });
 
   beforeEach(async () => {
+    globalThis.window.localStorage.setItem('kraak:locale', 'fr-CI');
     await TestBed.configureTestingModule({
       imports: [AdminProgrammesPage],
       providers: [
+        provideKraakI18n(),
         provideRouter([]),
         MessageService,
         { provide: WebAuthService, useValue: webAuthServiceMock },
       ],
     }).compileComponents();
+    await TestBed.inject(ApplicationInitStatus).donePromise;
   });
 
   it('Given the admin programmes page When it is created Then the instance exists', () => {
@@ -391,5 +398,89 @@ describe('AdminProgrammesPage', () => {
 
     expect(fixture.componentInstance['errorMessage']()).toContain('charger');
     expect(fixture.componentInstance['loading']()).toBe(false);
+  });
+
+  it('Given English locale, When the page renders, Then it renders Admin Programmes chrome in English', async () => {
+    const i18n = TestBed.inject(KraakI18nService);
+    await i18n.setLocale('en-GB');
+
+    const fixture = TestBed.createComponent(AdminProgrammesPage);
+    const comp = fixture.componentInstance;
+
+    comp.programsClient = programsClientMock;
+    comp.loadProgrammes = vi.fn().mockResolvedValue(undefined);
+
+    comp['loading'].set(false);
+    comp['programmes'].set(mockProgrammes);
+
+    fixture.detectChanges();
+
+    const host = fixture.nativeElement as HTMLElement;
+    const content = host.textContent ?? '';
+
+    expect(content).toContain('Programmes');
+    expect(content).toContain(
+      'Manage KRAAK programmes: creation, editing and publication status.',
+    );
+    expect(content).toContain('Dashboard');
+    expect(content).toContain('New programme');
+
+    expect(content).toContain('Title');
+    expect(content).toContain('Slug');
+    expect(content).toContain('Status');
+    expect(content).toContain('Visibility');
+    expect(content).toContain('Actions');
+
+    expect(content).toContain('Published');
+    expect(content).toContain('Public');
+    expect(content).toContain('Draft');
+    expect(content).toContain('Private');
+
+    expect(content).toContain('Edit');
+    expect(content).toContain('Delete');
+
+    expect(comp['getPublicationStatusLabel']('published')).toBe('Published');
+    expect(comp['getPublicationStatusLabel']('draft')).toBe('Draft');
+    expect(comp['getProgramVisibilityLabel']('public')).toBe('Public');
+    expect(comp['getProgramVisibilityLabel']('private')).toBe('Private');
+
+    expect(comp['getEditAriaLabel'](mockProgrammes[0])).toBe(
+      'Edit programme Formation Leadership',
+    );
+
+    expect(comp['getDeleteAriaLabel'](mockProgrammes[0])).toBe(
+      'Delete programme Formation Leadership',
+    );
+
+    comp.openCreateForm();
+    fixture.detectChanges();
+
+    const formContent = host.textContent ?? '';
+
+    expect(formContent).toContain('Create programme');
+    expect(formContent).toContain('Summary');
+    expect(formContent).toContain('Description');
+    expect(formContent).toContain('Cancel');
+
+    const slugInput = host.querySelector(
+      '#prog-slug',
+    ) as HTMLInputElement | null;
+
+    const titleInput = host.querySelector(
+      '#prog-title',
+    ) as HTMLInputElement | null;
+
+    const summaryInput = host.querySelector(
+      '#prog-summary',
+    ) as HTMLTextAreaElement | null;
+
+    const descriptionInput = host.querySelector(
+      '#prog-description',
+    ) as HTMLTextAreaElement | null;
+
+    expect(slugInput?.placeholder).toBe('e.g. leadership-training');
+    expect(titleInput?.placeholder).toBe('Programme title');
+    expect(summaryInput?.placeholder).toBe('Short summary shown in the list');
+    expect(descriptionInput?.placeholder).toBe('Full programme description');
   });
 });

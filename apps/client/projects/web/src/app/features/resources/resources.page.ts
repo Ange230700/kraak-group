@@ -1,12 +1,14 @@
 import { Component, OnInit, OnDestroy, inject } from '@angular/core';
 
+import { KraakTranslatePipe } from '../../../../../shared/i18n';
+
 import { CtaBanner } from '../../shared/cta-banner/cta-banner.component';
 import { GsapAnimationsService } from '../../core/animations/gsap-animations.service';
 
 @Component({
   selector: 'kraak-resources-page',
   standalone: true,
-  imports: [CtaBanner],
+  imports: [CtaBanner, KraakTranslatePipe],
   templateUrl: './resources.page.html',
 })
 export default class ResourcesPage implements OnInit, OnDestroy {

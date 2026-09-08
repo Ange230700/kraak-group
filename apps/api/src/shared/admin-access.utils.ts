@@ -1,5 +1,6 @@
 import { ForbiddenException, UnauthorizedException } from '@nestjs/common';
 import type { AuthService } from '../auth/auth.service';
+import { apiMessage } from '../i18n/api-message';
 import { extractAccessToken } from '../auth/auth.dto';
 
 type AdminSession = Awaited<
@@ -24,7 +25,7 @@ export async function requireAdminSession(
   if (session.profile.appUser.role !== 'admin') {
     throw new ForbiddenException({
       success: false,
-      message: 'Accès admin requis.',
+      message: apiMessage('auth.adminRequired'),
     });
   }
 
@@ -66,7 +67,7 @@ export async function requireEmployeeSession(
   if (role !== 'admin' && role !== 'employee') {
     throw new ForbiddenException({
       success: false,
-      message: 'Accès réservé aux employés et administrateurs.',
+      message: apiMessage('auth.employeeOrAdminRequired'),
     });
   }
 
@@ -107,7 +108,7 @@ export async function requireTrainerAccess(
   if (role !== 'admin' && role !== 'trainer') {
     throw new ForbiddenException({
       success: false,
-      message: 'Accès réservé aux formateurs et administrateurs.',
+      message: apiMessage('auth.trainerOrAdminRequired'),
     });
   }
 

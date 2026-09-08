@@ -43,12 +43,12 @@ describe('Programs DTO validation', () => {
     expect(result).toEqual({
       valid: false,
       errors: [
-        'Le champ slug est invalide.',
-        'Le champ title est requis.',
-        'Le champ summary est requis.',
-        'Le champ description est requis.',
-        'Le champ status est invalide.',
-        'Le champ visibility est invalide.',
+        { key: 'validation.invalidField', params: { field: 'slug' } },
+        { key: 'validation.requiredField', params: { field: 'title' } },
+        { key: 'validation.requiredField', params: { field: 'summary' } },
+        { key: 'validation.requiredField', params: { field: 'description' } },
+        { key: 'validation.invalidField', params: { field: 'status' } },
+        { key: 'validation.invalidField', params: { field: 'visibility' } },
       ],
     });
   });
@@ -58,7 +58,7 @@ describe('Programs DTO validation', () => {
 
     expect(result).toEqual({
       valid: false,
-      errors: ['Corps de requête invalide.'],
+      errors: [{ key: 'validation.invalidBody' }],
     });
   });
 
@@ -90,7 +90,7 @@ describe('Programs DTO validation', () => {
 
     expect(result).toEqual({
       valid: false,
-      errors: ['Le payload de mise à jour doit contenir au moins un champ.'],
+      errors: [{ key: 'validation.updateRequiresField' }],
     });
   });
 
@@ -104,9 +104,9 @@ describe('Programs DTO validation', () => {
     expect(result).toEqual({
       valid: false,
       errors: [
-        'Le champ slug est invalide.',
-        'Le champ status est invalide.',
-        'Le champ visibility est invalide.',
+        { key: 'validation.invalidField', params: { field: 'slug' } },
+        { key: 'validation.invalidField', params: { field: 'status' } },
+        { key: 'validation.invalidField', params: { field: 'visibility' } },
       ],
     });
   });
@@ -116,7 +116,7 @@ describe('Programs DTO validation', () => {
 
     expect(result).toEqual({
       valid: false,
-      errors: ['Corps de requête invalide.'],
+      errors: [{ key: 'validation.invalidBody' }],
     });
   });
 
@@ -144,8 +144,8 @@ describe('Programs DTO validation', () => {
     expect(result).toEqual({
       valid: false,
       errors: [
-        'Le champ title est requis.',
-        'Le champ sortOrder doit être un entier.',
+        { key: 'validation.requiredField', params: { field: 'title' } },
+        { key: 'validation.integerField', params: { field: 'sortOrder' } },
       ],
     });
   });
@@ -159,8 +159,8 @@ describe('Programs DTO validation', () => {
     expect(result).toEqual({
       valid: false,
       errors: [
-        'Le champ title est requis.',
-        'Le champ sortOrder doit être un entier.',
+        { key: 'validation.requiredField', params: { field: 'title' } },
+        { key: 'validation.integerField', params: { field: 'sortOrder' } },
       ],
     });
   });
@@ -172,7 +172,7 @@ describe('Programs DTO validation', () => {
 
     expect(result).toEqual({
       valid: false,
-      errors: ['Le champ title est requis.'],
+      errors: [{ key: 'validation.requiredField', params: { field: 'title' } }],
     });
   });
 
@@ -181,19 +181,19 @@ describe('Programs DTO validation', () => {
 
     expect(result).toEqual({
       valid: false,
-      errors: ['Le payload de mise à jour doit contenir au moins un champ.'],
+      errors: [{ key: 'validation.updateRequiresField' }],
     });
   });
 
   it('Given un body non objet feature, When les validateurs feature sont appelés, Then une erreur corps invalide est renvoyée', () => {
     expect(validateCreateProgramFeaturePayload(null)).toEqual({
       valid: false,
-      errors: ['Corps de requête invalide.'],
+      errors: [{ key: 'validation.invalidBody' }],
     });
 
     expect(validateUpdateProgramFeaturePayload('invalid')).toEqual({
       valid: false,
-      errors: ['Corps de requête invalide.'],
+      errors: [{ key: 'validation.invalidBody' }],
     });
   });
 
@@ -227,8 +227,8 @@ describe('Programs DTO validation', () => {
     expect(result).toEqual({
       valid: false,
       errors: [
-        'Le champ sessionId est requis.',
-        'Le champ completed doit être un booléen.',
+        { key: 'validation.requiredField', params: { field: 'sessionId' } },
+        { key: 'validation.booleanField', params: { field: 'completed' } },
       ],
     });
   });
@@ -238,7 +238,7 @@ describe('Programs DTO validation', () => {
 
     expect(result).toEqual({
       valid: false,
-      errors: ['Corps de requête invalide.'],
+      errors: [{ key: 'validation.invalidBody' }],
     });
   });
 
@@ -249,7 +249,7 @@ describe('Programs DTO validation', () => {
 
     expect(result).toEqual({
       valid: false,
-      errors: ['Le champ slug est requis.'],
+      errors: [{ key: 'validation.requiredField', params: { field: 'slug' } }],
     });
   });
 });

@@ -1,5 +1,6 @@
 // apps\client\projects\web\src\app\features\auth\sign-up.page.spec.ts
 
+import { ApplicationInitStatus } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { provideRouter, Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
@@ -9,6 +10,7 @@ import { WebAuthService } from '../../core/auth/web-auth.service';
 import SignUpPage from './sign-up.page';
 import { resolveWebRedirectUrl } from './auth-form.utils';
 
+import { KraakI18nService, provideKraakI18n } from '../../../../../shared/i18n';
 describe('Web SignUpPage', () => {
   const authService = {
     signUp: vi.fn(),
@@ -20,6 +22,7 @@ describe('Web SignUpPage', () => {
   let messageServiceAddSpy: ReturnType<typeof vi.spyOn>;
 
   beforeEach(async () => {
+    globalThis.window.localStorage.setItem('kraak:locale', 'fr-CI');
     authService.signUp.mockReset();
     authService.signUp.mockResolvedValue({
       message: 'Votre compte a été créé.',
@@ -31,11 +34,15 @@ describe('Web SignUpPage', () => {
     await TestBed.configureTestingModule({
       imports: [SignUpPage],
       providers: [
+        provideKraakI18n(),
         provideRouter([]),
         { provide: WebAuthService, useValue: authService },
         MessageService,
       ],
     }).compileComponents();
+
+    await TestBed.inject(ApplicationInitStatus).donePromise;
+    await TestBed.inject(KraakI18nService).setLocale('fr-CI');
 
     router = TestBed.inject(Router);
     messageService = TestBed.inject(MessageService);

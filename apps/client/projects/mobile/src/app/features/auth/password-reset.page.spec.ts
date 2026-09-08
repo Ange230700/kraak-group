@@ -1,7 +1,8 @@
-import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { ApplicationInitStatus, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { KraakI18nService, provideKraakI18n } from '../../../../../shared/i18n';
 import { MobileAuthService } from './mobile-auth.service';
 import PasswordResetPage from './password-reset.page';
 
@@ -11,6 +12,8 @@ describe('Mobile PasswordResetPage', () => {
   };
 
   beforeEach(async () => {
+    globalThis.window.localStorage.setItem('kraak:locale', 'fr-CI');
+
     authService.requestPasswordReset.mockReset();
     authService.requestPasswordReset.mockResolvedValue({
       success: true,
@@ -23,9 +26,12 @@ describe('Mobile PasswordResetPage', () => {
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
       providers: [
         provideRouter([]),
+        provideKraakI18n(),
         { provide: MobileAuthService, useValue: authService },
       ],
     }).compileComponents();
+
+    await TestBed.inject(ApplicationInitStatus).donePromise;
   });
 
   it('should create', () => {
@@ -105,5 +111,23 @@ describe('Mobile PasswordResetPage', () => {
 
     const element = fixture.nativeElement as HTMLElement;
     expect(element.textContent).toContain('email de réinitialisation');
+  });
+
+  it('Given English is selected, when password reset renders, then the recovery chrome is translated', async () => {
+    const i18n = TestBed.inject(KraakI18nService);
+    await i18n.setLocale('en-GB');
+
+    const fixture = TestBed.createComponent(PasswordResetPage);
+
+    fixture.detectChanges();
+    await fixture.whenStable();
+    fixture.detectChanges();
+
+    const text = (fixture.nativeElement.textContent ?? '').replace(/\s+/g, ' ');
+
+    expect(text).toContain('Security');
+    expect(text).toContain('Reset your password');
+    expect(text).toContain('Email address');
+    expect(text).toContain('Back to sign in');
   });
 });

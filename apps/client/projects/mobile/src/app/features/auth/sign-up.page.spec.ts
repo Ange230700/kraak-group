@@ -1,7 +1,8 @@
-import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { ApplicationInitStatus, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { provideRouter, Router } from '@angular/router';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { KraakI18nService, provideKraakI18n } from '../../../../../shared/i18n';
 import { MobileAuthService } from './mobile-auth.service';
 import SignUpPage from './sign-up.page';
 
@@ -11,6 +12,8 @@ describe('Mobile SignUpPage', () => {
   };
 
   beforeEach(async () => {
+    globalThis.window.localStorage.setItem('kraak:locale', 'fr-CI');
+
     authService.signUp.mockReset();
     authService.signUp.mockResolvedValue({
       message:
@@ -25,9 +28,12 @@ describe('Mobile SignUpPage', () => {
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
       providers: [
         provideRouter([]),
+        provideKraakI18n(),
         { provide: MobileAuthService, useValue: authService },
       ],
     }).compileComponents();
+
+    await TestBed.inject(ApplicationInitStatus).donePromise;
   });
 
   it('should create', () => {
@@ -180,5 +186,27 @@ describe('Mobile SignUpPage', () => {
 
     const element = fixture.nativeElement as HTMLElement;
     expect(element.textContent).toContain('Vérifiez votre email');
+  });
+
+  it('Given English is selected, when sign-up renders, then the account creation chrome is translated', async () => {
+    const i18n = TestBed.inject(KraakI18nService);
+    await i18n.setLocale('en-GB');
+
+    const fixture = TestBed.createComponent(SignUpPage);
+
+    fixture.detectChanges();
+    await fixture.whenStable();
+    fixture.detectChanges();
+
+    const text = (fixture.nativeElement.textContent ?? '').replace(/\s+/g, ' ');
+
+    expect(text).toContain('Account');
+    expect(text).toContain('Create an account');
+    expect(text).toContain('First name');
+    expect(text).toContain('Last name');
+    expect(text).toContain('Email address');
+    expect(text).toContain('Password');
+    expect(text).toContain('Phone');
+    expect(text).toContain('Sign in');
   });
 });

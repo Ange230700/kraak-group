@@ -1,3 +1,4 @@
+import { apiMessage, type ApiMessageValue } from '../i18n/api-message';
 import type {
   CreateArticleDto,
   CreateCategoryDto,
@@ -10,18 +11,7 @@ import {
   isObjectPayload,
   readTrimmedString,
 } from '../shared/dto-validation.utils';
-
-type ValidationSuccess<T> = {
-  valid: true;
-  data: T;
-};
-
-type ValidationFailure = {
-  valid: false;
-  errors: string[];
-};
-
-type ValidationResult<T> = ValidationSuccess<T> | ValidationFailure;
+import type { ValidationResult } from '../shared/validation-result.type';
 
 const publicationStatuses = new Set(['draft', 'published', 'archived']);
 
@@ -73,7 +63,7 @@ function readStringArray(value: unknown): string[] {
 function assignRequiredStringUpdate(
   body: Record<string, unknown>,
   sourceKey: Extract<keyof UpdateArticleDto, string>,
-  errors: string[],
+  errors: ApiMessageValue[],
   updates: UpdateArticleDto,
 ): void {
   if (!(sourceKey in body)) {
@@ -83,7 +73,9 @@ function assignRequiredStringUpdate(
   const value = readTrimmedString(body[sourceKey]);
 
   if (value.length === 0) {
-    errors.push(`Le champ ${sourceKey} est requis.`);
+    errors.push(
+      apiMessage('validation.requiredField', { field: String(sourceKey) }),
+    );
     return;
   }
 
@@ -92,7 +84,7 @@ function assignRequiredStringUpdate(
 
 function assignStatusUpdate(
   body: Record<string, unknown>,
-  errors: string[],
+  errors: ApiMessageValue[],
   updates: UpdateArticleDto,
 ): void {
   if (!('status' in body)) {
@@ -102,7 +94,7 @@ function assignStatusUpdate(
   const status = readTrimmedString(body['status']);
 
   if (publicationStatuses.has(status) === false) {
-    errors.push('Le champ status est invalide.');
+    errors.push(apiMessage('validation.invalidField', { field: 'status' }));
     return;
   }
 
@@ -112,7 +104,7 @@ function assignStatusUpdate(
 function assignArrayUpdate(
   body: Record<string, unknown>,
   field: 'categoryIds' | 'tagIds',
-  errors: string[],
+  errors: ApiMessageValue[],
   updates: UpdateArticleDto,
 ): void {
   if (!(field in body)) {
@@ -122,7 +114,7 @@ function assignArrayUpdate(
   const values = readStringArray(body[field]);
 
   if (values.length === 0) {
-    errors.push(`Le champ ${field} doit contenir au moins une valeur.`);
+    errors.push(apiMessage('validation.nonEmptyArrayField', { field }));
     return;
   }
 
@@ -143,7 +135,7 @@ function assignNullableStringUpdate(
 
 function assignNullableUrlUpdate(
   body: Record<string, unknown>,
-  errors: string[],
+  errors: ApiMessageValue[],
   updates: UpdateArticleDto,
 ): void {
   if (!('coverImageUrl' in body)) {
@@ -157,7 +149,9 @@ function assignNullableUrlUpdate(
 
   const { value, isInvalid } = readNullableUrl(body['coverImageUrl']);
   if (isInvalid) {
-    errors.push('Le champ coverImageUrl est invalide.');
+    errors.push(
+      apiMessage('validation.invalidField', { field: 'coverImageUrl' }),
+    );
     return;
   }
 
@@ -166,7 +160,7 @@ function assignNullableUrlUpdate(
 
 function assignNullableDateUpdate(
   body: Record<string, unknown>,
-  errors: string[],
+  errors: ApiMessageValue[],
   updates: UpdateArticleDto,
 ): void {
   if (!('publishedAt' in body)) {
@@ -180,7 +174,9 @@ function assignNullableDateUpdate(
 
   const { value, isInvalid } = readNullableDate(body['publishedAt']);
   if (isInvalid) {
-    errors.push('Le champ publishedAt est invalide.');
+    errors.push(
+      apiMessage('validation.invalidField', { field: 'publishedAt' }),
+    );
     return;
   }
 
@@ -190,16 +186,18 @@ function assignNullableDateUpdate(
 function validateRequiredText(
   value: string,
   fieldName: Extract<keyof CreateArticleDto, string>,
-  errors: string[],
+  errors: ApiMessageValue[],
 ): void {
   if (!value) {
-    errors.push(`Le champ ${fieldName} est requis.`);
+    errors.push(
+      apiMessage('validation.requiredField', { field: String(fieldName) }),
+    );
   }
 }
 
-function validateStatus(value: string, errors: string[]): void {
+function validateStatus(value: string, errors: ApiMessageValue[]): void {
   if (!publicationStatuses.has(value)) {
-    errors.push('Le champ status est invalide.');
+    errors.push(apiMessage('validation.invalidField', { field: 'status' }));
   }
 }
 
@@ -209,7 +207,7 @@ export function validateCreateArticlePayload(
   if (!isObjectPayload(body)) {
     return {
       valid: false,
-      errors: ['Corps de requête invalide.'],
+      errors: [apiMessage('validation.invalidBody')],
     };
   }
 
@@ -230,7 +228,7 @@ export function validateCreateArticlePayload(
   const categoryIds = readStringArray(body['categoryIds']);
   const tagIds = readStringArray(body['tagIds']);
 
-  const errors: string[] = [];
+  const errors: ApiMessageValue[] = [];
 
   validateRequiredText(slug, 'slug', errors);
   validateRequiredText(title, 'title', errors);
@@ -240,19 +238,31 @@ export function validateCreateArticlePayload(
   validateStatus(status, errors);
 
   if (categoryIds.length === 0) {
-    errors.push('Le champ categoryIds doit contenir au moins une valeur.');
+    errors.push(
+      apiMessage('validation.nonEmptyArrayField', {
+        field: 'categoryIds',
+      }),
+    );
   }
 
   if (tagIds.length === 0) {
-    errors.push('Le champ tagIds doit contenir au moins une valeur.');
+    errors.push(
+      apiMessage('validation.nonEmptyArrayField', {
+        field: 'tagIds',
+      }),
+    );
   }
 
   if (isCoverImageUrlInvalid) {
-    errors.push('Le champ coverImageUrl est invalide.');
+    errors.push(
+      apiMessage('validation.invalidField', { field: 'coverImageUrl' }),
+    );
   }
 
   if (isPublishedAtInvalid) {
-    errors.push('Le champ publishedAt est invalide.');
+    errors.push(
+      apiMessage('validation.invalidField', { field: 'publishedAt' }),
+    );
   }
 
   if (errors.length > 0) {
@@ -284,12 +294,12 @@ export function validateUpdateArticlePayload(
   if (!isObjectPayload(body)) {
     return {
       valid: false,
-      errors: ['Corps de requête invalide.'],
+      errors: [apiMessage('validation.invalidBody')],
     };
   }
 
   const updates: UpdateArticleDto = {};
-  const errors: string[] = [];
+  const errors: ApiMessageValue[] = [];
 
   assignRequiredStringUpdate(body, 'slug', errors, updates);
   assignRequiredStringUpdate(body, 'title', errors, updates);
@@ -311,7 +321,7 @@ export function validateUpdateArticlePayload(
   if (Object.keys(updates).length === 0) {
     return {
       valid: false,
-      errors: ['Au moins un champ doit être fourni pour la mise à jour.'],
+      errors: [apiMessage('validation.updateRequiresField')],
     };
   }
 
@@ -339,28 +349,28 @@ function validateTaxonomyCreatePayload(
   if (!isObjectPayload(body)) {
     return {
       valid: false,
-      errors: ['Corps de requête invalide.'],
+      errors: [apiMessage('validation.invalidBody')],
     };
   }
 
   const slug = readTrimmedString(body['slug']);
   const label = readTrimmedString(body['label']);
   const payload: Partial<CreateCategoryDto> = { slug, label };
-  const errors: string[] = [];
+  const errors: ApiMessageValue[] = [];
 
   if (slug.length === 0) {
-    errors.push('Le champ slug est requis.');
+    errors.push(apiMessage('validation.requiredField', { field: 'slug' }));
   }
 
   if (label.length === 0) {
-    errors.push('Le champ label est requis.');
+    errors.push(apiMessage('validation.requiredField', { field: 'label' }));
   }
 
   if (options.allowDescription) {
     payload.description =
       'description' in body ? readNullableString(body['description']) : null;
   } else if ('description' in body) {
-    errors.push('Le champ description n’est pas autorisé pour un tag.');
+    errors.push(apiMessage('articles.tagDescriptionForbidden'));
   }
 
   if (errors.length > 0) {
@@ -388,17 +398,17 @@ function validateTaxonomyUpdatePayload(
   if (!isObjectPayload(body)) {
     return {
       valid: false,
-      errors: ['Corps de requête invalide.'],
+      errors: [apiMessage('validation.invalidBody')],
     };
   }
 
   const updates: Record<string, string | null> = {};
-  const errors: string[] = [];
+  const errors: ApiMessageValue[] = [];
 
   if ('slug' in body) {
     const slug = readTrimmedString(body['slug']);
     if (slug.length === 0) {
-      errors.push('Le champ slug est requis.');
+      errors.push(apiMessage('validation.requiredField', { field: 'slug' }));
     } else {
       updates['slug'] = slug;
     }
@@ -407,7 +417,7 @@ function validateTaxonomyUpdatePayload(
   if ('label' in body) {
     const label = readTrimmedString(body['label']);
     if (label.length === 0) {
-      errors.push('Le champ label est requis.');
+      errors.push(apiMessage('validation.requiredField', { field: 'label' }));
     } else {
       updates['label'] = label;
     }
@@ -416,7 +426,7 @@ function validateTaxonomyUpdatePayload(
   if (options.allowDescription && 'description' in body) {
     updates['description'] = readNullableString(body['description']);
   } else if (!options.allowDescription && 'description' in body) {
-    errors.push('Le champ description n’est pas autorisé pour un tag.');
+    errors.push(apiMessage('articles.tagDescriptionForbidden'));
   }
 
   if (errors.length > 0) {
@@ -426,7 +436,7 @@ function validateTaxonomyUpdatePayload(
   if (Object.keys(updates).length === 0) {
     return {
       valid: false,
-      errors: ['Au moins un champ doit être fourni pour la mise à jour.'],
+      errors: [apiMessage('validation.updateRequiresField')],
     };
   }
 

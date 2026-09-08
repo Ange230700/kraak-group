@@ -30,51 +30,56 @@
       <p
         class="text-brand-blue text-sm font-semibold tracking-[0.2em] uppercase"
       >
-        Page introuvable
+        {{ 'web.status.notFound.eyebrow' | kraakTranslate }}
       </p>
       <h1
         class="text-brand-navy mt-5 text-5xl font-semibold sm:text-6xl lg:text-7xl"
       >
-        Oups.
+        {{ 'web.status.notFound.title' | kraakTranslate }}
       </h1>
       <p class="text-brand-navy mx-auto mt-6 max-w-2xl text-lg leading-8">
-        La page que vous cherchez n'existe pas, a été déplacée ou n'est plus
-        disponible. Nous vous ramenons vers une prochaine étape utile.
+        {{ 'web.status.notFound.description' | kraakTranslate }}
       </p>
 
       <div class="mt-10 flex flex-col justify-center gap-3 sm:flex-row">
         <a
           pButton
           [routerLink]="'home' | localizedPublicPath"
-          label="Retour à l'accueil"
+          [label]="'web.status.common.homeLabel' | kraakTranslate"
           icon="pi pi-home"
           size="large"
           class="kr-button-primary"
-          aria-label="Retour à la page d'accueil"
+          [attr.aria-label]="'web.status.common.homeAria' | kraakTranslate"
         >
-          <span class="sr-only">Retour à la page d'accueil</span>
+          <span class="sr-only">
+            {{ 'web.status.common.homeAria' | kraakTranslate }}
+          </span>
         </a>
         <a
           pButton
           [routerLink]="'faq' | localizedPublicPath"
-          label="Consulter l'aide"
+          [label]="'web.status.notFound.helpLabel' | kraakTranslate"
           icon="pi pi-question-circle"
           size="large"
           class="kr-button-ghost"
-          aria-label="Consulter la FAQ KRAAK"
+          [attr.aria-label]="'web.status.notFound.helpAria' | kraakTranslate"
         >
-          <span class="sr-only">Consulter la FAQ KRAAK</span>
+          <span class="sr-only">
+            {{ 'web.status.notFound.helpAria' | kraakTranslate }}
+          </span>
         </a>
         <a
           pButton
           [routerLink]="'contact' | localizedPublicPath"
-          label="Nous contacter"
+          [label]="'web.status.common.contactLabel' | kraakTranslate"
           icon="pi pi-envelope"
           size="large"
           class="kr-button-ghost"
-          aria-label="Contacter KRAAK"
+          [attr.aria-label]="'web.status.common.contactAria' | kraakTranslate"
         >
-          <span class="sr-only">Contacter KRAAK</span>
+          <span class="sr-only">
+            {{ 'web.status.common.contactAria' | kraakTranslate }}
+          </span>
         </a>
       </div>
 
@@ -84,11 +89,10 @@
           class="rounded-card bg-neutral-50 p-5 transition-all hover:bg-neutral-100 hover:shadow-md"
         >
           <h2 class="text-brand-navy text-base font-semibold">
-            Reprendre depuis l'accueil
+            {{ 'web.status.notFound.cardHomeTitle' | kraakTranslate }}
           </h2>
           <p class="text-brand-navy mt-2 text-sm leading-6">
-            Retrouvez les points d'entrée principaux selon votre profil et votre
-            objectif.
+            {{ 'web.status.notFound.cardHomeDescription' | kraakTranslate }}
           </p>
         </a>
         <a
@@ -96,11 +100,10 @@
           class="rounded-card bg-neutral-50 p-5 transition-all hover:bg-neutral-100 hover:shadow-md"
         >
           <h2 class="text-brand-navy text-base font-semibold">
-            Consulter l'aide
+            {{ 'web.status.notFound.cardHelpTitle' | kraakTranslate }}
           </h2>
           <p class="text-brand-navy mt-2 text-sm leading-6">
-            FAQ, conseils et orientation: trouvez la réponse à vos questions
-            fréquentes.
+            {{ 'web.status.notFound.cardHelpDescription' | kraakTranslate }}
           </p>
         </a>
         <a
@@ -108,11 +111,12 @@
           class="rounded-card bg-neutral-50 p-5 transition-all hover:bg-neutral-100 hover:shadow-md"
         >
           <h2 class="text-brand-navy text-base font-semibold">
-            Demander une orientation
+            {{ 'web.status.notFound.cardOrientationTitle' | kraakTranslate }}
           </h2>
           <p class="text-brand-navy mt-2 text-sm leading-6">
-            Si vous hésitez, nous vous aidons à identifier la bonne prochaine
-            étape.
+            {{
+              'web.status.notFound.cardOrientationDescription' | kraakTranslate
+            }}
           </p>
         </a>
       </div>

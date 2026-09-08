@@ -55,12 +55,14 @@ describe('Web routes', () => {
       const frenchChildPaths = routePathsOf(frenchRoute?.children ?? []);
 
       expect(frenchChildPaths).toEqual([
+        'blog/:slug',
         '',
         'a-propos',
         'services',
         'faq',
         'programmes',
         'ressources',
+        'blog',
         'contact',
         'mentions-legales',
         'politique-de-confidentialite',
@@ -80,12 +82,14 @@ describe('Web routes', () => {
       const englishChildPaths = routePathsOf(englishRoute?.children ?? []);
 
       expect(englishChildPaths).toEqual([
+        'blog/:slug',
         '',
         'about',
         'services',
         'faq',
         'programs',
         'resources',
+        'blog',
         'contact',
         'legal-notice',
         'privacy-policy',
@@ -106,7 +110,7 @@ describe('Web routes', () => {
         expect(publicRoute?.resolve?.['locale']).toBeDefined();
 
         for (const childRoute of publicRoute?.children ?? []) {
-          if (childRoute.path === '**') {
+          if (childRoute.path === '**' || childRoute.path === 'blog/:slug') {
             continue;
           }
 
@@ -117,13 +121,36 @@ describe('Web routes', () => {
       }
     });
 
+    it('When inspecting localized Blog article routes Then dynamic articles preserve locale ownership without static SEO metadata', () => {
+      const builtRoutes = buildRoutes({
+        includeParticipantArea: false,
+      });
+
+      for (const [localePath, locale] of [
+        ['fr', 'fr-CI'],
+        ['en', 'en-GB'],
+      ] as const) {
+        const articleRoute = localeRoute(
+          builtRoutes,
+          localePath,
+        )?.children?.find((route) => route.path === 'blog/:slug');
+
+        expect(articleRoute).toBeDefined();
+        expect(articleRoute?.data?.['locale']).toBe(locale);
+        expect(articleRoute?.data?.['pageId']).toBe('blog');
+        expect(articleRoute?.title).toBeUndefined();
+        expect(articleRoute?.data?.['seo']).toBeUndefined();
+        expect(articleRoute?.loadComponent).toBeDefined();
+      }
+    });
+
     it('Given the approved English homepage, When inspecting English routes, Then only the homepage is indexable', () => {
       const englishRoute = localeRoute(
         buildRoutes({ includeParticipantArea: false }),
         'en',
       );
       const pageRoutes = (englishRoute?.children ?? []).filter(
-        (route) => route.path !== '**',
+        (route) => route.path !== '**' && route.path !== 'blog/:slug',
       );
       const homeRoute = pageRoutes.find((route) => route.path === '');
 
@@ -297,7 +324,7 @@ describe('Web routes', () => {
       for (const localePath of ['fr', 'en'] as const) {
         for (const childRoute of localeRoute(builtRoutes, localePath)
           ?.children ?? []) {
-          if (childRoute.path !== '**') {
+          if (childRoute.path !== '**' && childRoute.path !== 'blog/:slug') {
             angularPaths.add(
               childRoute.path ? `${localePath}/${childRoute.path}` : localePath,
             );

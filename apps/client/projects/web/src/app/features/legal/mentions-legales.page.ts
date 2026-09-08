@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
+import { KraakTranslatePipe } from '../../../../../shared/i18n';
 import { CtaBanner } from '../../shared/cta-banner/cta-banner.component';
 import {
   CONTACT_EMAIL,
@@ -19,6 +20,7 @@ import { LocalizedPublicPathPipe } from '../../routing/localized-public-path.pip
     RouterLink,
     PublicConversionTrackingDirective,
     LocalizedPublicPathPipe,
+    KraakTranslatePipe,
   ],
   templateUrl: './mentions-legales.page.html',
 })

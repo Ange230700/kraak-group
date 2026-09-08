@@ -9,12 +9,13 @@
         <p
           class="text-brand-blue text-xs font-semibold tracking-[0.3em] uppercase"
         >
-          Administration
+          {{ 'web.admin.programmes.header.eyebrow' | kraakTranslate }}
         </p>
-        <h1 class="mt-2 text-3xl font-bold lg:text-4xl">Programmes</h1>
+        <h1 class="mt-2 text-3xl font-bold lg:text-4xl">
+          {{ 'web.admin.programmes.header.title' | kraakTranslate }}
+        </h1>
         <p class="mt-2 text-neutral-600">
-          Gérez les programmes KRAAK : création, modification, statut de
-          publication.
+          {{ 'web.admin.programmes.header.description' | kraakTranslate }}
         </p>
       </div>
       <div class="flex gap-3">
@@ -22,18 +23,22 @@
           pButton
           routerLink="/admin/dashboard"
           icon="pi pi-arrow-left"
-          label="Tableau de bord"
+          [label]="'web.admin.programmes.header.backDashboard' | kraakTranslate"
           class="kr-button-ghost"
-          aria-label="Retour au tableau de bord"
+          [attr.aria-label]="
+            'web.admin.programmes.header.backDashboardAria' | kraakTranslate
+          "
         ></a>
         <button
           type="button"
           pButton
           icon="pi pi-plus"
-          label="Nouveau programme"
+          [label]="'web.admin.programmes.header.new' | kraakTranslate"
           class="kr-button-primary"
           (click)="openCreateForm()"
-          aria-label="Créer un nouveau programme"
+          [attr.aria-label]="
+            'web.admin.programmes.header.newAria' | kraakTranslate
+          "
         ></button>
       </div>
     </div>
@@ -63,7 +68,12 @@
     @if (showForm()) {
       <section class="rounded-card bg-brand-white mb-8 p-8 shadow-sm">
         <h2 class="mb-6 text-2xl font-bold">
-          {{ isEditing() ? 'Modifier le programme' : 'Nouveau programme' }}
+          {{
+            (isEditing()
+              ? 'web.admin.programmes.form.title.edit'
+              : 'web.admin.programmes.form.title.create'
+            ) | kraakTranslate
+          }}
         </h2>
 
         <form [formGroup]="form" (ngSubmit)="submitForm()" novalidate>
@@ -73,20 +83,28 @@
                 for="prog-slug"
                 class="text-sm font-semibold text-neutral-700"
               >
-                Slug <span class="text-red-500" aria-hidden="true">*</span>
+                {{
+                  'web.admin.programmes.form.fields.slug.label' | kraakTranslate
+                }}
+                <span class="text-red-500" aria-hidden="true">*</span>
               </label>
               <input
                 id="prog-slug"
                 type="text"
                 formControlName="slug"
                 class="focus:border-brand-blue rounded border border-neutral-300 px-3 py-2 text-sm focus:outline-none"
-                placeholder="ex : formation-leadership"
+                [placeholder]="
+                  'web.admin.programmes.form.fields.slug.placeholder'
+                    | kraakTranslate
+                "
                 aria-required="true"
               />
               @if (form.controls.slug.invalid && form.controls.slug.touched) {
                 <p class="text-sm text-red-600">
-                  Le slug est requis et ne doit contenir que des lettres
-                  minuscules, chiffres et tirets.
+                  {{
+                    'web.admin.programmes.form.fields.slug.validation'
+                      | kraakTranslate
+                  }}
                 </p>
               }
             </div>
@@ -96,18 +114,30 @@
                 for="prog-title"
                 class="text-sm font-semibold text-neutral-700"
               >
-                Titre <span class="text-red-500" aria-hidden="true">*</span>
+                {{
+                  'web.admin.programmes.form.fields.title.label'
+                    | kraakTranslate
+                }}
+                <span class="text-red-500" aria-hidden="true">*</span>
               </label>
               <input
                 id="prog-title"
                 type="text"
                 formControlName="title"
                 class="focus:border-brand-blue rounded border border-neutral-300 px-3 py-2 text-sm focus:outline-none"
-                placeholder="Titre du programme"
+                [placeholder]="
+                  'web.admin.programmes.form.fields.title.placeholder'
+                    | kraakTranslate
+                "
                 aria-required="true"
               />
               @if (form.controls.title.invalid && form.controls.title.touched) {
-                <p class="text-sm text-red-600">Le titre est requis.</p>
+                <p class="text-sm text-red-600">
+                  {{
+                    'web.admin.programmes.form.fields.title.validation'
+                      | kraakTranslate
+                  }}
+                </p>
               }
             </div>
 
@@ -116,20 +146,32 @@
                 for="prog-summary"
                 class="text-sm font-semibold text-neutral-700"
               >
-                Résumé <span class="text-red-500" aria-hidden="true">*</span>
+                {{
+                  'web.admin.programmes.form.fields.summary.label'
+                    | kraakTranslate
+                }}
+                <span class="text-red-500" aria-hidden="true">*</span>
               </label>
               <textarea
                 id="prog-summary"
                 formControlName="summary"
                 rows="2"
                 class="focus:border-brand-blue rounded border border-neutral-300 px-3 py-2 text-sm focus:outline-none"
-                placeholder="Résumé court visible sur la liste"
+                [placeholder]="
+                  'web.admin.programmes.form.fields.summary.placeholder'
+                    | kraakTranslate
+                "
                 aria-required="true"
               ></textarea>
               @if (
                 form.controls.summary.invalid && form.controls.summary.touched
               ) {
-                <p class="text-sm text-red-600">Le résumé est requis.</p>
+                <p class="text-sm text-red-600">
+                  {{
+                    'web.admin.programmes.form.fields.summary.validation'
+                      | kraakTranslate
+                  }}
+                </p>
               }
             </div>
 
@@ -138,7 +180,10 @@
                 for="prog-description"
                 class="text-sm font-semibold text-neutral-700"
               >
-                Description
+                {{
+                  'web.admin.programmes.form.fields.description.label'
+                    | kraakTranslate
+                }}
                 <span class="text-red-500" aria-hidden="true">*</span>
               </label>
               <textarea
@@ -146,14 +191,22 @@
                 formControlName="description"
                 rows="4"
                 class="focus:border-brand-blue rounded border border-neutral-300 px-3 py-2 text-sm focus:outline-none"
-                placeholder="Description complète du programme"
+                [placeholder]="
+                  'web.admin.programmes.form.fields.description.placeholder'
+                    | kraakTranslate
+                "
                 aria-required="true"
               ></textarea>
               @if (
                 form.controls.description.invalid &&
                 form.controls.description.touched
               ) {
-                <p class="text-sm text-red-600">La description est requise.</p>
+                <p class="text-sm text-red-600">
+                  {{
+                    'web.admin.programmes.form.fields.description.validation'
+                      | kraakTranslate
+                  }}
+                </p>
               }
             </div>
 
@@ -162,7 +215,11 @@
                 for="prog-status"
                 class="text-sm font-semibold text-neutral-700"
               >
-                Statut <span class="text-red-500" aria-hidden="true">*</span>
+                {{
+                  'web.admin.programmes.form.fields.status.label'
+                    | kraakTranslate
+                }}
+                <span class="text-red-500" aria-hidden="true">*</span>
               </label>
               <select
                 id="prog-status"
@@ -171,7 +228,9 @@
                 aria-required="true"
               >
                 @for (s of publicationStatuses; track s) {
-                  <option [value]="s">{{ s }}</option>
+                  <option [value]="s">
+                    {{ getPublicationStatusLabel(s) }}
+                  </option>
                 }
               </select>
             </div>
@@ -181,7 +240,10 @@
                 for="prog-visibility"
                 class="text-sm font-semibold text-neutral-700"
               >
-                Visibilité
+                {{
+                  'web.admin.programmes.form.fields.visibility.label'
+                    | kraakTranslate
+                }}
                 <span class="text-red-500" aria-hidden="true">*</span>
               </label>
               <select
@@ -191,7 +253,9 @@
                 aria-required="true"
               >
                 @for (v of programVisibilities; track v) {
-                  <option [value]="v">{{ v }}</option>
+                  <option [value]="v">
+                    {{ getProgramVisibilityLabel(v) }}
+                  </option>
                 }
               </select>
             </div>
@@ -203,26 +267,32 @@
               pButton
               icon="pi pi-check"
               [label]="
-                isEditing()
-                  ? 'Enregistrer les modifications'
-                  : 'Créer le programme'
+                (isEditing()
+                  ? 'web.admin.programmes.form.actions.saveChanges'
+                  : 'web.admin.programmes.form.actions.create'
+                ) | kraakTranslate
               "
               class="kr-button-primary"
               [disabled]="submitting()"
               [attr.aria-label]="
-                isEditing()
-                  ? 'Enregistrer les modifications'
-                  : 'Créer le programme'
+                (isEditing()
+                  ? 'web.admin.programmes.form.actions.saveChanges'
+                  : 'web.admin.programmes.form.actions.create'
+                ) | kraakTranslate
               "
             ></button>
             <button
               type="button"
               pButton
               icon="pi pi-times"
-              label="Annuler"
+              [label]="
+                'web.admin.programmes.form.actions.cancel' | kraakTranslate
+              "
               class="kr-button-ghost"
               (click)="cancelForm()"
-              aria-label="Annuler et fermer le formulaire"
+              [attr.aria-label]="
+                'web.admin.programmes.form.actions.cancelAria' | kraakTranslate
+              "
             ></button>
           </div>
         </form>
@@ -231,19 +301,25 @@
 
     @if (loading()) {
       <div class="rounded-card bg-brand-white p-8 text-center shadow-sm">
-        <p class="text-neutral-600">Chargement des programmes…</p>
+        <p class="text-neutral-600">
+          {{ 'web.admin.programmes.loading.message' | kraakTranslate }}
+        </p>
       </div>
     } @else if (programmes().length === 0) {
       <div class="rounded-card bg-brand-white p-8 text-center shadow-sm">
-        <p class="mb-4 text-neutral-600">Aucun programme pour le moment.</p>
+        <p class="mb-4 text-neutral-600">
+          {{ 'web.admin.programmes.empty.message' | kraakTranslate }}
+        </p>
         <button
           type="button"
           pButton
           icon="pi pi-plus"
-          label="Créer le premier programme"
+          [label]="'web.admin.programmes.empty.createFirst' | kraakTranslate"
           class="kr-button-primary"
           (click)="openCreateForm()"
-          aria-label="Créer le premier programme"
+          [attr.aria-label]="
+            'web.admin.programmes.empty.createFirstAria' | kraakTranslate
+          "
         ></button>
       </div>
     } @else {
@@ -251,14 +327,29 @@
         <table class="w-full text-sm">
           <thead>
             <tr class="border-b border-neutral-200 text-left">
-              <th class="px-4 py-3 font-semibold text-neutral-700">Titre</th>
-              <th class="px-4 py-3 font-semibold text-neutral-700">Slug</th>
-              <th class="px-4 py-3 font-semibold text-neutral-700">Statut</th>
               <th class="px-4 py-3 font-semibold text-neutral-700">
-                Visibilité
+                {{
+                  'web.admin.programmes.table.columns.title' | kraakTranslate
+                }}
+              </th>
+              <th class="px-4 py-3 font-semibold text-neutral-700">
+                {{ 'web.admin.programmes.table.columns.slug' | kraakTranslate }}
+              </th>
+              <th class="px-4 py-3 font-semibold text-neutral-700">
+                {{
+                  'web.admin.programmes.table.columns.status' | kraakTranslate
+                }}
+              </th>
+              <th class="px-4 py-3 font-semibold text-neutral-700">
+                {{
+                  'web.admin.programmes.table.columns.visibility'
+                    | kraakTranslate
+                }}
               </th>
               <th class="px-4 py-3 text-right font-semibold text-neutral-700">
-                Actions
+                {{
+                  'web.admin.programmes.table.columns.actions' | kraakTranslate
+                }}
               </th>
             </tr>
           </thead>
@@ -284,11 +375,11 @@
                         programme.status !== 'draft',
                     }"
                   >
-                    {{ programme.status }}
+                    {{ getPublicationStatusLabel(programme.status) }}
                   </span>
                 </td>
                 <td class="px-4 py-3 text-neutral-600">
-                  {{ programme.visibility }}
+                  {{ getProgramVisibilityLabel(programme.visibility) }}
                 </td>
                 <td class="px-4 py-3 text-right">
                   <div class="flex items-center justify-end gap-2">
@@ -296,23 +387,23 @@
                       type="button"
                       pButton
                       icon="pi pi-pencil"
-                      label="Modifier"
+                      [label]="
+                        'web.admin.programmes.actions.edit' | kraakTranslate
+                      "
                       class="kr-button-ghost text-xs"
                       (click)="openEditForm(programme)"
-                      [attr.aria-label]="
-                        'Modifier le programme ' + programme.title
-                      "
+                      [attr.aria-label]="getEditAriaLabel(programme)"
                     ></button>
                     <button
                       type="button"
                       pButton
                       icon="pi pi-trash"
-                      label="Supprimer"
+                      [label]="
+                        'web.admin.programmes.actions.delete' | kraakTranslate
+                      "
                       class="text-xs text-red-600"
                       (click)="deleteProgramme(programme)"
-                      [attr.aria-label]="
-                        'Supprimer le programme ' + programme.title
-                      "
+                      [attr.aria-label]="getDeleteAriaLabel(programme)"
                     ></button>
                   </div>
                 </td>

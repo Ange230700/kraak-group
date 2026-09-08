@@ -16,26 +16,42 @@ import { resolveApiBaseUrl } from '../../../core/runtime/runtime-config';
 import { WebAuthService } from '../../../core/auth/web-auth.service';
 import { UserFormStateService } from './user-form-state.service';
 
+import {
+  KraakI18nService,
+  KraakTranslatePipe,
+} from '../../../../../../shared/i18n';
 interface WizardStep {
-  label: string;
+  labelKey: string;
   icon: string;
   path: string;
 }
 
 const WIZARD_STEPS: WizardStep[] = [
-  { label: 'Informations de base', icon: 'pi-user', path: 'basic-information' },
   {
-    label: 'Informations pro',
+    labelKey: 'web.admin.users.create.steps.basicInformation',
+    icon: 'pi-user',
+    path: 'basic-information',
+  },
+  {
+    labelKey: 'web.admin.users.create.steps.businessInformation',
     icon: 'pi-briefcase',
     path: 'business-information',
   },
   {
-    label: 'Localisation',
+    labelKey: 'web.admin.users.create.steps.locationInformation',
     icon: 'pi-map-marker',
     path: 'location-information',
   },
-  { label: 'Autorisations', icon: 'pi-key', path: 'authorization' },
-  { label: 'Statut du compte', icon: 'pi-shield', path: 'account-status' },
+  {
+    labelKey: 'web.admin.users.create.steps.authorization',
+    icon: 'pi-key',
+    path: 'authorization',
+  },
+  {
+    labelKey: 'web.admin.users.create.steps.accountStatus',
+    icon: 'pi-shield',
+    path: 'account-status',
+  },
 ];
 
 @Component({
@@ -47,6 +63,7 @@ const WIZARD_STEPS: WizardStep[] = [
     RouterOutlet,
     ButtonDirective,
     Message,
+    KraakTranslatePipe,
   ],
   templateUrl: './admin-user-create-layout.page.html',
 })
@@ -56,7 +73,9 @@ export default class AdminUserCreateLayoutPage {
   private readonly messageService = inject(MessageService);
   readonly formState = inject(UserFormStateService);
 
+  private readonly i18n = inject(KraakI18nService);
   private readonly usersClient = createApiClient({
+    getLocale: () => this.i18n.locale(),
     baseUrl: resolveApiBaseUrl(environment.apiBaseUrl),
     getAuthToken: () => this.authService.currentSession()?.accessToken ?? null,
   }).users;
@@ -89,13 +108,17 @@ export default class AdminUserCreateLayoutPage {
 
     if (!this.formState.isStep1Valid() || !this.formState.isStep2Valid()) {
       this.errorMessage.set(
-        'Veuillez compléter toutes les étapes obligatoires avant de soumettre.',
+        this.i18n.translate(
+          'web.admin.users.create.validation.incompleteSteps',
+        ),
       );
       return;
     }
     if (!state.sendInvitation) {
       this.errorMessage.set(
-        "L'option d'envoi de l'invitation est obligatoire pour créer un utilisateur.",
+        this.i18n.translate(
+          'web.admin.users.create.validation.invitationRequired',
+        ),
       );
       return;
     }
@@ -118,8 +141,13 @@ export default class AdminUserCreateLayoutPage {
       this.messageService.add({
         key: 'app-feedback',
         severity: 'success',
-        summary: 'Invitation envoyée',
-        detail: `L'invitation a été envoyée à ${payload.email}.`,
+        summary: this.i18n.translate(
+          'web.admin.users.create.feedback.successSummary',
+        ),
+        detail: this.i18n.translate(
+          'web.admin.users.create.feedback.successDetail',
+          { email: payload.email },
+        ),
       });
       await this.router.navigate(['/admin/utilisateurs/list']);
     } catch (err) {
@@ -128,7 +156,7 @@ export default class AdminUserCreateLayoutPage {
         err,
       );
       this.errorMessage.set(
-        "Impossible d'envoyer l'invitation. Vérifiez les données et réessayez.",
+        this.i18n.translate('web.admin.users.create.feedback.failure'),
       );
     } finally {
       this.submitting.set(false);

@@ -1,4 +1,5 @@
-import { Module } from '@nestjs/common';
+import { APP_FILTER } from '@nestjs/core';
+import { MiddlewareConsumer, Module, type NestModule } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
@@ -15,6 +16,10 @@ import { ServicesModule } from './services/services.module';
 import { SupabaseModule } from './supabase/supabase.module';
 import { SupportModule } from './support/support.module';
 import { UsersModule } from './users/users.module';
+import { ApiLocaleMiddleware } from './i18n/api-locale-context';
+import { ApiI18nModule } from './i18n/api-i18n.module';
+
+import { LocalizedHttpExceptionFilter } from './i18n/localized-http-exception.filter';
 
 @Module({
   imports: [
@@ -22,6 +27,7 @@ import { UsersModule } from './users/users.module';
       isGlobal: true,
       envFilePath: resolveApiEnvFilePaths(process.env['NODE_ENV']),
     }),
+    ApiI18nModule,
     SupabaseModule,
     AuthModule,
     CmsModule,
@@ -36,6 +42,16 @@ import { UsersModule } from './users/users.module';
     UsersModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [
+    AppService,
+    {
+      provide: APP_FILTER,
+      useClass: LocalizedHttpExceptionFilter,
+    },
+  ],
 })
-export class AppModule {}
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer): void {
+    consumer.apply(ApiLocaleMiddleware).forRoutes('*');
+  }
+}

@@ -42,10 +42,16 @@ describe('cms.dto validators', () => {
     expect(result.valid).toBe(false);
     expect((result as { errors: string[] }).errors).toEqual(
       expect.arrayContaining([
-        'Le champ name est requis.',
-        'Le champ logoUrl est requis et doit être une URL valide.',
-        'Le champ sortOrder doit être un entier positif ou nul.',
-        'Le champ status est invalide.',
+        { key: 'validation.requiredField', params: { field: 'name' } },
+        {
+          key: 'validation.requiredValidUrlField',
+          params: { field: 'logoUrl' },
+        },
+        {
+          key: 'validation.nonNegativeIntegerField',
+          params: { field: 'sortOrder' },
+        },
+        { key: 'validation.invalidField', params: { field: 'status' } },
       ]),
     );
   });
@@ -72,7 +78,7 @@ describe('cms.dto validators', () => {
 
     expect(result).toEqual({
       valid: false,
-      errors: ['Le payload de mise à jour doit contenir au moins un champ.'],
+      errors: [{ key: 'validation.updateRequiresField' }],
     });
   });
 
@@ -113,10 +119,13 @@ describe('cms.dto validators', () => {
     expect(result.valid).toBe(false);
     expect((result as { errors: string[] }).errors).toEqual(
       expect.arrayContaining([
-        'Le champ quote est requis.',
-        'Le champ authorName est requis.',
-        'Le champ avatarUrl est invalide.',
-        'Le champ sortOrder doit être un entier positif ou nul.',
+        { key: 'validation.requiredField', params: { field: 'quote' } },
+        { key: 'validation.requiredField', params: { field: 'authorName' } },
+        { key: 'validation.invalidField', params: { field: 'avatarUrl' } },
+        {
+          key: 'validation.nonNegativeIntegerField',
+          params: { field: 'sortOrder' },
+        },
       ]),
     );
   });
@@ -156,7 +165,12 @@ describe('cms.dto validators', () => {
 
     expect(result).toEqual({
       valid: false,
-      errors: ['Le champ logoUrl est requis et doit être une URL valide.'],
+      errors: [
+        {
+          key: 'validation.requiredValidUrlField',
+          params: { field: 'logoUrl' },
+        },
+      ],
     });
   });
 
@@ -165,7 +179,12 @@ describe('cms.dto validators', () => {
 
     expect(result).toEqual({
       valid: false,
-      errors: ['Le champ logoUrl est requis et doit être une URL valide.'],
+      errors: [
+        {
+          key: 'validation.requiredValidUrlField',
+          params: { field: 'logoUrl' },
+        },
+      ],
     });
   });
 
@@ -174,42 +193,42 @@ describe('cms.dto validators', () => {
 
     expect(result).toEqual({
       valid: false,
-      errors: ['Le payload de mise à jour doit contenir au moins un champ.'],
+      errors: [{ key: 'validation.updateRequiresField' }],
     });
   });
 
   it('rejects invalid request body shape for all CMS validators', () => {
     expect(validateCreateStatisticPayload(null)).toEqual({
       valid: false,
-      errors: ['Corps de requête invalide.'],
+      errors: [{ key: 'validation.invalidBody' }],
     });
     expect(validateUpdateStatisticPayload('invalid')).toEqual({
       valid: false,
-      errors: ['Corps de requête invalide.'],
+      errors: [{ key: 'validation.invalidBody' }],
     });
     expect(validateCreatePartnerPayload(undefined)).toEqual({
       valid: false,
-      errors: ['Corps de requête invalide.'],
+      errors: [{ key: 'validation.invalidBody' }],
     });
     expect(validateUpdatePartnerPayload(42)).toEqual({
       valid: false,
-      errors: ['Corps de requête invalide.'],
+      errors: [{ key: 'validation.invalidBody' }],
     });
     expect(validateCreateTestimonialPayload(null)).toEqual({
       valid: false,
-      errors: ['Corps de requête invalide.'],
+      errors: [{ key: 'validation.invalidBody' }],
     });
     expect(validateUpdateTestimonialPayload('invalid')).toEqual({
       valid: false,
-      errors: ['Corps de requête invalide.'],
+      errors: [{ key: 'validation.invalidBody' }],
     });
     expect(validateCreateTeamMemberPayload(null)).toEqual({
       valid: false,
-      errors: ['Corps de requête invalide.'],
+      errors: [{ key: 'validation.invalidBody' }],
     });
     expect(validateUpdateTeamMemberPayload('invalid')).toEqual({
       valid: false,
-      errors: ['Corps de requête invalide.'],
+      errors: [{ key: 'validation.invalidBody' }],
     });
   });
 
@@ -224,10 +243,13 @@ describe('cms.dto validators', () => {
     expect(result).toEqual({
       valid: false,
       errors: [
-        'Le champ label est requis.',
-        'Le champ value est requis.',
-        'Le champ sortOrder doit être un entier positif ou nul.',
-        'Le champ status est invalide.',
+        { key: 'validation.requiredField', params: { field: 'label' } },
+        { key: 'validation.requiredField', params: { field: 'value' } },
+        {
+          key: 'validation.nonNegativeIntegerField',
+          params: { field: 'sortOrder' },
+        },
+        { key: 'validation.invalidField', params: { field: 'status' } },
       ],
     });
   });
@@ -242,7 +264,12 @@ describe('cms.dto validators', () => {
 
     expect(result).toEqual({
       valid: false,
-      errors: ['Le champ sortOrder doit être un entier positif ou nul.'],
+      errors: [
+        {
+          key: 'validation.nonNegativeIntegerField',
+          params: { field: 'sortOrder' },
+        },
+      ],
     });
   });
 
@@ -251,7 +278,7 @@ describe('cms.dto validators', () => {
 
     expect(result).toEqual({
       valid: false,
-      errors: ['Le payload de mise à jour doit contenir au moins un champ.'],
+      errors: [{ key: 'validation.updateRequiresField' }],
     });
   });
 
@@ -287,7 +314,9 @@ describe('cms.dto validators', () => {
 
     expect(result).toEqual({
       valid: false,
-      errors: ['Le champ websiteUrl est invalide.'],
+      errors: [
+        { key: 'validation.invalidField', params: { field: 'websiteUrl' } },
+      ],
     });
   });
 
@@ -302,10 +331,13 @@ describe('cms.dto validators', () => {
     expect(result).toEqual({
       valid: false,
       errors: [
-        'Le champ name est requis.',
-        'Le champ websiteUrl est invalide.',
-        'Le champ sortOrder doit être un entier positif ou nul.',
-        'Le champ status est invalide.',
+        { key: 'validation.requiredField', params: { field: 'name' } },
+        { key: 'validation.invalidField', params: { field: 'websiteUrl' } },
+        {
+          key: 'validation.nonNegativeIntegerField',
+          params: { field: 'sortOrder' },
+        },
+        { key: 'validation.invalidField', params: { field: 'status' } },
       ],
     });
   });
@@ -338,7 +370,7 @@ describe('cms.dto validators', () => {
   it('rejects empty and malformed update testimonial payload', () => {
     expect(validateUpdateTestimonialPayload({})).toEqual({
       valid: false,
-      errors: ['Le payload de mise à jour doit contenir au moins un champ.'],
+      errors: [{ key: 'validation.updateRequiresField' }],
     });
 
     const result = validateUpdateTestimonialPayload({
@@ -352,11 +384,14 @@ describe('cms.dto validators', () => {
     expect(result).toEqual({
       valid: false,
       errors: [
-        'Le champ quote est requis.',
-        'Le champ authorName est requis.',
-        'Le champ avatarUrl est invalide.',
-        'Le champ sortOrder doit être un entier positif ou nul.',
-        'Le champ status est invalide.',
+        { key: 'validation.requiredField', params: { field: 'quote' } },
+        { key: 'validation.requiredField', params: { field: 'authorName' } },
+        { key: 'validation.invalidField', params: { field: 'avatarUrl' } },
+        {
+          key: 'validation.nonNegativeIntegerField',
+          params: { field: 'sortOrder' },
+        },
+        { key: 'validation.invalidField', params: { field: 'status' } },
       ],
     });
   });
@@ -374,12 +409,15 @@ describe('cms.dto validators', () => {
     expect(result).toEqual({
       valid: false,
       errors: [
-        'Le champ fullName est requis.',
-        'Le champ role est requis.',
-        'Le champ avatarUrl est invalide.',
-        'Le champ linkedinUrl est invalide.',
-        'Le champ sortOrder doit être un entier positif ou nul.',
-        'Le champ status est invalide.',
+        { key: 'validation.requiredField', params: { field: 'fullName' } },
+        { key: 'validation.requiredField', params: { field: 'role' } },
+        { key: 'validation.invalidField', params: { field: 'avatarUrl' } },
+        { key: 'validation.invalidField', params: { field: 'linkedinUrl' } },
+        {
+          key: 'validation.nonNegativeIntegerField',
+          params: { field: 'sortOrder' },
+        },
+        { key: 'validation.invalidField', params: { field: 'status' } },
       ],
     });
   });
@@ -418,12 +456,15 @@ describe('cms.dto validators', () => {
     expect(result).toEqual({
       valid: false,
       errors: [
-        'Le champ fullName est requis.',
-        'Le champ role est requis.',
-        'Le champ avatarUrl est invalide.',
-        'Le champ linkedinUrl est invalide.',
-        'Le champ sortOrder doit être un entier positif ou nul.',
-        'Le champ status est invalide.',
+        { key: 'validation.requiredField', params: { field: 'fullName' } },
+        { key: 'validation.requiredField', params: { field: 'role' } },
+        { key: 'validation.invalidField', params: { field: 'avatarUrl' } },
+        { key: 'validation.invalidField', params: { field: 'linkedinUrl' } },
+        {
+          key: 'validation.nonNegativeIntegerField',
+          params: { field: 'sortOrder' },
+        },
+        { key: 'validation.invalidField', params: { field: 'status' } },
       ],
     });
   });

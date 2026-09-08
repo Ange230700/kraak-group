@@ -86,6 +86,17 @@
       "legacyAliases": ["/ressources", "/resources"]
     },
     {
+      "id": "blog",
+      "component": "blog",
+      "seoPath": "blog",
+      "includeInSitemap": true,
+      "paths": {
+        "fr-CI": "/fr/blog",
+        "en-GB": "/en/blog"
+      },
+      "legacyAliases": ["/blog"]
+    },
+    {
       "id": "contact",
       "component": "contact",
       "seoPath": "contact",

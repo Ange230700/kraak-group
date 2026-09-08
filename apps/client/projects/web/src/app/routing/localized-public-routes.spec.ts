@@ -3,6 +3,7 @@ import { SOURCE_LOCALE, SUPPORTED_LOCALES } from '@kraak/domain';
 import {
   LOCALIZED_PUBLIC_LOCALES,
   LOCALIZED_PUBLIC_PAGES,
+  buildLocalizedBlogArticlePath,
   buildLocalizedPublicLocalePath,
   findLocalizedPublicRouteEntry,
   findLocalizedPublicRouteEntryByPath,
@@ -183,6 +184,23 @@ describe('Given the localized public route model', () => {
           expectedPath,
         );
       },
+    );
+  });
+
+  it('Given a localized Blog article with query and fragment, when another locale is requested, then the same article slug and suffix are preserved', () => {
+    expect(
+      buildLocalizedPublicLocalePath(
+        '/fr/blog/article-exemple?campaign=summer#details',
+        'en-GB',
+      ),
+    ).toBe('/en/blog/article-exemple?campaign=summer#details');
+
+    expect(
+      buildLocalizedPublicLocalePath('/en/blog/article-exemple', 'fr-CI'),
+    ).toBe('/fr/blog/article-exemple');
+
+    expect(buildLocalizedBlogArticlePath('article-exemple', 'en-GB')).toBe(
+      '/en/blog/article-exemple',
     );
   });
 

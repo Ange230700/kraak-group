@@ -1,9 +1,10 @@
-import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { ApplicationInitStatus, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import type { ParticipantProgramListItemDto } from '@kraak/contracts';
 import { MobileProgramsService } from './mobile-programs.service';
+import { KraakI18nService, provideKraakI18n } from '../../../../../shared/i18n';
 import ProgramListPage from './program-list.page';
 
 describe('Mobile ProgramListPage', () => {
@@ -35,6 +36,7 @@ describe('Mobile ProgramListPage', () => {
   };
 
   beforeEach(async () => {
+    globalThis.window.localStorage.setItem('kraak:locale', 'fr-CI');
     service = {
       listPrograms: vi.fn(),
     };
@@ -44,9 +46,11 @@ describe('Mobile ProgramListPage', () => {
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
       providers: [
         provideRouter([]),
+        provideKraakI18n(),
         { provide: MobileProgramsService, useValue: service },
       ],
     }).compileComponents();
+    await TestBed.inject(ApplicationInitStatus).donePromise;
   });
 
   it('should create', () => {
@@ -163,5 +167,30 @@ describe('Mobile ProgramListPage', () => {
         mockProgramListItem,
       ]);
     });
+  });
+
+  it('Given English locale, when programs render, then the page chrome and enrollment status are translated', async () => {
+    const i18n = TestBed.inject(KraakI18nService);
+    await i18n.setLocale('en-GB');
+
+    service.listPrograms.mockResolvedValue([mockProgramListItem]);
+
+    const fixture = TestBed.createComponent(ProgramListPage);
+    fixture.detectChanges();
+    await fixture.whenStable();
+    fixture.detectChanges();
+
+    const element = fixture.nativeElement as HTMLElement;
+    const content = element.textContent ?? '';
+
+    expect(content).toContain('Your learning paths');
+    expect(content).toContain("Explore the programmes you're enrolled in.");
+    expect(content).toContain('Status: Active');
+    expect(content).toContain('Progress: 0% (0/0 sessions)');
+    expect(content).toContain('View details');
+
+    // Business content remains unchanged until Layer 6.
+    expect(content).toContain('Programme test');
+    expect(content).toContain('Un programme de test');
   });
 });

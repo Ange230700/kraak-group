@@ -9,12 +9,13 @@
         <p
           class="text-brand-blue text-xs font-semibold tracking-[0.3em] uppercase"
         >
-          Administration
+          {{ 'web.admin.ressources.header.eyebrow' | kraakTranslate }}
         </p>
-        <h1 class="mt-2 text-3xl font-bold lg:text-4xl">Ressources</h1>
+        <h1 class="mt-2 text-3xl font-bold lg:text-4xl">
+          {{ 'web.admin.ressources.header.title' | kraakTranslate }}
+        </h1>
         <p class="mt-2 text-neutral-600">
-          Gérez les ressources KRAAK : création, modification, type et statut de
-          publication.
+          {{ 'web.admin.ressources.header.description' | kraakTranslate }}
         </p>
       </div>
       <div class="flex gap-3">
@@ -22,18 +23,22 @@
           pButton
           routerLink="/admin/dashboard"
           icon="pi pi-arrow-left"
-          label="Tableau de bord"
+          [label]="'web.admin.ressources.header.backDashboard' | kraakTranslate"
           class="kr-button-ghost"
-          aria-label="Retour au tableau de bord"
+          [attr.aria-label]="
+            'web.admin.ressources.header.backDashboardAria' | kraakTranslate
+          "
         ></a>
         <button
           type="button"
           pButton
           icon="pi pi-plus"
-          label="Nouvelle ressource"
+          [label]="'web.admin.ressources.header.new' | kraakTranslate"
           class="kr-button-primary"
           (click)="openCreateForm()"
-          aria-label="Créer une nouvelle ressource"
+          [attr.aria-label]="
+            'web.admin.ressources.header.newAria' | kraakTranslate
+          "
         ></button>
       </div>
     </div>
@@ -61,7 +66,12 @@
     @if (showForm()) {
       <section class="rounded-card bg-brand-white mb-8 p-8 shadow-sm">
         <h2 class="mb-6 text-2xl font-bold">
-          {{ isEditing() ? 'Modifier la ressource' : 'Nouvelle ressource' }}
+          {{
+            (isEditing()
+              ? 'web.admin.ressources.form.title.edit'
+              : 'web.admin.ressources.form.title.create'
+            ) | kraakTranslate
+          }}
         </h2>
 
         <form [formGroup]="form" (ngSubmit)="submitForm()" novalidate>
@@ -71,18 +81,30 @@
                 for="res-title"
                 class="text-sm font-semibold text-neutral-700"
               >
-                Titre <span class="text-red-500" aria-hidden="true">*</span>
+                {{
+                  'web.admin.ressources.form.fields.title.label'
+                    | kraakTranslate
+                }}
+                <span class="text-red-500" aria-hidden="true">*</span>
               </label>
               <input
                 id="res-title"
                 type="text"
                 formControlName="title"
                 class="focus:border-brand-blue rounded border border-neutral-300 px-3 py-2 text-sm focus:outline-none"
-                placeholder="Titre de la ressource"
+                [placeholder]="
+                  'web.admin.ressources.form.fields.title.placeholder'
+                    | kraakTranslate
+                "
                 aria-required="true"
               />
               @if (form.controls.title.invalid && form.controls.title.touched) {
-                <p class="text-sm text-red-600">Le titre est requis.</p>
+                <p class="text-sm text-red-600">
+                  {{
+                    'web.admin.ressources.form.fields.title.validation'
+                      | kraakTranslate
+                  }}
+                </p>
               }
             </div>
 
@@ -90,14 +112,21 @@
               <label
                 for="res-description"
                 class="text-sm font-semibold text-neutral-700"
-                >Description</label
               >
+                {{
+                  'web.admin.ressources.form.fields.description.label'
+                    | kraakTranslate
+                }}
+              </label>
               <textarea
                 id="res-description"
                 formControlName="description"
                 rows="3"
                 class="focus:border-brand-blue rounded border border-neutral-300 px-3 py-2 text-sm focus:outline-none"
-                placeholder="Description de la ressource (optionnelle)"
+                [placeholder]="
+                  'web.admin.ressources.form.fields.description.placeholder'
+                    | kraakTranslate
+                "
               ></textarea>
             </div>
 
@@ -106,7 +135,10 @@
                 for="res-type"
                 class="text-sm font-semibold text-neutral-700"
               >
-                Type <span class="text-red-500" aria-hidden="true">*</span>
+                {{
+                  'web.admin.ressources.form.fields.type.label' | kraakTranslate
+                }}
+                <span class="text-red-500" aria-hidden="true">*</span>
               </label>
               <select
                 id="res-type"
@@ -115,7 +147,9 @@
                 aria-required="true"
               >
                 @for (t of resourceTypes; track t) {
-                  <option [value]="t">{{ t }}</option>
+                  <option [value]="t">
+                    {{ getResourceTypeLabel(t) }}
+                  </option>
                 }
               </select>
             </div>
@@ -125,7 +159,11 @@
                 for="res-theme"
                 class="text-sm font-semibold text-neutral-700"
               >
-                Thème <span class="text-red-500" aria-hidden="true">*</span>
+                {{
+                  'web.admin.ressources.form.fields.theme.label'
+                    | kraakTranslate
+                }}
+                <span class="text-red-500" aria-hidden="true">*</span>
               </label>
               <select
                 id="res-theme"
@@ -134,7 +172,9 @@
                 aria-required="true"
               >
                 @for (th of resourceThemes; track th) {
-                  <option [value]="th">{{ th }}</option>
+                  <option [value]="th">
+                    {{ getResourceThemeLabel(th) }}
+                  </option>
                 }
               </select>
             </div>
@@ -144,7 +184,11 @@
                 for="res-audience"
                 class="text-sm font-semibold text-neutral-700"
               >
-                Audience <span class="text-red-500" aria-hidden="true">*</span>
+                {{
+                  'web.admin.ressources.form.fields.audience.label'
+                    | kraakTranslate
+                }}
+                <span class="text-red-500" aria-hidden="true">*</span>
               </label>
               <select
                 id="res-audience"
@@ -153,7 +197,9 @@
                 aria-required="true"
               >
                 @for (a of resourceAudiences; track a) {
-                  <option [value]="a">{{ a }}</option>
+                  <option [value]="a">
+                    {{ getResourceAudienceLabel(a) }}
+                  </option>
                 }
               </select>
             </div>
@@ -163,7 +209,11 @@
                 for="res-status"
                 class="text-sm font-semibold text-neutral-700"
               >
-                Statut <span class="text-red-500" aria-hidden="true">*</span>
+                {{
+                  'web.admin.ressources.form.fields.status.label'
+                    | kraakTranslate
+                }}
+                <span class="text-red-500" aria-hidden="true">*</span>
               </label>
               <select
                 id="res-status"
@@ -172,7 +222,9 @@
                 aria-required="true"
               >
                 @for (s of publicationStatuses; track s) {
-                  <option [value]="s">{{ s }}</option>
+                  <option [value]="s">
+                    {{ getPublicationStatusLabel(s) }}
+                  </option>
                 }
               </select>
             </div>
@@ -181,14 +233,20 @@
               <label
                 for="res-url"
                 class="text-sm font-semibold text-neutral-700"
-                >URL</label
               >
+                {{
+                  'web.admin.ressources.form.fields.url.label' | kraakTranslate
+                }}
+              </label>
               <input
                 id="res-url"
                 type="url"
                 formControlName="url"
                 class="focus:border-brand-blue rounded border border-neutral-300 px-3 py-2 text-sm focus:outline-none"
-                placeholder="https://... (optionnel)"
+                [placeholder]="
+                  'web.admin.ressources.form.fields.url.placeholder'
+                    | kraakTranslate
+                "
               />
             </div>
           </div>
@@ -199,26 +257,32 @@
               pButton
               icon="pi pi-check"
               [label]="
-                isEditing()
-                  ? 'Enregistrer les modifications'
-                  : 'Créer la ressource'
+                (isEditing()
+                  ? 'web.admin.ressources.form.actions.saveChanges'
+                  : 'web.admin.ressources.form.actions.create'
+                ) | kraakTranslate
               "
               class="kr-button-primary"
               [disabled]="submitting()"
               [attr.aria-label]="
-                isEditing()
-                  ? 'Enregistrer les modifications'
-                  : 'Créer la ressource'
+                (isEditing()
+                  ? 'web.admin.ressources.form.actions.saveChanges'
+                  : 'web.admin.ressources.form.actions.create'
+                ) | kraakTranslate
               "
             ></button>
             <button
               type="button"
               pButton
               icon="pi pi-times"
-              label="Annuler"
+              [label]="
+                'web.admin.ressources.form.actions.cancel' | kraakTranslate
+              "
               class="kr-button-ghost"
               (click)="cancelForm()"
-              aria-label="Annuler et fermer le formulaire"
+              [attr.aria-label]="
+                'web.admin.ressources.form.actions.cancelAria' | kraakTranslate
+              "
             ></button>
           </div>
         </form>
@@ -227,19 +291,25 @@
 
     @if (loading()) {
       <div class="rounded-card bg-brand-white p-8 text-center shadow-sm">
-        <p class="text-neutral-600">Chargement des ressources…</p>
+        <p class="text-neutral-600">
+          {{ 'web.admin.ressources.loading.message' | kraakTranslate }}
+        </p>
       </div>
     } @else if (ressources().length === 0) {
       <div class="rounded-card bg-brand-white p-8 text-center shadow-sm">
-        <p class="mb-4 text-neutral-600">Aucune ressource pour le moment.</p>
+        <p class="mb-4 text-neutral-600">
+          {{ 'web.admin.ressources.empty.message' | kraakTranslate }}
+        </p>
         <button
           type="button"
           pButton
           icon="pi pi-plus"
-          label="Créer la première ressource"
+          [label]="'web.admin.ressources.empty.createFirst' | kraakTranslate"
           class="kr-button-primary"
           (click)="openCreateForm()"
-          aria-label="Créer la première ressource"
+          [attr.aria-label]="
+            'web.admin.ressources.empty.createFirstAria' | kraakTranslate
+          "
         ></button>
       </div>
     } @else {
@@ -247,12 +317,28 @@
         <table class="w-full text-sm">
           <thead>
             <tr class="border-b border-neutral-200 text-left">
-              <th class="px-4 py-3 font-semibold text-neutral-700">Titre</th>
-              <th class="px-4 py-3 font-semibold text-neutral-700">Type</th>
-              <th class="px-4 py-3 font-semibold text-neutral-700">Thème</th>
-              <th class="px-4 py-3 font-semibold text-neutral-700">Statut</th>
+              <th class="px-4 py-3 font-semibold text-neutral-700">
+                {{
+                  'web.admin.ressources.table.columns.title' | kraakTranslate
+                }}
+              </th>
+              <th class="px-4 py-3 font-semibold text-neutral-700">
+                {{ 'web.admin.ressources.table.columns.type' | kraakTranslate }}
+              </th>
+              <th class="px-4 py-3 font-semibold text-neutral-700">
+                {{
+                  'web.admin.ressources.table.columns.theme' | kraakTranslate
+                }}
+              </th>
+              <th class="px-4 py-3 font-semibold text-neutral-700">
+                {{
+                  'web.admin.ressources.table.columns.status' | kraakTranslate
+                }}
+              </th>
               <th class="px-4 py-3 text-right font-semibold text-neutral-700">
-                Actions
+                {{
+                  'web.admin.ressources.table.columns.actions' | kraakTranslate
+                }}
               </th>
             </tr>
           </thead>
@@ -263,10 +349,10 @@
               >
                 <td class="px-4 py-3 font-medium">{{ ressource.title }}</td>
                 <td class="px-4 py-3 text-neutral-600">
-                  {{ ressource.resourceType }}
+                  {{ getResourceTypeLabel(ressource.resourceType) }}
                 </td>
                 <td class="px-4 py-3 text-neutral-600">
-                  {{ ressource.resourceTheme }}
+                  {{ getResourceThemeLabel(ressource.resourceTheme) }}
                 </td>
                 <td class="px-4 py-3">
                   <span
@@ -284,7 +370,7 @@
                       ressource.status !== 'draft'
                     "
                   >
-                    {{ ressource.status }}
+                    {{ getPublicationStatusLabel(ressource.status) }}
                   </span>
                 </td>
                 <td class="px-4 py-3 text-right">
@@ -293,23 +379,23 @@
                       type="button"
                       pButton
                       icon="pi pi-pencil"
-                      label="Modifier"
+                      [label]="
+                        'web.admin.ressources.actions.edit' | kraakTranslate
+                      "
                       class="kr-button-ghost text-xs"
                       (click)="openEditForm(ressource)"
-                      [attr.aria-label]="
-                        'Modifier la ressource ' + ressource.title
-                      "
+                      [attr.aria-label]="getEditAriaLabel(ressource)"
                     ></button>
                     <button
                       type="button"
                       pButton
                       icon="pi pi-trash"
-                      label="Supprimer"
+                      [label]="
+                        'web.admin.ressources.actions.delete' | kraakTranslate
+                      "
                       class="text-xs text-red-600"
                       (click)="deleteRessource(ressource)"
-                      [attr.aria-label]="
-                        'Supprimer la ressource ' + ressource.title
-                      "
+                      [attr.aria-label]="getDeleteAriaLabel(ressource)"
                     ></button>
                   </div>
                 </td>

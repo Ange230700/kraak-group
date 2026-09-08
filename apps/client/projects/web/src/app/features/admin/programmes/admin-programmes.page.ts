@@ -17,6 +17,10 @@ import { environment } from '../../../../environments/environment';
 import { resolveApiBaseUrl } from '../../../core/runtime/runtime-config';
 import { WebAuthService } from '../../../core/auth/web-auth.service';
 
+import {
+  KraakI18nService,
+  KraakTranslatePipe,
+} from '../../../../../../shared/i18n';
 interface ProgramFormModel {
   slug: FormControl<string>;
   title: FormControl<string>;
@@ -29,15 +33,25 @@ interface ProgramFormModel {
 @Component({
   selector: 'kraak-admin-programmes-page',
   standalone: true,
-  imports: [NgClass, ReactiveFormsModule, RouterLink, ButtonDirective, Message],
+  imports: [
+    NgClass,
+    ReactiveFormsModule,
+    RouterLink,
+    ButtonDirective,
+    Message,
+    KraakTranslatePipe,
+  ],
   templateUrl: './admin-programmes.page.html',
 })
 export default class AdminProgrammesPage implements OnInit {
   private readonly authService = inject(WebAuthService);
+  private readonly i18n = inject(KraakI18nService);
+
   programsClient: Pick<
     ApiClient['programs'],
     'list' | 'create' | 'update' | 'remove'
   > = createApiClient({
+    getLocale: () => this.i18n.locale(),
     baseUrl: resolveApiBaseUrl(environment.apiBaseUrl),
     getAuthToken: () => this.authService.currentSession()?.accessToken ?? null,
   }).programs;
@@ -51,6 +65,32 @@ export default class AdminProgrammesPage implements OnInit {
   protected readonly submitting = signal(false);
 
   protected readonly isEditing = computed(() => this.editingId() !== null);
+
+  protected getPublicationStatusLabel(status: string): string {
+    const key = `web.admin.programmes.statuses.${status}`;
+    const translated = this.i18n.translate(key);
+
+    return translated === key ? status : translated;
+  }
+
+  protected getProgramVisibilityLabel(visibility: string): string {
+    const key = `web.admin.programmes.visibilities.${visibility}`;
+    const translated = this.i18n.translate(key);
+
+    return translated === key ? visibility : translated;
+  }
+
+  protected getEditAriaLabel(programme: ProgramDto): string {
+    return this.i18n.translate('web.admin.programmes.actions.editAria', {
+      title: programme.title,
+    });
+  }
+
+  protected getDeleteAriaLabel(programme: ProgramDto): string {
+    return this.i18n.translate('web.admin.programmes.actions.deleteAria', {
+      title: programme.title,
+    });
+  }
 
   readonly publicationStatuses = Object.values(PublicationStatus);
   readonly programVisibilities = Object.values(ProgramVisibility);
@@ -98,7 +138,7 @@ export default class AdminProgrammesPage implements OnInit {
         err,
       );
       this.errorMessage.set(
-        'Impossible de charger les programmes. Vérifiez la connexion et réessayez.',
+        this.i18n.translate('web.admin.programmes.feedback.loadFailure'),
       );
     } finally {
       this.loading.set(false);
@@ -171,7 +211,9 @@ export default class AdminProgrammesPage implements OnInit {
         const created = await this.programsClient.create(payload);
         this.programmes.update((list) => [...list, created]);
         this.successMessage.set(
-          `Programme « ${created.title} » créé avec succès.`,
+          this.i18n.translate('web.admin.programmes.feedback.createSuccess', {
+            title: created.title,
+          }),
         );
       } else {
         const updated = await this.programsClient.update(id, payload);
@@ -179,7 +221,9 @@ export default class AdminProgrammesPage implements OnInit {
           list.map((p) => (p.id === id ? updated : p)),
         );
         this.successMessage.set(
-          `Programme « ${updated.title} » mis à jour avec succès.`,
+          this.i18n.translate('web.admin.programmes.feedback.updateSuccess', {
+            title: updated.title,
+          }),
         );
       }
       this.cancelForm();
@@ -189,7 +233,7 @@ export default class AdminProgrammesPage implements OnInit {
         err,
       );
       this.errorMessage.set(
-        'Une erreur est survenue lors de la sauvegarde. Vérifiez les champs et réessayez.',
+        this.i18n.translate('web.admin.programmes.feedback.saveFailure'),
       );
     } finally {
       this.submitting.set(false);
@@ -198,7 +242,9 @@ export default class AdminProgrammesPage implements OnInit {
 
   async deleteProgramme(programme: ProgramDto): Promise<void> {
     const shouldDelete = confirm(
-      `Supprimer le programme « ${programme.title} » ? Cette action est irréversible.`,
+      this.i18n.translate('web.admin.programmes.feedback.deleteConfirm', {
+        title: programme.title,
+      }),
     );
     if (shouldDelete === false) {
       return;
@@ -212,13 +258,19 @@ export default class AdminProgrammesPage implements OnInit {
       this.programmes.update((list) =>
         list.filter((p) => p.id !== programme.id),
       );
-      this.successMessage.set(`Programme « ${programme.title} » supprimé.`);
+      this.successMessage.set(
+        this.i18n.translate('web.admin.programmes.feedback.deleteSuccess', {
+          title: programme.title,
+        }),
+      );
     } catch (err) {
       console.error(
         '[AdminProgrammesPage] Erreur lors de la suppression du programme',
         err,
       );
-      this.errorMessage.set('Impossible de supprimer ce programme. Réessayez.');
+      this.errorMessage.set(
+        this.i18n.translate('web.admin.programmes.feedback.deleteFailure'),
+      );
     }
   }
 }

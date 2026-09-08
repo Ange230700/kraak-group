@@ -1,7 +1,10 @@
+import { ApplicationInitStatus } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
 import { delay, of } from 'rxjs';
 import { vi } from 'vitest';
+
+import { KraakI18nService, provideKraakI18n } from '../../../../../shared/i18n';
 
 import { GsapAnimationsService } from '../../core/animations/gsap-animations.service';
 import { blogArticles } from './blog.data';
@@ -31,6 +34,8 @@ describe('BlogPage', () => {
   );
 
   beforeEach(async () => {
+    globalThis.window.localStorage.setItem('kraak:locale', 'fr-CI');
+
     listPublishedArticlesMock.mockReset();
     listPublishedArticlesMock.mockReturnValue(
       of([...blogArticles]).pipe(delay(0)),
@@ -40,6 +45,7 @@ describe('BlogPage', () => {
       imports: [BlogPage],
       providers: [
         provideRouter([]),
+        provideKraakI18n(),
         {
           provide: GsapAnimationsService,
           useValue: gsapAnimationsServiceMock,
@@ -52,6 +58,9 @@ describe('BlogPage', () => {
         },
       ],
     }).compileComponents();
+
+    await TestBed.inject(ApplicationInitStatus).donePromise;
+    await TestBed.inject(KraakI18nService).setLocale('fr-CI');
   });
 
   it('Given the blog page component When it is created Then the instance exists', () => {
@@ -200,5 +209,26 @@ describe('BlogPage', () => {
     expect(component.totalPages).toBe(1);
     expect(component.pagedArticles).toEqual([]);
     expect(component.pageNumbers).toEqual([1]);
+  });
+  it('Given the English locale When the blog listing renders Then listing chrome is localized', async () => {
+    await TestBed.inject(KraakI18nService).setLocale('en-GB');
+
+    const fixture = TestBed.createComponent(BlogPage);
+    fixture.detectChanges();
+
+    const content = (fixture.nativeElement as HTMLElement).textContent ?? '';
+
+    expect(content).toContain('KRAAK Blog');
+    expect(content).toContain('Featured article');
+    expect(content).toContain('Clarify your project before applying');
+    expect(content).toContain('Read article');
+    expect(content).toContain('Latest articles');
+    expect(content).toContain('Have a more specific need?');
+
+    expect(content).not.toContain('Article vedette');
+    expect(content).not.toContain('Clarifier son projet avant de candidater');
+    expect(content).not.toContain('Derniers articles');
+
+    fixture.destroy();
   });
 });

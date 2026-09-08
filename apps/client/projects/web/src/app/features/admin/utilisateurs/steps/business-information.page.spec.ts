@@ -1,14 +1,20 @@
+import { ApplicationInitStatus } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
 import { vi } from 'vitest';
 import BusinessInformationPage from './business-information.page';
+import {
+  KraakI18nService,
+  provideKraakI18n,
+} from '../../../../../../../shared/i18n';
 import { UserFormStateService } from '../user-form-state.service';
 
 describe('BusinessInformationPage', () => {
   beforeEach(async () => {
+    globalThis.window.localStorage.setItem('kraak:locale', 'fr-CI');
     await TestBed.configureTestingModule({
       imports: [BusinessInformationPage],
-      providers: [provideRouter([]), UserFormStateService],
+      providers: [provideKraakI18n(), provideRouter([]), UserFormStateService],
     }).compileComponents();
   });
 
@@ -135,5 +141,33 @@ describe('BusinessInformationPage', () => {
     expect(formState.state().role).toBe('trainer');
     expect(formState.state().position).toBe('Coach principal');
     expect(formState.state().department).toBe('Programme');
+  });
+
+  it('Given English locale, When the step renders, Then it renders Business Information chrome in English', async () => {
+    const i18n = TestBed.inject(KraakI18nService);
+    await TestBed.inject(ApplicationInitStatus).donePromise;
+    await i18n.setLocale('en-GB');
+
+    const fixture = TestBed.createComponent(BusinessInformationPage);
+    fixture.detectChanges();
+
+    const host = fixture.nativeElement as HTMLElement;
+    const text = host.textContent ?? '';
+
+    expect(text).toContain('Step 2 of 5');
+    expect(text).toContain('Professional information');
+    expect(text).toContain('Role');
+    expect(text).toContain('Select a role…');
+    expect(text).toContain('Participant');
+    expect(text).toContain('Trainer');
+    expect(text).toContain('Administrator');
+    expect(text).toContain('Position / Job title');
+    expect(text).toContain('Department / Team');
+    expect(text).toContain('Previous');
+    expect(text).toContain('Next');
+
+    expect(
+      (host.querySelector('#position') as HTMLInputElement).placeholder,
+    ).toBe('E.g. Project manager');
   });
 });
